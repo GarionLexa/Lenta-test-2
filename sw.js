@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'lenta-v7-2026-10-21';
+const CACHE_VERSION = 'lenta-v9-2026-10-21';
 const CORE_ASSETS = ['./', './index.html', './manifest.json', './icon.png', './data.js'];
 
 self.addEventListener('install', (e) => {
@@ -20,11 +20,6 @@ self.addEventListener('fetch', (e) => {
   if (req.method !== 'GET') return;
   let url;
   try { url = new URL(req.url); } catch (_) { return; }
-
-  if (url.hostname.includes('wttr.in') || url.hostname.includes('open-meteo.com')) {
-    e.respondWith(fetch(req).catch(() => new Response('{}', { headers: { 'Content-Type': 'application/json' } })));
-    return;
-  }
   if (url.hostname.includes('cdn.tailwindcss.com') || url.hostname.includes('fonts.googleapis.com') || url.hostname.includes('fonts.gstatic.com') || url.hostname.includes('hits.sh')) {
     e.respondWith(caches.match(req).then(cached => cached || fetch(req).then(res => {
       const clone = res.clone();
