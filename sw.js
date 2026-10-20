@@ -1,5 +1,5 @@
-const CACHE_VERSION = 'lenta-v9-2026-10-21';
-const CORE_ASSETS = ['./', './index.html', './manifest.json', './icon.png', './data.js'];
+const CACHE_VERSION = 'lenta-v12-2026-10-21';
+const CORE_ASSETS = ['./', './index.html', './manifest.json', './icon.png', './data.js', './road-icon.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
