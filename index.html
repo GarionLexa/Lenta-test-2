@@ -229,17 +229,14 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
       <div id="selectedDayTitle" class="text-[11px] sm:text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 border-b border-gray-200 dark:border-slate-600 pb-1 flex justify-between"><span>Выберите день</span><span id="selectedDayCount" class="text-purple-600 dark:text-purple-400"></span></div>
       <div id="selectedDayShifts" class="flex-1 overflow-y-auto hide-scrollbar space-y-2 pr-1"><div class="text-center text-gray-400 text-xs mt-4">В этот день смен нет</div></div>
     </div>
-    <div class="flex flex-col gap-2">
-      <div class="grid grid-cols-2 gap-2">
-        <button onclick="openStorePicker()" class="flex items-center justify-center gap-1.5 px-3 py-2.5 bg-indigo-500 text-white rounded-2xl text-xs sm:text-sm font-bold tactile-btn shadow-lg">➕ ТК</button>
-        <button onclick="openTechPicker()" class="flex items-center justify-center gap-1.5 px-3 py-2.5 bg-orange-500 text-white rounded-2xl text-xs sm:text-sm font-bold tactile-btn shadow-lg">🔧 Сервис</button>
-      </div>
-      <button onclick="openCustomTaskModal()" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-teal-500 text-white rounded-2xl text-xs sm:text-sm font-bold tactile-btn shadow-lg">➕ Добавить точку</button>
-      <button onclick="exportMonthReport()" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-purple-500 text-white rounded-2xl text-xs sm:text-sm font-bold tactile-btn shadow-lg">📥 Скачать отчёт</button>
-      <div class="grid grid-cols-2 gap-2">
-        <button onclick="exportCalendarBackup()" class="flex items-center justify-center gap-2 px-3 py-2.5 bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-200 rounded-xl text-xs font-bold tactile-btn">💾 Бэкап</button>
-        <button onclick="importCalendarBackup()" class="flex items-center justify-center gap-2 px-3 py-2.5 bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-200 rounded-xl text-xs font-bold tactile-btn">📂 Загрузить</button>
-      </div>
+    <div class="grid grid-cols-3 gap-1.5 shrink-0">
+      <button onclick="openStorePicker()" class="flex flex-col items-center justify-center py-2.5 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-colors"><span class="text-base mb-0.5">➕</span>ТК</button>
+      <button onclick="openTechPicker()" class="flex flex-col items-center justify-center py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-colors"><span class="text-base mb-0.5">🔧</span>Сервис</button>
+      <button onclick="openCustomTaskModal()" class="flex flex-col items-center justify-center py-2.5 bg-teal-500 hover:bg-teal-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-colors"><span class="text-base mb-0.5">➕</span>Точка</button>
+      
+      <button onclick="exportMonthReport()" class="flex flex-col items-center justify-center py-2.5 bg-purple-500 hover:bg-purple-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-colors"><span class="text-base mb-0.5">📥</span>Отчёт</button>
+      <button onclick="exportCalendarBackup()" class="flex flex-col items-center justify-center py-2.5 bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-xl text-[10px] font-bold tactile-btn transition-colors"><span class="text-base mb-0.5">💾</span>Бэкап</button>
+      <button onclick="importCalendarBackup()" class="flex flex-col items-center justify-center py-2.5 bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-xl text-[10px] font-bold tactile-btn transition-colors"><span class="text-base mb-0.5">📂</span>Загрузить</button>
     </div>
   </div>
 </div>
@@ -269,8 +266,19 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
   </div>
 </div>
 
+<div id="timePickerModal" class="fixed inset-0 z-[120] bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="rounded-[24px] p-6 max-w-xs w-full relative animate-reveal bg-white dark:bg-slate-800 shadow-2xl flex flex-col text-center">
+    <h3 class="text-base font-black text-gray-800 dark:text-white mb-4">Укажите время</h3>
+    <input type="time" id="modalTimeInput" value="12:00" class="w-full bg-gray-100 dark:bg-slate-700 rounded-xl px-4 py-3 text-lg font-bold text-center text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500 mb-5">
+    <div class="flex gap-2">
+      <button onclick="closeTimePicker()" class="flex-1 py-3 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 text-gray-600 dark:text-gray-300 rounded-xl text-sm font-bold tactile-btn">Отмена</button>
+      <button onclick="confirmTimePicker()" class="flex-1 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-lg">OK</button>
+    </div>
+  </div>
+</div>
+
 <div id="customTaskModal" class="fixed inset-0 z-[110] bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-  <div class="rounded-[24px] p-5 max-w-sm w-full relative animate-reveal bg-white dark:bg-slate-800 shadow-2xl flex flex-col">
+  <div class="rounded-[24px] p-5 max-w-sm w-full relative animate-reveal bg-white dark:bg-slate-800 shadow-2xl flex flex-col max-h-[90vh] overflow-y-auto hide-scrollbar">
     <button onclick="closeCustomTaskModal()" class="absolute top-4 right-4 text-gray-400 bg-gray-100 dark:bg-slate-700 p-2 rounded-full tactile-btn z-10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
     <h3 class="text-base font-black text-teal-600 dark:text-teal-400 mb-3 uppercase pr-8 mt-1">Добавить точку</h3>
     <p class="text-xs text-gray-500 font-bold mb-2">Выберите тип:</p>
@@ -282,11 +290,20 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
     </div>
     <p class="text-xs text-gray-500 font-bold mb-1">Название:</p>
     <input type="text" id="customTaskName" placeholder="Название..." class="w-full bg-gray-100 dark:bg-slate-700 rounded-xl px-3 py-2 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500 mb-3">
-    <p class="text-xs text-gray-500 font-bold mb-1">Описание:</p>
+    
+    <!-- НОВЫЙ БЛОК: Выпадающий список для выбора из базы -->
+    <div id="customTaskDropdownContainer" class="hidden mb-3">
+      <p class="text-xs text-gray-500 font-bold mb-1">Или выберите из базы:</p>
+      <select id="customTaskDropdown" onchange="fillTaskFromDropdown()" class="w-full bg-gray-100 dark:bg-slate-700 rounded-xl px-3 py-2 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500 appearance-none">
+        <option value="">-- Выберите адрес --</option>
+      </select>
+    </div>
+
+    <p class="text-xs text-gray-500 font-bold mb-1">Куда заезжали / Описание:</p>
     <input type="text" id="customTaskDesc" placeholder="Например: ул. Ленина 5..." class="w-full bg-gray-100 dark:bg-slate-700 rounded-xl px-3 py-2 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500 mb-3">
     <p class="text-xs text-gray-500 font-bold mb-1">Время:</p>
     <input type="time" id="customTaskTime" value="12:00" class="w-full bg-gray-100 dark:bg-slate-700 rounded-xl px-3 py-2 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500 mb-5">
-    <button onclick="saveCustomTask()" class="w-full py-3 bg-teal-500 text-white rounded-xl text-sm font-bold tactile-btn shadow-lg">Сохранить точку</button>
+    <button onclick="saveCustomTask()" class="w-full py-3 bg-teal-500 hover:bg-teal-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-lg shrink-0">Сохранить точку</button>
   </div>
 </div>
 
@@ -360,6 +377,7 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
     <button id="clearSearchBtn" onclick="clearSearch();" class="hidden absolute right-2 top-2 text-gray-400 bg-white dark:bg-slate-700 p-1 rounded-full shadow-sm tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
     <div id="autocompleteList" class="absolute z-[100] w-full bg-white dark:bg-slate-800 rounded-xl hidden max-h-[40vh] overflow-y-auto mt-2 text-left text-gray-800 dark:text-gray-200 shadow-xl border border-gray-100 dark:border-slate-700 hide-scrollbar"></div>
   </div>
+  <button id="nearestBtn" onclick="sortByNearest();" class="relative bg-white dark:bg-slate-800 text-emerald-500 w-11 h-11 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 flex items-center justify-center shrink-0 tactile-btn" title="Ближайшие ко мне"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></button>
   <button id="voiceSearchBtn" onclick="startVoiceSearch();" class="bg-white dark:bg-slate-800 text-lentaBlue w-11 h-11 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 flex items-center justify-center shrink-0 tactile-btn" title="Голос"><svg id="micIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg></button>
 </div>
 <div class="relative overflow-hidden rounded-[16px] shadow-[inset_0_4px_15px_rgba(0,0,0,0.05)] border border-blue-100 dark:border-slate-700 bg-white dark:bg-slate-900">
@@ -419,32 +437,27 @@ window.openCalendarModal = function() {
 };
 window.closeCalendarModal = function() { document.getElementById('calendarModal').classList.add('hidden'); };
 
-// ПЛАВНОЕ ПЕРЕЛИСТЫВАНИЕ КАК КНИЖКА
 window.changeMonth = function(dir) {
   playTickSound();
   const grid = document.getElementById('calendarGrid');
   if (!grid || grid._animating) return;
   grid._animating = true;
 
-  // Фаза 1: сетка уезжает в сторону с fade
   grid.style.transition = 'transform 0.22s ease-in, opacity 0.22s ease-in';
   grid.style.transform = `translateX(${dir > 0 ? -100 : 100}%)`;
   grid.style.opacity = '0';
 
   setTimeout(() => {
-    // Меняем месяц
     currentCalMonth += dir;
     if (currentCalMonth > 11) { currentCalMonth = 0; currentCalYear++; }
     if (currentCalMonth < 0) { currentCalMonth = 11; currentCalYear--; }
     renderCalendar();
 
-    // Сброс в противоположную сторону (без анимации)
     grid.style.transition = 'none';
     grid.style.transform = `translateX(${dir > 0 ? 100 : -100}%)`;
     grid.style.opacity = '0';
     void grid.offsetWidth;
 
-    // Фаза 2: сетка въезжает в центр с fade
     requestAnimationFrame(() => {
       grid.style.transition = 'transform 0.3s cubic-bezier(0.16,1,0.3,1), opacity 0.3s cubic-bezier(0.16,1,0.3,1)';
       grid.style.transform = 'translateX(0)';
@@ -603,6 +616,7 @@ window.addToShifts = function(tk, brand, address, city) {
     showDayShifts(today);
   }
 };
+
 window.openCustomTaskModal = function() {
   if (!selectedDate) { showToast("Сначала выберите день в календаре!"); return; }
   playTickSound();
@@ -610,14 +624,40 @@ window.openCustomTaskModal = function() {
   document.getElementById('customTaskName').value = '';
   document.getElementById('customTaskDesc').value = '';
   document.getElementById('customTaskTime').value = '12:00';
+  document.getElementById('customTaskDropdownContainer').classList.add('hidden'); // Скрываем список при открытии
   document.querySelectorAll('.task-preset-btn').forEach(btn => { btn.classList.remove('bg-teal-100','border-teal-500','text-teal-800'); btn.classList.add('bg-gray-50','dark:bg-slate-700','border-gray-200','dark:border-slate-600'); });
 };
 window.closeCustomTaskModal = function() { document.getElementById('customTaskModal').classList.add('hidden'); };
+
 window.setTaskPreset = function(name, btnElement) {
   document.getElementById('customTaskName').value = name;
   document.querySelectorAll('.task-preset-btn').forEach(btn => { btn.classList.remove('bg-teal-100','border-teal-500','text-teal-800'); btn.classList.add('bg-gray-50','dark:bg-slate-700','border-gray-200','dark:border-slate-600'); });
   if (btnElement) { btnElement.classList.remove('bg-gray-50','dark:bg-slate-700','border-gray-200','dark:border-slate-600'); btnElement.classList.add('bg-teal-100','border-teal-500','text-teal-800'); }
+  
+  // Логика для выпадающего списка шиномонтажей
+  const dropdownContainer = document.getElementById('customTaskDropdownContainer');
+  const dropdown = document.getElementById('customTaskDropdown');
+  
+  if (name.includes('Шиномонтаж')) {
+    dropdown.innerHTML = '<option value="">-- Выберите или введите вручную --</option>';
+    // Берем только шиномонтажи из базы данных
+    const tireServices = techStations.filter(st => st.type === 'ШИНОМОНТАЖ');
+    tireServices.forEach(st => {
+      dropdown.innerHTML += `<option value="${st.address}">${st.name} (${st.address})</option>`;
+    });
+    dropdownContainer.classList.remove('hidden'); // Показываем список
+  } else {
+    dropdownContainer.classList.add('hidden'); // Скрываем для остальных
+  }
 };
+
+window.fillTaskFromDropdown = function() {
+  const val = document.getElementById('customTaskDropdown').value;
+  if (val) {
+    document.getElementById('customTaskDesc').value = val;
+  }
+};
+
 window.saveCustomTask = function() {
   const taskName = document.getElementById('customTaskName').value.trim();
   const taskDesc = document.getElementById('customTaskDesc').value.trim();
@@ -665,20 +705,7 @@ window.renderPickerStores = function() {
     container.appendChild(btn);
   });
 };
-window.saveStoreToDate = function(tk, brand, city, address) {
-  const timeInput = prompt("Введите время (например, 14:30):", "12:00");
-  if (timeInput === null) return;
-  const timeStr = timeInput.trim() === '' ? '12:00' : timeInput.trim();
-  if (!myShifts[selectedDate]) myShifts[selectedDate] = [];
-  myShifts[selectedDate].push({ tk, brand, address, city, time: timeStr, timestamp: Date.now() });
-  saveShifts();
-  closeStorePicker();
-  renderCalendar();
-  showDayShifts(selectedDate);
-  showToast("✅ Магазин добавлен в календарь!");
-};
 
-// НОВОЕ: выбор сервиса из готового списка
 window.openTechPicker = function() {
   if (!selectedDate) { showToast("Сначала выберите день в календаре!"); return; }
   playTickSound();
@@ -687,38 +714,69 @@ window.openTechPicker = function() {
   renderTechPicker();
 };
 window.closeTechPicker = function() { document.getElementById('techPickerModal').classList.add('hidden'); };
+
 window.renderTechPicker = function() {
   const query = document.getElementById('techPickerSearch').value.toLowerCase().trim();
   const container = document.getElementById('techPickerList');
   container.innerHTML = '';
   const words = query.split(/\s+/).filter(w => w.length > 0);
+  
+  // ФИЛЬТР: Показываем только тип 'СЕРВИС' (КАМАЗ-Центр и Уралтраксервис)
   const filtered = techStations.filter(st => {
+    if (st.type !== 'СЕРВИС') return false;
     const full = `${st.type} ${st.name} ${st.address} ${st.desc || ''} ${st.city || ''}`.toLowerCase();
     return words.every(w => full.includes(w));
   });
+  
   if (filtered.length === 0) { container.innerHTML = `<div class="text-center text-gray-400 py-6 text-sm">Ничего не найдено</div>`; return; }
+  
   filtered.forEach(st => {
-    const typeColors = { 'КАФЕ': 'bg-orange-500', 'СТОЯНКА': 'bg-blue-500', 'ШИНОМОНТАЖ': 'bg-emerald-500', 'АВТОМОЙКА': 'bg-sky-500', 'СЕРВИС': 'bg-purple-500' };
-    const badgeClass = typeColors[st.type] || 'bg-orange-500';
+    const badgeClass = 'bg-purple-500'; // Фиолетовый для автосервисов
     const btn = document.createElement('div');
-    btn.className = "bg-gray-50 dark:bg-slate-700/50 hover:bg-orange-50 dark:hover:bg-slate-700 p-3 rounded-xl border border-gray-100 dark:border-slate-600 cursor-pointer tactile-btn";
+    btn.className = "bg-gray-50 dark:bg-slate-700/50 hover:bg-purple-50 dark:hover:bg-slate-700 p-3 rounded-xl border border-gray-100 dark:border-slate-600 cursor-pointer tactile-btn";
     btn.onclick = () => { playTickSound(); saveTechToDate(st); };
     btn.innerHTML = `<div class="flex items-center gap-2 mb-1"><span class="px-2 py-0.5 rounded text-[10px] font-black uppercase text-white ${badgeClass}">${st.type}</span><span class="text-xs font-bold text-gray-800 dark:text-gray-200">${st.name}</span><span class="text-[10px] text-gray-500 ml-auto">${st.city || ''}</span></div><div class="text-[10px] text-gray-500 dark:text-gray-400 leading-tight">${st.address}</div>`;
     container.appendChild(btn);
   });
 };
+
+let _pendingTimeCallback = null;
+window.openTimePicker = function(callback) {
+  _pendingTimeCallback = callback;
+  document.getElementById('modalTimeInput').value = '12:00';
+  document.getElementById('timePickerModal').classList.remove('hidden');
+};
+window.closeTimePicker = function() {
+  _pendingTimeCallback = null;
+  document.getElementById('timePickerModal').classList.add('hidden');
+};
+window.confirmTimePicker = function() {
+  const t = document.getElementById('modalTimeInput').value || '12:00';
+  if (_pendingTimeCallback) _pendingTimeCallback(t);
+  closeTimePicker();
+};
+
+window.saveStoreToDate = function(tk, brand, city, address) {
+  openTimePicker((timeStr) => {
+    if (!myShifts[selectedDate]) myShifts[selectedDate] = [];
+    myShifts[selectedDate].push({ tk, brand, address, city, time: timeStr, timestamp: Date.now() });
+    saveShifts();
+    closeStorePicker();
+    renderCalendar();
+    showDayShifts(selectedDate);
+    showToast("✅ Магазин добавлен в календарь!");
+  });
+};
 window.saveTechToDate = function(st) {
-  if (!selectedDate) return;
-  const timeInput = prompt("Введите время (например, 14:30):", "12:00");
-  if (timeInput === null) return;
-  const timeStr = timeInput.trim() === '' ? '12:00' : timeInput.trim();
-  if (!myShifts[selectedDate]) myShifts[selectedDate] = [];
-  myShifts[selectedDate].push({ tk: st.id, brand: 'СЕРВИС', address: `${st.type}: ${st.name}`, city: st.address, time: timeStr, timestamp: Date.now() });
-  saveShifts();
-  closeTechPicker();
-  renderCalendar();
-  showDayShifts(selectedDate);
-  showToast("✅ Сервис добавлен в календарь!");
+  openTimePicker((timeStr) => {
+    if (!myShifts[selectedDate]) myShifts[selectedDate] = [];
+    myShifts[selectedDate].push({ tk: st.id, brand: 'СЕРВИС', address: `${st.type}: ${st.name}`, city: st.address, time: timeStr, timestamp: Date.now() });
+    saveShifts();
+    closeTechPicker();
+    renderCalendar();
+    showDayShifts(selectedDate);
+    showToast("✅ Сервис добавлен в календарь!");
+  });
 };
 window.exportMonthReport = function() {
   playTickSound();
@@ -736,7 +794,7 @@ window.exportMonthReport = function() {
       reportText += `📅 ${d}.${mo}.${y} (Записей: ${shifts.length})\n-----------------------------------------\n`;
       shifts.forEach(s => {
         totalShifts++;
-        if (s.brand === 'ЗАДАЧА') reportText += `[${s.time}] ЗАДАЧА: ${s.address} (${s.city})\n\n`;
+        if (s.brand === 'ЗАДАЧА' || s.brand === 'СЕРВИС') reportText += `[${s.time}] ${s.brand}: ${s.address} (${s.city})\n\n`;
         else {
           const tkName = s.tk !== '-' ? `ТК/РЦ ${s.tk}` : s.brand;
           reportText += `[${s.time}] ${s.brand} ${tkName} (${s.city})\nАдрес: ${s.address}\n\n`;
@@ -847,7 +905,6 @@ function playTickSound() {
   } catch(e) {}
 }
 
-// ГУДЕНИЕ ДВИГАТЕЛЯ — для машинок в слайдере
 let engineTimeout = null;
 function playEngineSound(speed) {
   if (!isAudioUnlocked || !audioCtx || !engineGain) return;
@@ -863,7 +920,6 @@ function playEngineSound(speed) {
   }, 150);
 }
 
-// ТРЕЩОТКА при скролле карточек — громкость и частота зависят от скорости
 let _lastClickTime = 0;
 function playClickTick(speed) {
   if (!isAudioUnlocked || !audioCtx || audioCtx.state === 'suspended') return;
@@ -970,7 +1026,6 @@ function resetTrucksToStart() {
   updateParallax(0);
 }
 
-// ГУДЕНИЕ при ручном скролле машинок
 let lastSliderScrollTime = 0;
 citySlider.addEventListener('scroll', () => {
   if (isMusicPlaying) return;
@@ -1114,7 +1169,6 @@ let currentNavQuery = '';
 window.executeNavigation = function(type) {
   playTickSound();
   let navUrl = '';
-  // ВСЕГДА текстовый адрес, никаких координат
   if (type === 'yandex') navUrl = `https://yandex.ru/maps/?text=${currentNavQuery}`;
   else if (type === '2gis') navUrl = `https://2gis.ru/search/${currentNavQuery}`;
   else if (type === 'google') navUrl = `https://www.google.com/maps/search/?api=1&query=${currentNavQuery}`;
@@ -1138,7 +1192,7 @@ window.shareRoute = function(tk, brandName, address, routeUrl, e) {
 let _lastCardsScrollY = window.scrollY;
 let _cardsScrollAt = 0;
 let _cardScrollAccum = 0;
-const _modalIds = ['navModal','contactsModal','monetkaModal','mechanicModal','calendarModal','storePickerModal','techPickerModal','customTaskModal','importConfirmModal'];
+const _modalIds = ['navModal','contactsModal','monetkaModal','mechanicModal','calendarModal','storePickerModal','techPickerModal','customTaskModal','importConfirmModal','timePickerModal'];
 function _isAnyModalOpen() {
   return _modalIds.some(id => {
     const el = document.getElementById(id);
@@ -1153,13 +1207,10 @@ window.addEventListener('scroll', () => {
   const dt = now - (_cardsScrollAt || now);
   _lastCardsScrollY = y;
   if (dy < 2) return;
-  // Скорость скролла в px за ~16мс (кадр)
   const speed = dy / Math.max(dt, 1) * 16;
-  // Интервал между тиками зависит от скорости: медленный — реже, быстрый — чаще
   const minInterval = speed > 8 ? 30 : speed > 4 ? 60 : 120;
   _cardScrollAccum += dy;
   if (now - _cardsScrollAt < minInterval) return;
-  // Порог накопленного сдвига тоже зависит от скорости
   const accumThreshold = Math.max(15, speed * 4);
   if (_cardScrollAccum >= accumThreshold) {
     playClickTick(speed);
@@ -1167,6 +1218,39 @@ window.addEventListener('scroll', () => {
     _cardScrollAccum = 0;
   }
 }, { passive: true });
+
+window.sortByNearest = function() {
+  playTickSound();
+  const btn = document.getElementById('nearestBtn');
+  if (window.isSortedByDistance) {
+    window.isSortedByDistance = false;
+    btn.classList.remove('bg-emerald-100', 'dark:bg-emerald-900/50', 'text-emerald-700', 'radar-active');
+    btn.classList.add('bg-white', 'dark:bg-slate-800', 'text-emerald-500');
+    renderCards();
+    return;
+  }
+  if (!navigator.geolocation) { showToast("Геолокация не поддерживается 😔"); return; }
+  btn.classList.add('radar-active');
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      window.userLocation = { lat: position.coords.latitude, lon: position.coords.longitude };
+      window.isSortedByDistance = true;
+      btn.classList.remove('radar-active', 'bg-white', 'dark:bg-slate-800', 'text-emerald-500');
+      btn.classList.add('bg-emerald-100', 'dark:bg-emerald-900/50', 'text-emerald-700');
+      renderCards();
+      showToast("Сортировка по удалённости применена 📍");
+    },
+    () => { btn.classList.remove('radar-active'); showToast("Геолокация запрещена ❌"); },
+    { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+  );
+};
+function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
 function getTimeLeftHtml(timeStr) {
   if (!timeStr || timeStr === '-' || !timeStr.includes('-')) return '';
   const now = new Date();
@@ -1193,6 +1277,7 @@ function getSmartNavQuery(city, address, tk) {
   text = text.replace(/Свердловская обл(?:асть|\.)?,?/gi, '').replace(/Тюменская обл(?:асть|\.)?,?/gi, '').replace(/Челябинская обл(?:асть|\.)?,?/gi, '').replace(/Курганская обл(?:асть|\.)?,?/gi, '').replace(/Ханты-?Мансийский Автономный округ.*?АО,?/gi, '').replace(/Ханты-Мансийский Автономный округ - Югра,?/gi, '').replace(/Ямало-Ненецкий АО,?/gi, '').replace(/Пермский край,?/gi, '').replace(/город Екатеринбург г\.о\.?,?/gi, '').replace(/Екатеринбург г\.о\.?,?/gi, '').replace(/г\.о\.,?/gi, '');
   text = text.replace(/г\.\s*[А-Яа-я-]+,?/g, '');
   text = text.replace(new RegExp(`\\b${city}\\b,`, 'gi'), '');
+  text = text.replace(/посёлок.*?(?=\s*$)/gi, ''); // Удаляем длинные хвосты "посёлок..."
   text = text.replace(/[\/\\]/g, ' ').replace(/,/g, ' ').replace(/\s+/g, ' ').trim();
   return city + ' ' + text;
 }
@@ -1288,6 +1373,9 @@ window.filterByCity = function(city) {
   window.scrollTo({top: 0, behavior: 'smooth'});
   renderCards();
 };
+let favorites = [];
+try { favorites = JSON.parse(localStorage.getItem('lenta_favs')) || []; } catch(e) { favorites = []; }
+
 function renderCards() {
   const rawSearch = searchInput.value.toLowerCase().trim();
   const q = rawSearch.replace(/['"`]/g, '').replace('окэй','окей');
@@ -1304,10 +1392,12 @@ function renderCards() {
       <button onclick="selectedTechType='ШИНОМОНТАЖ';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='ШИНОМОНТАЖ'?'bg-orange-500 text-white':'bg-white dark:bg-slate-800 text-gray-600 border border-gray-200'}">Шиномонтаж</button>
       <button onclick="selectedTechType='АВТОМОЙКА';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='АВТОМОЙКА'?'bg-orange-500 text-white':'bg-white dark:bg-slate-800 text-gray-600 border border-gray-200'}">Автомойка</button>
       <button onclick="selectedTechType='СЕРВИС';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='СЕРВИС'?'bg-orange-500 text-white':'bg-white dark:bg-slate-800 text-gray-600 border border-gray-200'}">Сервисы</button>
+      <button onclick="selectedTechType='favorites';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='favorites'?'bg-yellow-500 text-white':'bg-white dark:bg-slate-800 text-gray-600 border border-gray-200'}">⭐ Избранное</button>
     </div>`;
     let list = [...techStations];
     list.forEach(st => {
-      if (selectedTechType !== 'all' && st.type !== selectedTechType) return;
+      if (selectedTechType === 'favorites' && !favorites.includes(st.id)) return;
+      if (selectedTechType !== 'all' && selectedTechType !== 'favorites' && st.type !== selectedTechType) return;
       let match = true;
       if (words.length > 0) {
         const full = `${st.type} ${st.name} ${st.address} ${st.desc || ''} ${st.city || ''}`.toLowerCase();
@@ -1315,15 +1405,33 @@ function renderCards() {
       }
       if (!match) return;
       count++;
+      const isFav = favorites.includes(st.id);
       const is24C = st.is24_7 ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-gray-50 text-gray-500 border-gray-200';
       const is24T = st.is24_7 ? '24/7' : (st.start ? `${st.start}–${st.end || ''}` : '—');
       const typeB = st.type === 'СЕРВИС' ? 'bg-blue-600 text-white' : 'bg-orange-500 text-white';
-      const roadB = st.roadService ? `<span class="road-badge">🛣️ На трассе</span>` : '';
+      
+      let roadB = '';
+      if (st.roadService) {
+        const phoneLink = st.phone ? `<a href="tel:${st.phone.replace(/[^0-9+]/g, '')}" class="text-[10px] font-bold text-blue-600 dark:text-blue-400 underline ml-1">📞 Позвонить</a>` : '';
+        roadB = `<span class="road-badge"><img src="road-icon.png" class="w-3 h-3 object-contain inline" onerror="this.outerHTML='🛣️'"> Дорожная сеть</span>${phoneLink}`;
+      }
+      
       const navAddr = encodeURIComponent(st.address);
-      html += `<div class="store-card tech-card-bg relative flex flex-col justify-between animate-reveal rounded-[24px] p-5 shadow-sm border hover:shadow-md transition-shadow"><div><div class="flex flex-wrap items-center gap-2 mb-3"><span class="px-2 py-0.5 rounded text-[10px] font-black uppercase ${typeB}">${st.type}</span>${roadB}<div class="ml-auto flex items-center gap-1.5 shrink-0"><span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">${st.city || ''}</span></div></div><div class="text-sm font-black text-gray-900 dark:text-white leading-snug mb-1">${st.name}</div><div class="text-[11px] text-gray-600 dark:text-gray-400 font-medium mb-3">${st.address}</div><div class="text-[12px] text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-slate-900/50 p-3 rounded-xl border border-orange-100 dark:border-orange-900/50 mb-4 leading-relaxed">${st.desc || ''}</div></div><div class="space-y-4 mt-auto"><div class="flex justify-between items-center border-t border-orange-100 dark:border-orange-900/50 pt-3"><span class="text-[10px] font-bold text-gray-500 uppercase">Режим</span><span class="px-2 py-1 rounded-md text-[10px] font-bold border ${is24C}">${is24T}</span></div><div class="grid grid-cols-2 gap-2 pt-2"><button onclick="openNavModal('${navAddr}');" class="flex items-center justify-center gap-1.5 px-2 py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-xs font-bold tactile-btn shadow-lg">🗺️ Поехать</button><button onclick="shareRoute('${st.name.replace(/'/g,"\\'")}','ТЕХПОМОЩЬ','${st.address.replace(/'/g,"\\'")}','',event)" class="flex items-center justify-center gap-1.5 px-2 py-2.5 bg-white dark:bg-slate-800 text-orange-600 border border-orange-200 rounded-xl text-xs font-bold tactile-btn">📤 Отправить</button></div></div></div>`;
+      html += `<div class="store-card tech-card-bg relative flex flex-col justify-between animate-reveal rounded-[24px] p-5 shadow-sm border hover:shadow-md transition-shadow">
+        <div class="absolute top-4 right-4 flex gap-1 z-10">
+          <button onclick="toggleFav('${st.id}', event)" class="text-xl tactile-btn transition-transform ${isFav ? 'scale-110' : 'grayscale opacity-50'}">⭐</button>
+        </div>
+        <div><div class="flex flex-wrap items-center gap-2 mb-3 pr-10"><span class="px-2 py-0.5 rounded text-[10px] font-black uppercase ${typeB}">${st.type}</span>${roadB}<div class="ml-auto flex items-center gap-1.5 shrink-0"><span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">${st.city || ''}</span></div></div><div class="text-sm font-black text-gray-900 dark:text-white leading-snug mb-1">${st.name}</div><div class="text-[11px] text-gray-600 dark:text-gray-400 font-medium mb-3">${st.address}</div><div class="text-[12px] text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-slate-900/50 p-3 rounded-xl border border-orange-100 dark:border-orange-900/50 mb-4 leading-relaxed">${st.desc || ''}</div></div><div class="space-y-4 mt-auto"><div class="flex justify-between items-center border-t border-orange-100 dark:border-orange-900/50 pt-3"><span class="text-[10px] font-bold text-gray-500 uppercase">Режим</span><span class="px-2 py-1 rounded-md text-[10px] font-bold border ${is24C}">${is24T}</span></div><div class="grid grid-cols-2 gap-2 pt-2"><button onclick="openNavModal('${navAddr}');" class="flex items-center justify-center gap-1.5 px-2 py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-xs font-bold tactile-btn shadow-lg">🗺️ Поехать</button><button onclick="shareRoute('${st.name.replace(/'/g,"\\'")}','ТЕХПОМОЩЬ','${st.address.replace(/'/g,"\\'")}','',event)" class="flex items-center justify-center gap-1.5 px-2 py-2.5 bg-white dark:bg-slate-800 text-orange-600 border border-orange-200 rounded-xl text-xs font-bold tactile-btn">📤 Отправить</button></div></div></div>`;
     });
   } else {
     let list = [...stores];
+    if (window.isSortedByDistance && window.userLocation) {
+      list.forEach(s => {
+        const c = window.storeCoords ? window.storeCoords[s.tk] : null;
+        s.distance = c ? getDistanceFromLatLonInKm(window.userLocation.lat, window.userLocation.lon, c.lat, c.lon) : 999999;
+      });
+      list.sort((a,b) => a.distance - b.distance);
+    }
     list.forEach(store => {
       let brand = "ЛЕНТА";
       if (store.address.includes("ОКЕЙ") || store.tk === "929929") brand = "О'КЕЙ";
@@ -1346,18 +1454,34 @@ function renderCards() {
       const is24T = store.is24_7 ? '24/7' : `${store.start}–${store.end}`;
       const rc1 = store.rc1 !== '-' ? `<div class="flex flex-col items-end"><span class="px-2 py-1 bg-emerald-500 text-white font-bold rounded-md text-[10px]">${store.rc1}</span>${getTimeLeftHtml(store.rc1)}</div>` : '<span class="text-gray-300 font-bold">—</span>';
       const cleanAddr = store.address.replace('ООО "Лента", ','').replace('ООО "Лента" ','').replace('РЦ "Монетка", ','');
-      // НАВИГАЦИЯ ТОЛЬКО ПО АДРЕСУ, без координат
+      
       const navQ = getSmartNavQuery(store.city, store.address, store.tk);
       const encQ = encodeURIComponent(navQ);
       const panoUrl = `https://yandex.ru/maps/?text=${encQ}&l=stv,sta`;
+      
       const routeUrl = customRoutes[store.tk] || null;
+      const dTag = (window.isSortedByDistance && store.distance !== undefined && store.distance !== 999999) ? `<span class="text-[11px] font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">${store.distance.toFixed(1)} км</span>` : '';
       const extraBtn = brand === "МОНЕТКА" ? `<button onclick="openMonetkaModal();" class="mt-3 w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-orange-50 text-orange-600 border border-orange-200 rounded-xl text-xs font-bold tactile-btn">📖 Правила выгрузки</button>` : '';
-      html += `<div class="store-card relative flex flex-col justify-between animate-reveal bg-white dark:bg-slate-800 rounded-[24px] p-5 shadow-sm border border-gray-100 dark:border-slate-700 hover:shadow-md transition-shadow"><button onclick="closeCard(this)" class="absolute top-4 right-4 text-gray-300 hover:text-gray-500 bg-gray-50 dark:bg-slate-700 p-2 rounded-full z-10 tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button><div><div class="flex flex-wrap items-center gap-2 mb-3 pr-8"><span class="px-2 py-0.5 rounded text-[10px] font-black uppercase ${badge}">${dispBrand}</span><span class="text-xs font-bold text-gray-500 dark:text-gray-300">${num}</span><div class="ml-auto flex items-center gap-1.5 shrink-0"><span class="text-[11px] font-extrabold text-lentaBlue bg-blue-50 dark:bg-slate-700/50 px-2 py-1 rounded-md border border-blue-100 dark:border-slate-600">${store.city}</span></div></div><div class="text-sm font-semibold text-gray-800 dark:text-white leading-snug mb-5">${cleanAddr}</div></div><div class="space-y-4 pt-4 border-t border-gray-50 dark:border-slate-700 mt-auto"><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase">Время приёма</span>${rc1}</div><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase">Режим</span><span class="px-2 py-1 rounded-md text-[10px] font-bold border ${is24C}">${is24T}</span></div>${extraBtn}<button onclick="addToShifts('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${store.city}')" class="w-full flex items-center justify-center gap-2 px-3 py-2 bg-purple-50 text-purple-600 border border-purple-200 rounded-xl text-xs font-bold tactile-btn">📝 Учесть</button><div class="grid grid-cols-2 gap-2 pt-2"><button onclick="openApproachMap('${routeUrl}')" class="flex items-center justify-center gap-1.5 px-2 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-bold tactile-btn shadow-lg">🛣️ Подъезд</button><button onclick="openNavModal('${encQ}')" class="flex items-center justify-center gap-1.5 px-2 py-2 bg-lentaBlue hover:bg-[#003366] text-white rounded-xl text-xs font-bold tactile-btn shadow-lg">🧭 Навигатор</button><a href="${panoUrl}" target="_blank" class="flex items-center justify-center gap-1.5 px-2 py-2 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-200 rounded-xl text-xs font-bold tactile-btn">📷 Панорама</a><button onclick="shareRoute('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${routeUrl}',event)" class="flex items-center justify-center gap-1.5 px-2 py-2 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 rounded-xl text-xs font-bold tactile-btn">📤 Отправить</button></div></div></div>`;
+      html += `<div class="store-card relative flex flex-col justify-between animate-reveal bg-white dark:bg-slate-800 rounded-[24px] p-5 shadow-sm border border-gray-100 dark:border-slate-700 hover:shadow-md transition-shadow"><button onclick="closeCard(this)" class="absolute top-4 right-4 text-gray-300 hover:text-gray-500 bg-gray-50 dark:bg-slate-700 p-2 rounded-full z-10 tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button><div><div class="flex flex-wrap items-center gap-2 mb-3 pr-8"><span class="px-2 py-0.5 rounded text-[10px] font-black uppercase ${badge}">${dispBrand}</span><span class="text-xs font-bold text-gray-500 dark:text-gray-300">${num}</span><div class="ml-auto flex items-center gap-1.5 shrink-0">${dTag}<span class="text-[11px] font-extrabold text-lentaBlue bg-blue-50 dark:bg-slate-700/50 px-2 py-1 rounded-md border border-blue-100 dark:border-slate-600">${store.city}</span></div></div><div class="text-sm font-semibold text-gray-800 dark:text-white leading-snug mb-5">${cleanAddr}</div></div><div class="space-y-4 pt-4 border-t border-gray-50 dark:border-slate-700 mt-auto"><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase">Время приёма</span>${rc1}</div><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase">Режим</span><span class="px-2 py-1 rounded-md text-[10px] font-bold border ${is24C}">${is24T}</span></div>${extraBtn}<button onclick="addToShifts('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${store.city}')" class="w-full flex items-center justify-center gap-2 px-3 py-2 bg-purple-50 text-purple-600 border border-purple-200 rounded-xl text-xs font-bold tactile-btn">📝 Учесть</button><div class="grid grid-cols-2 gap-2 pt-2"><button onclick="openApproachMap('${routeUrl}')" class="flex items-center justify-center gap-1.5 px-2 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-bold tactile-btn shadow-lg">🛣️ Подъезд</button><button onclick="openNavModal('${encQ}')" class="flex items-center justify-center gap-1.5 px-2 py-2 bg-lentaBlue hover:bg-[#003366] text-white rounded-xl text-xs font-bold tactile-btn shadow-lg">🧭 Навигатор</button><a href="${panoUrl}" target="_blank" class="flex items-center justify-center gap-1.5 px-2 py-2 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-200 rounded-xl text-xs font-bold tactile-btn">📷 Панорама</a><button onclick="shareRoute('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${routeUrl}',event)" class="flex items-center justify-center gap-1.5 px-2 py-2 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 rounded-xl text-xs font-bold tactile-btn">📤 Отправить</button></div></div></div>`;
     });
   }
   if (count === 0) cardsGrid.innerHTML = `<div class="col-span-full py-16 text-center text-gray-400 font-medium bg-white dark:bg-slate-800 rounded-[24px] border border-gray-100">По запросу ничего не найдено</div>`;
   else cardsGrid.innerHTML = html;
 }
+
+window.toggleFav = function(id, e) {
+  if (e) e.stopPropagation();
+  playTickSound();
+  if (favorites.includes(id)) {
+    favorites = favorites.filter(f => f !== id);
+    showToast("Удалено из избранного");
+  } else {
+    favorites.push(id);
+    showToast("Добавлено в избранное ⭐");
+  }
+  try { localStorage.setItem('lenta_favs', JSON.stringify(favorites)); } catch(e) {}
+  renderCards();
+};
 function debounce(fn, delay) { let t; return function(...a) { clearTimeout(t); t = setTimeout(() => fn.apply(this, a), delay); }; }
 function getDropdownItemHTML(item, isTech) {
   if (isTech) return `<div class="flex items-center gap-2 mb-1"><span class="text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded font-black uppercase">${item.type}</span><span class="font-bold text-xs text-orange-600">${item.city || ''}</span></div><div class="text-[11px] font-bold text-gray-800 dark:text-gray-200">${item.name}</div><div class="text-[10px] text-gray-500">${item.address}</div>`;
@@ -1562,7 +1686,7 @@ if ('serviceWorker' in navigator) {
   setTimeout(() => { if (!isMusicPlaying) playStory(); startStoryTimer(); }, 5000);
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      ['navModal','contactsModal','monetkaModal','mechanicModal','calendarModal','storePickerModal','techPickerModal','customTaskModal','importConfirmModal'].forEach(id => {
+      ['navModal','contactsModal','monetkaModal','mechanicModal','calendarModal','storePickerModal','techPickerModal','customTaskModal','importConfirmModal','timePickerModal'].forEach(id => {
         const el = document.getElementById(id); if (el) el.classList.add('hidden');
       });
     }
