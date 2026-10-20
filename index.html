@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
 <title>ЛЕНТА: Мониторинг доставок</title>
-<meta name="description" content="База гипермаркетов и схем заездов для водителей логистики.">
 <link rel="icon" href="icon.png" type="image/png">
 <link rel="apple-touch-icon" href="icon.png">
 <meta name="mobile-web-app-capable" content="yes">
@@ -44,8 +43,6 @@ body { background-color: #F8FAFC; color: #1F2937; font-family: 'Inter', sans-ser
 .mic-listening { animation: pulse-ring 1.5s infinite; background-color: #ef4444 !important; color: white !important; border-color: #ef4444 !important; }
 @keyframes slideUpModal { 0% { transform: translateY(100%); } 100% { transform: translateY(0); } }
 .animate-slide-up { animation: slideUpModal 0.3s cubic-bezier(0.16,1,0.3,1) forwards; }
-</style>
-<style>
 .scenic-bg { background-color: #0f172a; overflow: hidden; position: relative; height: 140px; width: 100%; border-radius: 16px; }
 .sky-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity 0.2s ease-out; }
 .sky-day { background: linear-gradient(to bottom, #38bdf8 0%, #bae6fd 100%); opacity: 1; z-index: 1; }
@@ -87,8 +84,6 @@ body { background-color: #F8FAFC; color: #1F2937; font-family: 'Inter', sans-ser
 .tail-light { position: absolute; bottom: 4px; left: -1px; width: 3px; height: 8px; background-color: #ef4444; box-shadow: 0 0 12px 3px rgba(239,68,68,0.95); opacity: var(--truck-light-opacity); transition: opacity 0.3s; border-radius: 2px; z-index: 20; }
 .marker-light { position: absolute; top: 2px; width: 4px; height: 2px; background-color: #fde047; box-shadow: 0 0 8px 2px rgba(253,224,71,0.9); opacity: var(--truck-light-opacity); transition: opacity 0.3s; border-radius: 1px; }
 .dark .city-name-plaque { background-color: #1e293b !important; color: #f1f5f9 !important; border-color: #334155 !important; }
-</style>
-<style>
 #visitContainer { transition: all 0.6s cubic-bezier(0.4,0,0.2,1); overflow: hidden; }
 .story-mode #visitContainer { width: 0 !important; min-width: 0 !important; opacity: 0; padding: 0; margin: 0; transform: scale(0.8); pointer-events: none; }
 .story-mode #centerStage { width: 100%; flex: 1; }
@@ -124,8 +119,6 @@ body { background-color: #F8FAFC; color: #1F2937; font-family: 'Inter', sans-ser
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 .tech-card-bg { background: linear-gradient(145deg, #fffbeb, #fff); border-color: #fcd34d; }
 .dark .tech-card-bg { background: linear-gradient(145deg, #422006, #1e293b); border-color: #9a3412; }
-</style>
-<style>
 html.large-text { font-size: 18px; }
 html.large-text .text-\[8px\]  { font-size: 11px !important; }
 html.large-text .text-\[9px\]  { font-size: 12px !important; }
@@ -171,7 +164,6 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
     </div>
   </div>
 </div>
-
 <div id="contactsModal" class="fixed inset-0 z-[100] bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
   <div class="rounded-[32px] p-6 max-w-sm w-full text-center relative animate-reveal bg-white dark:bg-slate-800 shadow-2xl max-h-[90vh] overflow-y-auto hide-scrollbar">
     <button onclick="closeContactsModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100 dark:bg-slate-700 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
@@ -200,7 +192,6 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
     </div>
   </div>
 </div>
-
 <div id="mechanicModal" class="fixed inset-0 z-[100] bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
   <div class="rounded-[32px] p-6 max-w-md w-full relative animate-reveal bg-white dark:bg-slate-800 shadow-2xl flex flex-col max-h-[90vh]">
     <button onclick="closeMechanicModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100 dark:bg-slate-700 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
@@ -233,14 +224,12 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
       <button onclick="openStorePicker()" class="flex flex-col items-center justify-center py-2.5 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-colors"><span class="text-base mb-0.5">➕</span>ТК</button>
       <button onclick="openTechPicker()" class="flex flex-col items-center justify-center py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-colors"><span class="text-base mb-0.5">🔧</span>Сервис</button>
       <button onclick="openCustomTaskModal()" class="flex flex-col items-center justify-center py-2.5 bg-teal-500 hover:bg-teal-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-colors"><span class="text-base mb-0.5">➕</span>Точка</button>
-      
       <button onclick="exportMonthReport()" class="flex flex-col items-center justify-center py-2.5 bg-purple-500 hover:bg-purple-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-colors"><span class="text-base mb-0.5">📥</span>Отчёт</button>
       <button onclick="exportCalendarBackup()" class="flex flex-col items-center justify-center py-2.5 bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-xl text-[10px] font-bold tactile-btn transition-colors"><span class="text-base mb-0.5">💾</span>Бэкап</button>
       <button onclick="importCalendarBackup()" class="flex flex-col items-center justify-center py-2.5 bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-xl text-[10px] font-bold tactile-btn transition-colors"><span class="text-base mb-0.5">📂</span>Загрузить</button>
     </div>
   </div>
 </div>
-
 <div id="storePickerModal" class="fixed inset-0 z-[110] bg-gray-900/60 backdrop-blur-sm hidden flex items-end justify-center sm:items-center p-0 sm:p-4">
   <div class="rounded-t-[32px] sm:rounded-[32px] w-full max-w-md relative animate-slide-up sm:animate-reveal bg-white dark:bg-slate-800 shadow-2xl flex flex-col h-[80vh] sm:h-auto sm:max-h-[90vh]">
     <div class="p-4 border-b border-gray-100 dark:border-slate-700 flex justify-between items-center bg-gray-50 dark:bg-slate-800/80 rounded-t-[32px]">
@@ -265,7 +254,6 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
     <div id="techPickerList" class="flex-1 overflow-y-auto p-3 pt-0 space-y-2 hide-scrollbar bg-white dark:bg-slate-800 rounded-b-[32px]"></div>
   </div>
 </div>
-
 <div id="timePickerModal" class="fixed inset-0 z-[120] bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
   <div class="rounded-[24px] p-6 max-w-xs w-full relative animate-reveal bg-white dark:bg-slate-800 shadow-2xl flex flex-col text-center">
     <h3 class="text-base font-black text-gray-800 dark:text-white mb-4">Укажите время</h3>
@@ -276,7 +264,6 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
     </div>
   </div>
 </div>
-
 <div id="customTaskModal" class="fixed inset-0 z-[110] bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
   <div class="rounded-[24px] p-5 max-w-sm w-full relative animate-reveal bg-white dark:bg-slate-800 shadow-2xl flex flex-col max-h-[90vh] overflow-y-auto hide-scrollbar">
     <button onclick="closeCustomTaskModal()" class="absolute top-4 right-4 text-gray-400 bg-gray-100 dark:bg-slate-700 p-2 rounded-full tactile-btn z-10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
@@ -290,15 +277,12 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
     </div>
     <p class="text-xs text-gray-500 font-bold mb-1">Название:</p>
     <input type="text" id="customTaskName" placeholder="Название..." class="w-full bg-gray-100 dark:bg-slate-700 rounded-xl px-3 py-2 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500 mb-3">
-    
-    <!-- НОВЫЙ БЛОК: Выпадающий список для выбора из базы -->
     <div id="customTaskDropdownContainer" class="hidden mb-3">
       <p class="text-xs text-gray-500 font-bold mb-1">Или выберите из базы:</p>
       <select id="customTaskDropdown" onchange="fillTaskFromDropdown()" class="w-full bg-gray-100 dark:bg-slate-700 rounded-xl px-3 py-2 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500 appearance-none">
         <option value="">-- Выберите адрес --</option>
       </select>
     </div>
-
     <p class="text-xs text-gray-500 font-bold mb-1">Куда заезжали / Описание:</p>
     <input type="text" id="customTaskDesc" placeholder="Например: ул. Ленина 5..." class="w-full bg-gray-100 dark:bg-slate-700 rounded-xl px-3 py-2 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500 mb-3">
     <p class="text-xs text-gray-500 font-bold mb-1">Время:</p>
@@ -306,7 +290,36 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
     <button onclick="saveCustomTask()" class="w-full py-3 bg-teal-500 hover:bg-teal-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-lg shrink-0">Сохранить точку</button>
   </div>
 </div>
-
+<div id="addTechModal" class="fixed inset-0 z-[120] bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="rounded-[24px] p-5 max-w-sm w-full relative animate-reveal bg-white dark:bg-slate-800 shadow-2xl flex flex-col max-h-[90vh] overflow-y-auto hide-scrollbar">
+    <button onclick="closeAddTechModal()" class="absolute top-4 right-4 text-gray-400 bg-gray-100 dark:bg-slate-700 p-2 rounded-full tactile-btn z-10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    <h3 class="text-base font-black text-emerald-600 dark:text-emerald-400 mb-4 uppercase pr-8 mt-1">Добавить свою точку</h3>
+    <p class="text-xs text-gray-500 font-bold mb-1">Тип:</p>
+    <select id="newTechType" class="w-full bg-gray-100 dark:bg-slate-700 rounded-xl px-3 py-2 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500 mb-3">
+      <option value="ШИНОМОНТАЖ">🛞 Шиномонтаж</option>
+      <option value="СТОЯНКА">🅿️ Стоянка</option>
+      <option value="АВТОМОЙКА">🚿 Автомойка</option>
+      <option value="КАФЕ">☕ Кафе</option>
+      <option value="СЕРВИС">🔧 Сервис / Ремонт</option>
+    </select>
+    <p class="text-xs text-gray-500 font-bold mb-1">Название:</p>
+    <input type="text" id="newTechName" placeholder="Например: Шиномонтаж у дяди Васи" class="w-full bg-gray-100 dark:bg-slate-700 rounded-xl px-3 py-2 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500 mb-3">
+    <p class="text-xs text-gray-500 font-bold mb-1">Адрес (город, улица, дом):</p>
+    <input type="text" id="newTechAddress" placeholder="Например: Тюмень, ул. Ленина, 10" class="w-full bg-gray-100 dark:bg-slate-700 rounded-xl px-3 py-2 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500 mb-3">
+    <p class="text-xs text-gray-500 font-bold mb-1">Город (для фильтра):</p>
+    <input type="text" id="newTechCity" placeholder="Например: Тюмень" class="w-full bg-gray-100 dark:bg-slate-700 rounded-xl px-3 py-2 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500 mb-3">
+    <p class="text-xs text-gray-500 font-bold mb-1">Описание (необязательно):</p>
+    <input type="text" id="newTechDesc" placeholder="Например: Круглосуточно, есть эстакада" class="w-full bg-gray-100 dark:bg-slate-700 rounded-xl px-3 py-2 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500 mb-3">
+    <p class="text-xs text-gray-500 font-bold mb-1">Телефон (необязательно):</p>
+    <input type="tel" id="newTechPhone" placeholder="+7..." class="w-full bg-gray-100 dark:bg-slate-700 rounded-xl px-3 py-2 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500 mb-3">
+    <div class="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-xl border border-blue-100 dark:border-blue-800 mb-4">
+      <p class="text-[11px] text-blue-800 dark:text-blue-300 font-bold mb-1">Координаты (необязательно):</p>
+      <p class="text-[10px] text-blue-600 dark:text-blue-400 leading-tight mb-2">Скопируйте из Яндекс.Карт.</p>
+      <input type="text" id="newTechCoords" placeholder="57.152, 65.541" class="w-full bg-white dark:bg-slate-800 rounded-lg px-2 py-1.5 text-xs text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500">
+    </div>
+    <button onclick="saveCustomTech()" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-lg shrink-0">Сохранить точку</button>
+  </div>
+</div>
 <div id="importConfirmModal" class="fixed inset-0 z-[110] bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
   <div class="rounded-[24px] p-6 max-w-sm w-full relative animate-reveal bg-white dark:bg-slate-800 shadow-2xl text-center">
     <h3 class="text-lg font-black text-blue-600 dark:text-blue-400 mb-2">Загрузка данных</h3>
@@ -322,7 +335,6 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
   <div class="flex-1 text-xs font-bold" id="updateBannerText">Доступно обновление</div>
   <button onclick="applyUpdate()" class="bg-white text-blue-600 px-3 py-1.5 rounded-xl text-xs font-bold tactile-btn">Обновить</button>
 </div>
-
 <header class="glass-header">
 <div class="max-w-[1600px] mx-auto px-3 sm:px-6 relative z-10 pb-4">
 <div class="flex flex-row items-center justify-between gap-1 sm:gap-4 mb-4">
@@ -400,14 +412,12 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
 </div>
 </div>
 </header>
-
 <main class="max-w-[1600px] mx-auto px-4 sm:px-6 py-6 relative z-10 flex-1">
   <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 mb-8"></div>
 </main>
-
 <div id="toast-notification" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-gray-800/95 dark:bg-slate-700/95 backdrop-blur-md text-white px-5 py-3 rounded-2xl shadow-2xl z-[200] font-bold text-[13px] text-center border border-gray-700 transition-all duration-300 opacity-0 scale-95 pointer-events-none whitespace-nowrap"></div>
-
 <script src="data.js"></script>
+<script src="data_services.js"></script>
 <script>
 let myShifts = {};
 try { myShifts = JSON.parse(localStorage.getItem('lenta_shifts_v1')) || {}; } catch(e) { myShifts = {}; }
@@ -424,7 +434,6 @@ function getTodayStr() {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
-
 window.openCalendarModal = function() {
   playTickSound();
   document.getElementById('calendarModal').classList.remove('hidden');
@@ -436,36 +445,28 @@ window.openCalendarModal = function() {
   showDayShifts(selectedDate);
 };
 window.closeCalendarModal = function() { document.getElementById('calendarModal').classList.add('hidden'); };
-
 window.changeMonth = function(dir) {
   playTickSound();
   const grid = document.getElementById('calendarGrid');
   if (!grid || grid._animating) return;
   grid._animating = true;
-
   grid.style.transition = 'transform 0.22s ease-in, opacity 0.22s ease-in';
   grid.style.transform = `translateX(${dir > 0 ? -100 : 100}%)`;
   grid.style.opacity = '0';
-
   setTimeout(() => {
     currentCalMonth += dir;
     if (currentCalMonth > 11) { currentCalMonth = 0; currentCalYear++; }
     if (currentCalMonth < 0) { currentCalMonth = 11; currentCalYear--; }
     renderCalendar();
-
     grid.style.transition = 'none';
     grid.style.transform = `translateX(${dir > 0 ? 100 : -100}%)`;
     grid.style.opacity = '0';
     void grid.offsetWidth;
-
     requestAnimationFrame(() => {
       grid.style.transition = 'transform 0.3s cubic-bezier(0.16,1,0.3,1), opacity 0.3s cubic-bezier(0.16,1,0.3,1)';
       grid.style.transform = 'translateX(0)';
       grid.style.opacity = '1';
-      setTimeout(() => {
-        grid._animating = false;
-        grid.style.transition = '';
-      }, 320);
+      setTimeout(() => { grid._animating = false; grid.style.transition = ''; }, 320);
     });
   }, 220);
 };
@@ -494,9 +495,7 @@ function renderCalendar() {
     let shiftIndicator = '';
     if (hasShift) {
       const hasTask = myShifts[dateStr].some(s => s.brand === 'ЗАДАЧА' || s.brand === 'СЕРВИС');
-      shiftIndicator = hasTask
-        ? `<span class="absolute bottom-0.5 text-[8px] sm:text-[10px] leading-none">🛠️</span>`
-        : `<span class="absolute bottom-0.5 text-[8px] sm:text-[10px] leading-none">🚛</span>`;
+      shiftIndicator = hasTask ? `<span class="absolute bottom-0.5 text-[8px] sm:text-[10px] leading-none">🛠️</span>` : `<span class="absolute bottom-0.5 text-[8px] sm:text-[10px] leading-none">🚛</span>`;
     }
     grid.innerHTML += `<div onclick="selectDate('${dateStr}')" class="${classes}"><span class="${hasShift ? 'mb-2' : ''}">${day}</span>${shiftIndicator}</div>`;
   }
@@ -525,15 +524,9 @@ window.selectDate = function(dateStr) {
     if (locked || grid._animating) return;
     const dx = e.touches[0].clientX - sx;
     const dy = e.touches[0].clientY - sy;
-    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 10) {
-      locked = true;
-      grid.style.transform = '';
-      grid.style.opacity = '1';
-      return;
-    }
+    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 10) { locked = true; grid.style.transform = ''; grid.style.opacity = '1'; return; }
     if (Math.abs(dx) > 5 && Math.abs(dx) > Math.abs(dy)) {
-      const dampened = dx * 0.6;
-      grid.style.transform = `translateX(${dampened}px)`;
+      grid.style.transform = `translateX(${dx * 0.6}px)`;
       grid.style.opacity = String(Math.max(0.4, 1 - Math.abs(dx) / 400));
     }
   }, {passive: true});
@@ -616,6 +609,9 @@ window.addToShifts = function(tk, brand, address, city) {
     showDayShifts(today);
   }
 };
+let customTechStations = [];
+try { customTechStations = JSON.parse(localStorage.getItem('lenta_custom_tech')) || []; } catch(e) { customTechStations = []; }
+function getTechStations() { return [...window.techStations, ...customTechStations]; }
 
 window.openCustomTaskModal = function() {
   if (!selectedDate) { showToast("Сначала выберите день в календаре!"); return; }
@@ -624,40 +620,27 @@ window.openCustomTaskModal = function() {
   document.getElementById('customTaskName').value = '';
   document.getElementById('customTaskDesc').value = '';
   document.getElementById('customTaskTime').value = '12:00';
-  document.getElementById('customTaskDropdownContainer').classList.add('hidden'); // Скрываем список при открытии
+  document.getElementById('customTaskDropdownContainer').classList.add('hidden');
   document.querySelectorAll('.task-preset-btn').forEach(btn => { btn.classList.remove('bg-teal-100','border-teal-500','text-teal-800'); btn.classList.add('bg-gray-50','dark:bg-slate-700','border-gray-200','dark:border-slate-600'); });
 };
 window.closeCustomTaskModal = function() { document.getElementById('customTaskModal').classList.add('hidden'); };
-
 window.setTaskPreset = function(name, btnElement) {
   document.getElementById('customTaskName').value = name;
   document.querySelectorAll('.task-preset-btn').forEach(btn => { btn.classList.remove('bg-teal-100','border-teal-500','text-teal-800'); btn.classList.add('bg-gray-50','dark:bg-slate-700','border-gray-200','dark:border-slate-600'); });
   if (btnElement) { btnElement.classList.remove('bg-gray-50','dark:bg-slate-700','border-gray-200','dark:border-slate-600'); btnElement.classList.add('bg-teal-100','border-teal-500','text-teal-800'); }
-  
-  // Логика для выпадающего списка шиномонтажей
   const dropdownContainer = document.getElementById('customTaskDropdownContainer');
   const dropdown = document.getElementById('customTaskDropdown');
-  
   if (name.includes('Шиномонтаж')) {
     dropdown.innerHTML = '<option value="">-- Выберите или введите вручную --</option>';
-    // Берем только шиномонтажи из базы данных
-    const tireServices = techStations.filter(st => st.type === 'ШИНОМОНТАЖ');
-    tireServices.forEach(st => {
-      dropdown.innerHTML += `<option value="${st.address}">${st.name} (${st.address})</option>`;
-    });
-    dropdownContainer.classList.remove('hidden'); // Показываем список
-  } else {
-    dropdownContainer.classList.add('hidden'); // Скрываем для остальных
-  }
+    const tireServices = getTechStations().filter(st => st.type === 'ШИНОМОНТАЖ');
+    tireServices.forEach(st => { dropdown.innerHTML += `<option value="${st.address}">${st.name} (${st.address})</option>`; });
+    dropdownContainer.classList.remove('hidden');
+  } else { dropdownContainer.classList.add('hidden'); }
 };
-
 window.fillTaskFromDropdown = function() {
   const val = document.getElementById('customTaskDropdown').value;
-  if (val) {
-    document.getElementById('customTaskDesc').value = val;
-  }
+  if (val) document.getElementById('customTaskDesc').value = val;
 };
-
 window.saveCustomTask = function() {
   const taskName = document.getElementById('customTaskName').value.trim();
   const taskDesc = document.getElementById('customTaskDesc').value.trim();
@@ -665,11 +648,7 @@ window.saveCustomTask = function() {
   if (!taskName) { showToast("Выберите тип или введите название!"); return; }
   if (!myShifts[selectedDate]) myShifts[selectedDate] = [];
   myShifts[selectedDate].push({ tk: '-', brand: 'ЗАДАЧА', address: taskName, city: taskDesc || 'Без описания', time: timeStr, timestamp: Date.now() });
-  saveShifts();
-  closeCustomTaskModal();
-  renderCalendar();
-  showDayShifts(selectedDate);
-  showToast("✅ Точка добавлена!");
+  saveShifts(); closeCustomTaskModal(); renderCalendar(); showDayShifts(selectedDate); showToast("✅ Точка добавлена!");
 };
 window.openStorePicker = function() {
   if (!selectedDate) { showToast("Сначала выберите день в календаре!"); return; }
@@ -705,7 +684,6 @@ window.renderPickerStores = function() {
     container.appendChild(btn);
   });
 };
-
 window.openTechPicker = function() {
   if (!selectedDate) { showToast("Сначала выберите день в календаре!"); return; }
   playTickSound();
@@ -714,69 +692,80 @@ window.openTechPicker = function() {
   renderTechPicker();
 };
 window.closeTechPicker = function() { document.getElementById('techPickerModal').classList.add('hidden'); };
-
 window.renderTechPicker = function() {
   const query = document.getElementById('techPickerSearch').value.toLowerCase().trim();
   const container = document.getElementById('techPickerList');
   container.innerHTML = '';
   const words = query.split(/\s+/).filter(w => w.length > 0);
-  
-  // ФИЛЬТР: Показываем только тип 'СЕРВИС' (КАМАЗ-Центр и Уралтраксервис)
-  const filtered = techStations.filter(st => {
-    if (st.type !== 'СЕРВИС') return false;
+  const filtered = getTechStations().filter(st => {
     const full = `${st.type} ${st.name} ${st.address} ${st.desc || ''} ${st.city || ''}`.toLowerCase();
     return words.every(w => full.includes(w));
   });
-  
   if (filtered.length === 0) { container.innerHTML = `<div class="text-center text-gray-400 py-6 text-sm">Ничего не найдено</div>`; return; }
-  
   filtered.forEach(st => {
-    const badgeClass = 'bg-purple-500'; // Фиолетовый для автосервисов
+    const typeColors = { 'КАФЕ': 'bg-orange-500', 'СТОЯНКА': 'bg-blue-500', 'ШИНОМОНТАЖ': 'bg-emerald-500', 'АВТОМОЙКА': 'bg-sky-500', 'СЕРВИС': 'bg-purple-500' };
+    const badgeClass = typeColors[st.type] || 'bg-orange-500';
     const btn = document.createElement('div');
-    btn.className = "bg-gray-50 dark:bg-slate-700/50 hover:bg-purple-50 dark:hover:bg-slate-700 p-3 rounded-xl border border-gray-100 dark:border-slate-600 cursor-pointer tactile-btn";
+    btn.className = "bg-gray-50 dark:bg-slate-700/50 hover:bg-orange-50 dark:hover:bg-slate-700 p-3 rounded-xl border border-gray-100 dark:border-slate-600 cursor-pointer tactile-btn";
     btn.onclick = () => { playTickSound(); saveTechToDate(st); };
     btn.innerHTML = `<div class="flex items-center gap-2 mb-1"><span class="px-2 py-0.5 rounded text-[10px] font-black uppercase text-white ${badgeClass}">${st.type}</span><span class="text-xs font-bold text-gray-800 dark:text-gray-200">${st.name}</span><span class="text-[10px] text-gray-500 ml-auto">${st.city || ''}</span></div><div class="text-[10px] text-gray-500 dark:text-gray-400 leading-tight">${st.address}</div>`;
     container.appendChild(btn);
   });
 };
-
 let _pendingTimeCallback = null;
-window.openTimePicker = function(callback) {
-  _pendingTimeCallback = callback;
-  document.getElementById('modalTimeInput').value = '12:00';
-  document.getElementById('timePickerModal').classList.remove('hidden');
-};
-window.closeTimePicker = function() {
-  _pendingTimeCallback = null;
-  document.getElementById('timePickerModal').classList.add('hidden');
-};
-window.confirmTimePicker = function() {
-  const t = document.getElementById('modalTimeInput').value || '12:00';
-  if (_pendingTimeCallback) _pendingTimeCallback(t);
-  closeTimePicker();
-};
-
+window.openTimePicker = function(callback) { _pendingTimeCallback = callback; document.getElementById('modalTimeInput').value = '12:00'; document.getElementById('timePickerModal').classList.remove('hidden'); };
+window.closeTimePicker = function() { _pendingTimeCallback = null; document.getElementById('timePickerModal').classList.add('hidden'); };
+window.confirmTimePicker = function() { const t = document.getElementById('modalTimeInput').value || '12:00'; if (_pendingTimeCallback) _pendingTimeCallback(t); closeTimePicker(); };
 window.saveStoreToDate = function(tk, brand, city, address) {
   openTimePicker((timeStr) => {
     if (!myShifts[selectedDate]) myShifts[selectedDate] = [];
     myShifts[selectedDate].push({ tk, brand, address, city, time: timeStr, timestamp: Date.now() });
-    saveShifts();
-    closeStorePicker();
-    renderCalendar();
-    showDayShifts(selectedDate);
-    showToast("✅ Магазин добавлен в календарь!");
+    saveShifts(); closeStorePicker(); renderCalendar(); showDayShifts(selectedDate); showToast("✅ Магазин добавлен!");
   });
 };
 window.saveTechToDate = function(st) {
   openTimePicker((timeStr) => {
     if (!myShifts[selectedDate]) myShifts[selectedDate] = [];
     myShifts[selectedDate].push({ tk: st.id, brand: 'СЕРВИС', address: `${st.type}: ${st.name}`, city: st.address, time: timeStr, timestamp: Date.now() });
-    saveShifts();
-    closeTechPicker();
-    renderCalendar();
-    showDayShifts(selectedDate);
-    showToast("✅ Сервис добавлен в календарь!");
+    saveShifts(); closeTechPicker(); renderCalendar(); showDayShifts(selectedDate); showToast("✅ Сервис добавлен!");
   });
+};
+window.openAddTechModal = function() {
+  playTickSound();
+  document.getElementById('addTechModal').classList.remove('hidden');
+  document.getElementById('newTechType').value = 'ШИНОМОНТАЖ';
+  document.getElementById('newTechName').value = '';
+  document.getElementById('newTechAddress').value = '';
+  document.getElementById('newTechCity').value = '';
+  document.getElementById('newTechDesc').value = '';
+  document.getElementById('newTechPhone').value = '';
+  document.getElementById('newTechCoords').value = '';
+};
+window.closeAddTechModal = function() { document.getElementById('addTechModal').classList.add('hidden'); };
+window.saveCustomTech = function() {
+  const type = document.getElementById('newTechType').value;
+  const name = document.getElementById('newTechName').value.trim();
+  const address = document.getElementById('newTechAddress').value.trim();
+  const city = document.getElementById('newTechCity').value.trim();
+  const desc = document.getElementById('newTechDesc').value.trim();
+  const phone = document.getElementById('newTechPhone').value.trim();
+  const coordsInput = document.getElementById('newTechCoords').value.trim();
+  if (!name || !address || !city) { showToast("Заполните название, адрес и город!"); return; }
+  let lat = null, lon = null;
+  if (coordsInput) {
+    const parts = coordsInput.split(',');
+    if (parts.length === 2) { lat = parseFloat(parts[0].trim()); lon = parseFloat(parts[1].trim()); if (isNaN(lat) || isNaN(lon)) { lat = null; lon = null; } }
+  }
+  const newId = 'custom_' + Date.now();
+  customTechStations.push({ id: newId, type: type, name: name, address: address, city: city, desc: desc, phone: phone, is24_7: false, roadService: false, lat: lat, lon: lon, isCustom: true });
+  try { localStorage.setItem('lenta_custom_tech', JSON.stringify(customTechStations)); } catch(e) {}
+  closeAddTechModal(); showToast("✅ Точка добавлена!"); renderCards();
+};
+window.deleteCustomTech = function(id) {
+  if (!confirm("Удалить эту точку?")) return;
+  customTechStations = customTechStations.filter(s => s.id !== id);
+  try { localStorage.setItem('lenta_custom_tech', JSON.stringify(customTechStations)); } catch(e) {}
+  showToast("Точка удалена"); renderCards();
 };
 window.exportMonthReport = function() {
   playTickSound();
@@ -795,49 +784,32 @@ window.exportMonthReport = function() {
       shifts.forEach(s => {
         totalShifts++;
         if (s.brand === 'ЗАДАЧА' || s.brand === 'СЕРВИС') reportText += `[${s.time}] ${s.brand}: ${s.address} (${s.city})\n\n`;
-        else {
-          const tkName = s.tk !== '-' ? `ТК/РЦ ${s.tk}` : s.brand;
-          reportText += `[${s.time}] ${s.brand} ${tkName} (${s.city})\nАдрес: ${s.address}\n\n`;
-        }
+        else { const tkName = s.tk !== '-' ? `ТК/РЦ ${s.tk}` : s.brand; reportText += `[${s.time}] ${s.brand} ${tkName} (${s.city})\nАдрес: ${s.address}\n\n`; }
       });
     }
   });
-  reportText += `=========================================\nИТОГО: Отработано дней — ${daysWorked}, Всего записей — ${totalShifts}\n\n* Отчёт из приложения «ЛЕНТА»`;
+  reportText += `=========================================\nИТОГО: Дней — ${daysWorked}, Записей — ${totalShifts}\n\n* Отчёт из приложения «ЛЕНТА»`;
   const blob = new Blob([reportText], {type: "text/plain;charset=utf-8"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `Reysi_${monthNames[currentCalMonth]}_${currentCalYear}.txt`;
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  showToast("Файл отчёта скачан! 📁");
+  const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `Reysi_${monthNames[currentCalMonth]}_${currentCalYear}.txt`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); showToast("Файл отчёта скачан! 📁");
 };
 window.exportCalendarBackup = function() {
   playTickSound();
   if (Object.keys(myShifts).length === 0) { showToast("Нет данных 🤷‍♂️"); return; }
   const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(myShifts, null, 2));
-  const a = document.createElement('a');
-  a.setAttribute("href", dataStr);
-  a.setAttribute("download", `lenta_backup_${getTodayStr()}.json`);
-  document.body.appendChild(a); a.click(); a.remove();
-  showToast("Бэкап сохранён! 💾");
+  const a = document.createElement('a'); a.setAttribute("href", dataStr); a.setAttribute("download", `lenta_backup_${getTodayStr()}.json`);
+  document.body.appendChild(a); a.click(); a.remove(); showToast("Бэкап сохранён! 💾");
 };
 let _importedData = null;
 window.importCalendarBackup = function() {
   playTickSound();
-  const input = document.createElement('input');
-  input.type = 'file'; input.accept = '*/*';
+  const input = document.createElement('input'); input.type = 'file'; input.accept = '*/*';
   input.onchange = function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
+    const file = e.target.files[0]; if (!file) return;
     const reader = new FileReader();
     reader.onload = function(event) {
-      try {
-        const parsed = JSON.parse(event.target.result);
-        if (typeof parsed !== 'object' || parsed === null) throw new Error("Неверный формат");
-        _importedData = parsed;
-        document.getElementById('importConfirmModal').classList.remove('hidden');
-      } catch (err) { showToast("❌ Ошибка чтения файла"); }
+      try { const parsed = JSON.parse(event.target.result); if (typeof parsed !== 'object' || parsed === null) throw new Error("Неверный формат"); _importedData = parsed; document.getElementById('importConfirmModal').classList.remove('hidden'); } 
+      catch (err) { showToast("❌ Ошибка чтения файла"); }
     };
     reader.readAsText(file);
   };
@@ -845,21 +817,12 @@ window.importCalendarBackup = function() {
 };
 window.confirmImport = function(mergeMode) {
   if (!_importedData) return;
-  if (mergeMode) {
-    for (const date in _importedData) {
-      if (!myShifts[date]) myShifts[date] = [];
-      myShifts[date] = myShifts[date].concat(_importedData[date]);
-    }
-  } else myShifts = _importedData;
-  saveShifts();
-  document.getElementById('importConfirmModal').classList.add('hidden');
-  renderCalendar();
-  showDayShifts(selectedDate);
-  showToast("✅ Данные успешно загружены!");
+  if (mergeMode) { for (const date in _importedData) { if (!myShifts[date]) myShifts[date] = []; myShifts[date] = myShifts[date].concat(_importedData[date]); } } 
+  else myShifts = _importedData;
+  saveShifts(); document.getElementById('importConfirmModal').classList.add('hidden'); renderCalendar(); showDayShifts(selectedDate); showToast("✅ Данные успешно загружены!");
 };
 (function initCounter() {
-  const badge = document.getElementById('visitCounterBadge');
-  if (!badge) return;
+  const badge = document.getElementById('visitCounterBadge'); if (!badge) return;
   const uniqueTime = Date.now() + Math.floor(Math.random() * 1000);
   badge.src = `https://hits.sh/garionlexa_new.github.io/lenta_app_v3.svg?label=%D0%92%D0%B8%D0%B7%D0%B8%D1%82%D1%8B&color=1e293b&labelColor=334155&nocache=${uniqueTime}`;
 })();
@@ -867,7 +830,6 @@ let audioCtx = null;
 let engineOsc = null;
 let engineGain = null;
 let isAudioUnlocked = false;
-
 function unlockAudio() {
   if (isAudioUnlocked) return;
   const AC = window.AudioContext || window.webkitAudioContext;
@@ -882,75 +844,52 @@ function unlockAudio() {
     filter.type = 'lowpass'; filter.frequency.value = 150;
     engineGain.gain.value = 0;
     engineOsc.connect(filter); filter.connect(engineGain); engineGain.connect(audioCtx.destination);
-    engineOsc.start();
-    isAudioUnlocked = true;
+    engineOsc.start(); isAudioUnlocked = true;
   } catch(e) {}
 }
 document.addEventListener('touchstart', unlockAudio, {passive: true, once: true});
 document.addEventListener('mousedown', unlockAudio, {passive: true, once: true});
-
 function playTickSound() {
   if (!isAudioUnlocked || !audioCtx) return;
   if (audioCtx.state === 'suspended') audioCtx.resume();
   try {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'square';
-    osc.frequency.setValueAtTime(200, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.02);
-    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.02);
-    osc.connect(gain); gain.connect(audioCtx.destination);
-    osc.start(); osc.stop(audioCtx.currentTime + 0.03);
+    const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+    osc.type = 'square'; osc.frequency.setValueAtTime(200, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.02);
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.02);
+    osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.03);
   } catch(e) {}
 }
-
 let engineTimeout = null;
 function playEngineSound(speed) {
   if (!isAudioUnlocked || !audioCtx || !engineGain) return;
   if (audioCtx.state === 'suspended') audioCtx.resume();
-  const vol = Math.min(0.12, speed * 0.15);
-  const freq = Math.min(70, 35 + speed * 25);
-  engineGain.gain.setTargetAtTime(vol, audioCtx.currentTime, 0.1);
-  engineOsc.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.1);
+  const vol = Math.min(0.12, speed * 0.15); const freq = Math.min(70, 35 + speed * 25);
+  engineGain.gain.setTargetAtTime(vol, audioCtx.currentTime, 0.1); engineOsc.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.1);
   clearTimeout(engineTimeout);
-  engineTimeout = setTimeout(() => {
-    engineGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.2);
-    engineOsc.frequency.setTargetAtTime(35, audioCtx.currentTime, 0.2);
-  }, 150);
+  engineTimeout = setTimeout(() => { engineGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.2); engineOsc.frequency.setTargetAtTime(35, audioCtx.currentTime, 0.2); }, 150);
 }
-
 let _lastClickTime = 0;
 function playClickTick(speed) {
   if (!isAudioUnlocked || !audioCtx || audioCtx.state === 'suspended') return;
-  const now = audioCtx.currentTime;
-  if (now - _lastClickTime < 0.02) return;
-  _lastClickTime = now;
+  const now = audioCtx.currentTime; if (now - _lastClickTime < 0.02) return; _lastClickTime = now;
   try {
     const bufferSize = Math.floor(audioCtx.sampleRate * 0.012);
     const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
     const data = buffer.getChannelData(0);
     for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.15));
-    const src = audioCtx.createBufferSource();
-    src.buffer = buffer;
-    const filter = audioCtx.createBiquadFilter();
-    filter.type = 'bandpass'; filter.frequency.value = 1800; filter.Q.value = 0.8;
-    const gain = audioCtx.createGain();
-    const volume = Math.min(0.12, 0.04 + (speed || 1) * 0.008);
-    gain.gain.value = volume;
-    src.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
-    src.start();
+    const src = audioCtx.createBufferSource(); src.buffer = buffer;
+    const filter = audioCtx.createBiquadFilter(); filter.type = 'bandpass'; filter.frequency.value = 1800; filter.Q.value = 0.8;
+    const gain = audioCtx.createGain(); gain.gain.value = Math.min(0.12, 0.04 + (speed || 1) * 0.008);
+    src.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination); src.start();
   } catch(e) {}
 }
 function vibrateShort() { if (navigator.vibrate) navigator.vibrate(50); }
-
 function toggleTheme() {
   const html = document.documentElement;
   html.classList.toggle('dark');
   const isDark = html.classList.contains('dark');
   try { localStorage.setItem('lenta_theme', isDark ? 'dark' : 'light'); } catch(e) {}
-  const icon = document.getElementById('themeIcon');
-  const btn = document.getElementById('themeToggleBtn');
+  const icon = document.getElementById('themeIcon'); const btn = document.getElementById('themeToggleBtn');
   if (isDark) {
     icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>`;
     btn.classList.add('text-amber-500');
@@ -960,33 +899,23 @@ function toggleTheme() {
   }
 }
 function toggleTextSize() {
-  const html = document.documentElement;
-  html.classList.toggle('large-text');
+  const html = document.documentElement; html.classList.toggle('large-text');
   const isLarge = html.classList.contains('large-text');
   try { localStorage.setItem('lenta_large_text', isLarge ? '1' : '0'); } catch(e) {}
-  const btn = document.getElementById('textSizeBtn');
-  if (btn) btn.textContent = isLarge ? 'A' : 'A+';
+  const btn = document.getElementById('textSizeBtn'); if (btn) btn.textContent = isLarge ? 'A' : 'A+';
   showToast(isLarge ? "🔎 Крупный текст включён" : "Текст обычного размера");
 }
-const bgMusic = document.getElementById('bgMusic');
-bgMusic.volume = 0.45;
-let isMusicPlaying = false;
-let autoScrollAnimationId = null;
-const citySlider = document.getElementById('citySlider');
-let virtualScrollX = 0;
-let lastActualScrollLeft = 0;
+const bgMusic = document.getElementById('bgMusic'); bgMusic.volume = 0.45; let isMusicPlaying = false;
+let autoScrollAnimationId = null; const citySlider = document.getElementById('citySlider'); let virtualScrollX = 0; let lastActualScrollLeft = 0;
 let isMouseDown = false, startX, scrollLeftPos;
-
 citySlider.addEventListener('mousedown', (e) => { if (isMusicPlaying) return; isMouseDown = true; citySlider.style.cursor = 'grabbing'; startX = e.pageX - citySlider.offsetLeft; scrollLeftPos = citySlider.scrollLeft; });
 citySlider.addEventListener('mouseleave', () => { isMouseDown = false; citySlider.style.cursor = 'grab'; });
 citySlider.addEventListener('mouseup', () => { isMouseDown = false; citySlider.style.cursor = 'grab'; });
 citySlider.addEventListener('mousemove', (e) => { if (!isMouseDown || isMusicPlaying) return; e.preventDefault(); const x = e.pageX - citySlider.offsetLeft; citySlider.scrollLeft = scrollLeftPos - (x - startX) * 2; });
 citySlider.style.cursor = 'grab';
-
 let lastLogoTapTime = 0, logoTapTimeout;
 function handleLogoTap() {
-  unlockAudio();
-  const now = Date.now();
+  unlockAudio(); const now = Date.now();
   if (now - lastLogoTapTime < 400) { clearTimeout(logoTapTimeout); fullStopMusic(); }
   else logoTapTimeout = setTimeout(togglePlayPause, 400);
   lastLogoTapTime = now;
@@ -994,60 +923,30 @@ function handleLogoTap() {
 function togglePlayPause() {
   const logo = document.getElementById('logoImage');
   if (isMusicPlaying) {
-    bgMusic.pause(); isMusicPlaying = false;
-    logo.classList.remove('record-spin');
-    stopAutoScroll();
-    startStoryTimer();
+    bgMusic.pause(); isMusicPlaying = false; logo.classList.remove('record-spin'); stopAutoScroll(); startStoryTimer();
   } else {
     abortStory(); clearTimeout(storyTimer);
     const p = bgMusic.play();
-    if (p !== undefined) {
-      p.then(() => {
-        isMusicPlaying = true;
-        logo.classList.add('record-spin');
-        startAutoScroll();
-      }).catch(() => showToast("Не удалось запустить музыку 🔇"));
-    }
+    if (p !== undefined) { p.then(() => { isMusicPlaying = true; logo.classList.add('record-spin'); startAutoScroll(); }).catch(() => showToast("Не удалось запустить музыку 🔇")); }
   }
 }
 function fullStopMusic() {
-  bgMusic.pause(); bgMusic.currentTime = 0; isMusicPlaying = false;
-  document.getElementById('logoImage').classList.remove('record-spin');
-  stopAutoScroll();
-  resetTrucksToStart();
-  startStoryTimer();
+  bgMusic.pause(); bgMusic.currentTime = 0; isMusicPlaying = false; document.getElementById('logoImage').classList.remove('record-spin');
+  stopAutoScroll(); resetTrucksToStart(); startStoryTimer();
 }
-function resetTrucksToStart() {
-  buildCitySlider();
-  citySlider.scrollLeft = 0;
-  virtualScrollX = 0;
-  window.fractionalScroll = 0;
-  lastActualScrollLeft = 0;
-  updateParallax(0);
-}
-
+function resetTrucksToStart() { buildCitySlider(); citySlider.scrollLeft = 0; virtualScrollX = 0; window.fractionalScroll = 0; lastActualScrollLeft = 0; updateParallax(0); }
 let lastSliderScrollTime = 0;
 citySlider.addEventListener('scroll', () => {
   if (isMusicPlaying) return;
-  const currentScroll = citySlider.scrollLeft;
-  const dx = currentScroll - lastActualScrollLeft;
+  const currentScroll = citySlider.scrollLeft; const dx = currentScroll - lastActualScrollLeft;
   if (Math.abs(dx) > 0) {
-    virtualScrollX += Math.abs(dx);
-    const now = Date.now();
-    const dt = now - lastSliderScrollTime;
-    if (dt > 16) {
-      const speed = Math.abs(dx) / dt;
-      if (speed > 0.05) playEngineSound(speed);
-    }
-    lastSliderScrollTime = now;
-    updateParallax(virtualScrollX);
+    virtualScrollX += Math.abs(dx); const now = Date.now(); const dt = now - lastSliderScrollTime;
+    if (dt > 16) { const speed = Math.abs(dx) / dt; if (speed > 0.05) playEngineSound(speed); }
+    lastSliderScrollTime = now; updateParallax(virtualScrollX);
   }
   lastActualScrollLeft = currentScroll;
 }, { passive: true });
-
-function startAutoScroll() {
-  if (!autoScrollAnimationId) { lastActualScrollLeft = citySlider.scrollLeft; citySlider.classList.add('auto-driving'); autoScrollLoop(); }
-}
+function startAutoScroll() { if (!autoScrollAnimationId) { lastActualScrollLeft = citySlider.scrollLeft; citySlider.classList.add('auto-driving'); autoScrollLoop(); } }
 function stopAutoScroll() {
   if (autoScrollAnimationId) { cancelAnimationFrame(autoScrollAnimationId); autoScrollAnimationId = null; }
   citySlider.classList.remove('auto-driving');
@@ -1057,10 +956,7 @@ function stopAutoScroll() {
 let policeTimer = 0;
 function autoScrollLoop() {
   if (!isMusicPlaying) return;
-  const speed = 0.5;
-  virtualScrollX += speed;
-  playEngineSound(0.4);
-  policeTimer++;
+  const speed = 0.5; virtualScrollX += speed; playEngineSound(0.4); policeTimer++;
   if (policeTimer > 700 && Math.random() > 0.98) {
     const p = document.getElementById('policeCar');
     if (!p.classList.contains('active')) { p.classList.add('active'); setTimeout(() => p.classList.remove('active'), 4500); policeTimer = 0; }
@@ -1068,53 +964,34 @@ function autoScrollLoop() {
   if (citySlider.firstElementChild) {
     window.fractionalScroll = (window.fractionalScroll || 0) + speed;
     if (window.fractionalScroll >= 1) {
-      let shift = Math.floor(window.fractionalScroll);
-      window.fractionalScroll -= shift;
-      citySlider.scrollLeft -= shift;
-      if (citySlider.scrollLeft <= 0) {
-        const last = citySlider.lastElementChild;
-        const w = last.offsetWidth + 20;
-        citySlider.insertBefore(last, citySlider.firstElementChild);
-        citySlider.scrollLeft += w;
-      }
+      let shift = Math.floor(window.fractionalScroll); window.fractionalScroll -= shift; citySlider.scrollLeft -= shift;
+      if (citySlider.scrollLeft <= 0) { const last = citySlider.lastElementChild; const w = last.offsetWidth + 20; citySlider.insertBefore(last, citySlider.firstElementChild); citySlider.scrollLeft += w; }
       lastActualScrollLeft = citySlider.scrollLeft;
     }
   }
-  updateParallax(virtualScrollX);
-  autoScrollAnimationId = requestAnimationFrame(autoScrollLoop);
+  updateParallax(virtualScrollX); autoScrollAnimationId = requestAnimationFrame(autoScrollLoop);
 }
 function updateParallax(vX) {
   document.getElementById('layerMountains').style.transform = `translate3d(-${(vX * 0.2) % 200}px, 0, 0)`;
   document.getElementById('layerTrees').style.transform = `translate3d(-${(vX * 0.5) % 100}px, 0, 0)`;
   document.getElementById('layerRoad').style.transform = `translate3d(-${(vX * 0.9) % 40}px, 0, 0)`;
   document.getElementById('layerSigns').style.transform = `translate3d(-${(vX * 0.9) % 2200}px, 0, 0)`;
-  const cycle = 3000;
-  const raw = (Math.abs(vX) % cycle) / cycle;
-  const progress = 1 - Math.abs(raw * 2 - 1);
+  const cycle = 3000; const raw = (Math.abs(vX) % cycle) / cycle; const progress = 1 - Math.abs(raw * 2 - 1);
   document.getElementById('skyDay').style.opacity = Math.max(0, 1 - progress * 2);
   document.getElementById('skySunset').style.opacity = progress < 0.5 ? progress * 2 : Math.max(0, 1 - (progress - 0.5) * 2);
   document.getElementById('skyNight').style.opacity = progress > 0.4 ? (progress - 0.4) / 0.6 : 0;
   document.getElementById('skyStars').style.opacity = progress > 0.5 ? (progress - 0.5) / 0.5 : 0;
   const darkness = 1 - progress * 0.7;
-  if (progress > 0.6) {
-    document.documentElement.style.setProperty('--truck-light-opacity', '1');
-    document.documentElement.style.setProperty('--truck-body-brightness', '0.6');
-  } else {
-    document.documentElement.style.setProperty('--truck-light-opacity', '0');
-    document.documentElement.style.setProperty('--truck-body-brightness', '1');
-  }
-  const layerTrees = document.getElementById('layerTrees');
-  const layerLeaves = document.getElementById('layerLeaves');
-  const layerSnow = document.getElementById('layerSnow');
+  if (progress > 0.6) { document.documentElement.style.setProperty('--truck-light-opacity', '1'); document.documentElement.style.setProperty('--truck-body-brightness', '0.6'); } 
+  else { document.documentElement.style.setProperty('--truck-light-opacity', '0'); document.documentElement.style.setProperty('--truck-body-brightness', '1'); }
+  const layerTrees = document.getElementById('layerTrees'); const layerLeaves = document.getElementById('layerLeaves'); const layerSnow = document.getElementById('layerSnow');
   if (progress < 0.25) { layerLeaves.style.opacity = 0; layerSnow.style.opacity = 0; layerTrees.style.filter = `brightness(${darkness}) hue-rotate(-20deg) saturate(1.5)`; }
   else if (progress < 0.5) { layerLeaves.style.opacity = 0; layerSnow.style.opacity = 0; layerTrees.style.filter = `brightness(${darkness})`; }
   else if (progress < 0.75) { const p = (progress - 0.5) / 0.25; layerLeaves.style.opacity = p; layerSnow.style.opacity = 0; layerTrees.style.filter = `brightness(${darkness}) sepia(${p * 0.6}) hue-rotate(-${p * 40}deg)`; }
   else { const p = (progress - 0.75) / 0.25; layerLeaves.style.opacity = 0; layerSnow.style.opacity = p; layerTrees.style.filter = `brightness(${darkness}) grayscale(${p * 0.8}) brightness(${1 + p * 0.5})`; }
   const sun = document.getElementById('sunBody'), moon = document.getElementById('moonBody');
-  if (progress <= 0.6) { const p = progress / 0.6; sun.style.transform = `translate3d(calc(${p * 100}vw + 20px), calc(-${Math.sin(p * Math.PI) * 50}px), 0)`; sun.style.opacity = 1; }
-  else sun.style.opacity = 0;
-  if (progress >= 0.4) { const p = (progress - 0.4) / 0.6; moon.style.transform = `translate3d(calc(${p * 100}vw + 20px), calc(-${Math.sin(p * Math.PI) * 50}px), 0)`; moon.style.opacity = 1; }
-  else moon.style.opacity = 0;
+  if (progress <= 0.6) { const p = progress / 0.6; sun.style.transform = `translate3d(calc(${p * 100}vw + 20px), calc(-${Math.sin(p * Math.PI) * 50}px), 0)`; sun.style.opacity = 1; } else sun.style.opacity = 0;
+  if (progress >= 0.4) { const p = (progress - 0.4) / 0.6; moon.style.transform = `translate3d(calc(${p * 100}vw + 20px), calc(-${Math.sin(p * Math.PI) * 50}px), 0)`; moon.style.opacity = 1; } else moon.style.opacity = 0;
 }
 window.openContactsModal = function() { document.getElementById('contactsModal').classList.remove('hidden'); };
 window.closeContactsModal = function() { document.getElementById('contactsModal').classList.add('hidden'); };
@@ -1122,153 +999,104 @@ window.openMonetkaModal = function() { document.getElementById('monetkaModal').c
 window.closeMonetkaModal = function() { document.getElementById('monetkaModal').classList.add('hidden'); };
 window.openMechanicModal = function() { document.getElementById('mechanicModal').classList.remove('hidden'); };
 window.closeMechanicModal = function() { document.getElementById('mechanicModal').classList.add('hidden'); };
-window.clearSearch = function() {
-  searchInput.value = '';
-  clearSearchBtn.classList.add('hidden');
-  autocompleteList.classList.add('hidden');
-  renderCards();
-};
-window.closeCard = function(btn) {
-  playTickSound();
-  if (searchInput.value.trim() !== '') clearSearch();
-  else { const c = btn.closest('.store-card'); if (c) c.style.display = 'none'; }
-};
+window.clearSearch = function() { searchInput.value = ''; clearSearchBtn.classList.add('hidden'); autocompleteList.classList.add('hidden'); renderCards(); };
+window.closeCard = function(btn) { playTickSound(); if (searchInput.value.trim() !== '') clearSearch(); else { const c = btn.closest('.store-card'); if (c) c.style.display = 'none'; } };
 function showToast(message) {
   let toast = document.getElementById('toast-notification');
   if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'toast-notification';
-    toast.className = 'fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-gray-800/95 text-white px-5 py-3 rounded-2xl shadow-2xl z-[200] font-bold text-[13px] text-center border border-gray-700 transition-all duration-300 opacity-0 scale-95 pointer-events-none whitespace-nowrap';
-    document.body.appendChild(toast);
+    toast = document.createElement('div'); toast.id = 'toast-notification'; toast.className = 'fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-gray-800/95 text-white px-5 py-3 rounded-2xl shadow-2xl z-[200] font-bold text-[13px] text-center border border-gray-700 transition-all duration-300 opacity-0 scale-95 pointer-events-none whitespace-nowrap'; document.body.appendChild(toast);
   }
-  toast.innerHTML = message;
-  void toast.offsetWidth;
-  toast.classList.remove('opacity-0', 'scale-95');
-  toast.classList.add('opacity-100', 'scale-100');
+  toast.innerHTML = message; void toast.offsetWidth; toast.classList.remove('opacity-0', 'scale-95'); toast.classList.add('opacity-100', 'scale-100');
   if (toast.timeoutId) clearTimeout(toast.timeoutId);
-  toast.timeoutId = setTimeout(() => {
-    toast.classList.remove('opacity-100', 'scale-100');
-    toast.classList.add('opacity-0', 'scale-95');
-  }, 3000);
+  toast.timeoutId = setTimeout(() => { toast.classList.remove('opacity-100', 'scale-100'); toast.classList.add('opacity-0', 'scale-95'); }, 3000);
 }
 window.openApproachMap = function(url) {
   playTickSound();
   if (url && url !== 'undefined' && url !== 'null' && url.trim() !== '') {
-    let finalUrl = url;
-    const m = url.match(/um=constructor%3A([a-zA-Z0-9_-]+)/);
+    let finalUrl = url; const m = url.match(/um=constructor%3A([a-zA-Z0-9_-]+)/);
     if (m && m[1]) finalUrl = `https://yandex.ru/map-widget/v1/?um=constructor%3A${m[1]}`;
     window.open(finalUrl, '_blank');
   } else showToast("Схема заезда ещё не добавлена 🛠");
 };
-window.openNavModal = function(query) {
-  currentNavQuery = query;
-  document.getElementById('navModal').classList.remove('hidden');
-};
+window.openNavModal = function(query) { currentNavQuery = query; document.getElementById('navModal').classList.remove('hidden'); };
 window.closeNavModal = function() { document.getElementById('navModal').classList.add('hidden'); };
 let currentNavQuery = '';
 window.executeNavigation = function(type) {
-  playTickSound();
-  let navUrl = '';
+  playTickSound(); let navUrl = '';
   if (type === 'yandex') navUrl = `https://yandex.ru/maps/?text=${currentNavQuery}`;
   else if (type === '2gis') navUrl = `https://2gis.ru/search/${currentNavQuery}`;
   else if (type === 'google') navUrl = `https://www.google.com/maps/search/?api=1&query=${currentNavQuery}`;
-  window.location.href = navUrl;
-  closeNavModal();
+  window.location.href = navUrl; closeNavModal();
 };
 window.shareRoute = function(tk, brandName, address, routeUrl, e) {
-  if (e) e.stopPropagation();
-  playTickSound();
+  if (e) e.stopPropagation(); playTickSound();
   let tkString = tk !== '-' ? (brandName === "МОНЕТКА" ? `РЦ ${tk}` : (brandName === "ТЕХПОМОЩЬ" ? '' : `ТК ${tk}`)) : '';
   let text = brandName === "ТЕХПОМОЩЬ" ? `Помощь в пути:\n${tk} - ${address}` : `Схема заезда:\n${brandName} ${tkString}\n📍 ${address}`;
   if (routeUrl && routeUrl !== 'undefined' && routeUrl !== 'null' && routeUrl.trim() !== '') {
-    let finalUrl = routeUrl;
-    const m = routeUrl.match(/um=constructor%3A([a-zA-Z0-9_-]+)/);
+    let finalUrl = routeUrl; const m = routeUrl.match(/um=constructor%3A([a-zA-Z0-9_-]+)/);
     if (m && m[1]) finalUrl = `https://yandex.ru/maps/?um=constructor%3A${m[1]}`;
     text += `\n\n🗺 Открыть: ${finalUrl}`;
   }
   if (navigator.share) navigator.share({ title: `Схема заезда`, text }).catch(() => {});
   else if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => showToast("Скопировано 📋")).catch(() => showToast("Ошибка 😔"));
 };
-let _lastCardsScrollY = window.scrollY;
-let _cardsScrollAt = 0;
-let _cardScrollAccum = 0;
-const _modalIds = ['navModal','contactsModal','monetkaModal','mechanicModal','calendarModal','storePickerModal','techPickerModal','customTaskModal','importConfirmModal','timePickerModal'];
-function _isAnyModalOpen() {
-  return _modalIds.some(id => {
-    const el = document.getElementById(id);
-    return el && !el.classList.contains('hidden');
-  });
-}
+let _lastCardsScrollY = window.scrollY; let _cardsScrollAt = 0; let _cardScrollAccum = 0;
+const _modalIds = ['navModal','contactsModal','monetkaModal','mechanicModal','calendarModal','storePickerModal','techPickerModal','customTaskModal','importConfirmModal','timePickerModal','addTechModal'];
+function _isAnyModalOpen() { return _modalIds.some(id => { const el = document.getElementById(id); return el && !el.classList.contains('hidden'); }); }
 window.addEventListener('scroll', () => {
   if (_isAnyModalOpen()) return;
-  const y = window.scrollY;
-  const dy = Math.abs(y - _lastCardsScrollY);
-  const now = performance.now();
-  const dt = now - (_cardsScrollAt || now);
-  _lastCardsScrollY = y;
-  if (dy < 2) return;
-  const speed = dy / Math.max(dt, 1) * 16;
-  const minInterval = speed > 8 ? 30 : speed > 4 ? 60 : 120;
-  _cardScrollAccum += dy;
+  const y = window.scrollY; const dy = Math.abs(y - _lastCardsScrollY); const now = performance.now(); const dt = now - (_cardsScrollAt || now);
+  _lastCardsScrollY = y; if (dy < 2) return;
+  const speed = dy / Math.max(dt, 1) * 16; const minInterval = speed > 8 ? 30 : speed > 4 ? 60 : 120; _cardScrollAccum += dy;
   if (now - _cardsScrollAt < minInterval) return;
   const accumThreshold = Math.max(15, speed * 4);
-  if (_cardScrollAccum >= accumThreshold) {
-    playClickTick(speed);
-    _cardsScrollAt = now;
-    _cardScrollAccum = 0;
-  }
+  if (_cardScrollAccum >= accumThreshold) { playClickTick(speed); _cardsScrollAt = now; _cardScrollAccum = 0; }
 }, { passive: true });
-
 window.sortByNearest = function() {
-  playTickSound();
-  const btn = document.getElementById('nearestBtn');
+  playTickSound(); const btn = document.getElementById('nearestBtn');
   if (window.isSortedByDistance) {
-    window.isSortedByDistance = false;
-    btn.classList.remove('bg-emerald-100', 'dark:bg-emerald-900/50', 'text-emerald-700', 'radar-active');
-    btn.classList.add('bg-white', 'dark:bg-slate-800', 'text-emerald-500');
-    renderCards();
-    return;
+    window.isSortedByDistance = false; btn.classList.remove('bg-emerald-100', 'dark:bg-emerald-900/50', 'text-emerald-700', 'radar-active'); btn.classList.add('bg-white', 'dark:bg-slate-800', 'text-emerald-500'); renderCards(); return;
   }
   if (!navigator.geolocation) { showToast("Геолокация не поддерживается 😔"); return; }
   btn.classList.add('radar-active');
   navigator.geolocation.getCurrentPosition(
     (position) => {
-      window.userLocation = { lat: position.coords.latitude, lon: position.coords.longitude };
-      window.isSortedByDistance = true;
-      btn.classList.remove('radar-active', 'bg-white', 'dark:bg-slate-800', 'text-emerald-500');
-      btn.classList.add('bg-emerald-100', 'dark:bg-emerald-900/50', 'text-emerald-700');
-      renderCards();
-      showToast("Сортировка по удалённости применена 📍");
+      window.userLocation = { lat: position.coords.latitude, lon: position.coords.longitude }; window.isSortedByDistance = true;
+      btn.classList.remove('radar-active', 'bg-white', 'dark:bg-slate-800', 'text-emerald-500'); btn.classList.add('bg-emerald-100', 'dark:bg-emerald-900/50', 'text-emerald-700');
+      renderCards(); showToast("Сортировка по удалённости применена 📍");
     },
     () => { btn.classList.remove('radar-active'); showToast("Геолокация запрещена ❌"); },
     { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
   );
 };
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const R = 6371; const dLat = (lat2 - lat1) * Math.PI / 180; const dLon = (lon2 - lon1) * Math.PI / 180;
   const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 }
 function getTimeLeftHtml(timeStr) {
   if (!timeStr || timeStr === '-' || !timeStr.includes('-')) return '';
-  const now = new Date();
-  const nowMin = now.getHours() * 60 + now.getMinutes();
-  const [s, e] = timeStr.split('-');
-  if (!s || !e) return '';
-  const [sh, sm] = s.split(':').map(Number);
-  const [eh, em] = e.split(':').map(Number);
+  const now = new Date(); const nowMin = now.getHours() * 60 + now.getMinutes();
+  const [s, e] = timeStr.split('-'); if (!s || !e) return '';
+  const [sh, sm] = s.split(':').map(Number); const [eh, em] = e.split(':').map(Number);
   if (isNaN(sh) || isNaN(eh)) return '';
-  const start = sh * 60 + (sm || 0);
-  let end = eh * 60 + (em || 0);
+  const start = sh * 60 + (sm || 0); let end = eh * 60 + (em || 0);
   const inProgress = start <= end ? (nowMin >= start && nowMin <= end) : (nowMin >= start || nowMin <= end);
   if (inProgress) return `<div class="text-[10px] text-emerald-700 dark:text-emerald-400 font-extrabold animate-pulse px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/50 inline-flex items-center gap-1 border border-emerald-100 mt-1"><span>🔥</span> Разгрузка идёт</div>`;
-  let diff = start - nowMin;
-  if (diff < 0) diff += 24 * 60;
-  const h = Math.floor(diff / 60), m = diff % 60;
-  const cls = h < 4 ? 'text-amber-500 font-bold' : 'text-gray-400';
+  let diff = start - nowMin; if (diff < 0) diff += 24 * 60;
+  const h = Math.floor(diff / 60), m = diff % 60; const cls = h < 4 ? 'text-amber-500 font-bold' : 'text-gray-400';
   return `<div class="text-[10px] ${cls} mt-1">⏱ До начала: ${h}ч ${m}м</div>`;
+}
+async function fetchWeather(id, lat, lon) {
+  const slot = document.getElementById(`weather-${id}`); if (!slot) return;
+  try {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,wind_speed_10m&wind_speed_unit=ms&timezone=auto`;
+    const res = await fetch(url); const data = await res.json();
+    const temp = Math.round(data.current.temperature_2m); const code = data.current.weather_code;
+    let icon = '🌡️'; if (code === 0) icon = '☀️'; else if (code <= 3) icon = '🌤️'; else if (code <= 48) icon = '🌫️'; else if (code <= 67) icon = '🌧️'; else if (code <= 77) icon = '❄️'; else if (code <= 86) icon = '🌨️'; else icon = '⛈️';
+    slot.innerHTML = `${icon} ${temp}°C`;
+    slot.classList.remove('text-gray-400', 'bg-gray-100', 'dark:bg-slate-700'); slot.classList.add('text-emerald-700', 'bg-emerald-50', 'dark:bg-emerald-900/30', 'dark:text-emerald-300');
+  } catch (e) { slot.innerText = '🌡️ --°C'; }
 }
 function getSmartNavQuery(city, address, tk) {
   let text = address;
@@ -1277,7 +1105,7 @@ function getSmartNavQuery(city, address, tk) {
   text = text.replace(/Свердловская обл(?:асть|\.)?,?/gi, '').replace(/Тюменская обл(?:асть|\.)?,?/gi, '').replace(/Челябинская обл(?:асть|\.)?,?/gi, '').replace(/Курганская обл(?:асть|\.)?,?/gi, '').replace(/Ханты-?Мансийский Автономный округ.*?АО,?/gi, '').replace(/Ханты-Мансийский Автономный округ - Югра,?/gi, '').replace(/Ямало-Ненецкий АО,?/gi, '').replace(/Пермский край,?/gi, '').replace(/город Екатеринбург г\.о\.?,?/gi, '').replace(/Екатеринбург г\.о\.?,?/gi, '').replace(/г\.о\.,?/gi, '');
   text = text.replace(/г\.\s*[А-Яа-я-]+,?/g, '');
   text = text.replace(new RegExp(`\\b${city}\\b,`, 'gi'), '');
-  text = text.replace(/посёлок.*?(?=\s*$)/gi, ''); // Удаляем длинные хвосты "посёлок..."
+  text = text.replace(/посёлок.*?(?=\s*$)/gi, '');
   text = text.replace(/[\/\\]/g, ' ').replace(/,/g, ' ').replace(/\s+/g, ' ').trim();
   return city + ' ' + text;
 }
@@ -1285,35 +1113,19 @@ const cityOrder = ["Все города","Екатеринбург","Берез�
 let stores = [];
 try {
   (window.rawData || '').trim().split('\n').forEach((line, index) => {
-    let cols = line.split('\t');
-    if (cols.length < 4) cols = line.split('|').map(c => c.trim());
+    let cols = line.split('\t'); if (cols.length < 4) cols = line.split('|').map(c => c.trim());
     cols = cols.map(c => c ? c.trim() : '-');
-    if (cols.length >= 4) {
-      stores.push({
-        id: 'store_' + index,
-        tk: cols[0], route: cols[1], address: cols[2], city: cols[3],
-        rc1: cols[4] || '-', rc2: cols[5] || '-',
-        is24_7: cols[7] === 'Да',
-        start: cols[8] || '-', end: cols[9] || '-'
-      });
-    }
+    if (cols.length >= 4) { stores.push({ id: 'store_' + index, tk: cols[0], route: cols[1], address: cols[2], city: cols[3], rc1: cols[4] || '-', rc2: cols[5] || '-', is24_7: cols[7] === 'Да', start: cols[8] || '-', end: cols[9] || '-' }); }
   });
 } catch(e) { console.error('rawData parse error', e); }
 stores.sort((a,b) => {
-  let ia = cityOrder.indexOf(a.city); if (ia === -1) ia = 999;
-  let ib = cityOrder.indexOf(b.city); if (ib === -1) ib = 999;
-  if (ia !== ib) return ia - ib;
-  return a.tk.localeCompare(b.tk, undefined, {numeric: true});
+  let ia = cityOrder.indexOf(a.city); if (ia === -1) ia = 999; let ib = cityOrder.indexOf(b.city); if (ib === -1) ib = 999;
+  if (ia !== ib) return ia - ib; return a.tk.localeCompare(b.tk, undefined, {numeric: true});
 });
 const techStations = window.techStations || [];
-let selectedCityFilter = 'all';
-let isTechMode = false;
-let selectedTechType = 'all';
-const cardsGrid = document.getElementById('cardsGrid');
-const searchInput = document.getElementById('searchInput');
-const clearSearchBtn = document.getElementById('clearSearchBtn');
-const autocompleteList = document.getElementById('autocompleteList');
-
+let selectedCityFilter = 'all'; let isTechMode = false; let selectedTechType = 'all';
+const cardsGrid = document.getElementById('cardsGrid'); const searchInput = document.getElementById('searchInput');
+const clearSearchBtn = document.getElementById('clearSearchBtn'); const autocompleteList = document.getElementById('autocompleteList');
 const cabVariants = [
   `<div class="cab w-7 md:w-8 h-9 md:h-10 bg-[#1e3a8a] border-y border-r border-b-2 border-[#172554] shadow-md rounded-tr-md rounded-br-sm relative ml-[1px] z-20"><div class="headlight-beam" style="top:18px;right:-45px;"></div><div class="marker-light" style="right:2px;"></div><div class="absolute top-1 right-1 w-3 h-4 bg-sky-100/90 rounded-tr-sm border-b border-l border-sky-300"></div><div class="absolute -bottom-1.5 right-1"><div class="w-3 h-3 bg-gray-800 rounded-full border-2 border-gray-300"></div></div></div>`,
   `<div class="cab w-7 md:w-8 h-9 md:h-10 bg-gray-50 border-y border-r border-b-2 border-gray-300 shadow-md rounded-tr-[12px] rounded-br-sm relative ml-[1px] z-20"><div class="headlight-beam" style="top:22px;right:-45px;"></div><div class="marker-light" style="right:4px;"></div><div class="absolute top-1 right-1 w-3 h-3 bg-sky-200/80 rounded-tr-[8px] border-b border-l border-sky-300"></div><div class="absolute -bottom-1.5 right-1"><div class="w-3 h-3 bg-gray-800 rounded-full border-2 border-gray-300"></div></div></div>`,
@@ -1326,52 +1138,30 @@ const trailerVariants = [
   { border: 'border-[#172554]', bg: 'bg-gradient-to-b from-[#004182] to-[#002B5E]', html: `<div class="absolute bottom-0 w-full h-1 bg-lentaYellow z-10"></div><div class="absolute inset-0 flex items-center justify-center gap-1.5"><div class="w-4 h-4 bg-lentaYellow rounded-full"></div><div class="text-white font-black text-[10px]">ЛЕНТА</div></div>` }
 ];
 function createTruckButton(city, isAll, index) {
-  const btn = document.createElement('button');
-  btn.setAttribute('data-city', city);
-  btn.className = `truck-chip group flex items-end shrink-0 cursor-pointer ${isAll ? 'active' : ''}`;
-  const label = isAll ? '🌐 ВСЕ ГОРОДА' : city;
-  const cab = cabVariants[index % cabVariants.length];
-  const tr = trailerVariants[index % trailerVariants.length];
+  const btn = document.createElement('button'); btn.setAttribute('data-city', city); btn.className = `truck-chip group flex items-end shrink-0 cursor-pointer ${isAll ? 'active' : ''}`;
+  const label = isAll ? '🌐 ВСЕ ГОРОДА' : city; const cab = cabVariants[index % cabVariants.length]; const tr = trailerVariants[index % trailerVariants.length];
   btn.innerHTML = `<div class="truck-wrapper flex items-end" style="--bump-del:-${(index*0.37)%2}s;--bump-dur:${1.1+(index%3)*0.15}s;"><div class="trailer h-10 md:h-11 min-w-[150px] max-w-[180px] rounded-l-md border-y border-l border-b-2 ${tr.border} shadow-md flex relative z-10 overflow-hidden ${tr.bg}"><div class="tail-light"></div>${tr.html}<div class="absolute inset-0 z-20 flex items-center justify-center px-1" style="left:20px;"><span class="city-name-plaque city-name text-[9px] font-black uppercase tracking-widest text-lentaDark bg-white/95 px-2 py-0.5 rounded shadow-sm border border-gray-200 truncate max-w-full">${label}</span></div><div class="absolute -bottom-1.5 left-2 flex gap-0.5 z-30"><div class="w-3 h-3 bg-gray-800 rounded-full border-2 border-gray-300"></div><div class="w-3 h-3 bg-gray-800 rounded-full border-2 border-gray-300"></div><div class="w-3 h-3 bg-gray-800 rounded-full border-2 border-gray-300"></div></div></div>${cab}</div>`;
-  btn.onclick = () => { playTickSound(); filterByCity(city); };
-  return btn;
+  btn.onclick = () => { playTickSound(); filterByCity(city); }; return btn;
 }
 function createTechTruckButton() {
-  const btn = document.createElement('button');
-  btn.setAttribute('data-city', 'TECH_SUPPORT');
-  btn.className = 'truck-chip group flex items-end shrink-0 cursor-pointer';
+  const btn = document.createElement('button'); btn.setAttribute('data-city', 'TECH_SUPPORT'); btn.className = 'truck-chip group flex items-end shrink-0 cursor-pointer';
   btn.innerHTML = `<div class="truck-wrapper flex items-end"><div class="trailer h-9 md:h-10 min-w-[150px] max-w-[180px] rounded-l-md border border-orange-600 bg-yellow-400 shadow-md flex relative z-10 overflow-hidden items-center justify-center"><div class="relative flex items-center gap-1.5 z-20 bg-white/95 px-2 py-0.5 rounded shadow-sm border border-orange-200"><span class="text-xs">🛠</span><span class="font-black text-[9px] text-orange-900 uppercase">ТЕХПОМОЩЬ</span></div></div><div class="cab w-7 md:w-8 h-9 md:h-10 bg-orange-500 border-y border-r border-b-2 border-orange-700 shadow-md rounded-tr-lg rounded-br-sm relative ml-[1px] z-20"><div class="siren-orange"></div><div class="headlight-beam" style="top:20px;right:-45px;"></div></div></div>`;
-  btn.onclick = () => { playTickSound(); filterByTechSupport(); };
-  return btn;
+  btn.onclick = () => { playTickSound(); filterByTechSupport(); }; return btn;
 }
 function buildCitySlider() {
-  citySlider.innerHTML = '';
-  const cities = [...new Set(stores.map(s => s.city))];
-  const all = ['all', ...cities];
-  all.forEach((c, i) => citySlider.appendChild(createTruckButton(c, c === 'all', i)));
-  citySlider.appendChild(createTechTruckButton());
-  const sp = document.createElement('div'); sp.style.width = '60px'; sp.style.flexShrink = '0';
-  citySlider.appendChild(sp);
+  citySlider.innerHTML = ''; const cities = [...new Set(stores.map(s => s.city))]; const all = ['all', ...cities];
+  all.forEach((c, i) => citySlider.appendChild(createTruckButton(c, c === 'all', i))); citySlider.appendChild(createTechTruckButton());
+  const sp = document.createElement('div'); sp.style.width = '60px'; sp.style.flexShrink = '0'; citySlider.appendChild(sp);
 }
 window.filterByTechSupport = function() {
-  isTechMode = true; selectedTechType = 'all';
-  searchInput.value = ''; clearSearchBtn.classList.add('hidden');
-  document.querySelectorAll('.truck-chip').forEach(el => {
-    if (el.getAttribute('data-city') === 'TECH_SUPPORT') { el.classList.add('active'); if (!isMusicPlaying) el.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'}); }
-    else el.classList.remove('active');
-  });
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  renderCards();
+  isTechMode = true; selectedTechType = 'all'; searchInput.value = ''; clearSearchBtn.classList.add('hidden');
+  document.querySelectorAll('.truck-chip').forEach(el => { if (el.getAttribute('data-city') === 'TECH_SUPPORT') { el.classList.add('active'); if (!isMusicPlaying) el.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'}); } else el.classList.remove('active'); });
+  window.scrollTo({top: 0, behavior: 'smooth'}); renderCards();
 };
 window.filterByCity = function(city) {
-  isTechMode = false; selectedCityFilter = city;
-  searchInput.value = ''; clearSearchBtn.classList.add('hidden');
-  document.querySelectorAll('.truck-chip').forEach(el => {
-    if (el.getAttribute('data-city') === city) { el.classList.add('active'); if (!isMusicPlaying) el.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'}); }
-    else el.classList.remove('active');
-  });
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  renderCards();
+  isTechMode = false; selectedCityFilter = city; searchInput.value = ''; clearSearchBtn.classList.add('hidden');
+  document.querySelectorAll('.truck-chip').forEach(el => { if (el.getAttribute('data-city') === city) { el.classList.add('active'); if (!isMusicPlaying) el.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'}); } else el.classList.remove('active'); });
+  window.scrollTo({top: 0, behavior: 'smooth'}); renderCards();
 };
 let favorites = [];
 try { favorites = JSON.parse(localStorage.getItem('lenta_favs')) || []; } catch(e) { favorites = []; }
@@ -1380,10 +1170,8 @@ function renderCards() {
   const rawSearch = searchInput.value.toLowerCase().trim();
   const q = rawSearch.replace(/['"`]/g, '').replace('окэй','окей');
   if (q) clearSearchBtn.classList.remove('hidden'); else clearSearchBtn.classList.add('hidden');
-  cardsGrid.innerHTML = '';
-  let count = 0;
-  const words = q.split(/\s+/).filter(w => w.length > 0);
-  let html = '';
+  cardsGrid.innerHTML = ''; let count = 0; const words = q.split(/\s+/).filter(w => w.length > 0); let html = '';
+  
   if (isTechMode) {
     html += `<div class="col-span-full flex flex-wrap gap-2 mb-2 overflow-x-auto hide-scrollbar pb-1">
       <button onclick="selectedTechType='all';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='all'?'bg-orange-500 text-white':'bg-white dark:bg-slate-800 text-gray-600 border border-gray-200'}">Все</button>
@@ -1393,43 +1181,31 @@ function renderCards() {
       <button onclick="selectedTechType='АВТОМОЙКА';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='АВТОМОЙКА'?'bg-orange-500 text-white':'bg-white dark:bg-slate-800 text-gray-600 border border-gray-200'}">Автомойка</button>
       <button onclick="selectedTechType='СЕРВИС';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='СЕРВИС'?'bg-orange-500 text-white':'bg-white dark:bg-slate-800 text-gray-600 border border-gray-200'}">Сервисы</button>
       <button onclick="selectedTechType='favorites';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='favorites'?'bg-yellow-500 text-white':'bg-white dark:bg-slate-800 text-gray-600 border border-gray-200'}">⭐ Избранное</button>
+      <button onclick="openAddTechModal();" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-white shadow-md tactile-btn ml-auto">➕ Своя точка</button>
     </div>`;
-    let list = [...techStations];
+    let list = getTechStations();
+    if (window.isSortedByDistance && window.userLocation) {
+      list.forEach(st => { if (st.lat && st.lon) { st.distance = getDistanceFromLatLonInKm(window.userLocation.lat, window.userLocation.lon, st.lat, st.lon); } else { st.distance = 999999; } });
+      list.sort((a,b) => a.distance - b.distance);
+    }
     list.forEach(st => {
       if (selectedTechType === 'favorites' && !favorites.includes(st.id)) return;
       if (selectedTechType !== 'all' && selectedTechType !== 'favorites' && st.type !== selectedTechType) return;
-      let match = true;
-      if (words.length > 0) {
-        const full = `${st.type} ${st.name} ${st.address} ${st.desc || ''} ${st.city || ''}`.toLowerCase();
-        match = words.every(w => full.includes(w));
-      }
-      if (!match) return;
-      count++;
-      const isFav = favorites.includes(st.id);
-      const is24C = st.is24_7 ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-gray-50 text-gray-500 border-gray-200';
-      const is24T = st.is24_7 ? '24/7' : (st.start ? `${st.start}–${st.end || ''}` : '—');
-      const typeB = st.type === 'СЕРВИС' ? 'bg-blue-600 text-white' : 'bg-orange-500 text-white';
-      
-      let roadB = '';
-      if (st.roadService) {
-        const phoneLink = st.phone ? `<a href="tel:${st.phone.replace(/[^0-9+]/g, '')}" class="text-[10px] font-bold text-blue-600 dark:text-blue-400 underline ml-1">📞 Позвонить</a>` : '';
-        roadB = `<span class="road-badge"><img src="road-icon.png" class="w-3 h-3 object-contain inline" onerror="this.outerHTML='🛣️'"> Дорожная сеть</span>${phoneLink}`;
-      }
-      
+      let match = true; if (words.length > 0) { const full = `${st.type} ${st.name} ${st.address} ${st.desc || ''} ${st.city || ''}`.toLowerCase(); match = words.every(w => full.includes(w)); }
+      if (!match) return; count++;
+      const isFav = favorites.includes(st.id); const is24C = st.is24_7 ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-gray-50 text-gray-500 border-gray-200';
+      const is24T = st.is24_7 ? '24/7' : (st.start ? `${st.start}–${st.end || ''}` : '—'); const typeB = st.type === 'СЕРВИС' ? 'bg-blue-600 text-white' : 'bg-orange-500 text-white';
+      const roadB = st.roadService ? `<span class="road-badge"><img src="road-icon.png" class="w-3 h-3 object-contain inline" onerror="this.outerHTML='🛣️'"> Дорожная сеть</span>` : '';
+      const deleteBtn = st.isCustom ? `<button onclick="deleteCustomTech('${st.id}')" class="absolute top-4 right-12 text-red-400 hover:text-red-600 bg-white/80 dark:bg-slate-800/80 p-1.5 rounded-full z-10 tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>` : '';
+      const dTag = (window.isSortedByDistance && st.distance !== undefined && st.distance !== 999999) ? `<span class="text-[11px] font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">${st.distance.toFixed(1)} км</span>` : '';
+      const phoneLink = st.phone ? `<a href="tel:${st.phone.replace(/[^0-9+]/g, '')}" class="text-[10px] font-bold text-blue-600 dark:text-blue-400 underline ml-1">📞 ${st.phone}</a>` : '';
       const navAddr = encodeURIComponent(st.address);
-      html += `<div class="store-card tech-card-bg relative flex flex-col justify-between animate-reveal rounded-[24px] p-5 shadow-sm border hover:shadow-md transition-shadow">
-        <div class="absolute top-4 right-4 flex gap-1 z-10">
-          <button onclick="toggleFav('${st.id}', event)" class="text-xl tactile-btn transition-transform ${isFav ? 'scale-110' : 'grayscale opacity-50'}">⭐</button>
-        </div>
-        <div><div class="flex flex-wrap items-center gap-2 mb-3 pr-10"><span class="px-2 py-0.5 rounded text-[10px] font-black uppercase ${typeB}">${st.type}</span>${roadB}<div class="ml-auto flex items-center gap-1.5 shrink-0"><span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">${st.city || ''}</span></div></div><div class="text-sm font-black text-gray-900 dark:text-white leading-snug mb-1">${st.name}</div><div class="text-[11px] text-gray-600 dark:text-gray-400 font-medium mb-3">${st.address}</div><div class="text-[12px] text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-slate-900/50 p-3 rounded-xl border border-orange-100 dark:border-orange-900/50 mb-4 leading-relaxed">${st.desc || ''}</div></div><div class="space-y-4 mt-auto"><div class="flex justify-between items-center border-t border-orange-100 dark:border-orange-900/50 pt-3"><span class="text-[10px] font-bold text-gray-500 uppercase">Режим</span><span class="px-2 py-1 rounded-md text-[10px] font-bold border ${is24C}">${is24T}</span></div><div class="grid grid-cols-2 gap-2 pt-2"><button onclick="openNavModal('${navAddr}');" class="flex items-center justify-center gap-1.5 px-2 py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-xs font-bold tactile-btn shadow-lg">🗺️ Поехать</button><button onclick="shareRoute('${st.name.replace(/'/g,"\\'")}','ТЕХПОМОЩЬ','${st.address.replace(/'/g,"\\'")}','',event)" class="flex items-center justify-center gap-1.5 px-2 py-2.5 bg-white dark:bg-slate-800 text-orange-600 border border-orange-200 rounded-xl text-xs font-bold tactile-btn">📤 Отправить</button></div></div></div>`;
+      html += `<div class="store-card tech-card-bg relative flex flex-col justify-between animate-reveal rounded-[24px] p-5 shadow-sm border hover:shadow-md transition-shadow"><div class="absolute top-4 right-4 flex gap-1 z-10">${deleteBtn}<button onclick="toggleFav('${st.id}', event)" class="text-xl tactile-btn transition-transform ${isFav ? 'scale-110' : 'grayscale opacity-50'}">⭐</button></div><div><div class="flex flex-wrap items-center gap-2 mb-3 pr-10"><span class="px-2 py-0.5 rounded text-[10px] font-black uppercase ${typeB}">${st.type}</span>${roadB}<div class="ml-auto flex items-center gap-1.5 shrink-0">${dTag}<span id="weather-${st.id}" class="text-[10px] font-bold text-gray-400 bg-gray-100 dark:bg-slate-700 px-2 py-0.5 rounded border border-gray-200 dark:border-slate-600">🌡️ ...</span><span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">${st.city || ''}</span></div></div><div class="text-sm font-black text-gray-900 dark:text-white leading-snug mb-1">${st.name}</div><div class="text-[11px] text-gray-600 dark:text-gray-400 font-medium mb-3">${st.address} ${phoneLink}</div><div class="text-[12px] text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-slate-900/50 p-3 rounded-xl border border-orange-100 dark:border-orange-900/50 mb-4 leading-relaxed">${st.desc || ''}</div></div><div class="space-y-4 mt-auto"><div class="flex justify-between items-center border-t border-orange-100 dark:border-orange-900/50 pt-3"><span class="text-[10px] font-bold text-gray-500 uppercase">Режим</span><span class="px-2 py-1 rounded-md text-[10px] font-bold border ${is24C}">${is24T}</span></div><div class="grid grid-cols-3 gap-1.5 pt-2"><button onclick="openNavModal('${navAddr}');" class="flex items-center justify-center gap-1 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-[10px] font-bold tactile-btn shadow-sm">🗺️ Поехать</button><button onclick="shareRoute('${st.name.replace(/'/g,"\\'")}','ТЕХПОМОЩЬ','${st.address.replace(/'/g,"\\'")}','',event)" class="flex items-center justify-center gap-1 py-2 bg-white dark:bg-slate-800 text-orange-600 border border-orange-200 rounded-lg text-[10px] font-bold tactile-btn">📤 Отправить</button><button onclick="toggleFav('${st.id}', event)" class="flex items-center justify-center gap-1 py-2 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 rounded-lg text-[10px] font-bold tactile-btn">${isFav ? '⭐ В избранном' : '☆ В избранное'}</button></div></div></div>`;
     });
   } else {
     let list = [...stores];
     if (window.isSortedByDistance && window.userLocation) {
-      list.forEach(s => {
-        const c = window.storeCoords ? window.storeCoords[s.tk] : null;
-        s.distance = c ? getDistanceFromLatLonInKm(window.userLocation.lat, window.userLocation.lon, c.lat, c.lon) : 999999;
-      });
+      list.forEach(s => { const c = window.storeCoords ? window.storeCoords[s.tk] : null; s.distance = c ? getDistanceFromLatLonInKm(window.userLocation.lat, window.userLocation.lon, c.lat, c.lon) : 999999; });
       list.sort((a,b) => a.distance - b.distance);
     }
     list.forEach(store => {
@@ -1444,8 +1220,7 @@ function renderCards() {
         match = words.every(w => /^\d+$/.test(w) ? (store.tk === w || new RegExp(`\\b${w}\\b`).test(cleanAddr.toLowerCase())) : full.includes(w));
       }
       if (!q && selectedCityFilter !== 'all' && store.city !== selectedCityFilter) return;
-      if (!match) return;
-      count++;
+      if (!match) return; count++;
       let dispBrand = "ЛЕНТА", badge = "bg-lentaYellow text-lentaDark", num = store.tk !== '-' ? `ТК ${store.tk}` : '';
       if (brand === "О'КЕЙ") { dispBrand = "О'КЕЙ"; badge = "bg-red-600 text-white"; num = "ГИПЕРМАРКЕТ"; }
       else if (brand === "РЦ МОЛЛ") { dispBrand = "РЦ МОЛЛ"; badge = "bg-purple-600 text-white"; num = "СКЛАД"; }
@@ -1454,33 +1229,29 @@ function renderCards() {
       const is24T = store.is24_7 ? '24/7' : `${store.start}–${store.end}`;
       const rc1 = store.rc1 !== '-' ? `<div class="flex flex-col items-end"><span class="px-2 py-1 bg-emerald-500 text-white font-bold rounded-md text-[10px]">${store.rc1}</span>${getTimeLeftHtml(store.rc1)}</div>` : '<span class="text-gray-300 font-bold">—</span>';
       const cleanAddr = store.address.replace('ООО "Лента", ','').replace('ООО "Лента" ','').replace('РЦ "Монетка", ','');
-      
-      const navQ = getSmartNavQuery(store.city, store.address, store.tk);
-      const encQ = encodeURIComponent(navQ);
-      const panoUrl = `https://yandex.ru/maps/?text=${encQ}&l=stv,sta`;
-      
+      const navQ = getSmartNavQuery(store.city, store.address, store.tk); const encQ = encodeURIComponent(navQ);
       const routeUrl = customRoutes[store.tk] || null;
       const dTag = (window.isSortedByDistance && store.distance !== undefined && store.distance !== 999999) ? `<span class="text-[11px] font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">${store.distance.toFixed(1)} км</span>` : '';
       const extraBtn = brand === "МОНЕТКА" ? `<button onclick="openMonetkaModal();" class="mt-3 w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-orange-50 text-orange-600 border border-orange-200 rounded-xl text-xs font-bold tactile-btn">📖 Правила выгрузки</button>` : '';
-      html += `<div class="store-card relative flex flex-col justify-between animate-reveal bg-white dark:bg-slate-800 rounded-[24px] p-5 shadow-sm border border-gray-100 dark:border-slate-700 hover:shadow-md transition-shadow"><button onclick="closeCard(this)" class="absolute top-4 right-4 text-gray-300 hover:text-gray-500 bg-gray-50 dark:bg-slate-700 p-2 rounded-full z-10 tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button><div><div class="flex flex-wrap items-center gap-2 mb-3 pr-8"><span class="px-2 py-0.5 rounded text-[10px] font-black uppercase ${badge}">${dispBrand}</span><span class="text-xs font-bold text-gray-500 dark:text-gray-300">${num}</span><div class="ml-auto flex items-center gap-1.5 shrink-0">${dTag}<span class="text-[11px] font-extrabold text-lentaBlue bg-blue-50 dark:bg-slate-700/50 px-2 py-1 rounded-md border border-blue-100 dark:border-slate-600">${store.city}</span></div></div><div class="text-sm font-semibold text-gray-800 dark:text-white leading-snug mb-5">${cleanAddr}</div></div><div class="space-y-4 pt-4 border-t border-gray-50 dark:border-slate-700 mt-auto"><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase">Время приёма</span>${rc1}</div><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase">Режим</span><span class="px-2 py-1 rounded-md text-[10px] font-bold border ${is24C}">${is24T}</span></div>${extraBtn}<button onclick="addToShifts('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${store.city}')" class="w-full flex items-center justify-center gap-2 px-3 py-2 bg-purple-50 text-purple-600 border border-purple-200 rounded-xl text-xs font-bold tactile-btn">📝 Учесть</button><div class="grid grid-cols-2 gap-2 pt-2"><button onclick="openApproachMap('${routeUrl}')" class="flex items-center justify-center gap-1.5 px-2 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-bold tactile-btn shadow-lg">🛣️ Подъезд</button><button onclick="openNavModal('${encQ}')" class="flex items-center justify-center gap-1.5 px-2 py-2 bg-lentaBlue hover:bg-[#003366] text-white rounded-xl text-xs font-bold tactile-btn shadow-lg">🧭 Навигатор</button><a href="${panoUrl}" target="_blank" class="flex items-center justify-center gap-1.5 px-2 py-2 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-200 rounded-xl text-xs font-bold tactile-btn">📷 Панорама</a><button onclick="shareRoute('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${routeUrl}',event)" class="flex items-center justify-center gap-1.5 px-2 py-2 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 rounded-xl text-xs font-bold tactile-btn">📤 Отправить</button></div></div></div>`;
+      html += `<div class="store-card relative flex flex-col justify-between animate-reveal bg-white dark:bg-slate-800 rounded-[24px] p-5 shadow-sm border border-gray-100 dark:border-slate-700 hover:shadow-md transition-shadow"><button onclick="closeCard(this)" class="absolute top-4 right-4 text-gray-300 hover:text-gray-500 bg-gray-50 dark:bg-slate-700 p-2 rounded-full z-10 tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button><div><div class="flex flex-wrap items-center gap-2 mb-3 pr-8"><span class="px-2 py-0.5 rounded text-[10px] font-black uppercase ${badge}">${dispBrand}</span><span class="text-xs font-bold text-gray-500 dark:text-gray-300">${num}</span><div class="ml-auto flex items-center gap-1.5 shrink-0">${dTag}<span id="weather-${store.tk}" class="text-[10px] font-bold text-gray-400 bg-gray-100 dark:bg-slate-700 px-2 py-0.5 rounded border border-gray-200 dark:border-slate-600">🌡️ ...</span><span class="text-[11px] font-extrabold text-lentaBlue bg-blue-50 dark:bg-slate-700/50 px-2 py-1 rounded-md border border-blue-100 dark:border-slate-600">${store.city}</span></div></div><div class="text-sm font-semibold text-gray-800 dark:text-white leading-snug mb-5">${cleanAddr}</div></div><div class="space-y-4 pt-4 border-t border-gray-50 dark:border-slate-700 mt-auto"><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase">Время приёма</span>${rc1}</div><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase">Режим</span><span class="px-2 py-1 rounded-md text-[10px] font-bold border ${is24C}">${is24T}</span></div>${extraBtn}<button onclick="addToShifts('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${store.city}')" class="w-full flex items-center justify-center gap-2 px-3 py-2 bg-purple-50 text-purple-600 border border-purple-200 rounded-xl text-xs font-bold tactile-btn">📝 Учесть</button><div class="grid grid-cols-3 gap-1.5 pt-2"><button onclick="openApproachMap('${routeUrl}')" class="flex items-center justify-center gap-1 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-[10px] font-bold tactile-btn shadow-sm">🛣️ Подъезд</button><button onclick="openNavModal('${encQ}')" class="flex items-center justify-center gap-1 py-1.5 bg-lentaBlue hover:bg-[#003366] text-white rounded-lg text-[10px] font-bold tactile-btn shadow-sm">🧭 Навигатор</button><button onclick="shareRoute('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${routeUrl}',event)" class="flex items-center justify-center gap-1 py-1.5 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 rounded-lg text-[10px] font-bold tactile-btn">📤 Отправить</button></div></div></div>`;
     });
   }
   if (count === 0) cardsGrid.innerHTML = `<div class="col-span-full py-16 text-center text-gray-400 font-medium bg-white dark:bg-slate-800 rounded-[24px] border border-gray-100">По запросу ничего не найдено</div>`;
-  else cardsGrid.innerHTML = html;
-}
-
-window.toggleFav = function(id, e) {
-  if (e) e.stopPropagation();
-  playTickSound();
-  if (favorites.includes(id)) {
-    favorites = favorites.filter(f => f !== id);
-    showToast("Удалено из избранного");
-  } else {
-    favorites.push(id);
-    showToast("Добавлено в избранное ⭐");
+  else {
+    cardsGrid.innerHTML = html;
+    document.querySelectorAll('[id^="weather-"]').forEach(el => {
+      const id = el.id.replace('weather-', ''); let lat, lon;
+      if (isTechMode) { const st = getTechStations().find(s => s.id === id); if (st && st.lat && st.lon) { lat = st.lat; lon = st.lon; } } 
+      else { const coords = window.storeCoords[id]; if (coords) { lat = coords.lat; lon = coords.lon; } }
+      if (lat && lon) fetchWeather(id, lat, lon);
+    });
   }
-  try { localStorage.setItem('lenta_favs', JSON.stringify(favorites)); } catch(e) {}
-  renderCards();
+}
+window.toggleFav = function(id, e) {
+  if (e) e.stopPropagation(); playTickSound();
+  if (favorites.includes(id)) { favorites = favorites.filter(f => f !== id); showToast("Удалено из избранного"); } 
+  else { favorites.push(id); showToast("Добавлено в избранное ⭐"); }
+  try { localStorage.setItem('lenta_favs', JSON.stringify(favorites)); } catch(e) {} renderCards();
 };
 function debounce(fn, delay) { let t; return function(...a) { clearTimeout(t); t = setTimeout(() => fn.apply(this, a), delay); }; }
 function getDropdownItemHTML(item, isTech) {
@@ -1501,19 +1272,14 @@ const handleSearchInput = function() {
     const all = document.querySelector('[data-city="all"]');
     if (all && !all.classList.contains('active')) { document.querySelectorAll('.truck-chip').forEach(el => el.classList.remove('active')); all.classList.add('active'); }
   }
-  renderCards();
-  autocompleteList.innerHTML = '';
-  if (!v) { autocompleteList.classList.add('hidden'); return; }
-  const words = v.split(/\s+/).filter(w => w.length > 0);
-  let suggestions = [];
+  renderCards(); autocompleteList.innerHTML = ''; if (!v) { autocompleteList.classList.add('hidden'); return; }
+  const words = v.split(/\s+/).filter(w => w.length > 0); let suggestions = [];
   if (isTechMode) {
-    suggestions = techStations.filter(st => { const full = `${st.type} ${st.name} ${st.address} ${st.desc || ''} ${st.city || ''}`.toLowerCase(); return words.every(w => full.includes(w)); });
+    const allTech = getTechStations();
+    suggestions = allTech.filter(st => { const full = `${st.type} ${st.name} ${st.address} ${st.desc || ''} ${st.city || ''}`.toLowerCase(); return words.every(w => full.includes(w)); });
   } else {
     suggestions = stores.filter(store => {
-      let brand = "ЛЕНТА";
-      if (store.address.includes("ОКЕЙ") || store.tk === "929929") brand = "О'КЕЙ";
-      else if (store.address.includes("Молл")) brand = "РЦ МОЛЛ";
-      else if (store.address.includes("Монетка") || (store.tk.startsWith("92") && store.tk.length > 3)) brand = "МОНЕТКА";
+      let brand = "ЛЕНТА"; if (store.address.includes("ОКЕЙ") || store.tk === "929929") brand = "О'КЕЙ"; else if (store.address.includes("Молл")) brand = "РЦ МОЛЛ"; else if (store.address.includes("Монетка") || (store.tk.startsWith("92") && store.tk.length > 3)) brand = "МОНЕТКА";
       const clean = store.address.replace(/\b\d{6}\b,?\s*/g, '');
       const full = `тк ${store.tk} рц ${store.tk} ${store.city} ${clean} ${brand}`.toLowerCase().replace(/['"`]/g, '');
       const m = words.every(w => /^\d+$/.test(w) ? (store.tk === w || new RegExp(`\\b${w}\\b`).test(clean.toLowerCase())) : full.includes(w));
@@ -1524,169 +1290,98 @@ const handleSearchInput = function() {
   if (suggestions.length === 0) { autocompleteList.classList.add('hidden'); return; }
   autocompleteList.classList.remove('hidden');
   suggestions.slice(0, 20).forEach(item => {
-    const div = document.createElement('div');
-    div.className = 'px-4 py-3 hover:bg-blue-50 dark:hover:bg-slate-700 cursor-pointer border-b border-gray-50 dark:border-slate-700 last:border-none mx-1 my-0.5 text-gray-800 dark:text-gray-200';
+    const div = document.createElement('div'); div.className = 'px-4 py-3 hover:bg-blue-50 dark:hover:bg-slate-700 cursor-pointer border-b border-gray-50 dark:border-slate-700 last:border-none mx-1 my-0.5 text-gray-800 dark:text-gray-200';
     div.innerHTML = getDropdownItemHTML(item, isTechMode);
-    div.addEventListener('click', () => {
-      playTickSound(); vibrateShort();
-      searchInput.value = isTechMode ? item.name : (item.tk !== '-' ? item.tk : item.city);
-      autocompleteList.classList.add('hidden');
-      searchInput.blur();
-      renderCards();
-    });
+    div.addEventListener('click', () => { playTickSound(); vibrateShort(); searchInput.value = isTechMode ? item.name : (item.tk !== '-' ? item.tk : item.city); autocompleteList.classList.add('hidden'); searchInput.blur(); renderCards(); });
     autocompleteList.appendChild(div);
   });
 };
 searchInput.addEventListener('input', debounce(handleSearchInput, 250));
-document.addEventListener('click', (e) => {
-  if (!searchInput.contains(e.target) && !autocompleteList.contains(e.target)) autocompleteList.classList.add('hidden');
-});
+document.addEventListener('click', (e) => { if (!searchInput.contains(e.target) && !autocompleteList.contains(e.target)) autocompleteList.classList.add('hidden'); });
 window.startVoiceSearch = function() {
-  const micBtn = document.getElementById('voiceSearchBtn');
-  const el = document.getElementById('searchInput');
+  const micBtn = document.getElementById('voiceSearchBtn'); const el = document.getElementById('searchInput');
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) { showToast("Голосовой поиск не поддерживается 🎙"); return; }
   const reset = () => { micBtn.classList.remove('mic-listening'); micBtn.classList.add('text-lentaBlue'); el.placeholder = "Поиск..."; };
   try {
-    const r = new SR();
-    r.lang = 'ru-RU'; r.interimResults = false; r.maxAlternatives = 1;
+    const r = new SR(); r.lang = 'ru-RU'; r.interimResults = false; r.maxAlternatives = 1;
     r.onstart = () => { micBtn.classList.add('mic-listening'); micBtn.classList.remove('text-lentaBlue'); el.value = ''; el.placeholder = "Слушаю..."; };
-    r.onresult = (ev) => {
-      let s = ev.results[0][0].transcript.toLowerCase();
-      s = s.replace(/\bсто\b/gi,'100').replace(/\bдвести\b/gi,'200').replace(/\bтриста\b/gi,'300').replace(/\.$/,'').trim();
-      el.value = s; el.dispatchEvent(new Event('input'));
-    };
-    r.onerror = () => { reset(); el.placeholder = "Повторите..."; };
-    r.onend = reset;
-    vibrateShort();
-    r.start();
+    r.onresult = (ev) => { let s = ev.results[0][0].transcript.toLowerCase(); s = s.replace(/\bсто\b/gi,'100').replace(/\bдвести\b/gi,'200').replace(/\bтриста\b/gi,'300').replace(/\.$/,'').trim(); el.value = s; el.dispatchEvent(new Event('input')); };
+    r.onerror = () => { reset(); el.placeholder = "Повторите..."; }; r.onend = reset; vibrateShort(); r.start();
   } catch(e) { reset(); }
 };
-const storyList = window.stories || [];
-let isStoryPlaying = false, storyTimer = null;
+const storyList = window.stories || []; let isStoryPlaying = false, storyTimer = null;
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 async function showBubble(actor, text, duration) {
   if (!isStoryPlaying) return;
   const target = actor === 'mech' ? document.getElementById('bubbleMech') : actor === 'sveta' ? document.getElementById('bubbleSveta') : document.getElementById('bubbleMarina');
-  if (!target) return;
-  target.querySelector('.story-bubble-inner').innerText = text;
-  target.classList.add('active');
-  await sleep(duration);
-  target.classList.remove('active');
-  await sleep(400);
+  if (!target) return; target.querySelector('.story-bubble-inner').innerText = text; target.classList.add('active');
+  await sleep(duration); target.classList.remove('active'); await sleep(400);
 }
 function triggerAction(actor, action) {
   if (!isStoryPlaying) return;
   const sveta = document.getElementById('svetaBody'), marina = document.getElementById('marinaBody'), mech = document.getElementById('mechBody'), sweat = document.getElementById('sweatDrop');
-  [sveta, marina, mech].forEach(el => el && el.classList.remove('laughing'));
-  sweat && sweat.classList.remove('show-sweat');
+  [sveta, marina, mech].forEach(el => el && el.classList.remove('laughing')); sweat && sweat.classList.remove('show-sweat');
   const target = actor === 'sveta' ? sveta : actor === 'marina' ? marina : mech;
   if (target && action === 'laughing') target.classList.add('laughing');
   if (actor === 'mech' && action === 'sweat' && sweat) sweat.classList.add('show-sweat');
 }
 async function playStory() {
   if (isMusicPlaying || isStoryPlaying || storyList.length === 0) return;
-  isStoryPlaying = true;
-  document.getElementById('controlPanel').classList.add('story-mode');
-  await sleep(800);
-  if (!isStoryPlaying) return;
-  const story = storyList[Math.floor(Math.random() * storyList.length)];
-  for (const line of story.dialogues) {
-    if (!isStoryPlaying) break;
-    triggerAction(line.actor, line.action);
-    await showBubble(line.actor, line.text, line.time);
-  }
+  isStoryPlaying = true; document.getElementById('controlPanel').classList.add('story-mode'); await sleep(800);
+  if (!isStoryPlaying) return; const story = storyList[Math.floor(Math.random() * storyList.length)];
+  for (const line of story.dialogues) { if (!isStoryPlaying) break; triggerAction(line.actor, line.action); await showBubble(line.actor, line.text, line.time); }
   if (isStoryPlaying) abortStory();
 }
 function abortStory() {
-  isStoryPlaying = false;
-  document.getElementById('controlPanel').classList.remove('story-mode');
+  isStoryPlaying = false; document.getElementById('controlPanel').classList.remove('story-mode');
   ['bubbleSveta','bubbleMarina','bubbleMech'].forEach(id => document.getElementById(id).classList.remove('active'));
   ['svetaBody','marinaBody','mechBody'].forEach(id => document.getElementById(id).classList.remove('laughing'));
   document.getElementById('sweatDrop').classList.remove('show-sweat');
 }
-function startStoryTimer() {
-  clearTimeout(storyTimer);
-  storyTimer = setInterval(() => { if (!isMusicPlaying && !isStoryPlaying) playStory(); }, 30000);
-}
+function startStoryTimer() { clearTimeout(storyTimer); storyTimer = setInterval(() => { if (!isMusicPlaying && !isStoryPlaying) playStory(); }, 30000); }
 function updateSpeedLimit() {
-  const m = new Date().getMonth();
-  const isWinter = m === 11 || m === 0 || m === 1 || m === 2 || m === 10;
-  document.getElementById('speedLimitNumber').innerText = isWinter ? '60' : '80';
-  const icon = document.getElementById('seasonIcon');
+  const m = new Date().getMonth(); const isWinter = m === 11 || m === 0 || m === 1 || m === 2 || m === 10;
+  document.getElementById('speedLimitNumber').innerText = isWinter ? '60' : '80'; const icon = document.getElementById('seasonIcon');
   if (isWinter) { icon.innerText = '❄️'; icon.className = 'absolute -bottom-1 -right-2 w-4 h-4 bg-blue-50 border-blue-200 flex items-center justify-center text-[8px] shadow-sm border rounded-full'; }
   else { icon.innerText = '☀️'; icon.className = 'absolute -bottom-1 -right-2 w-4 h-4 bg-amber-50 border-amber-200 flex items-center justify-center text-[8px] shadow-sm border rounded-full'; }
 }
-
-let deferredInstallPrompt = null;
-let waitingWorker = null;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault(); deferredInstallPrompt = e;
-  const b = document.getElementById('installPwaBtn'); if (b) b.classList.remove('hidden');
-});
+let deferredInstallPrompt = null; let waitingWorker = null;
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredInstallPrompt = e; const b = document.getElementById('installPwaBtn'); if (b) b.classList.remove('hidden'); });
 window.installPwa = function() {
   if (!deferredInstallPrompt) { showToast("Откройте меню Chrome → «Добавить на главный экран»"); return; }
-  playTickSound();
-  deferredInstallPrompt.prompt();
-  deferredInstallPrompt.userChoice.then((c) => {
-    if (c.outcome === 'accepted') showToast("✅ Приложение установлено!");
-    deferredInstallPrompt = null;
-    const b = document.getElementById('installPwaBtn'); if (b) b.classList.add('hidden');
-  });
+  playTickSound(); deferredInstallPrompt.prompt();
+  deferredInstallPrompt.userChoice.then((c) => { if (c.outcome === 'accepted') showToast("✅ Приложение установлено!"); deferredInstallPrompt = null; const b = document.getElementById('installPwaBtn'); if (b) b.classList.add('hidden'); });
 };
-window.addEventListener('appinstalled', () => {
-  const b = document.getElementById('installPwaBtn'); if (b) b.classList.add('hidden');
-  showToast("🎉 Приложение на главном экране!");
-});
-if (window.matchMedia('(display-mode: standalone)').matches) {
-  const b = document.getElementById('installPwaBtn'); if (b) b.classList.add('hidden');
-}
+window.addEventListener('appinstalled', () => { const b = document.getElementById('installPwaBtn'); if (b) b.classList.add('hidden'); showToast("🎉 Приложение на главном экране!"); });
+if (window.matchMedia('(display-mode: standalone)').matches) { const b = document.getElementById('installPwaBtn'); if (b) b.classList.add('hidden'); }
 window.showUpdateBanner = function(hasData) {
-  const el = document.getElementById('updateBanner');
-  const txt = document.getElementById('updateBannerText');
-  txt.innerHTML = hasData ? '⚠️ Обновление. <b>Сначала сделайте бэкап календаря!</b>' : '✨ Доступно обновление приложения.';
-  el.classList.remove('hidden');
+  const el = document.getElementById('updateBanner'); const txt = document.getElementById('updateBannerText');
+  txt.innerHTML = hasData ? '⚠️ Обновление. <b>Сначала сделайте бэкап календаря!</b>' : '✨ Доступно обновление приложения.'; el.classList.remove('hidden');
 };
-window.applyUpdate = function() {
-  if (waitingWorker) waitingWorker.postMessage('SKIP_WAITING');
-  else window.location.reload();
-};
+window.applyUpdate = function() { if (waitingWorker) waitingWorker.postMessage('SKIP_WAITING'); else window.location.reload(); };
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').then(reg => {
-      reg.update();
-      setInterval(() => reg.update(), 3600000);
+      reg.update(); setInterval(() => reg.update(), 3600000);
       if (reg.waiting) { waitingWorker = reg.waiting; showUpdateBanner(Object.keys(myShifts).length > 0); }
       reg.addEventListener('updatefound', () => {
-        const nw = reg.installing;
-        if (!nw) return;
-        nw.addEventListener('statechange', () => {
-          if (nw.state === 'installed' && navigator.serviceWorker.controller) {
-            waitingWorker = nw;
-            showUpdateBanner(Object.keys(myShifts).length > 0);
-          }
-        });
+        const nw = reg.installing; if (!nw) return;
+        nw.addEventListener('statechange', () => { if (nw.state === 'installed' && navigator.serviceWorker.controller) { waitingWorker = nw; showUpdateBanner(Object.keys(myShifts).length > 0); } });
       });
     }).catch(() => {});
   });
   let refreshing = false;
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (refreshing) return;
-    refreshing = true;
-    window.location.reload();
-  });
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (refreshing) return; refreshing = true; window.location.reload(); });
 }
 (function init() {
-  const txtBtn = document.getElementById('textSizeBtn');
-  if (txtBtn) txtBtn.textContent = document.documentElement.classList.contains('large-text') ? 'A' : 'A+';
-  buildCitySlider();
-  updateSpeedLimit();
-  renderCards();
+  const txtBtn = document.getElementById('textSizeBtn'); if (txtBtn) txtBtn.textContent = document.documentElement.classList.contains('large-text') ? 'A' : 'A+';
+  buildCitySlider(); updateSpeedLimit(); renderCards();
   setTimeout(() => citySlider.dispatchEvent(new Event('scroll')), 100);
   setTimeout(() => { if (!isMusicPlaying) playStory(); startStoryTimer(); }, 5000);
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      ['navModal','contactsModal','monetkaModal','mechanicModal','calendarModal','storePickerModal','techPickerModal','customTaskModal','importConfirmModal','timePickerModal'].forEach(id => {
+      ['navModal','contactsModal','monetkaModal','mechanicModal','calendarModal','storePickerModal','techPickerModal','customTaskModal','importConfirmModal','timePickerModal','addTechModal'].forEach(id => {
         const el = document.getElementById(id); if (el) el.classList.add('hidden');
       });
     }
