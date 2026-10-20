@@ -1,59 +1,58 @@
-const CACHE_NAME = 'lenta-app-v1';
-const urlsToCache = [
-    './',
-    './index.html',
-    './manifest.json',
-    './icon.png',
-    './music.mp3',
-    'https://cdn.tailwindcss.com',
-    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap'
-];
+const CACHE_VERSION = 'lenta-v5-2026-10-20';
+const CORE_ASSETS = ['./', './index.html', './manifest.json', './icon.png', './data.js'];
 
-self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => {
-            return Promise.all(
-                urlsToCache.map(url => {
-                    return cache.add(url).catch(err => console.log('Не удалось закэшировать:', url));
-                })
-            );
-        })
-    );
-    self.skipWaiting();
+self.addEventListener('install', (e) => {
+  e.waitUntil(
+    caches.open(CACHE_VERSION)
+      .then(cache => cache.addAll(CORE_ASSETS).catch(() => {}))
+      .then(() => self.skipWaiting())
+  );
 });
 
-self.addEventListener('activate', event => {
-    event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(cacheName => {
-                    if (cacheName !== CACHE_NAME) {
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
-        })
-    );
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys().then(keys => Promise.all(
+      keys.filter(k => k !== CACHE_VERSION).map(k => caches.delete(k))
+    )).then(() => self.clients.claim())
+  );
 });
 
-self.addEventListener('fetch', event => {
-    event.respondWith(
-        caches.match(event.request).then(response => {
-            if (response) return response;
-            return fetch(event.request).then(response => {
-                if(!response || response.status !== 200 || response.type !== 'basic') {
-                    return response;
-                }
-                var responseToCache = response.clone();
-                caches.open(CACHE_NAME).then(cache => {
-                    cache.put(event.request, responseToCache);
-                });
-                return response;
-            });
-        }).catch(() => {
-            if (event.request.mode === 'navigate') {
-                return caches.match('./index.html');
-            }
-        })
-    );
+self.addEventListener('fetch', (e) => {
+  const req = e.request;
+  if (req.method !== 'GET') return;
+  let url;
+  try { url = new URL(req.url); } catch (_) { return; }
+
+  if (url.hostname.includes('open-meteo.com')) {
+    e.respondWith(fetch(req).catch(() => new Response('{}', { headers: { 'Content-Type': 'application/json' } })));
+    return;
+  }
+
+  if (url.hostname.includes('cdn.tailwindcss.com') || url.hostname.includes('fonts.googleapis.com') || url.hostname.includes('fonts.gstatic.com') || url.hostname.includes('hits.sh')) {
+    e.respondWith(caches.match(req).then(cached => cached || fetch(req).then(res => {
+      const clone = res.clone();
+      caches.open(CACHE_VERSION).then(c => c.put(req, clone)).catch(() => {});
+      return res;
+    }).catch(() => new Response('', { status: 503 }))));
+    return;
+  }
+
+  if (url.pathname.endsWith('/data.js') || url.pathname === '/data.js') {
+    e.respondWith(fetch(req, { cache: 'no-store' }).then(res => {
+      const clone = res.clone();
+      caches.open(CACHE_VERSION).then(c => c.put(req, clone)).catch(() => {});
+      return res;
+    }).catch(() => caches.match(req)));
+    return;
+  }
+
+  e.respondWith(caches.match(req).then(cached => cached || fetch(req).then(res => {
+    if (res.status === 200 && (res.type === 'basic' || res.type === 'cors')) {
+      const clone = res.clone();
+      caches.open(CACHE_VERSION).then(c => c.put(req, clone)).catch(() => {});
+    }
+    return res;
+  }).catch(() => caches.match('./index.html'))));
 });
+
+self.addEventListener('message', (e) => { if (e.data === 'SKIP_WAITING') self.skipWaiting(); });
