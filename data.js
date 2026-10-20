@@ -128,45 +128,12 @@ window.customRoutes = {
   '317':'https://yandex.ru/maps/?um=constructor%3A5f0fb3706ed1ecc385fdf70ddc878fc1b9ed849e91bb04e5cd628df6fb1a899f&source=constructorLink'
 };
 window.stories = [
-  { dialogues: [
-    { actor:'mech', text:'Девчонки, где мой ключ на 32?! 🔧', time:2500, action:'sweat' },
-    { actor:'marina', text:'Мы им ножку стола подперли 😂', time:2500, action:'laughing' },
-    { actor:'mech', text:'...А мне как кардан крутить? 😤', time:2500, action:'none' },
-    { actor:'sveta', text:'Крути руками, ты же сильный! 💪', time:2500, action:'laughing' }
-  ]},
-  { dialogues: [
-    { actor:'marina', text:'Водитель говорит, перед ним 20 машин на выгрузку... 🚛🚛🚛', time:3000, action:'none' },
-    { actor:'mech', text:'Пусть поспит. Я пока ему колодки поменяю ⚙️', time:3000, action:'laughing' },
-    { actor:'sveta', text:'Он уже спит, мы добудиться не можем! 😴', time:2500, action:'sweat' }
-  ]},
-  { dialogues: [
-    { actor:'sveta', text:'Водитель с 203 ТК в лесу застрял... 🌲', time:2500, action:'sweat' },
-    { actor:'marina', text:'Опять навигатор по короткой повел? 🗺️', time:2500, action:'laughing' },
-    { actor:'mech', text:'Готовьте трактор, я выезжаю! 🚜', time:2500, action:'sweat' }
-  ]},
-  { dialogues: [
-    { actor:'mech', text:'Кто опять все паллеты сломал?! 📦💥', time:2500, action:'sweat' },
-    { actor:'sveta', text:'Это не мы, это складские! 🙅', time:2000, action:'none' },
-    { actor:'marina', text:'Они их зубами грызут, что ли? 🦷', time:2500, action:'laughing' }
-  ]},
-  { dialogues: [
-    { actor:'sveta', text:'Водитель спрашивает: «А вы точно Лента, а не Монетка?» 😂', time:3000, action:'laughing' },
-    { actor:'marina', text:'Скажи: «Мы Лента, но с монетками в кармане!» 🪙', time:3000, action:'laughing' },
-    { actor:'mech', text:'А я думал, он про скидку на шиномонтаж... 🛞', time:2500, action:'sweat' }
-  ]},
-  { dialogues: [
-    { actor:'mech', text:'Кто залил кофе в принтер путевых листов?! ☕🖨️', time:2500, action:'sweat' },
-    { actor:'sveta', text:'Это не я, это водитель с 203-й! «Для бодрости»! 💪', time:3000, action:'none' },
-    { actor:'marina', text:'Теперь у нас путёвки с ароматом арабики 😅', time:2500, action:'laughing' }
-  ]},
-  { dialogues: [
-    { actor:'marina', text:'Начальник спрашивает: «Почему все фуры в наклейках?» 🚛✨', time:3000, action:'none' },
-    { actor:'sveta', text:'Это не наклейки, это куски рекламы «Лента»! 🟡🔵', time:3000, action:'laughing' },
-    { actor:'mech', text:'Ага, теперь у нас самый весёлый автопарк 😎', time:2500, action:'laughing' }
-  ]},
-  { dialogues: [
-    { actor:'mech', text:'Срочно! Кто-нибудь видел мою кружку с надписью «Начальник»? ☕', time:3000, action:'sweat' },
-    { actor:'marina', text:'Она у Светы. Говорит, так надёжнее 😏', time:2500, action:'laughing' },
-    { actor:'sveta', text:'Зато не потеряется! 🏆', time:2000, action:'laughing' }
-  ]}
+  { dialogues: [{ actor:'mech', text:'Девчонки, где мой ключ на 32?! 🔧', time:2500, action:'sweat' },{ actor:'marina', text:'Мы им ножку стола подперли 😂', time:2500, action:'laughing' },{ actor:'mech', text:'...А мне как кардан крутить? 😤', time:2500, action:'none' },{ actor:'sveta', text:'Крути руками, ты же сильный! 💪', time:2500, action:'laughing' }]},
+  { dialogues: [{ actor:'marina', text:'Водитель говорит, перед ним 20 машин на выгрузку... 🚛🚛🚛', time:3000, action:'none' },{ actor:'mech', text:'Пусть поспит. Я пока ему колодки поменяю ⚙️', time:3000, action:'laughing' },{ actor:'sveta', text:'Он уже спит, мы добудиться не можем! 😴', time:2500, action:'sweat' }]},
+  { dialogues: [{ actor:'sveta', text:'Водитель с 203 ТК в лесу застрял... 🌲', time:2500, action:'sweat' },{ actor:'marina', text:'Опять навигатор по короткой повел? 🗺️', time:2500, action:'laughing' },{ actor:'mech', text:'Готовьте трактор, я выезжаю! 🚜', time:2500, action:'sweat' }]},
+  { dialogues: [{ actor:'mech', text:'Кто опять все паллеты сломал?! 📦💥', time:2500, action:'sweat' },{ actor:'sveta', text:'Это не мы, это складские! 🙅', time:2000, action:'none' },{ actor:'marina', text:'Они их зубами грызут, что ли? 🦷', time:2500, action:'laughing' }]},
+  { dialogues: [{ actor:'sveta', text:'Водитель спрашивает: «А вы точно Лента, а не Монетка?» 😂', time:3000, action:'laughing' },{ actor:'marina', text:'Скажи: «Мы Лента, но с монетками в кармане!» 🪙', time:3000, action:'laughing' },{ actor:'mech', text:'А я думал, он про скидку на шиномонтаж... 🛞', time:2500, action:'sweat' }]},
+  { dialogues: [{ actor:'mech', text:'Кто залил кофе в принтер путевых листов?! ☕🖨️', time:2500, action:'sweat' },{ actor:'sveta', text:'Это не я, это водитель с 203-й! «Для бодрости»! 💪', time:3000, action:'none' },{ actor:'marina', text:'Теперь у нас путёвки с ароматом арабики 😅', time:2500, action:'laughing' }]},
+  { dialogues: [{ actor:'marina', text:'Начальник спрашивает: «Почему все фуры в наклейках?» 🚛✨', time:3000, action:'none' },{ actor:'sveta', text:'Это не наклейки, это куски рекламы «Лента»! 🟡🔵', time:3000, action:'laughing' },{ actor:'mech', text:'Ага, теперь у нас самый весёлый автопарк 😎', time:2500, action:'laughing' }]},
+  { dialogues: [{ actor:'mech', text:'Срочно! Кто-нибудь видел мою кружку с надписью «Начальник»? ☕', time:3000, action:'sweat' },{ actor:'marina', text:'Она у Светы. Говорит, так надёжнее 😏', time:2500, action:'laughing' },{ actor:'sveta', text:'Зато не потеряется! 🏆', time:2000, action:'laughing' }]}
 ];
