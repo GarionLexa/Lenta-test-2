@@ -58,23 +58,6 @@ window.rawData = `203	8092	ООО "Лента", 620000, Свердловская
 8081	-	РЦ Молл, Радонежская улица, 15, Челябинск, 454036	Челябинск	-	-	-	Нет	-	-
 8082	-	РЦ Молл, Моховая улица, 7, Челябинск, 454005	Челябинск	-	-	-	Нет	-	-
 8083	-	РЦ Молл, шоссе Металлургов, 88, Челябинск, 454052	Челябинск	-	-	-	Нет	-	-`;
-window.storeCoords = {
-  '203':{lat:56.8197,lon:60.6728},'227':{lat:56.7865,lon:60.5484},'228':{lat:56.8641,lon:60.6111},'229':{lat:56.8858,lon:60.5833},
-  '230':{lat:56.9015,lon:60.6276},'176':{lat:56.4024,lon:61.9429},'309':{lat:55.4363,lon:65.3051},'74':{lat:53.4294,lon:58.9818},
-  '192':{lat:53.3855,lon:58.9806},'317':{lat:60.9587,lon:76.5777},'61':{lat:57.8767,lon:59.9866},'206':{lat:57.8631,lon:60.0384},
-  '285':{lat:63.2005,lon:75.4206},'42':{lat:58.0016,lon:56.1468},'147':{lat:57.9715,lon:56.1774},'235':{lat:58.0076,lon:56.2874},
-  '297':{lat:57.9620,lon:56.2625},'92':{lat:61.2678,lon:73.4475},'93':{lat:61.2462,lon:73.4402},'321':{lat:61.2588,lon:73.3440},
-  '135':{lat:58.2198,lon:68.2868},'91':{lat:57.1147,lon:65.5562},'94':{lat:57.1165,lon:65.6174},'146':{lat:57.1726,lon:65.6264},
-  '209':{lat:57.1717,lon:65.5684},'245':{lat:57.1171,lon:65.5901},'100':{lat:60.9839,lon:69.0435},'69':{lat:55.1206,lon:61.3411},
-  '154':{lat:55.1837,lon:61.3415},'184':{lat:55.1583,lon:61.2847},'212':{lat:55.2415,lon:61.3853},'213':{lat:55.1322,lon:61.4646},
-  '301':{lat:55.1691,lon:61.4317},'335':{lat:55.1669,lon:61.2863},'337':{lat:55.1957,lon:61.2721},'334':{lat:55.1706,lon:61.3650},
-  '336':{lat:55.1352,lon:61.4352},'338':{lat:55.0560,lon:60.1142},'368':{lat:56.8851,lon:60.6231},'396':{lat:56.8152,lon:60.5401},
-  '369':{lat:56.7946,lon:60.6166},'390':{lat:57.1118,lon:65.6025},'389':{lat:57.1643,lon:65.5492},'929929':{lat:57.1141,lon:65.5583},
-  '411':{lat:61.2654,lon:73.3856},'343':{lat:61.1075,lon:72.5833},'929455':{lat:58.0772,lon:55.6728},'929453':{lat:57.2185,lon:65.5898},
-  '928177':{lat:56.8864,lon:60.7712},'927898':{lat:56.8524,lon:60.7915},'929451':{lat:61.0881,lon:72.6366},'929452':{lat:54.4947,lon:61.2291},
-  '928817':{lat:54.7663,lon:56.1662},'929034':{lat:55.0062,lon:82.6843},'929000':{lat:55.2974,lon:37.6415},'929100':{lat:59.9073,lon:30.3951},
-  '8081':{lat:55.2045,lon:61.3444},'8082':{lat:55.2341,lon:61.4283},'8083':{lat:55.2536,lon:61.4111}
-};
 window.customRoutes = {
   '203':'https://yandex.ru/maps/?um=constructor%3Afbbd0b022ba16d28a9759e073e3de48d938f03a1cd710ca64ff5c6fad195da4f&source=constructorLink',
   '227':'https://yandex.ru/maps/?um=constructor%3A585e886c013d87e06fac691aa947e6c165d773146047bb1343a571bdadfd4646&source=constructorLink',
@@ -127,36 +110,35 @@ window.customRoutes = {
   '94':'https://yandex.ru/maps/?um=constructor%3A80d2266d0be153d3f15728239c6084256047cb996bd39ac8fc4f78b2d51a904b&source=constructorLink',
   '368':'https://yandex.ru/maps/?um=constructor%3A151b677d3b24e5df2ebe6b33ae80a1f4be00314930619040658a6cd4a76487a8&source=constructorLink',
   '317':'https://yandex.ru/maps/?um=constructor%3A5f0fb3706ed1ecc385fdf70ddc878fc1b9ed849e91bb04e5cd628df6fb1a899f&source=constructorLink'
-};
-window.techStations = [
-  { id:'ts_1', type:'КАФЕ', name:'Кафе "Дальнобойщик"', address:'Екатеринбург, Тюменский тракт, 45 км', desc:'Горячие обеды, большая стоянка. Душ.', lat:56.8245, lon:60.7238, is24_7:true, city:'Екатеринбург', roadService:true },
-  { id:'ts_2', type:'ШИНОМОНТАЖ', name:'ГрузШина', address:'Екатеринбург, ЕКАД, 12 км', desc:'Ремонт грузовых шин, балансировка. Безнал.', lat:56.8522, lon:60.6345, is24_7:true, city:'Екатеринбург', roadService:true },
-  { id:'ts_3', type:'СТОЯНКА', name:'Стоянка "Каштан"', address:'Екатеринбург, Челябинский тракт, 20 км', desc:'Охраняемая стоянка, эстакада, кафе.', lat:56.7285, lon:60.7432, is24_7:true, city:'Екатеринбург', roadService:true },
-  { id:'ts_4', type:'АВТОМОЙКА', name:'Мойка "Блеск"', address:'Екатеринбург, ул. Промышленная, 15', desc:'Грузовая мойка, чистка кузова.', lat:56.8321, lon:60.6523, is24_7:false, start:'08:00', end:'22:00', city:'Екатеринбург', roadService:false },
-  { id:'ts_ekb_5', type:'КАФЕ', name:'Столовая "Уралочка"', address:'Екатеринбург, Сибирский тракт, 8 км', desc:'Домашняя еда, комплексные обеды.', lat:56.7981, lon:60.7112, is24_7:true, city:'Екатеринбург', roadService:true },
-  { id:'ts_ekb_kamaz', type:'СЕРВИС', name:'КАМАЗ-Центр Екатеринбург', address:'Березовский, ул. Кольцевая, 4к', desc:'Официальный дилер КАМАЗ. Прямая приёмка.', lat:56.8971, lon:60.8017, is24_7:false, start:'09:00', end:'21:00', city:'Березовский', roadService:false },
-  { id:'ts_ekb_man', type:'СЕРВИС', name:'Уралтраксервис (MAN)', address:'Свердловская обл., Белоярский р-н, пос. Бобровка, Тюменская ул., 15', desc:'Сервисный партнер MAN, дилер Sitrak, Dongfeng.', lat:56.745507, lon:60.995762, is24_7:false, start:'09:00', end:'20:00', city:'Бобровка', roadService:false },
-  { id:'ts_chel_1', type:'КАФЕ', name:'Кафе "Уральские пельмени"', address:'Челябинск, Копейское ш., 50', desc:'Сытно, недорого. Парковка.', lat:55.1300, lon:61.4500, is24_7:true, city:'Челябинск', roadService:true },
-  { id:'ts_chel_2', type:'ШИНОМОНТАЖ', name:'Грузовой шиномонтаж', address:'Челябинск, ул. Труда, 180', desc:'Ремонт любой сложности, выезд.', lat:55.1700, lon:61.3700, is24_7:false, start:'09:00', end:'20:00', city:'Челябинск', roadService:false },
-  { id:'ts_chel_3', type:'АВТОМОЙКА', name:'Мойка "Чистый путь"', address:'Челябинск, Свердловский пр., 30', desc:'Мойка фур, выезд на трассу.', lat:55.1900, lon:61.4000, is24_7:true, city:'Челябинск', roadService:true },
-  { id:'ts_chel_4', type:'СТОЯНКА', name:'Стоянка "Тракт"', address:'Челябинск, Троицкий тракт, 11 км', desc:'Охрана, видеонаблюдение, душ.', lat:55.1045, lon:61.4321, is24_7:true, city:'Челябинск', roadService:true },
-  { id:'ts_tyumen_1', type:'КАФЕ', name:'Кафе "Тракт"', address:'Тюмень, Тобольский тракт, 5 км', desc:'Домашняя еда, стоянка.', lat:57.1726, lon:65.6264, is24_7:true, city:'Тюмень', roadService:true },
-  { id:'ts_tyumen_2', type:'ШИНОМОНТАЖ', name:'Шиномонтаж 24', address:'Тюмень, ул. Мельникайте, 130', desc:'Срочный ремонт шин.', lat:57.1100, lon:65.5600, is24_7:true, city:'Тюмень', roadService:false },
-  { id:'ts_tyumen_3', type:'АВТОМОЙКА', name:'ГрузМойка "Тюмень"', address:'Тюмень, ул. Республики, 250', desc:'Мойка, уборка кабины.', lat:57.1100, lon:65.6000, is24_7:false, start:'08:00', end:'23:00', city:'Тюмень', roadService:false },
-  { id:'ts_tyumen_4', type:'СТОЯНКА', name:'Паркинг "Сибирь"', address:'Тюмень, ул. 50 лет ВЛКСМ, 60', desc:'Охраняемая стоянка, шлагбаум.', lat:57.1288, lon:65.5521, is24_7:true, city:'Тюмень', roadService:false },
-  { id:'ts_surgut_1', type:'КАФЕ', name:'Кафе "У Ашота"', address:'Сургут, Нефтеюганское шоссе, 15', desc:'Вкусный плов, большая стоянка.', lat:61.2654, lon:73.3856, is24_7:true, city:'Сургут', roadService:true },
-  { id:'ts_surgut_2', type:'ШИНОМОНТАЖ', name:'Шиномонтаж "Колесо"', address:'Сургут, ул. Профсоюзов, 55', desc:'Грузовые шины, балансировка.', lat:61.2500, lon:73.4000, is24_7:false, start:'09:00', end:'21:00', city:'Сургут', roadService:false },
-  { id:'ts_surgut_3', type:'СТОЯНКА', name:'Стоянка "Сибирь"', address:'Сургут, Югорский тракт, 30', desc:'Охраняемая, туалет, магазин.', lat:61.2588, lon:73.3440, is24_7:true, city:'Сургут', roadService:true },
-  { id:'ts_surgut_4', type:'АВТОМОЙКА', name:'Мойка "Аква"', address:'Сургут, ул. Энергетиков, 10', desc:'Мойка фур и фургонов.', lat:61.2700, lon:73.4200, is24_7:true, city:'Сургут', roadService:false },
-  { id:'ts_surgut_5', type:'КАФЕ', name:'Блинная "Солнышко"', address:'Сургут, ул. Магистральная, 1', desc:'Быстро, вкусно, есть стоянка.', lat:61.2412, lon:73.4110, is24_7:true, city:'Сургут', roadService:false },
-  { id:'ts_perm_1', type:'КАФЕ', name:'Кафе "Пермский тракт"', address:'Пермь, ш. Космонавтов, 150', desc:'Столовая, стоянка.', lat:57.9700, lon:56.1800, is24_7:true, city:'Пермь', roadService:true },
-  { id:'ts_perm_2', type:'АВТОМОЙКА', name:'Мойка "Парма"', address:'Пермь, ул. Героев Хасана, 100', desc:'Круглосуточная мойка фур.', lat:57.9500, lon:56.2600, is24_7:true, city:'Пермь', roadService:true },
-  { id:'ts_perm_3', type:'СТОЯНКА', name:'Стоянка "Мост"', address:'Пермь, ул. Уинская, 1', desc:'Охраняемая, эстакада.', lat:58.0100, lon:56.2100, is24_7:true, city:'Пермь', roadService:false },
-  { id:'ts_nv_1', type:'СТОЯНКА', name:'Стоянка "У КПП"', address:'Нижневартовск, ул. Кузоваткина, 17', desc:'Эстакада, заправка.', lat:60.9587, lon:76.5777, is24_7:true, city:'Нижневартовск', roadService:true },
-  { id:'ts_nv_2', type:'АВТОМОЙКА', name:'Мойка "Самотлор"', address:'Нижневартовск, ул. Индустриальная, 20', desc:'Быстрая мойка.', lat:60.9400, lon:76.5500, is24_7:false, start:'08:00', end:'22:00', city:'Нижневартовск', roadService:false },
-  { id:'ts_nef_1', type:'КАФЕ', name:'Кафе "Таёжное"', address:'Нефтеюганск, ул. Промышленная, 5', desc:'Обеды, стоянка для грузовиков.', lat:61.1000, lon:72.6000, is24_7:true, city:'Нефтеюганск', roadService:false },
-  { id:'ts_kurg_1', type:'КАФЕ', name:'Кафе "Зауралье"', address:'Курган, ул. Омская, 150', desc:'Комплексные обеды, большая парковка.', lat:55.4300, lon:65.3200, is24_7:true, city:'Курган', roadService:true },
-  { id:'ts_kurg_2', type:'ШИНОМОНТАЖ', name:'Шинный центр', address:'Курган, ул. Куйбышева, 200', desc:'Вулканизация, правка дисков.', lat:55.4400, lon:65.3100, is24_7:false, start:'09:00', end:'19:00', city:'Курган', roadService:false }
+};window.techStations = [
+  { id:'ts_1', type:'КАФЕ', name:'Кафе "Дальнобойщик"', address:'Екатеринбург, Тюменский тракт, 45 км', desc:'Горячие обеды, большая стоянка. Душ.', is24_7:true, city:'Екатеринбург', roadService:true },
+  { id:'ts_2', type:'ШИНОМОНТАЖ', name:'ГрузШина', address:'Екатеринбург, ЕКАД, 12 км', desc:'Ремонт грузовых шин, балансировка. Безнал.', is24_7:true, city:'Екатеринбург', roadService:true },
+  { id:'ts_3', type:'СТОЯНКА', name:'Стоянка "Каштан"', address:'Екатеринбург, Челябинский тракт, 20 км', desc:'Охраняемая стоянка, эстакада, кафе.', is24_7:true, city:'Екатеринбург', roadService:true },
+  { id:'ts_4', type:'АВТОМОЙКА', name:'Мойка "Блеск"', address:'Екатеринбург, ул. Промышленная, 15', desc:'Грузовая мойка, чистка кузова.', is24_7:false, start:'08:00', end:'22:00', city:'Екатеринбург', roadService:false },
+  { id:'ts_ekb_5', type:'КАФЕ', name:'Столовая "Уралочка"', address:'Екатеринбург, Сибирский тракт, 8 км', desc:'Домашняя еда, комплексные обеды.', is24_7:true, city:'Екатеринбург', roadService:true },
+  { id:'ts_ekb_kamaz', type:'СЕРВИС', name:'КАМАЗ-Центр Екатеринбург', address:'Березовский, ул. Кольцевая, 4к', desc:'Официальный дилер КАМАЗ. Прямая приёмка.', is24_7:false, start:'09:00', end:'21:00', city:'Березовский', roadService:false },
+  { id:'ts_ekb_man', type:'СЕРВИС', name:'Уралтраксервис (MAN)', address:'Бобровка, Тюменская ул., 15', desc:'Сервисный партнер MAN, дилер Sitrak, Dongfeng.', is24_7:false, start:'09:00', end:'20:00', city:'Бобровка', roadService:false },
+  { id:'ts_chel_1', type:'КАФЕ', name:'Кафе "Уральские пельмени"', address:'Челябинск, Копейское ш., 50', desc:'Сытно, недорого. Парковка.', is24_7:true, city:'Челябинск', roadService:true },
+  { id:'ts_chel_2', type:'ШИНОМОНТАЖ', name:'Грузовой шиномонтаж', address:'Челябинск, ул. Труда, 180', desc:'Ремонт любой сложности, выезд.', is24_7:false, start:'09:00', end:'20:00', city:'Челябинск', roadService:false },
+  { id:'ts_chel_3', type:'АВТОМОЙКА', name:'Мойка "Чистый путь"', address:'Челябинск, Свердловский пр., 30', desc:'Мойка фур, выезд на трассу.', is24_7:true, city:'Челябинск', roadService:true },
+  { id:'ts_chel_4', type:'СТОЯНКА', name:'Стоянка "Тракт"', address:'Челябинск, Троицкий тракт, 11 км', desc:'Охрана, видеонаблюдение, душ.', is24_7:true, city:'Челябинск', roadService:true },
+  { id:'ts_tyumen_1', type:'КАФЕ', name:'Кафе "Тракт"', address:'Тюмень, Тобольский тракт, 5 км', desc:'Домашняя еда, стоянка.', is24_7:true, city:'Тюмень', roadService:true },
+  { id:'ts_tyumen_2', type:'ШИНОМОНТАЖ', name:'Шиномонтаж 24', address:'Тюмень, ул. Мельникайте, 130', desc:'Срочный ремонт шин.', is24_7:true, city:'Тюмень', roadService:false },
+  { id:'ts_tyumen_3', type:'АВТОМОЙКА', name:'ГрузМойка "Тюмень"', address:'Тюмень, ул. Республики, 250', desc:'Мойка, уборка кабины.', is24_7:false, start:'08:00', end:'23:00', city:'Тюмень', roadService:false },
+  { id:'ts_tyumen_4', type:'СТОЯНКА', name:'Паркинг "Сибирь"', address:'Тюмень, ул. 50 лет ВЛКСМ, 60', desc:'Охраняемая стоянка, шлагбаум.', is24_7:true, city:'Тюмень', roadService:false },
+  { id:'ts_surgut_1', type:'КАФЕ', name:'Кафе "У Ашота"', address:'Сургут, Нефтеюганское шоссе, 15', desc:'Вкусный плов, большая стоянка.', is24_7:true, city:'Сургут', roadService:true },
+  { id:'ts_surgut_2', type:'ШИНОМОНТАЖ', name:'Шиномонтаж "Колесо"', address:'Сургут, ул. Профсоюзов, 55', desc:'Грузовые шины, балансировка.', is24_7:false, start:'09:00', end:'21:00', city:'Сургут', roadService:false },
+  { id:'ts_surgut_3', type:'СТОЯНКА', name:'Стоянка "Сибирь"', address:'Сургут, Югорский тракт, 30', desc:'Охраняемая, туалет, магазин.', is24_7:true, city:'Сургут', roadService:true },
+  { id:'ts_surgut_4', type:'АВТОМОЙКА', name:'Мойка "Аква"', address:'Сургут, ул. Энергетиков, 10', desc:'Мойка фур и фургонов.', is24_7:true, city:'Сургут', roadService:false },
+  { id:'ts_surgut_5', type:'КАФЕ', name:'Блинная "Солнышко"', address:'Сургут, ул. Магистральная, 1', desc:'Быстро, вкусно, есть стоянка.', is24_7:true, city:'Сургут', roadService:false },
+  { id:'ts_perm_1', type:'КАФЕ', name:'Кафе "Пермский тракт"', address:'Пермь, ш. Космонавтов, 150', desc:'Столовая, стоянка.', is24_7:true, city:'Пермь', roadService:true },
+  { id:'ts_perm_2', type:'АВТОМОЙКА', name:'Мойка "Парма"', address:'Пермь, ул. Героев Хасана, 100', desc:'Круглосуточная мойка фур.', is24_7:true, city:'Пермь', roadService:true },
+  { id:'ts_perm_3', type:'СТОЯНКА', name:'Стоянка "Мост"', address:'Пермь, ул. Уинская, 1', desc:'Охраняемая, эстакада.', is24_7:true, city:'Пермь', roadService:false },
+  { id:'ts_nv_1', type:'СТОЯНКА', name:'Стоянка "У КПП"', address:'Нижневартовск, ул. Кузоваткина, 17', desc:'Эстакада, заправка.', is24_7:true, city:'Нижневартовск', roadService:true },
+  { id:'ts_nv_2', type:'АВТОМОЙКА', name:'Мойка "Самотлор"', address:'Нижневартовск, ул. Индустриальная, 20', desc:'Быстрая мойка.', is24_7:false, start:'08:00', end:'22:00', city:'Нижневартовск', roadService:false },
+  { id:'ts_nef_1', type:'КАФЕ', name:'Кафе "Таёжное"', address:'Нефтеюганск, ул. Промышленная, 5', desc:'Обеды, стоянка для грузовиков.', is24_7:true, city:'Нефтеюганск', roadService:false },
+  { id:'ts_kurg_1', type:'КАФЕ', name:'Кафе "Зауралье"', address:'Курган, ул. Омская, 150', desc:'Комплексные обеды, большая парковка.', is24_7:true, city:'Курган', roadService:true },
+  { id:'ts_kurg_2', type:'ШИНОМОНТАЖ', name:'Шинный центр', address:'Курган, ул. Куйбышева, 200', desc:'Вулканизация, правка дисков.', is24_7:false, start:'09:00', end:'19:00', city:'Курган', roadService:false }
 ];
 
 window.stories = [
@@ -202,3 +184,4 @@ window.stories = [
     { actor:'sveta', text:'Зато не потеряется! 🏆', time:2000, action:'laughing' }
   ]}
 ];
+
