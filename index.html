@@ -532,7 +532,6 @@ window.addToShifts = function(tk, brand, address, city) {
 let customTechStations = [];
 try { customTechStations = JSON.parse(localStorage.getItem('lenta_custom_tech')) || []; } catch(e) { customTechStations = []; }
 function getTechStations() { return [...window.techStations, ...customTechStations]; }
-
 window.openCustomTaskModal = function() {
   if (!selectedDate) { showToast("Сначала выберите день в календаре!"); return; }
   playTickSound(); document.getElementById('customTaskModal').classList.remove('hidden');
@@ -591,7 +590,6 @@ window.closeTechPicker = function() { document.getElementById('techPickerModal')
 window.renderTechPicker = function() {
   const query = document.getElementById('techPickerSearch').value.toLowerCase().trim();
   const container = document.getElementById('techPickerList'); container.innerHTML = ''; const words = query.split(/\s+/).filter(w => w.length > 0);
-  // ЖЕСТКИЙ ФИЛЬТР: ТОЛЬКО СЕРВИСЫ
   const filtered = getTechStations().filter(st => {
     if (st.type !== 'СЕРВИС') return false;
     const full = `${st.type} ${st.name} ${st.address} ${st.desc || ''} ${st.city || ''}`.toLowerCase();
@@ -692,7 +690,11 @@ function toggleTextSize() {
   localStorage.setItem('lenta_text_size', currentSize.toString());
   
   const btn = document.getElementById('textSizeBtn');
-  if (btn) btn.textContent = currentSize === 0 ? 'A+' : (currentSize === 1 ? 'A++' : 'A');
+  if (btn) {
+    if (currentSize === 0) btn.textContent = 'A';
+    else if (currentSize === 1) btn.textContent = 'A+';
+    else btn.textContent = 'A++';
+  }
   
   showToast(currentSize === 0 ? "Текст обычного размера" : (currentSize === 1 ? "🔎 Крупный текст" : "🔎 Очень крупный текст"));
 }
@@ -999,23 +1001,20 @@ window.startVoiceSearch = function() {
   if (!SR) { showToast("Голосовой поиск не поддерживается 🎙"); return; }
   const reset = () => { micBtn.classList.remove('mic-listening'); micBtn.classList.add('text-lentaBlue'); el.placeholder = "Поиск..."; };
   try { 
-    const r = new SR(); 
-    r.lang = 'ru-RU'; 
-    r.interimResults = false; 
-    r.maxAlternatives = 1; 
-    
+    const r = new SR(); r.lang = 'ru-RU'; r.interimResults = false; r.maxAlternatives = 1; 
     r.onstart = () => { micBtn.classList.add('mic-listening'); micBtn.classList.remove('text-lentaBlue'); el.value = ''; el.placeholder = "Слушаю..."; }; 
-    
     r.onresult = (ev) => { 
-      let s = ev.results[0][0].transcript.toLowerCase(); 
-      s = s.replace(/\bсто\b/gi,'100').replace(/\bдвести\b/gi,'200').replace(/\bтриста\b/gi,'300').replace(/\.$/,'').trim(); 
+      let rawText = ev.results[0][0].transcript.toLowerCase(); 
+      let s = rawText.replace(/\bсто\b/gi,'100').replace(/\bдвести\b/gi,'200').replace(/\bтриста\b/gi,'300')
+                      .replace(/двести тридцатый/gi, '230').replace(/двести тридцать/gi, '230')
+                      .replace(/стоянку/gi, 'стоянка').replace(/шинку/gi, 'шиномонтаж').replace(/кафешку/gi, 'кафе').replace(/мойку/gi, 'мойка')
+                      .replace(/гипер/gi, '').replace(/магазин/gi, '').replace(/\.$/,'').trim(); 
       
-      // УМНЫЙ ПОИСК: Определяем, куда перенаправить пользователя
       const techKeywords = ['стоянка', 'шинка', 'шиномонтаж', 'кафе', 'мойка', 'сервис', 'техпомощь', 'уют', 'туртас', 'ремонт', 'камаз'];
-      const storeKeywords = ['лента', 'монетка', 'окей', 'гипер', 'магазин', 'рц', 'тк'];
+      const storeKeywords = ['лента', 'монетка', 'окей', 'рц', 'тк'];
       
-      let isTechQuery = techKeywords.some(kw => s.includes(kw));
-      let isStoreQuery = storeKeywords.some(kw => s.includes(kw));
+      let isTechQuery = techKeywords.some(kw => rawText.includes(kw));
+      let isStoreQuery = storeKeywords.some(kw => rawText.includes(kw));
       
       if (isTechQuery && !isStoreQuery) {
         if (!isTechMode) {
@@ -1039,14 +1038,9 @@ window.startVoiceSearch = function() {
       el.value = s; 
       el.dispatchEvent(new Event('input')); 
     }; 
-    
-    r.onerror = () => { reset(); el.placeholder = "Повторите..."; }; 
-    r.onend = reset; 
-    vibrateShort(); 
-    r.start(); 
+    r.onerror = () => { reset(); el.placeholder = "Повторите..."; }; r.onend = reset; vibrateShort(); r.start(); 
   } catch(e) { reset(); }
 };
-
 const storyList = window.stories || []; let isStoryPlaying = false, storyTimer = null;
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 async function showBubble(actor, text, duration) { if (!isStoryPlaying) return; const target = actor === 'mech' ? document.getElementById('bubbleMech') : actor === 'sveta' ? document.getElementById('bubbleSveta') : document.getElementById('bubbleMarina'); if (!target) return; target.querySelector('.story-bubble-inner').innerText = text; target.classList.add('active'); await sleep(duration); target.classList.remove('active'); await sleep(400); }
@@ -1065,14 +1059,8 @@ window.applyUpdate = function() {
   showToast("⏳ Обновляем приложение...");
   const btn = document.querySelector('#updateBanner button');
   if (btn) { btn.textContent = 'Ждите...'; btn.style.opacity = '0.7'; btn.disabled = true; }
-  
-  if (waitingWorker) {
-    waitingWorker.postMessage('SKIP_WAITING');
-  }
-  
-  setTimeout(() => {
-    window.location.reload();
-  }, 800);
+  if (waitingWorker) waitingWorker.postMessage('SKIP_WAITING');
+  setTimeout(() => { window.location.reload(); }, 800);
 };
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -1088,7 +1076,11 @@ if ('serviceWorker' in navigator) {
 (function init() {
   const txtBtn = document.getElementById('textSizeBtn');
   const savedSize = parseInt(localStorage.getItem('lenta_text_size') || '0');
-  if (txtBtn) txtBtn.textContent = savedSize === 0 ? 'A+' : (savedSize === 1 ? 'A++' : 'A');
+  if (txtBtn) {
+    if (savedSize === 0) txtBtn.textContent = 'A';
+    else if (savedSize === 1) txtBtn.textContent = 'A+';
+    else txtBtn.textContent = 'A++';
+  }
   
   buildCitySlider(); updateSpeedLimit(); renderCards();
   setTimeout(() => citySlider.dispatchEvent(new Event('scroll')), 100);
