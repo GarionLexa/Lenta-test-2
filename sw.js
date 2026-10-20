@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'lenta-v5-2026-10-20';
+const CACHE_VERSION = 'lenta-v7-2026-10-21';
 const CORE_ASSETS = ['./', './index.html', './manifest.json', './icon.png', './data.js'];
 
 self.addEventListener('install', (e) => {
@@ -8,7 +8,6 @@ self.addEventListener('install', (e) => {
       .then(() => self.skipWaiting())
   );
 });
-
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then(keys => Promise.all(
@@ -16,18 +15,16 @@ self.addEventListener('activate', (e) => {
     )).then(() => self.clients.claim())
   );
 });
-
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;
   let url;
   try { url = new URL(req.url); } catch (_) { return; }
 
-  if (url.hostname.includes('open-meteo.com')) {
+  if (url.hostname.includes('wttr.in') || url.hostname.includes('open-meteo.com')) {
     e.respondWith(fetch(req).catch(() => new Response('{}', { headers: { 'Content-Type': 'application/json' } })));
     return;
   }
-
   if (url.hostname.includes('cdn.tailwindcss.com') || url.hostname.includes('fonts.googleapis.com') || url.hostname.includes('fonts.gstatic.com') || url.hostname.includes('hits.sh')) {
     e.respondWith(caches.match(req).then(cached => cached || fetch(req).then(res => {
       const clone = res.clone();
@@ -36,7 +33,6 @@ self.addEventListener('fetch', (e) => {
     }).catch(() => new Response('', { status: 503 }))));
     return;
   }
-
   if (url.pathname.endsWith('/data.js') || url.pathname === '/data.js') {
     e.respondWith(fetch(req, { cache: 'no-store' }).then(res => {
       const clone = res.clone();
@@ -45,7 +41,6 @@ self.addEventListener('fetch', (e) => {
     }).catch(() => caches.match(req)));
     return;
   }
-
   e.respondWith(caches.match(req).then(cached => cached || fetch(req).then(res => {
     if (res.status === 200 && (res.type === 'basic' || res.type === 'cors')) {
       const clone = res.clone();
@@ -54,5 +49,4 @@ self.addEventListener('fetch', (e) => {
     return res;
   }).catch(() => caches.match('./index.html'))));
 });
-
 self.addEventListener('message', (e) => { if (e.data === 'SKIP_WAITING') self.skipWaiting(); });
