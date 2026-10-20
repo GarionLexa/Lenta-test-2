@@ -29,13 +29,11 @@
 :root { --truck-light-opacity: 0; --truck-body-brightness: 1; }
 body { background-color: #F8FAFC; color: #1F2937; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; width: 100%; overflow-x: hidden; padding-bottom: env(safe-area-inset-bottom); transition: background-color 0.3s ease, color 0.3s ease; }
 .dark body { background-color: #0f172a; color: #f1f5f9; }
-</style>
-<style>
 .glass-header { background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.04); padding-top: max(1rem, env(safe-area-inset-top)); position: sticky; top: 0; z-index: 50; border-radius: 0 0 24px 24px; transition: all 0.3s ease; }
 .dark .glass-header { background: rgba(15,23,42,0.95); border-bottom: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 @media (max-height: 550px) { .glass-header { position: relative; border-radius: 0; } }
 @keyframes slideUpFade { 0% { opacity: 0; transform: translateY(20px) scale(0.95); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
-.animate-reveal { animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-reveal { animation: slideUpFade 0.4s cubic-bezier(0.16,1,0.3,1) forwards; }
 .tactile-btn { transition: transform 0.1s ease, background-color 0.2s ease; }
 .tactile-btn:active { transform: scale(0.92); }
 </style>
@@ -110,8 +108,6 @@ body { background-color: #F8FAFC; color: #1F2937; font-family: 'Inter', sans-ser
 .sweat-drop { opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: translateY(-5px); }
 .show-sweat { opacity: 1; transform: translateY(0); animation: dripDown 1.5s forwards; }
 @keyframes dripDown { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
-</style>
-<style>
 .story-bubble { position: absolute; background: white; border: 2px solid #e2e8f0; color: #1e293b; font-size: 10px; font-weight: 800; padding: 6px 10px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); opacity: 0; pointer-events: none; z-index: 1000; max-width: 140px; text-align: center; line-height: 1.2; white-space: normal; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
 .dark .story-bubble { background: #1e293b; border-color: #475569; color: #f1f5f9; }
 .story-bubble.actor-sveta { bottom: 85%; left: 0; transform: scale(0.9) translateY(10px); }
@@ -147,13 +143,18 @@ html.large-text .leading-tight { line-height: 1.4 !important; }
 html.large-text .w-10, html.large-text .h-10 { width: 2.75rem !important; height: 2.75rem !important; }
 html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height: 2.25rem !important; }
 .weather-slot button { cursor: pointer; }
-.weather-inline { display: flex; align-items: center; gap: 6px; font-weight: 700; }
-.weather-badge { background: linear-gradient(135deg, #e0f2fe, #bae6fd); border: 1px solid #7dd3fc; color: #075985; padding: 4px 10px; border-radius: 10px; font-size: 12px; font-weight: 800; }
+.weather-badge { background: linear-gradient(135deg, #e0f2fe, #bae6fd); border: 1px solid #7dd3fc; color: #075985; padding: 4px 10px; border-radius: 10px; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; }
 .dark .weather-badge { background: linear-gradient(135deg, #0c4a6e, #075985); border-color: #0284c7; color: #e0f2fe; }
 #updateBanner { animation: slideDownBanner 0.4s cubic-bezier(0.16,1,0.3,1); }
 @keyframes slideDownBanner { 0% { transform: translate(-50%,-120%); } 100% { transform: translate(-50%,0); } }
 .road-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 900; padding: 2px 6px; border-radius: 6px; background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; text-transform: uppercase; letter-spacing: 0.3px; }
 .dark .road-badge { background: #1e3a8a; color: #dbeafe; border-color: #1e40af; }
+/* ===== Анимация перелистывания календаря ===== */
+@keyframes calSlideInRight { 0% { opacity: 0; transform: translateX(60px) scale(0.96); } 100% { opacity: 1; transform: translateX(0) scale(1); } }
+@keyframes calSlideInLeft  { 0% { opacity: 0; transform: translateX(-60px) scale(0.96); } 100% { opacity: 1; transform: translateX(0) scale(1); } }
+.cal-slide-next { animation: calSlideInRight 0.32s cubic-bezier(0.16,1,0.3,1) both; }
+.cal-slide-prev { animation: calSlideInLeft  0.32s cubic-bezier(0.16,1,0.3,1) both; }
+#calendarGrid { will-change: transform, opacity; touch-action: pan-y; }
 @media (orientation: landscape) and (max-height: 500px) {
   .glass-header { position: relative; border-radius: 0; padding-top: 8px; padding-bottom: 8px; }
   .scenic-bg { height: 100px; }
@@ -163,9 +164,7 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   #cardsGrid { grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
-@media (max-width: 360px) {
-  #controlPanel { padding: 8px 8px; }
-}
+@media (max-width: 360px) { #controlPanel { padding: 8px 8px; } }
 </style>
 </head>
 <body class="relative flex flex-col min-h-screen">
@@ -261,7 +260,6 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
     </div>
   </div>
 </div>
-
 <div id="storePickerModal" class="fixed inset-0 z-[110] bg-gray-900/60 backdrop-blur-sm hidden flex items-end justify-center sm:items-center p-0 sm:p-4">
   <div class="rounded-t-[32px] sm:rounded-[32px] w-full max-w-md relative animate-slide-up sm:animate-reveal bg-white dark:bg-slate-800 shadow-2xl flex flex-col h-[80vh] sm:h-auto sm:max-h-[90vh]">
     <div class="p-4 border-b border-gray-100 dark:border-slate-700 flex justify-between items-center bg-gray-50 dark:bg-slate-800/80 rounded-t-[32px]">
@@ -274,6 +272,7 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
     <div id="pickerStoreList" class="flex-1 overflow-y-auto p-3 pt-0 space-y-2 hide-scrollbar bg-white dark:bg-slate-800 rounded-b-[32px]"></div>
   </div>
 </div>
+
 <div id="customTaskModal" class="fixed inset-0 z-[110] bg-gray-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
   <div class="rounded-[24px] p-5 max-w-sm w-full relative animate-reveal bg-white dark:bg-slate-800 shadow-2xl flex flex-col">
     <button onclick="closeCustomTaskModal()" class="absolute top-4 right-4 text-gray-400 bg-gray-100 dark:bg-slate-700 p-2 rounded-full tactile-btn z-10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
@@ -358,7 +357,6 @@ html.large-text .w-8,  html.large-text .h-8  { width: 2.25rem !important; height
     </div>
   </div>
 </div>
-
 <div class="flex items-center gap-2 w-full mb-4 mt-2">
   <div class="relative flex-1 group">
     <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></div>
@@ -431,6 +429,12 @@ window.changeMonth = function(dir) {
   if (currentCalMonth > 11) { currentCalMonth = 0; currentCalYear++; }
   if (currentCalMonth < 0) { currentCalMonth = 11; currentCalYear--; }
   renderCalendar();
+  const grid = document.getElementById('calendarGrid');
+  if (grid) {
+    grid.classList.remove('cal-slide-next', 'cal-slide-prev');
+    void grid.offsetWidth;
+    grid.classList.add(dir > 0 ? 'cal-slide-next' : 'cal-slide-prev');
+  }
 };
 function renderCalendar() {
   document.getElementById('calendarMonthYear').innerText = `${monthNames[currentCalMonth]} ${currentCalYear}`;
@@ -471,17 +475,39 @@ window.selectDate = function(dateStr) {
   renderCalendar();
   showDayShifts(dateStr);
 };
+
 (function initCalendarSwipe() {
   const grid = document.getElementById('calendarGrid');
   if (!grid) return;
-  let sx = 0, sy = 0;
-  grid.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive: true});
+  let sx = 0, sy = 0, moved = 0, locked = false;
+  grid.addEventListener('touchstart', e => {
+    sx = e.touches[0].clientX;
+    sy = e.touches[0].clientY;
+    moved = 0;
+    locked = false;
+    grid.style.transition = 'none';
+    grid.style.transform = '';
+  }, {passive: true});
+  grid.addEventListener('touchmove', e => {
+    if (locked) return;
+    const dx = e.touches[0].clientX - sx;
+    const dy = e.touches[0].clientY - sy;
+    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 10) { locked = true; grid.style.transform = ''; return; }
+    if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) {
+      moved = dx;
+      const dampened = Math.max(-80, Math.min(80, dx * 0.4));
+      grid.style.transform = `translateX(${dampened}px)`;
+    }
+  }, {passive: true});
   grid.addEventListener('touchend', e => {
+    if (locked) { grid.style.transform = ''; return; }
     const dx = e.changedTouches[0].clientX - sx;
     const dy = e.changedTouches[0].clientY - sy;
-    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+    grid.style.transition = 'transform 0.2s ease';
+    grid.style.transform = '';
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) {
       window._calSwipeActive = true;
-      setTimeout(() => { window._calSwipeActive = false; }, 300);
+      setTimeout(() => { window._calSwipeActive = false; }, 350);
       changeMonth(dx > 0 ? -1 : 1);
     }
   }, {passive: true});
@@ -549,7 +575,6 @@ window.addToShifts = function(tk, brand, address, city) {
     showDayShifts(today);
   }
 };
-
 window.openCustomTaskModal = function() {
   if (!selectedDate) { showToast("Сначала выберите день в календаре!"); return; }
   playTickSound();
@@ -586,7 +611,6 @@ window.openStorePicker = function() {
   renderPickerStores();
 };
 window.closeStorePicker = function() { document.getElementById('storePickerModal').classList.add('hidden'); };
-
 window.renderPickerStores = function() {
   const query = document.getElementById('pickerSearch').value.toLowerCase().trim().replace(/['"`]/g, '').replace('окэй','окей');
   const container = document.getElementById('pickerStoreList');
@@ -659,7 +683,6 @@ window.exportMonthReport = function() {
   URL.revokeObjectURL(url);
   showToast("Файл отчёта скачан! 📁");
 };
-
 window.exportCalendarBackup = function() {
   playTickSound();
   if (Object.keys(myShifts).length === 0) { showToast("Нет данных 🤷‍♂️"); return; }
@@ -670,7 +693,6 @@ window.exportCalendarBackup = function() {
   document.body.appendChild(a); a.click(); a.remove();
   showToast("Бэкап сохранён! 💾");
 };
-
 let _importedData = null;
 window.importCalendarBackup = function() {
   playTickSound();
@@ -712,7 +734,6 @@ window.confirmImport = function(mergeMode) {
   const uniqueTime = Date.now() + Math.floor(Math.random() * 1000);
   badge.src = `https://hits.sh/garionlexa_new.github.io/lenta_app_v3.svg?label=%D0%92%D0%B8%D0%B7%D0%B8%D1%82%D1%8B&color=1e293b&labelColor=334155&nocache=${uniqueTime}`;
 })();
-
 let audioCtx = null;
 let engineOsc = null;
 let engineGain = null;
@@ -755,6 +776,23 @@ function playTickSound() {
   } catch(e) {}
 }
 
+// ГУДЕНИЕ ДВИГАТЕЛЯ — для машинок в слайдере
+let engineTimeout = null;
+function playEngineSound(speed) {
+  if (!isAudioUnlocked || !audioCtx || !engineGain) return;
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  const vol = Math.min(0.12, speed * 0.15);
+  const freq = Math.min(70, 35 + speed * 25);
+  engineGain.gain.setTargetAtTime(vol, audioCtx.currentTime, 0.1);
+  engineOsc.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.1);
+  clearTimeout(engineTimeout);
+  engineTimeout = setTimeout(() => {
+    engineGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.2);
+    engineOsc.frequency.setTargetAtTime(35, audioCtx.currentTime, 0.2);
+  }, 150);
+}
+
+// ТРЕЩОТКА — для скролла карточек магазинов
 let _lastClickTime = 0;
 function playClickTick() {
   if (!isAudioUnlocked || !audioCtx || audioCtx.state === 'suspended') return;
@@ -775,7 +813,6 @@ function playClickTick() {
     src.start();
   } catch(e) {}
 }
-
 function vibrateShort() { if (navigator.vibrate) navigator.vibrate(50); }
 
 function toggleTheme() {
@@ -793,7 +830,6 @@ function toggleTheme() {
     btn.classList.remove('text-amber-500');
   }
 }
-
 function toggleTextSize() {
   const html = document.documentElement;
   html.classList.toggle('large-text');
@@ -860,12 +896,27 @@ function resetTrucksToStart() {
   lastActualScrollLeft = 0;
   updateParallax(0);
 }
+
+// ГУДЕНИЕ при ручном скролле машинок
+let lastSliderScrollTime = 0;
 citySlider.addEventListener('scroll', () => {
   if (isMusicPlaying) return;
-  const dx = citySlider.scrollLeft - lastActualScrollLeft;
-  if (Math.abs(dx) > 0) { virtualScrollX += Math.abs(dx); playClickTick(); updateParallax(virtualScrollX); }
-  lastActualScrollLeft = citySlider.scrollLeft;
-}, {passive: true});
+  const currentScroll = citySlider.scrollLeft;
+  const dx = currentScroll - lastActualScrollLeft;
+  if (Math.abs(dx) > 0) {
+    virtualScrollX += Math.abs(dx);
+    const now = Date.now();
+    const dt = now - lastSliderScrollTime;
+    if (dt > 16) {
+      const speed = Math.abs(dx) / dt;
+      if (speed > 0.05) playEngineSound(speed);
+    }
+    lastSliderScrollTime = now;
+    updateParallax(virtualScrollX);
+  }
+  lastActualScrollLeft = currentScroll;
+}, { passive: true });
+
 function startAutoScroll() {
   if (!autoScrollAnimationId) { lastActualScrollLeft = citySlider.scrollLeft; citySlider.classList.add('auto-driving'); autoScrollLoop(); }
 }
@@ -880,6 +931,7 @@ function autoScrollLoop() {
   if (!isMusicPlaying) return;
   const speed = 0.5;
   virtualScrollX += speed;
+  playEngineSound(0.4);
   policeTimer++;
   if (policeTimer > 700 && Math.random() > 0.98) {
     const p = document.getElementById('policeCar');
@@ -955,7 +1007,6 @@ window.closeCard = function(btn) {
   if (searchInput.value.trim() !== '') clearSearch();
   else { const c = btn.closest('.store-card'); if (c) c.style.display = 'none'; }
 };
-
 function showToast(message) {
   let toast = document.getElementById('toast-notification');
   if (!toast) {
@@ -974,7 +1025,6 @@ function showToast(message) {
     toast.classList.add('opacity-0', 'scale-95');
   }, 3000);
 }
-
 window.openApproachMap = function(url) {
   playTickSound();
   if (url && url !== 'undefined' && url !== 'null' && url.trim() !== '') {
@@ -984,7 +1034,6 @@ window.openApproachMap = function(url) {
     window.open(finalUrl, '_blank');
   } else showToast("Схема заезда ещё не добавлена 🛠");
 };
-
 window.openNavModal = function(query) {
   currentNavQuery = query;
   document.getElementById('navModal').classList.remove('hidden');
@@ -1008,7 +1057,6 @@ window.executeNavigation = function(type) {
   window.location.href = navUrl;
   closeNavModal();
 };
-
 window.shareRoute = function(tk, brandName, address, routeUrl, e) {
   if (e) e.stopPropagation();
   playTickSound();
@@ -1025,19 +1073,19 @@ window.shareRoute = function(tk, brandName, address, routeUrl, e) {
 };
 const weatherCache = new Map();
 function getWeatherIcon(code) {
-  if (code === 0) return '☀️';
-  if (code <= 3) return '🌤️';
-  if (code <= 48) return '🌫️';
-  if (code <= 67) return '🌧️';
-  if (code <= 77) return '❄️';
-  if (code <= 82) return '🌧️';
-  if (code <= 86) return '🌨️';
-  return '⛈️';
+  if (code === 113) return '☀️';
+  if (code === 116) return '🌤️';
+  if (code === 119 || code === 122) return '☁️';
+  if ([143, 248, 260].includes(code)) return '🌫️';
+  if ([176, 263, 266, 293, 296, 299, 302, 305, 308, 353, 356, 359].includes(code)) return '🌧️';
+  if ([179, 182, 185, 227, 230, 320, 323, 326, 329, 332, 335, 338, 350, 362, 365, 368, 371, 374, 377].includes(code)) return '❄️';
+  if ([200, 386, 389, 392, 395].includes(code)) return '⛈️';
+  return '🌡️';
 }
 function renderWeatherHtml(tk) {
   if (weatherCache.has(tk)) {
     const w = weatherCache.get(tk);
-    return `<div class="weather-badge"><span>${getWeatherIcon(w.weather_code)}</span> ${Math.round(w.temperature_2m)}°C <span style="opacity:.6;font-size:10px;">${w.wind_speed_10m ?? 0} м/с</span></div>`;
+    return `<div class="weather-badge"><span>${getWeatherIcon(w.weather_code)}</span> ${Math.round(w.temperature_2m)}°C <span style="opacity:.6;font-size:10px;">${Math.round(w.wind_speed_10m)} м/с</span></div>`;
   }
   return `<button onclick="loadWeatherForCard('${tk}', event)" class="w-full flex items-center justify-center gap-1.5 px-2 py-1.5 text-[11px] font-bold text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 rounded-lg bg-sky-50 dark:bg-sky-900/20 tactile-btn">🌡️ Погода</button>`;
 }
@@ -1048,12 +1096,21 @@ window.loadWeatherForCard = async function(tk, e) {
   const card = e?.target?.closest('.store-card');
   const slot = card?.querySelector('.weather-slot');
   if (!slot) return;
+  if (weatherCache.has(tk)) { slot.innerHTML = renderWeatherHtml(tk); return; }
   slot.innerHTML = `<div class="text-[10px] text-gray-400 text-center py-1">Загрузка… ⏳</div>`;
   try {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&current=temperature_2m,weather_code,wind_speed_10m&wind_speed_unit=ms&timezone=auto`;
+    const url = `https://wttr.in/${coords.lat},${coords.lon}?format=j1&lang=ru`;
     const res = await fetch(url);
+    if (!res.ok) throw new Error('bad response');
     const data = await res.json();
-    weatherCache.set(tk, data.current);
+    const cc = data.current_condition && data.current_condition[0];
+    if (!cc) throw new Error('no data');
+    const normalized = {
+      temperature_2m: parseFloat(cc.temp_C),
+      weather_code: parseInt(cc.weatherCode, 10),
+      wind_speed_10m: parseFloat(cc.windspeedKmph) / 3.6
+    };
+    weatherCache.set(tk, normalized);
     slot.innerHTML = renderWeatherHtml(tk);
   } catch (err) {
     slot.innerHTML = `<div class="text-[10px] text-red-400 text-center py-1">Погода недоступна</div>`;
@@ -1114,9 +1171,6 @@ function getTimeLeftHtml(timeStr) {
   return `<div class="text-[10px] ${cls} mt-1">⏱ До начала: ${h}ч ${m}м</div>`;
 }
 function getSmartNavQuery(city, address, tk) {
-  if (tk === '929452') return '54.4947,61.2291';
-  if (tk === '929100') return '59.9073,30.3951';
-  if (tk === '929000') return '55.2974,37.6415';
   let text = address;
   text = text.replace(/ООО ["']?Лента["']?,?/gi, '').replace(/ООО ОКЕЙ,?/gi, '').replace(/РЦ ["']?Монетка["']?,?/gi, '').replace(/РЦ Молл,?/gi, '');
   text = text.replace(/\b\d{6}\b,?/g, '');
@@ -1218,7 +1272,6 @@ window.filterByCity = function(city) {
   window.scrollTo({top: 0, behavior: 'smooth'});
   renderCards();
 };
-
 function renderCards() {
   const rawSearch = searchInput.value.toLowerCase().trim();
   const q = rawSearch.replace(/['"`]/g, '').replace('окэй','окей');
@@ -1227,7 +1280,6 @@ function renderCards() {
   let count = 0;
   const words = q.split(/\s+/).filter(w => w.length > 0);
   let html = '';
-
   if (isTechMode) {
     html += `<div class="col-span-full flex flex-wrap gap-2 mb-2 overflow-x-auto hide-scrollbar pb-1">
       <button onclick="selectedTechType='all';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='all'?'bg-orange-500 text-white':'bg-white dark:bg-slate-800 text-gray-600 border border-gray-200'}">Все</button>
@@ -1256,6 +1308,7 @@ function renderCards() {
       const is24T = st.is24_7 ? '24/7' : (st.start ? `${st.start}–${st.end || ''}` : '—');
       const typeB = st.type === 'СЕРВИС' ? 'bg-blue-600 text-white' : 'bg-orange-500 text-white';
       const roadB = st.roadService ? `<span class="road-badge">🛣️ На трассе</span>` : '';
+      // Для сервисов используем координаты — точная навигация
       html += `<div class="store-card tech-card-bg relative flex flex-col justify-between animate-reveal rounded-[24px] p-5 shadow-sm border hover:shadow-md transition-shadow"><div><div class="flex flex-wrap items-center gap-2 mb-3"><span class="px-2 py-0.5 rounded text-[10px] font-black uppercase ${typeB}">${st.type}</span>${roadB}<div class="ml-auto flex items-center gap-1.5 shrink-0"><span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">${st.city || ''}</span>${dTag}</div></div><div class="text-sm font-black text-gray-900 dark:text-white leading-snug mb-1">${st.name}</div><div class="text-[11px] text-gray-600 dark:text-gray-400 font-medium mb-3">${st.address}</div><div class="text-[12px] text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-slate-900/50 p-3 rounded-xl border border-orange-100 dark:border-orange-900/50 mb-4 leading-relaxed">${st.desc || ''}</div></div><div class="space-y-4 mt-auto"><div class="flex justify-between items-center border-t border-orange-100 dark:border-orange-900/50 pt-3"><span class="text-[10px] font-bold text-gray-500 uppercase">Режим</span><span class="px-2 py-1 rounded-md text-[10px] font-bold border ${is24C}">${is24T}</span></div><div class="grid grid-cols-2 gap-2 pt-2"><button onclick="openNavModal('${st.lat},${st.lon}');" class="flex items-center justify-center gap-1.5 px-2 py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-xs font-bold tactile-btn shadow-lg">🗺️ Поехать</button><button onclick="shareRoute('${st.name.replace(/'/g,"\\'")}','ТЕХПОМОЩЬ','${st.address.replace(/'/g,"\\'")}','',event)" class="flex items-center justify-center gap-1.5 px-2 py-2.5 bg-white dark:bg-slate-800 text-orange-600 border border-orange-200 rounded-xl text-xs font-bold tactile-btn">📤 Отправить</button></div></div></div>`;
     });
   } else {
@@ -1289,9 +1342,13 @@ function renderCards() {
       const is24T = store.is24_7 ? '24/7' : `${store.start}–${store.end}`;
       const rc1 = store.rc1 !== '-' ? `<div class="flex flex-col items-end"><span class="px-2 py-1 bg-emerald-500 text-white font-bold rounded-md text-[10px]">${store.rc1}</span>${getTimeLeftHtml(store.rc1)}</div>` : '<span class="text-gray-300 font-bold">—</span>';
       const cleanAddr = store.address.replace('ООО "Лента", ','').replace('ООО "Лента" ','').replace('РЦ "Монетка", ','');
+      // ФИКС: используем координаты, если есть; иначе — текст
+      const coords = storeCoords[store.tk];
       const navQ = getSmartNavQuery(store.city, store.address, store.tk);
-      const encQ = encodeURIComponent(navQ);
-      const panoUrl = `https://yandex.ru/maps/?text=${encQ}&l=stv,sta`;
+      const encQ = coords ? `${coords.lat},${coords.lon}` : encodeURIComponent(navQ);
+      const panoUrl = coords
+        ? `https://yandex.ru/maps/?ll=${coords.lon},${coords.lat}&z=18&l=stv,sta&pt=${coords.lon},${coords.lat}`
+        : `https://yandex.ru/maps/?text=${encodeURIComponent(navQ)}&l=stv,sta`;
       const routeUrl = customRoutes[store.tk] || null;
       const dTag = (isSortedByDistance && store.distance !== undefined && store.distance !== 999999) ? `<span class="text-[11px] font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">${store.distance.toFixed(1)} км</span>` : '';
       const extraBtn = brand === "МОНЕТКА" ? `<button onclick="openMonetkaModal();" class="mt-3 w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-orange-50 text-orange-600 border border-orange-200 rounded-xl text-xs font-bold tactile-btn">📖 Правила выгрузки</button>` : '';
@@ -1301,7 +1358,6 @@ function renderCards() {
   if (count === 0) cardsGrid.innerHTML = `<div class="col-span-full py-16 text-center text-gray-400 font-medium bg-white dark:bg-slate-800 rounded-[24px] border border-gray-100">По запросу ничего не найдено</div>`;
   else cardsGrid.innerHTML = html;
 }
-
 function debounce(fn, delay) { let t; return function(...a) { clearTimeout(t); t = setTimeout(() => fn.apply(this, a), delay); }; }
 function getDropdownItemHTML(item, isTech) {
   if (isTech) return `<div class="flex items-center gap-2 mb-1"><span class="text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded font-black uppercase">${item.type}</span><span class="font-bold text-xs text-orange-600">${item.city || ''}</span></div><div class="text-[11px] font-bold text-gray-800 dark:text-gray-200">${item.name}</div><div class="text-[10px] text-gray-500">${item.address}</div>`;
@@ -1361,6 +1417,33 @@ searchInput.addEventListener('input', debounce(handleSearchInput, 250));
 document.addEventListener('click', (e) => {
   if (!searchInput.contains(e.target) && !autocompleteList.contains(e.target)) autocompleteList.classList.add('hidden');
 });
+
+// ТРЕЩОТКА при скролле карточек магазинов
+let _lastCardsScrollY = window.scrollY;
+let _cardsScrollAt = 0;
+let _cardScrollAccum = 0;
+const _modalIds = ['navModal','contactsModal','monetkaModal','mechanicModal','geoModal','calendarModal','storePickerModal','customTaskModal','importConfirmModal'];
+function _isAnyModalOpen() {
+  return _modalIds.some(id => {
+    const el = document.getElementById(id);
+    return el && !el.classList.contains('hidden');
+  });
+}
+window.addEventListener('scroll', () => {
+  if (_isAnyModalOpen()) return;
+  const y = window.scrollY;
+  const dy = Math.abs(y - _lastCardsScrollY);
+  _lastCardsScrollY = y;
+  _cardScrollAccum += dy;
+  const now = Date.now();
+  if (now - _cardsScrollAt < 55) return;
+  if (_cardScrollAccum >= 30) {
+    playClickTick();
+    _cardsScrollAt = now;
+    _cardScrollAccum = 0;
+  }
+}, { passive: true });
+
 window.startVoiceSearch = function() {
   const micBtn = document.getElementById('voiceSearchBtn');
   const el = document.getElementById('searchInput');
@@ -1382,7 +1465,6 @@ window.startVoiceSearch = function() {
     r.start();
   } catch(e) { reset(); }
 };
-
 const storyList = window.stories || [];
 let isStoryPlaying = false, storyTimer = null;
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
@@ -1430,7 +1512,6 @@ function startStoryTimer() {
   clearTimeout(storyTimer);
   storyTimer = setInterval(() => { if (!isMusicPlaying && !isStoryPlaying) playStory(); }, 30000);
 }
-
 function updateSpeedLimit() {
   const m = new Date().getMonth();
   const isWinter = m === 11 || m === 0 || m === 1 || m === 2 || m === 10;
@@ -1498,7 +1579,6 @@ if ('serviceWorker' in navigator) {
     window.location.reload();
   });
 }
-
 (function init() {
   const txtBtn = document.getElementById('textSizeBtn');
   if (txtBtn) txtBtn.textContent = document.documentElement.classList.contains('large-text') ? 'A' : 'A+';
