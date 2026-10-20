@@ -1005,7 +1005,23 @@ window.installPwa = function() { if (!deferredInstallPrompt) { showToast("Отк
 window.addEventListener('appinstalled', () => { const b = document.getElementById('installPwaBtn'); if (b) b.classList.add('hidden'); showToast("🎉 Приложение на главном экране!"); });
 if (window.matchMedia('(display-mode: standalone)').matches) { const b = document.getElementById('installPwaBtn'); if (b) b.classList.add('hidden'); }
 window.showUpdateBanner = function(hasData) { const el = document.getElementById('updateBanner'); const txt = document.getElementById('updateBannerText'); txt.innerHTML = hasData ? '⚠️ Обновление. <b>Сначала сделайте бэкап календаря!</b>' : '✨ Доступно обновление приложения.'; el.classList.remove('hidden'); };
-window.applyUpdate = function() { if (waitingWorker) waitingWorker.postMessage('SKIP_WAITING'); else window.location.reload(); };
+
+// ОБНОВЛЕННАЯ ФУНКЦИЯ ОБНОВЛЕНИЯ
+window.applyUpdate = function() {
+  showToast("⏳ Обновляем приложение...");
+  const btn = document.querySelector('#updateBanner button');
+  if (btn) { btn.textContent = 'Ждите...'; btn.style.opacity = '0.7'; btn.disabled = true; }
+  
+  if (waitingWorker) {
+    waitingWorker.postMessage('SKIP_WAITING');
+  }
+  
+  // Принудительная перезагрузка через 800 мс
+  setTimeout(() => {
+    window.location.reload();
+  }, 800);
+};
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').then(reg => {
