@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'lenta-v17-2026-10-21';
+const CACHE_VERSION = 'lenta-v18-2026-10-21';
 const CORE_ASSETS = [
   './', './index.html', './manifest.json', './icon.png', './road-icon.png', 
   './data.js', './data_services.js', './music.mp3',
@@ -9,7 +9,6 @@ const CORE_ASSETS = [
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE_VERSION).then(cache => {
-      // Кэшируем каждый файл по отдельности, чтобы ошибка одного не ломала весь оффлайн
       return Promise.all(CORE_ASSETS.map(url => cache.add(url).catch(() => console.warn('Не удалось закэшировать:', url))));
     }).then(() => self.skipWaiting())
   );
@@ -29,13 +28,11 @@ self.addEventListener('fetch', (e) => {
   let url;
   try { url = new URL(req.url); } catch (_) { return; }
 
-  // Запросы к API (если появятся) - только сеть
   if (url.hostname.includes('api.')) {
     e.respondWith(fetch(req).catch(() => new Response('{}', { headers: { 'Content-Type': 'application/json' } })));
     return;
   }
 
-  // Всё остальное: Cache-First (сначала кэш, потом сеть)
   e.respondWith(caches.match(req).then(cached => {
     return cached || fetch(req).then(res => {
       if (res.status === 200 && (res.type === 'basic' || res.type === 'cors')) {
