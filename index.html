@@ -127,11 +127,11 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 /* ПАСХАЛКА: БАЙКЕР САШКА БЕЛОБОРОДОВ */
 .biker-easter-egg {
   position: absolute;
-  bottom: 8px; /* Прямо над дорогой */
-  right: -150px; /* Стартует за экраном */
+  bottom: 8px;
+  right: -150px;
   width: 100px;
   height: 60px;
-  z-index: 35; /* Поверх машин и деревьев, но под верхними панелями */
+  z-index: 35;
   cursor: pointer;
   display: none;
   filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
@@ -184,6 +184,22 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .anim-look { animation: lookAround 3s infinite ease-in-out; }
 @keyframes readBook { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(2deg); } }
 .anim-read { animation: readBook 2s infinite ease-in-out; }
+
+/* АНИМАЦИЯ ИКОНОК КОНТАКТОВ */
+@keyframes wiggleIcon {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-8deg) scale(1.05); }
+  75% { transform: rotate(8deg) scale(1.05); }
+}
+.contact-icon {
+  animation: wiggleIcon 1.5s infinite ease-in-out;
+}
+.contact-icon:nth-child(2n) {
+  animation-delay: 0.2s;
+}
+.contact-icon:nth-child(3n) {
+  animation-delay: 0.4s;
+}
 
 /* Story bubble */
 .story-bubble { 
@@ -288,12 +304,9 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
       <div class="relative flex flex-col items-center justify-end h-[80px]">
         <div id="bubbleSveta" class="story-bubble bubble-sveta"><div class="story-bubble-inner"></div></div>
         <svg viewBox="0 0 100 80" class="w-full h-full text-gray-500 drop-shadow-sm">
-          <!-- Дорожка -->
           <rect x="10" y="65" width="80" height="8" rx="3" fill="#475569" />
           <line x1="15" y1="68" x2="85" y2="68" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 5" style="animation: spinBelt 1s linear infinite;" />
           <path d="M 10 65 L 5 73 M 90 65 L 95 73" stroke="#334155" stroke-width="3" />
-          
-          <!-- Светлана бежит -->
           <g class="anim-treadmill" style="transform-origin: 50px 60px;">
             <circle cx="50" cy="25" r="7" fill="currentColor"/>
             <path d="M 50 32 L 50 50" stroke="currentColor" stroke-width="3"/>
@@ -308,12 +321,9 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
       <div class="relative flex flex-col items-center justify-end h-[80px]">
         <div id="bubbleMarina" class="story-bubble bubble-marina"><div class="story-bubble-inner"></div></div>
         <svg viewBox="0 0 100 80" class="w-full h-full text-gray-500 drop-shadow-sm">
-          <!-- Марина -->
           <circle cx="40" cy="30" r="8" fill="currentColor"/>
           <path d="M 40 38 L 40 60 M 40 60 L 30 75 M 40 60 L 50 75" stroke="currentColor" stroke-width="3" fill="none"/>
           <path d="M 32 25 Q 40 15 48 25 Q 50 35 40 38" stroke="currentColor" stroke-width="2" fill="none" class="anim-hairdryer"/>
-          
-          <!-- Фен -->
           <g class="anim-hairdryer" style="transform-origin: 50px 40px;">
             <rect x="50" y="35" width="15" height="10" rx="3" fill="#64748b"/>
             <path d="M 50 40 L 45 40" stroke="#64748b" stroke-width="4"/>
@@ -329,12 +339,10 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
         <svg viewBox="0 0 100 80" class="w-full h-full text-gray-500 drop-shadow-sm">
           <g class="anim-look" style="transform-origin: 50px 40px;">
             <circle cx="50" cy="30" r="8" fill="currentColor"/>
-            <!-- Глаза -->
             <circle cx="47" cy="28" r="1.5" fill="#fff" />
             <circle cx="53" cy="28" r="1.5" fill="#fff" />
             <path d="M 50 38 L 50 60 M 50 60 L 40 75 M 50 60 L 60 75" stroke="currentColor" stroke-width="3" fill="none"/>
             <path d="M 50 45 L 40 55 M 50 45 L 60 50" stroke="currentColor" stroke-width="3" class="wrench-arm" style="transform-origin: 50px 45px;"/>
-            <!-- Ключ -->
             <circle cx="62" cy="50" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
           </g>
         </svg>
@@ -345,18 +353,14 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
       <div class="relative flex flex-col items-center justify-end h-[80px]">
         <div id="bubbleSergey" class="story-bubble bubble-sergey"><div class="story-bubble-inner"></div></div>
         <svg viewBox="0 0 100 80" class="w-full h-full text-gray-500 drop-shadow-sm">
-          <!-- Стол -->
           <rect x="20" y="65" width="60" height="5" fill="#475569"/>
-          <!-- Сергей -->
           <circle cx="50" cy="25" r="8" fill="currentColor"/>
           <path d="M 50 33 L 50 55 M 50 55 L 40 65 M 50 55 L 60 65" stroke="currentColor" stroke-width="3" fill="none"/>
-          <!-- Книга ПДД -->
           <g class="anim-read" style="transform-origin: 50px 50px;">
             <rect x="35" y="45" width="30" height="20" rx="2" fill="#ef4444"/>
             <path d="M 50 45 L 50 65" stroke="#fff" stroke-width="1" opacity="0.5"/>
             <text x="50" y="55" font-size="6" fill="white" text-anchor="middle" font-weight="bold">ПДД</text>
           </g>
-          <!-- Руки -->
           <path d="M 50 40 L 35 45 M 50 40 L 65 45" stroke="currentColor" stroke-width="2"/>
         </svg>
         <span class="text-[9px] font-bold text-gray-400 mt-1">Сергей</span>
@@ -366,10 +370,10 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
     <!-- КОНЕЦ СЕТКИ -->
 
     <div class="space-y-2 relative z-10">
-      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-400 text-sm">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Сергей</div><div class="text-[8px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div></div><div class="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
-      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-sm">🔧</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Механик</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div></div><div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
-      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue dark:text-blue-400 text-sm">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Светлана</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-8 h-8 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
-      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-600 dark:text-purple-400 text-sm">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Марина</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
+      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="contact-icon w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-400 text-sm">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Сергей</div><div class="text-[8px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div></div><div class="contact-icon w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
+      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="contact-icon w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-sm">🔧</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Механик</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div></div><div class="contact-icon w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
+      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="contact-icon w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue dark:text-blue-400 text-sm">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Светлана</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="contact-icon w-8 h-8 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
+      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="contact-icon w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-600 dark:text-purple-400 text-sm">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Марина</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="contact-icon w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
     </div>
   </div>
 </div>
@@ -665,21 +669,16 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
       <!-- ПАСХАЛКА: САШКА БЕЛОБОРОДОВ -->
       <div id="bikerEasterEgg" class="biker-easter-egg" title="Сашка Белобородов" onclick="window.open('https://www.youtube.com/@AlexxxRider', '_blank'); playTickSound();">
         <svg viewBox="0 0 100 60" fill="currentColor" stroke="none">
-          <!-- Заднее колесо -->
           <circle cx="20" cy="45" r="15" fill="#1e293b" stroke="#475569" stroke-width="3"/>
           <circle cx="20" cy="45" r="4" fill="#cbd5e1"/>
-          <!-- Переднее колесо (поднято) -->
           <circle cx="85" cy="15" r="12" fill="#1e293b" stroke="#475569" stroke-width="3"/>
           <circle cx="85" cy="15" r="3" fill="#cbd5e1"/>
-          <!-- Рама -->
           <path d="M 20 45 L 45 30 L 60 30 L 75 20" stroke="#0f172a" stroke-width="4" stroke-linecap="round" fill="none"/>
           <path d="M 45 30 L 50 50 L 75 20" stroke="#334155" stroke-width="3" stroke-linecap="round" fill="none"/>
-          <!-- Байкер -->
-          <circle cx="55" cy="10" r="6" fill="#0f172a"/> <!-- Голова -->
-          <path d="M 55 16 L 45 30" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/> <!-- Тело -->
-          <path d="M 45 30 L 25 45" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/> <!-- Нога -->
-          <path d="M 55 20 L 70 25" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/> <!-- Рука -->
-          <!-- Выхлоп -->
+          <circle cx="55" cy="10" r="6" fill="#0f172a"/>
+          <path d="M 55 16 L 45 30" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+          <path d="M 45 30 L 25 45" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+          <path d="M 55 20 L 70 25" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
           <path d="M 10 45 L 0 40 M 10 48 L -5 45" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
         </svg>
       </div>
@@ -1196,7 +1195,7 @@ function triggerModalAction(actor, action) {
 async function showModalBubble(actor, text, duration) {
     if (!isModalStoryPlaying) return;
     const target = document.getElementById('bubble' + actor.charAt(0).toUpperCase() + actor.slice(1));
-    if (!target) return;
+    if (!target) { console.warn('Bubble not found for', actor); return; }
     
     target.querySelector('.story-bubble-inner').innerText = text;
     target.classList.add('active');
@@ -1374,12 +1373,12 @@ function buildCitySlider() {
 }
 window.filterByTechSupport = function() {
   isTechMode = true; selectedTechType = 'all'; searchInput.value = ''; clearSearchBtn.classList.add('hidden');
-  document.querySelectorAll('.truck-chip').forEach(el => { if (el.getAttribute('data-city') === 'TECH_SUPPORT') { el.classList.add('active'); if (!isMusicPlaying) el.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'}); } else el.classList.remove('active'); });
+  document.querySelectorAll('.truck-chip').forEach(el => { if (el.getAttribute('data-city') === 'TECH_SUPPORT') { el.classList.add('active'); } else el.classList.remove('active'); });
   window.scrollTo({top: 0, behavior: 'smooth'}); renderCards();
 };
 window.filterByCity = function(city) {
   isTechMode = false; selectedCityFilter = city; searchInput.value = ''; clearSearchBtn.classList.add('hidden');
-  document.querySelectorAll('.truck-chip').forEach(el => { if (el.getAttribute('data-city') === city) { el.classList.add('active'); if (!isMusicPlaying) el.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'}); } else el.classList.remove('active'); });
+  document.querySelectorAll('.truck-chip').forEach(el => { if (el.getAttribute('data-city') === city) { el.classList.add('active'); } else el.classList.remove('active'); });
   window.scrollTo({top: 0, behavior: 'smooth'}); renderCards();
 };
 let favorites = [];
