@@ -858,12 +858,10 @@ window.openApproachMap = function(url) {
   playTickSound(); if (url && url !== 'undefined' && url !== 'null' && url.trim() !== '') { let finalUrl = url; const m = url.match(/um=constructor%3A([a-zA-Z0-9_-]+)/); if (m && m[1]) finalUrl = `https://yandex.ru/map-widget/v1/?um=constructor%3A${m[1]}`; window.open(finalUrl, '_blank'); } else showToast("Схема заезда ещё не добавлена 🛠");
 };
 
-// УЛУЧШЕННАЯ НАВИГАЦИЯ (Поддержка координат)
 let currentNavQuery = '';
 let currentNavCoords = null;
 
 window.openNavModal = function(query) {
-  // Проверяем, переданы ли координаты (например "56.8197,60.6728")
   if (query && query.match(/^-?\d+\.\d+,\s*-?\d+\.\d+$/)) {
     currentNavCoords = query.split(',').map(s => s.trim());
     currentNavQuery = query;
@@ -1030,9 +1028,7 @@ function renderCards() {
       const dTag = (window.isSortedByDistance && st.distance !== undefined && st.distance !== 999999) ? `<span class="text-[11px] font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">${st.distance.toFixed(1)} км</span>` : '';
       const phoneLink = st.phone ? `<a href="tel:${st.phone.replace(/[^0-9+]/g, '')}" class="text-[10px] font-bold text-blue-600 dark:text-blue-400 underline ml-1">📞 ${st.phone}</a>` : '';
       
-      // ИСПОЛЬЗУЕМ КООРДИНАТЫ, ЕСЛИ ЕСТЬ, ДЛЯ ТОЧНОГО МАРШРУТА
       const navQuery = (st.lat && st.lon) ? `${st.lat},${st.lon}` : st.address;
-      // Не кодируем координаты через encodeURIComponent, чтобы навигатор их понял
       const navAddr = navQuery; 
       
       let colorClass = 'card-type-kafe';
@@ -1075,12 +1071,11 @@ function renderCards() {
       const rc1 = store.rc1 !== '-' ? `<div class="flex flex-col items-end"><span class="px-2 py-1 bg-emerald-500 text-white font-bold rounded-md text-[10px]">${store.rc1}</span>${getTimeLeftHtml(store.rc1)}</div>` : '<span class="text-gray-300 font-bold">—</span>';
       const cleanAddr = store.address.replace('ООО "Лента", ','').replace('ООО "Лента" ','').replace('РЦ "Монетка", ','');
       
-      // ИСПОЛЬЗУЕМ КООРДИНАТЫ ДЛЯ МАГАЗИНОВ
       let navQ = getSmartNavQuery(store.city, store.address, store.tk);
       const coords = window.storeCoords ? window.storeCoords[store.tk] : null;
       if (coords) navQ = `${coords.lat},${coords.lon}`;
       
-      const encQ = navQ; // Не кодируем координаты
+      const encQ = navQ;
       const routeUrl = customRoutes[store.tk] || null;
       const dTag = (window.isSortedByDistance && store.distance !== undefined && store.distance !== 999999) ? `<span class="text-[11px] font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">${store.distance.toFixed(1)} км</span>` : '';
       const extraBtn = brand === "МОНЕТКА" ? `<button onclick="openMonetkaModal();" class="mt-3 w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-orange-50 text-orange-600 border border-orange-200 rounded-xl text-xs font-bold tactile-btn">📖 Правила выгрузки</button>` : '';
@@ -1111,22 +1106,28 @@ function getDropdownItemHTML(item, isTech) {
   return `<div class="flex items-center gap-2 mb-1"><span class="text-[10px] ${badge} px-2 py-0.5 rounded font-black uppercase">${num}</span><span class="font-bold text-xs text-lentaBlue dark:text-blue-300">${item.city}</span></div><div class="text-[11px] text-gray-500 leading-tight">${clean}</div>`;
 }
 
-// УМНЫЙ ПОИСК (Автопереключение на техпомощь)
+// ИСПРАВЛЕННЫЙ ПОИСК
 const handleSearchInput = function() {
   let v = this.value.toLowerCase().trim().replace(/['"`]/g, '').replace('окэй','окей');
   
-  // Если пользователь ищет что-то, чего нет в магазинах, но есть в Техпомощи
-  if (!isTechMode && v.length > 2) {
-      const isTechMatch = getTechStations().some(st => 
-          `${st.name} ${st.address} ${st.city} ${st.desc}`.toLowerCase().includes(v)
-      );
-      if (isTechMatch) {
-          isTechMode = true;
+  if (v.length > 0) {
+      // Сбрасываем фильтр при вводе текста, чтобы искать везде
+      if (isTechMode && selectedTechType !== 'all') {
           selectedTechType = 'all';
-          document.querySelectorAll('.truck-chip').forEach(el => {
-              if (el.getAttribute('data-city') === 'TECH_SUPPORT') el.classList.add('active');
-              else el.classList.remove('active');
-          });
+      }
+      
+      if (!isTechMode) {
+          const isTechMatch = getTechStations().some(st => 
+              `${st.name} ${st.address} ${st.city} ${st.desc}`.toLowerCase().includes(v)
+          );
+          if (isTechMatch) {
+              isTechMode = true;
+              selectedTechType = 'all';
+              document.querySelectorAll('.truck-chip').forEach(el => {
+                  if (el.getAttribute('data-city') === 'TECH_SUPPORT') el.classList.add('active');
+                  else el.classList.remove('active');
+              });
+          }
       }
   }
 
@@ -1152,13 +1153,11 @@ window.startVoiceSearch = function() {
     r.onresult = (ev) => { 
       let rawText = ev.results[0][0].transcript.toLowerCase().replace(/ё/g, 'е'); 
       
-      // 1. Распознавание чисел
       let s = rawText.replace(/\bсто\b/gi,'100').replace(/\bдвести\b/gi,'200').replace(/\bтриста\b/gi,'300')
                       .replace(/\bчетыреста\b/gi,'400').replace(/\bпятьсот\b/gi,'500').replace(/\bшестьсот\b/gi,'600')
                       .replace(/\bсемьсот\b/gi,'700').replace(/\bвосемьсот\b/gi,'800').replace(/\bдевятьсот\b/gi,'900')
                       .replace(/двести тридцатый/gi, '230').replace(/двести тридцать/gi, '230');
       
-      // 2. Словарь синонимов для Техпомощи
       const techSynonyms = {
         'шинк': 'шиномонтаж', 'колес': 'шиномонтаж', 'покрышк': 'шиномонтаж', 'резин': 'шиномонтаж',
         'поесть': 'кафе', 'покушать': 'кафе', 'столов': 'кафе', 'кушать': 'кафе', 'обед': 'кафе', 'перекусить': 'кафе',
@@ -1172,12 +1171,10 @@ window.startVoiceSearch = function() {
         if (s.includes(key)) { s += ' ' + value; isTechQuery = true; }
       }
       
-      // Прямое распознавание имен точек техпомощи
       if (s.includes('уют') || s.includes('туртас') || s.includes('ман') || s.includes('камаз')) {
           isTechQuery = true;
       }
       
-      // 3. Команда "Ближайшие"
       if (s.includes('ближайш') || s.includes('рядом') || s.includes('около меня')) {
         if (!window.isSortedByDistance) sortByNearest();
       }
@@ -1185,7 +1182,7 @@ window.startVoiceSearch = function() {
       const storeKeywords = ['лента', 'монетка', 'окей', 'рц', 'тк', 'молл'];
       let isStoreQuery = storeKeywords.some(kw => s.includes(kw));
       
-      // Переключение режимов
+      // Переключение режимов с обязательным сбросом фильтра
       if (isTechQuery && !isStoreQuery) {
         if (!isTechMode) {
           isTechMode = true;
@@ -1194,6 +1191,7 @@ window.startVoiceSearch = function() {
             else el.classList.remove('active');
           });
         }
+        selectedTechType = 'all'; // Сброс фильтра
       } else if (isStoreQuery && !isTechQuery) {
         if (isTechMode) {
           isTechMode = false;
