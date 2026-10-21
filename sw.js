@@ -1,5 +1,4 @@
-
-const CACHE_NAME = 'lenta-cache-v14'; // Версия поднята для принудительного обновления
+const CACHE_NAME = 'lenta-cache-v14'; // Версия поднята
 const ASSETS = [
   './',
   './index.html',
@@ -12,8 +11,7 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
-  // ВАЖНО: Мы убрали self.skipWaiting() отсюда!
-  // Теперь новая версия будет терпеливо ждать, пока пользователь сам не нажмет "Обновить".
+  // НЕ вызываем skipWaiting() здесь, чтобы приложение ждало кнопку "Обновить"
   e.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(ASSETS);
@@ -35,7 +33,7 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-// Слушаем команду от index.html: если пришел сигнал SKIP_WAITING, значит пользователь нажал кнопку.
+// Ждем команду от index.html для запуска обновления
 self.addEventListener('message', (event) => {
   if (event.data === 'SKIP_WAITING') {
     self.skipWaiting();
