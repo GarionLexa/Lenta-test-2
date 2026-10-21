@@ -152,21 +152,18 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .wrench-arm { animation: wrenchMotion 0.6s infinite alternate ease-in-out; }
 @keyframes wrenchMotion { 0% { transform: rotate(-15deg); } 100% { transform: rotate(20deg); } }
 
-/* NEW ANIMATIONS */
-.laughing { animation: bodyLaugh 0.3s infinite alternate; }
-@keyframes bodyLaugh { 0% { transform: translateY(0) scaleY(1); } 100% { transform: translateY(-2px) scaleY(1.05); } }
+/* NEW ANIMATIONS FOR CONTACTS MODAL */
+@keyframes runTreadmill { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+.anim-treadmill { animation: runTreadmill 0.4s infinite ease-in-out; }
+@keyframes spinBelt { 100% { stroke-dashoffset: -20; } }
+@keyframes blowHair { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+.anim-hairdryer { animation: blowHair 0.15s infinite alternate; }
+@keyframes lookAround { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
+.anim-look { animation: lookAround 3s infinite ease-in-out; }
+@keyframes readBook { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(2deg); } }
+.anim-read { animation: readBook 2s infinite ease-in-out; }
 
-.anim-bounce { animation: bounceAct 0.4s infinite alternate cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-@keyframes bounceAct { 0% { transform: translateY(0); } 100% { transform: translateY(-8px); } }
-
-.anim-shake { animation: shakeAct 0.2s infinite alternate; }
-@keyframes shakeAct { 0% { transform: rotate(-3deg); } 100% { transform: rotate(3deg); } }
-
-.sweat-drop { opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: translateY(-5px); }
-.show-sweat { opacity: 1; transform: translateY(0); animation: dripDown 1.5s forwards; }
-@keyframes dripDown { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
-
-/* ПУЗЫРИ */
+/* Story bubble */
 .story-bubble { 
   position: absolute; 
   background: white; 
@@ -174,34 +171,32 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
   color: #18181b; 
   font-size: 11px; 
   font-weight: 700; 
-  padding: 8px 12px; 
-  border-radius: 16px; 
-  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); 
+  padding: 6px 10px; 
+  border-radius: 12px; 
+  box-shadow: 0 4px 15px -3px rgba(0,0,0,0.1); 
   opacity: 0; 
   pointer-events: none; 
   z-index: 9999; 
-  max-width: 280px; 
+  max-width: 120px; 
   width: max-content;
   white-space: normal; 
   word-break: break-word; 
   text-align: center; 
-  line-height: 1.3; 
+  line-height: 1.2; 
   transition: all 0.3s cubic-bezier(0.4,0,0.2,1); 
 }
 .dark .story-bubble { background: #27272a; border-color: #3f3f46; color: #f4f4f5; }
 
-.story-bubble.actor-sveta { bottom: 100%; left: 0; transform: scale(0.9) translateY(10px); }
-.story-bubble.actor-sveta.active { transform: scale(1) translateY(0); opacity: 1; }
-.story-bubble.actor-marina { bottom: 100%; right: 0; transform: scale(0.9) translateY(10px); }
-.story-bubble.actor-marina.active { transform: scale(1) translateY(0); opacity: 1; }
-.story-bubble.actor-mech { bottom: 100%; left: 50%; margin-left: -60px; transform: scale(0.9) translateY(10px); }
-.story-bubble.actor-mech.active { transform: scale(1) translateY(0); opacity: 1; }
+.story-bubble.active { transform: scale(1) translateY(0) !important; opacity: 1 !important; }
 
-.story-bubble::after { content: ''; position: absolute; top: 100%; border-width: 5px; border-style: solid; border-color: white transparent transparent transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05)); }
-.dark .story-bubble::after { border-color: #27272a transparent transparent transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); }
-.story-bubble.actor-sveta::after { left: 40px; }
-.story-bubble.actor-marina::after { right: 40px; }
-.story-bubble.actor-mech::after { left: 50%; margin-left: -5px; }
+.story-bubble::after { content: ''; position: absolute; top: 100%; border-width: 4px; border-style: solid; border-color: white transparent transparent transparent; }
+.dark .story-bubble::after { border-color: #27272a transparent transparent transparent; }
+
+/* Позиции для пузырей в сетке 2х2 */
+.bubble-sveta { bottom: 100%; left: 0; margin-bottom: 5px; transform: scale(0.9) translateY(5px); }
+.bubble-marina { bottom: 100%; right: 0; margin-bottom: 5px; transform: scale(0.9) translateY(5px); }
+.bubble-mech { bottom: 100%; left: 0; margin-bottom: 5px; transform: scale(0.9) translateY(5px); }
+.bubble-sergey { bottom: 100%; right: 0; margin-bottom: 5px; transform: scale(0.9) translateY(5px); }
 
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -257,42 +252,102 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   </div>
 </div>
 
-<!-- Контакты -->
+<!-- Контакты (Обновленный с 4 сценками) -->
 <div id="contactsModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-  <div class="rounded-[32px] p-6 max-w-sm w-full relative animate-reveal glass-panel shadow-2xl max-h-[90vh] overflow-y-auto hide-scrollbar">
+  <div class="rounded-[32px] p-5 max-w-md w-full relative animate-reveal glass-panel shadow-2xl max-h-[90vh] overflow-y-auto hide-scrollbar">
     <button onclick="closeContactsModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-50"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
     <h3 class="text-xl font-display font-extrabold text-lentaDark dark:text-white mb-1 uppercase mt-2 text-center">Контакты</h3>
     <p class="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium text-center">Кому звоним?</p>
     
-    <!-- Анимированная сценка внутри окна -->
-    <div class="relative w-full h-[130px] mb-4 flex flex-col items-center justify-end overflow-visible">
-        <!-- Пузыри для диалогов в модалке -->
-        <div id="modalBubbleSveta" class="story-bubble actor-sveta" style="bottom: 100%; left: 0;"><div class="story-bubble-inner"></div></div>
-        <div id="modalBubbleMarina" class="story-bubble actor-marina" style="bottom: 100%; right: 0;"><div class="story-bubble-inner"></div></div>
-        <div id="modalBubbleMech" class="story-bubble actor-mech" style="bottom: 100%; left: 50%; margin-left: -60px;"><div class="story-bubble-inner"></div></div>
-
-        <!-- SVG персонажи -->
-        <svg viewBox="0 0 240 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-64 h-full text-gray-500 dark:text-gray-400 overflow-visible drop-shadow-sm" id="modalSvgElement">
-          <g id="modalGirlsGroup">
-            <path d="M 15 48 L 85 48" stroke-width="2"/>
-            <g id="modalSvetaBody" style="transform-origin: 30px 48px;"><rect x="15" y="32" width="10" height="7" rx="1"/><path d="M 20 39 V 48"/><circle cx="35" cy="22" r="5"/><path d="M 35 27 V 43"/><path d="M 35 43 L 30 55 M 35 43 L 40 55"/><path d="M 30 43 L 40 43 Z" fill="currentColor" stroke-width="1"/><g class="arm-typing" style="transform-origin: 35px 29px;"><path d="M 35 29 L 28 35 L 22 36"/><path d="M 35 29 L 25 36 L 20 38"/></g></g>
-            <g id="modalMarinaBody" style="transform-origin: 70px 48px;"><rect x="75" y="32" width="10" height="7" rx="1"/><path d="M 80 39 V 48"/><circle cx="60" cy="22" r="5"/><path d="M 55 22 A 5 5 0 0 1 65 22" stroke-width="2"/><path d="M 60 27 V 43"/><path d="M 60 43 L 55 55 M 60 43 L 65 55"/><path d="M 55 43 L 65 43 Z" fill="currentColor" stroke-width="1"/><g class="arm-typing-delay" style="transform-origin: 60px 29px;"><path d="M 60 29 L 68 35 L 75 36"/><path d="M 60 29 L 71 36 L 78 38"/></g></g>
-          </g>
-          <g id="modalMechGroup">
-            <g class="juggling-item jug-1"><circle cx="155" cy="10" r="3" fill="#9ca3af" stroke="none"/></g>
-            <g class="juggling-item jug-2"><rect x="170" y="5" width="5" height="5" rx="1" fill="#fbbf24" stroke="none" transform="rotate(45 172.5 7.5)"/></g>
-            <g class="juggling-item jug-3"><path d="M 180 15 L 185 10 L 190 15" stroke="#6b7280" stroke-width="2" fill="none"/></g>
-            <g id="modalMechBody" style="transform-origin: 170px 55px;"><circle cx="170" cy="22" r="5"/><path d="M 165 18 L 175 18 L 173 22 Z" fill="currentColor"/><path d="M 170 27 V 45"/><path d="M 170 45 L 163 55 M 170 45 L 177 55"/><g class="wrench-arm" style="transform-origin: 170px 29px;"><path d="M 170 29 L 155 36"/><path d="M 157 34 L 150 40" stroke-width="2"/><path d="M 148 37 C 152 35, 153 42, 150 40" stroke-width="2" fill="none"/></g><path d="M 170 29 L 178 35 L 172 40"/><path id="modalSweatDrop" d="M 176 16 Q 178 20 176 22 Q 174 20 176 16 Z" fill="#38bdf8" stroke="none" class="sweat-drop"/></g><circle cx="195" cy="45" r="10" stroke-width="3"/><circle cx="195" cy="45" r="3" fill="currentColor" stroke="none"/><path d="M 185 55 L 205 55" stroke-width="1.5"/>
+    <!-- СЕТКА 2x2 С АНИМАЦИЯМИ -->
+    <div class="grid grid-cols-2 gap-4 mb-4 mt-2 bg-white/30 dark:bg-black/20 rounded-2xl p-3 border border-white/40 dark:border-white/5 shadow-inner relative">
+      
+      <!-- Светлана (Беговая дорожка) -->
+      <div class="relative flex flex-col items-center justify-end h-[80px]">
+        <div id="bubbleSveta" class="story-bubble bubble-sveta"><div class="story-bubble-inner"></div></div>
+        <svg viewBox="0 0 100 80" class="w-full h-full text-gray-500 drop-shadow-sm">
+          <!-- Дорожка -->
+          <rect x="10" y="65" width="80" height="8" rx="3" fill="#475569" />
+          <line x1="15" y1="68" x2="85" y2="68" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 5" style="animation: spinBelt 1s linear infinite;" />
+          <path d="M 10 65 L 5 73 M 90 65 L 95 73" stroke="#334155" stroke-width="3" />
+          
+          <!-- Светлана бежит -->
+          <g class="anim-treadmill" style="transform-origin: 50px 60px;">
+            <circle cx="50" cy="25" r="7" fill="currentColor"/>
+            <path d="M 50 32 L 50 50" stroke="currentColor" stroke-width="3"/>
+            <path d="M 50 50 L 40 60 M 50 50 L 60 60" stroke="currentColor" stroke-width="3"/>
+            <path d="M 50 38 L 35 45 M 50 38 L 65 40" stroke="currentColor" stroke-width="3" class="arm-typing"/>
           </g>
         </svg>
-    </div>
-    <!-- Конец сценки -->
+        <span class="text-[9px] font-bold text-gray-400 mt-1">Светлана</span>
+      </div>
 
-    <div class="space-y-3 relative z-10">
-      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-400 text-lg">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Сергей</div><div class="text-[9px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div></div><div class="w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
-      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-lg">🔧</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Механик</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div></div><div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
-      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue dark:text-blue-400 text-lg">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Светлана</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-10 h-10 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
-      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-600 dark:text-purple-400 text-lg">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Марина</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-10 h-10 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
+      <!-- Марина (Фен) -->
+      <div class="relative flex flex-col items-center justify-end h-[80px]">
+        <div id="bubbleMarina" class="story-bubble bubble-marina"><div class="story-bubble-inner"></div></div>
+        <svg viewBox="0 0 100 80" class="w-full h-full text-gray-500 drop-shadow-sm">
+          <!-- Марина -->
+          <circle cx="40" cy="30" r="8" fill="currentColor"/>
+          <path d="M 40 38 L 40 60 M 40 60 L 30 75 M 40 60 L 50 75" stroke="currentColor" stroke-width="3" fill="none"/>
+          <path d="M 32 25 Q 40 15 48 25 Q 50 35 40 38" stroke="currentColor" stroke-width="2" fill="none" class="anim-hairdryer"/>
+          
+          <!-- Фен -->
+          <g class="anim-hairdryer" style="transform-origin: 50px 40px;">
+            <rect x="50" y="35" width="15" height="10" rx="3" fill="#64748b"/>
+            <path d="M 50 40 L 45 40" stroke="#64748b" stroke-width="4"/>
+            <path d="M 65 40 L 75 35 M 65 40 L 75 45" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+          </g>
+        </svg>
+        <span class="text-[9px] font-bold text-gray-400 mt-1">Марина</span>
+      </div>
+
+      <!-- Механик (Смотрит) -->
+      <div class="relative flex flex-col items-center justify-end h-[80px]">
+        <div id="bubbleMech" class="story-bubble bubble-mech"><div class="story-bubble-inner"></div></div>
+        <svg viewBox="0 0 100 80" class="w-full h-full text-gray-500 drop-shadow-sm">
+          <g class="anim-look" style="transform-origin: 50px 40px;">
+            <circle cx="50" cy="30" r="8" fill="currentColor"/>
+            <!-- Глаза -->
+            <circle cx="47" cy="28" r="1.5" fill="#fff" />
+            <circle cx="53" cy="28" r="1.5" fill="#fff" />
+            <path d="M 50 38 L 50 60 M 50 60 L 40 75 M 50 60 L 60 75" stroke="currentColor" stroke-width="3" fill="none"/>
+            <path d="M 50 45 L 40 55 M 50 45 L 60 50" stroke="currentColor" stroke-width="3" class="wrench-arm" style="transform-origin: 50px 45px;"/>
+            <!-- Ключ -->
+            <circle cx="62" cy="50" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+          </g>
+        </svg>
+        <span class="text-[9px] font-bold text-gray-400 mt-1">Механик</span>
+      </div>
+
+      <!-- Сергей (Учит ПДД) -->
+      <div class="relative flex flex-col items-center justify-end h-[80px]">
+        <div id="bubbleSergey" class="story-bubble bubble-sergey"><div class="story-bubble-inner"></div></div>
+        <svg viewBox="0 0 100 80" class="w-full h-full text-gray-500 drop-shadow-sm">
+          <!-- Стол -->
+          <rect x="20" y="65" width="60" height="5" fill="#475569"/>
+          <!-- Сергей -->
+          <circle cx="50" cy="25" r="8" fill="currentColor"/>
+          <path d="M 50 33 L 50 55 M 50 55 L 40 65 M 50 55 L 60 65" stroke="currentColor" stroke-width="3" fill="none"/>
+          <!-- Книга ПДД -->
+          <g class="anim-read" style="transform-origin: 50px 50px;">
+            <rect x="35" y="45" width="30" height="20" rx="2" fill="#ef4444"/>
+            <path d="M 50 45 L 50 65" stroke="#fff" stroke-width="1" opacity="0.5"/>
+            <text x="50" y="55" font-size="6" fill="white" text-anchor="middle" font-weight="bold">ПДД</text>
+          </g>
+          <!-- Руки -->
+          <path d="M 50 40 L 35 45 M 50 40 L 65 45" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <span class="text-[9px] font-bold text-gray-400 mt-1">Сергей</span>
+      </div>
+
+    </div>
+    <!-- КОНЕЦ СЕТКИ -->
+
+    <div class="space-y-2 relative z-10">
+      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-400 text-sm">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Сергей</div><div class="text-[8px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div></div><div class="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
+      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-sm">🔧</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Механик</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div></div><div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
+      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue dark:text-blue-400 text-sm">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Светлана</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-8 h-8 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
+      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-600 dark:text-purple-400 text-sm">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Марина</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
     </div>
   </div>
 </div>
@@ -597,13 +652,22 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 
 <div id="toast-notification" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-gray-900/90 dark:bg-white/10 backdrop-blur-md text-white px-6 py-3.5 rounded-2xl shadow-2xl z-[200] font-bold text-[13px] text-center border border-white/20 dark:border-white/10 transition-all duration-300 opacity-0 scale-95 pointer-events-none whitespace-nowrap"></div>
 
-<!-- ПОДКЛЮЧЕНИЕ ВНЕШНИХ ФАЙЛОВ -->
 <script src="data.js"></script>
 <script src="data_services.js"></script>
 <script src="stories.js"></script>
 
+<!-- ВАША НОВАЯ ССЫЛКА НА СХЕМУ ЗАЕЗДА -->
 <script>
-// --- ЛОГИКА ПРИЛОЖЕНИЯ (МОДУЛЬНАЯ) ---
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.customRoutes) {
+      window.customRoutes['YOUR_TK'] = 'https://yandex.ru/maps/?um=constructor%3Af2cd3724d301f3fe3b7c39731d8a78a0374d7e5d924083e42ab669fe140f78bd&source=constructorLink';
+    }
+  });
+</script>
+<!-- ============================================== -->
+
+<script>
+// --- ЛОГИКА ПРИЛОЖЕНИЯ ---
 
 let myShifts = {};
 try { myShifts = JSON.parse(localStorage.getItem('lenta_shifts_v1')) || {}; } catch(e) { myShifts = {}; }
@@ -1043,11 +1107,10 @@ let isModalStoryPlaying = false;
 let modalStoryTimeout = null;
 
 const modalDialogues = [
-    { actor: 'sveta', text: 'Сергей на линии?', time: 2000, action: 'none' },
-    { actor: 'marina', text: 'Да, переключаю!', time: 2000, action: 'bounce' },
-    { actor: 'mech', text: 'А мне кто-нибудь позвонит? Мой ключ на 32 застрял...', time: 3000, action: 'shake' },
-    { actor: 'sveta', text: 'Сейчас наберем! 😂', time: 2000, action: 'laughing' },
-    { actor: 'marina', text: 'Механик, хватит жонглировать, бери трубку!', time: 2500, action: 'laughing' }
+    { actor: 'sveta', text: 'Ух, 5 км пробежала! 🏃‍♀️', time: 2000, action: 'run' },
+    { actor: 'sergey', text: 'Так, пункт 8.23... уступаем... 📖', time: 2500, action: 'read' },
+    { actor: 'marina', text: 'Ветер в лицо! Освежаюсь 💨', time: 2000, action: 'dry' },
+    { actor: 'mech', text: 'Эх, кто бы мне ключ подал...', time: 2500, action: 'look' }
 ];
 
 async function startModalStory() {
@@ -1074,44 +1137,19 @@ function stopModalStory() {
     clearTimeout(modalStoryTimeout);
     
     // Сбрасываем анимации и скрываем пузыри
-    ['modalBubbleSveta','modalBubbleMarina','modalBubbleMech'].forEach(id => {
+    ['bubbleSveta','bubbleMarina','bubbleMech','bubbleSergey'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.remove('active');
     });
-    ['modalSvetaBody','modalMarinaBody','modalMechBody'].forEach(id => { 
-        const el = document.getElementById(id); 
-        if (el) el.classList.remove('laughing', 'anim-bounce', 'anim-shake'); 
-    });
-    const mechGroup = document.getElementById('modalMechGroup');
-    if (mechGroup) mechGroup.classList.remove('juggling-active');
-    const sweat = document.getElementById('modalSweatDrop'); 
-    if (sweat) sweat.classList.remove('show-sweat'); 
 }
 
 function triggerModalAction(actor, action) {
-    const sveta = document.getElementById('modalSvetaBody');
-    const marina = document.getElementById('modalMarinaBody');
-    const mech = document.getElementById('modalMechBody');
-    const mechGroup = document.getElementById('modalMechGroup');
-    const sweat = document.getElementById('modalSweatDrop');
-
-    [sveta, marina, mech].forEach(el => { if(el) el.classList.remove('laughing', 'anim-bounce', 'anim-shake'); }); 
-    if(sweat) sweat.classList.remove('show-sweat'); 
-    if(mechGroup) mechGroup.classList.remove('juggling-active');
-    
-    const target = actor === 'sveta' ? sveta : actor === 'marina' ? marina : mech; 
-    if (target) {
-        if (action === 'laughing') target.classList.add('laughing');
-        if (action === 'bounce') target.classList.add('anim-bounce');
-        if (action === 'shake') target.classList.add('anim-shake');
-    }
-    if (actor === 'mech' && mechGroup) mechGroup.classList.add('juggling-active');
-    if (actor === 'mech' && action === 'sweat' && sweat) sweat.classList.add('show-sweat'); 
+    // (Анимации в CSS уже зациклены, здесь только визуальный триггер при желании)
 }
 
 async function showModalBubble(actor, text, duration) {
     if (!isModalStoryPlaying) return;
-    const target = actor === 'mech' ? document.getElementById('modalBubbleMech') : actor === 'sveta' ? document.getElementById('modalBubbleSveta') : document.getElementById('modalBubbleMarina');
+    const target = document.getElementById('bubble' + actor.charAt(0).toUpperCase() + actor.slice(1));
     if (!target) return;
     
     target.querySelector('.story-bubble-inner').innerText = text;
@@ -1338,7 +1376,6 @@ function renderCards() {
       
       const phoneLink = st.phone ? `<a href="tel:${st.phone.replace(/[^0-9+]/g, '')}" class="inline-flex items-center text-[11px] font-bold text-blue-600 dark:text-blue-400 underline decoration-blue-600/30 underline-offset-2 hover:decoration-blue-600 whitespace-nowrap mt-1">📞 ${st.phone}</a>` : '';
       
-      // ИСПРАВЛЕНО: Используем текстовый адрес + НАЗВАНИЕ для точного поиска в Яндексе
       let navAddr = st.name;
       if (st.city && !navAddr.toLowerCase().includes(st.city.toLowerCase())) {
         navAddr = st.city + ', ' + navAddr;
@@ -1363,7 +1400,6 @@ function renderCards() {
         else { iconEmoji = '⚙️'; iconBg = 'bg-violet-100 dark:bg-violet-900/50 text-violet-600 dark:text-violet-400'; }
       }
 
-      // ИСПРАВЛЕНО: Кнопка подъезда для сервисов (если есть route)
       const routeUrl = st.route || (window.customRoutes ? window.customRoutes[st.id] : null);
       
       html += `<div class="store-card volume-card animate-reveal ${colorClass} p-4">
@@ -1510,6 +1546,7 @@ window.startVoiceSearch = function() {
       const techSynonyms = {
         'шинк': 'шиномонтаж', 'колес': 'шиномонтаж', 'покрышк': 'шиномонтаж', 'резин': 'шиномонтаж',
         'поесть': 'кафе', 'покушать': 'кафе', 'столов': 'кафе', 'кушать': 'кафе', 'обед': 'кафе', 'перекусить': 'кафе',
+        'беляш': 'кафе', 'еда': 'кафе', 'голод': 'кафе', 'перекус': 'кафе', 'пирожок': 'кафе', 'столовая': 'кафе',
         'помыть': 'автомойка', 'мойк': 'автомойка', 'помыться': 'автомойка', 'баня': 'автомойка',
         'поспать': 'стоянка', 'отдохнуть': 'стоянка', 'стоянк': 'стоянка', 'парковк': 'стоянка', 'ночлег': 'стоянка',
         'починить': 'сервис', 'поломк': 'сервис', 'ремонт': 'сервис', 'сломался': 'сервис', 'техпомощь': 'сервис'
@@ -1518,6 +1555,12 @@ window.startVoiceSearch = function() {
       let isTechQuery = false;
       for (const [key, value] of Object.entries(techSynonyms)) {
         if (s.includes(key)) { s += ' ' + value; isTechQuery = true; }
+      }
+      
+      // Если сказали "стоянка с беляшами", ищем и кафе, и стоянки
+      if (s.includes('стоянка') && (s.includes('беляш') || s.includes('еда') || s.includes('поесть'))) {
+         isTechQuery = true;
+         s += ' кафе стоянка';
       }
       
       if (s.includes('уют') || s.includes('туртас') || s.includes('ман') || s.includes('камаз') || s.includes('гарион')) {
