@@ -857,16 +857,42 @@ function showToast(message) {
 window.openApproachMap = function(url) {
   playTickSound(); if (url && url !== 'undefined' && url !== 'null' && url.trim() !== '') { let finalUrl = url; const m = url.match(/um=constructor%3A([a-zA-Z0-9_-]+)/); if (m && m[1]) finalUrl = `https://yandex.ru/map-widget/v1/?um=constructor%3A${m[1]}`; window.open(finalUrl, '_blank'); } else showToast("Схема заезда ещё не добавлена 🛠");
 };
-window.openNavModal = function(query) { currentNavQuery = query; document.getElementById('navModal').classList.remove('hidden'); };
-window.closeNavModal = function() { document.getElementById('navModal').classList.add('hidden'); };
+
+// УЛУЧШЕННАЯ НАВИГАЦИЯ (Поддержка координат)
 let currentNavQuery = '';
+let currentNavCoords = null;
+
+window.openNavModal = function(query) {
+  // Проверяем, переданы ли координаты (например "56.8197,60.6728")
+  if (query && query.match(/^-?\d+\.\d+,\s*-?\d+\.\d+$/)) {
+    currentNavCoords = query.split(',').map(s => s.trim());
+    currentNavQuery = query;
+  } else {
+    currentNavCoords = null;
+    currentNavQuery = query;
+  }
+  document.getElementById('navModal').classList.remove('hidden');
+};
+
+window.closeNavModal = function() { document.getElementById('navModal').classList.add('hidden'); };
+
 window.executeNavigation = function(type) {
   playTickSound(); let navUrl = '';
-  if (type === 'yandex') navUrl = `https://yandex.ru/maps/?text=${currentNavQuery}`;
-  else if (type === '2gis') navUrl = `https://2gis.ru/search/${currentNavQuery}`;
-  else if (type === 'google') navUrl = `https://www.google.com/maps/search/?api=1&query=${currentNavQuery}`;
+  
+  if (currentNavCoords) {
+    const [lat, lon] = currentNavCoords;
+    if (type === 'yandex') navUrl = `https://yandex.ru/maps/?pt=${lon},${lat}&z=17&l=map`;
+    else if (type === '2gis') navUrl = `https://2gis.ru/geo/${lon},${lat}`;
+    else if (type === 'google') navUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+  } else {
+    if (type === 'yandex') navUrl = `https://yandex.ru/maps/?text=${currentNavQuery}`;
+    else if (type === '2gis') navUrl = `https://2gis.ru/search/${currentNavQuery}`;
+    else if (type === 'google') navUrl = `https://www.google.com/maps/search/?api=1&query=${currentNavQuery}`;
+  }
+  
   window.location.href = navUrl; closeNavModal();
 };
+
 window.shareRoute = function(tk, brandName, address, routeUrl, e) {
   if (e) e.stopPropagation(); playTickSound(); let tkString = tk !== '-' ? (brandName === "МОНЕТКА" ? `РЦ ${tk}` : (brandName === "ТЕХПОМОЩЬ" ? '' : `ТК ${tk}`)) : '';
   let text = brandName === "ТЕХПОМОЩЬ" ? `Помощь в пути:\n${tk} - ${address}` : `Схема заезда:\n${brandName} ${tkString}\n📍 ${address}`;
@@ -1006,7 +1032,8 @@ function renderCards() {
       
       // ИСПОЛЬЗУЕМ КООРДИНАТЫ, ЕСЛИ ЕСТЬ, ДЛЯ ТОЧНОГО МАРШРУТА
       const navQuery = (st.lat && st.lon) ? `${st.lat},${st.lon}` : st.address;
-      const navAddr = encodeURIComponent(navQuery);
+      // Не кодируем координаты через encodeURIComponent, чтобы навигатор их понял
+      const navAddr = navQuery; 
       
       let colorClass = 'card-type-kafe';
       if (st.type === 'СТОЯНКА') colorClass = 'card-type-stoyanka';
@@ -1053,7 +1080,7 @@ function renderCards() {
       const coords = window.storeCoords ? window.storeCoords[store.tk] : null;
       if (coords) navQ = `${coords.lat},${coords.lon}`;
       
-      const encQ = encodeURIComponent(navQ);
+      const encQ = navQ; // Не кодируем координаты
       const routeUrl = customRoutes[store.tk] || null;
       const dTag = (window.isSortedByDistance && store.distance !== undefined && store.distance !== 999999) ? `<span class="text-[11px] font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">${store.distance.toFixed(1)} км</span>` : '';
       const extraBtn = brand === "МОНЕТКА" ? `<button onclick="openMonetkaModal();" class="mt-3 w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-orange-50 text-orange-600 border border-orange-200 rounded-xl text-xs font-bold tactile-btn">📖 Правила выгрузки</button>` : '';
@@ -1083,8 +1110,26 @@ function getDropdownItemHTML(item, isTech) {
   const clean = item.address.replace('ООО "Лента", ','').replace('РЦ "Монетка", ','');
   return `<div class="flex items-center gap-2 mb-1"><span class="text-[10px] ${badge} px-2 py-0.5 rounded font-black uppercase">${num}</span><span class="font-bold text-xs text-lentaBlue dark:text-blue-300">${item.city}</span></div><div class="text-[11px] text-gray-500 leading-tight">${clean}</div>`;
 }
+
+// УМНЫЙ ПОИСК (Автопереключение на техпомощь)
 const handleSearchInput = function() {
   let v = this.value.toLowerCase().trim().replace(/['"`]/g, '').replace('окэй','окей');
+  
+  // Если пользователь ищет что-то, чего нет в магазинах, но есть в Техпомощи
+  if (!isTechMode && v.length > 2) {
+      const isTechMatch = getTechStations().some(st => 
+          `${st.name} ${st.address} ${st.city} ${st.desc}`.toLowerCase().includes(v)
+      );
+      if (isTechMatch) {
+          isTechMode = true;
+          selectedTechType = 'all';
+          document.querySelectorAll('.truck-chip').forEach(el => {
+              if (el.getAttribute('data-city') === 'TECH_SUPPORT') el.classList.add('active');
+              else el.classList.remove('active');
+          });
+      }
+  }
+
   if (/^\d+$/.test(v) && !isTechMode) { const all = document.querySelector('[data-city="all"]'); if (all && !all.classList.contains('active')) { document.querySelectorAll('.truck-chip').forEach(el => el.classList.remove('active')); all.classList.add('active'); } }
   renderCards(); autocompleteList.innerHTML = ''; if (!v) { autocompleteList.classList.add('hidden'); return; }
   const words = v.split(/\s+/).filter(w => w.length > 0); let suggestions = [];
@@ -1097,7 +1142,6 @@ const handleSearchInput = function() {
 searchInput.addEventListener('input', debounce(handleSearchInput, 250));
 document.addEventListener('click', (e) => { if (!searchInput.contains(e.target) && !autocompleteList.contains(e.target)) autocompleteList.classList.add('hidden'); });
 
-// ========== УЛУЧШЕННЫЙ ГОЛОСОВОЙ ПОИСК ==========
 window.startVoiceSearch = function() {
   const micBtn = document.getElementById('voiceSearchBtn'); const el = document.getElementById('searchInput'); const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) { showToast("Голосовой поиск не поддерживается 🎙"); return; }
@@ -1126,6 +1170,11 @@ window.startVoiceSearch = function() {
       let isTechQuery = false;
       for (const [key, value] of Object.entries(techSynonyms)) {
         if (s.includes(key)) { s += ' ' + value; isTechQuery = true; }
+      }
+      
+      // Прямое распознавание имен точек техпомощи
+      if (s.includes('уют') || s.includes('туртас') || s.includes('ман') || s.includes('камаз')) {
+          isTechQuery = true;
       }
       
       // 3. Команда "Ближайшие"
