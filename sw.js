@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lenta-cache-v10'; // ОБЯЗАТЕЛЬНО МЕНЯЙТЕ ЦИФРУ ПРИ ОБНОВЛЕНИИ
+const CACHE_NAME = 'lenta-cache-v12'; // Версия поднята! Принудительное обновление
 const ASSETS = [
   './',
   './index.html',
