@@ -174,18 +174,17 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .wrench-arm { animation: wrenchMotion 0.6s infinite alternate ease-in-out; }
 @keyframes wrenchMotion { 0% { transform: rotate(-15deg); } 100% { transform: rotate(20deg); } }
 
-/* NEW ANIMATIONS FOR CONTACTS MODAL */
-@keyframes runTreadmill { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-.anim-treadmill { animation: runTreadmill 0.4s infinite ease-in-out; }
-@keyframes spinBelt { 100% { stroke-dashoffset: -20; } }
-@keyframes blowHair { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
-.anim-hairdryer { animation: blowHair 0.15s infinite alternate; }
-@keyframes lookAround { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
-.anim-look { animation: lookAround 3s infinite ease-in-out; }
-@keyframes readBook { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(2deg); } }
-.anim-read { animation: readBook 2s infinite ease-in-out; }
+/* NEW ANIMATIONS FOR CONTACTS MODAL (PIXAR STYLE) */
+@keyframes floatSvetlana { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes floatMarina { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes floatMech { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes floatSergey { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
 
-/* АНИМАЦИЯ ИКОНОК КОНТАКТОВ */
+.anim-pixar-sveta { animation: floatSvetlana 3s infinite ease-in-out; }
+.anim-pixar-marina { animation: floatMarina 2.5s infinite ease-in-out; }
+.anim-pixar-mech { animation: floatMech 3.2s infinite ease-in-out; }
+.anim-pixar-sergey { animation: floatSergey 2.8s infinite ease-in-out; }
+
 @keyframes wiggleIcon {
   0%, 100% { transform: rotate(0deg) scale(1); }
   25% { transform: rotate(-8deg) scale(1.05); }
@@ -194,12 +193,8 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .contact-icon {
   animation: wiggleIcon 1.5s infinite ease-in-out;
 }
-.contact-icon:nth-child(2n) {
-  animation-delay: 0.2s;
-}
-.contact-icon:nth-child(3n) {
-  animation-delay: 0.4s;
-}
+.contact-icon:nth-child(2n) { animation-delay: 0.2s; }
+.contact-icon:nth-child(3n) { animation-delay: 0.4s; }
 
 /* Story bubble */
 .story-bubble { 
@@ -290,78 +285,160 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   </div>
 </div>
 
-<!-- Контакты (Обновленный с 4 сценками) -->
+<!-- Контакты (PIXAR STYLE) -->
 <div id="contactsModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
   <div class="rounded-[32px] p-5 max-w-md w-full relative animate-reveal glass-panel shadow-2xl max-h-[90vh] overflow-y-auto hide-scrollbar">
     <button onclick="closeContactsModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-50"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
     <h3 class="text-xl font-display font-extrabold text-lentaDark dark:text-white mb-1 uppercase mt-2 text-center">Контакты</h3>
     <p class="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium text-center">Кому звоним?</p>
     
-    <!-- СЕТКА 2x2 С АНИМАЦИЯМИ -->
+    <!-- СЕТКА 2x2 С АНИМАЦИЯМИ PIXAR -->
     <div class="grid grid-cols-2 gap-4 mb-4 mt-2 bg-white/30 dark:bg-black/20 rounded-2xl p-3 border border-white/40 dark:border-white/5 shadow-inner relative">
       
-      <!-- Светлана (Беговая дорожка) -->
-      <div class="relative flex flex-col items-center justify-end h-[80px]">
+      <!-- Светлана (Бег на дорожке) -->
+      <div class="relative flex flex-col items-center justify-end h-[90px]">
         <div id="bubbleSveta" class="story-bubble bubble-sveta"><div class="story-bubble-inner"></div></div>
-        <svg viewBox="0 0 100 80" class="w-full h-full text-gray-500 drop-shadow-sm">
-          <rect x="10" y="65" width="80" height="8" rx="3" fill="#475569" />
-          <line x1="15" y1="68" x2="85" y2="68" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 5" style="animation: spinBelt 1s linear infinite;" />
-          <path d="M 10 65 L 5 73 M 90 65 L 95 73" stroke="#334155" stroke-width="3" />
-          <g class="anim-treadmill" style="transform-origin: 50px 60px;">
-            <circle cx="50" cy="25" r="7" fill="currentColor"/>
-            <path d="M 50 32 L 50 50" stroke="currentColor" stroke-width="3"/>
-            <path d="M 50 50 L 40 60 M 50 50 L 60 60" stroke="currentColor" stroke-width="3"/>
-            <path d="M 50 38 L 35 45 M 50 38 L 65 40" stroke="currentColor" stroke-width="3" class="arm-typing"/>
+        <svg viewBox="0 0 100 90" class="w-full h-full overflow-visible drop-shadow-md">
+          <defs>
+            <radialGradient id="skinSveta" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#fcdbb6"/><stop offset="100%" stop-color="#d99e66"/></radialGradient>
+            <linearGradient id="bodySveta" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#1d4ed8"/></linearGradient>
+          </defs>
+          <!-- Дорожка -->
+          <rect x="5" y="80" width="90" height="8" rx="4" fill="#475569" />
+          <line x1="10" y1="84" x2="90" y2="84" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 4" style="animation: spinBelt 1s linear infinite;" />
+          
+          <!-- Светлана -->
+          <g class="anim-pixar-sveta" style="transform-origin: 50px 50px;">
+            <!-- Волосы сзади -->
+            <path d="M 30 35 Q 25 50 35 60 Q 45 65 50 55" fill="#78350f" />
+            <!-- Тело -->
+            <path d="M 35 55 L 50 70 L 65 55 Z" fill="url(#bodySveta)" />
+            <!-- Руки -->
+            <path d="M 40 60 L 25 50 M 60 60 L 75 50" stroke="url(#skinSveta)" stroke-width="6" stroke-linecap="round" />
+            <!-- Голова -->
+            <circle cx="50" cy="35" r="12" fill="url(#skinSveta)" />
+            <!-- Волосы спереди -->
+            <path d="M 38 30 Q 50 15 62 30 Q 55 25 50 35 Q 45 25 38 30 Z" fill="#78350f" />
+            <!-- Гарнитура -->
+            <path d="M 38 35 Q 35 40 38 45" stroke="#334155" stroke-width="2" fill="none" />
+            <circle cx="38" cy="38" r="2" fill="#ef4444" />
+            <!-- Глаза -->
+            <circle cx="46" cy="34" r="1.5" fill="#1e293b" />
+            <circle cx="54" cy="34" r="1.5" fill="#1e293b" />
+            <!-- Улыбка -->
+            <path d="M 47 40 Q 50 42 53 40" stroke="#1e293b" stroke-width="1" fill="none" />
+            <!-- Ноги -->
+            <path d="M 42 70 L 35 80 M 58 70 L 65 80" stroke="#1e293b" stroke-width="5" stroke-linecap="round" />
           </g>
         </svg>
         <span class="text-[9px] font-bold text-gray-400 mt-1">Светлана</span>
       </div>
 
-      <!-- Марина (Фен) -->
-      <div class="relative flex flex-col items-center justify-end h-[80px]">
+      <!-- Марина (Пьет кофе) -->
+      <div class="relative flex flex-col items-center justify-end h-[90px]">
         <div id="bubbleMarina" class="story-bubble bubble-marina"><div class="story-bubble-inner"></div></div>
-        <svg viewBox="0 0 100 80" class="w-full h-full text-gray-500 drop-shadow-sm">
-          <circle cx="40" cy="30" r="8" fill="currentColor"/>
-          <path d="M 40 38 L 40 60 M 40 60 L 30 75 M 40 60 L 50 75" stroke="currentColor" stroke-width="3" fill="none"/>
-          <path d="M 32 25 Q 40 15 48 25 Q 50 35 40 38" stroke="currentColor" stroke-width="2" fill="none" class="anim-hairdryer"/>
-          <g class="anim-hairdryer" style="transform-origin: 50px 40px;">
-            <rect x="50" y="35" width="15" height="10" rx="3" fill="#64748b"/>
-            <path d="M 50 40 L 45 40" stroke="#64748b" stroke-width="4"/>
-            <path d="M 65 40 L 75 35 M 65 40 L 75 45" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <svg viewBox="0 0 100 90" class="w-full h-full overflow-visible drop-shadow-md">
+          <defs>
+            <radialGradient id="skinMarina" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#fcdbb6"/><stop offset="100%" stop-color="#d99e66"/></radialGradient>
+            <linearGradient id="bodyMarina" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f472b6"/><stop offset="100%" stop-color="#be185d"/></linearGradient>
+          </defs>
+          <!-- Стол -->
+          <rect x="10" y="75" width="80" height="10" rx="3" fill="#94a3b8" />
+          
+          <!-- Марина -->
+          <g class="anim-pixar-marina" style="transform-origin: 50px 50px;">
+            <!-- Волосы сзади -->
+            <path d="M 35 30 Q 30 50 40 60 L 60 60 Q 70 50 65 30 Z" fill="#171717" />
+            <!-- Тело -->
+            <path d="M 35 55 L 50 75 L 65 55 Z" fill="url(#bodyMarina)" />
+            <!-- Руки -->
+            <path d="M 40 60 L 30 70 M 60 60 L 70 70" stroke="url(#skinMarina)" stroke-width="5" stroke-linecap="round" />
+            <!-- Голова -->
+            <circle cx="50" cy="35" r="12" fill="url(#skinMarina)" />
+            <!-- Волосы спереди (челка) -->
+            <path d="M 38 30 Q 50 20 62 30 Q 55 35 50 35 Q 45 35 38 30 Z" fill="#171717" />
+            <!-- Глаза -->
+            <circle cx="46" cy="34" r="1.5" fill="#1e293b" />
+            <circle cx="54" cy="34" r="1.5" fill="#1e293b" />
+            <!-- Улыбка -->
+            <path d="M 47 40 Q 50 42 53 40" stroke="#1e293b" stroke-width="1" fill="none" />
+            <!-- Кружка -->
+            <rect x="65" y="65" width="12" height="14" rx="2" fill="#fff" stroke="#cbd5e1" stroke-width="1" />
+            <path d="M 77 68 Q 82 68 82 72 Q 82 76 77 76" stroke="#cbd5e1" stroke-width="2" fill="none" />
+            <!-- Пар -->
+            <path d="M 68 62 Q 70 58 68 55 M 72 62 Q 74 58 72 55" stroke="#94a3b8" stroke-width="1.5" fill="none" class="anim-hairdryer" />
           </g>
         </svg>
         <span class="text-[9px] font-bold text-gray-400 mt-1">Марина</span>
       </div>
 
-      <!-- Механик (Смотрит) -->
-      <div class="relative flex flex-col items-center justify-end h-[80px]">
+      <!-- Механик (С гаечным ключом) -->
+      <div class="relative flex flex-col items-center justify-end h-[90px]">
         <div id="bubbleMech" class="story-bubble bubble-mech"><div class="story-bubble-inner"></div></div>
-        <svg viewBox="0 0 100 80" class="w-full h-full text-gray-500 drop-shadow-sm">
-          <g class="anim-look" style="transform-origin: 50px 40px;">
-            <circle cx="50" cy="30" r="8" fill="currentColor"/>
-            <circle cx="47" cy="28" r="1.5" fill="#fff" />
-            <circle cx="53" cy="28" r="1.5" fill="#fff" />
-            <path d="M 50 38 L 50 60 M 50 60 L 40 75 M 50 60 L 60 75" stroke="currentColor" stroke-width="3" fill="none"/>
-            <path d="M 50 45 L 40 55 M 50 45 L 60 50" stroke="currentColor" stroke-width="3" class="wrench-arm" style="transform-origin: 50px 45px;"/>
-            <circle cx="62" cy="50" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+        <svg viewBox="0 0 100 90" class="w-full h-full overflow-visible drop-shadow-md">
+          <defs>
+            <radialGradient id="skinMech" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#fcdbb6"/><stop offset="100%" stop-color="#d99e66"/></radialGradient>
+            <linearGradient id="bodyMech" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4ade80"/><stop offset="100%" stop-color="#166534"/></linearGradient>
+          </defs>
+          
+          <!-- Механик -->
+          <g class="anim-pixar-mech" style="transform-origin: 50px 50px;">
+            <!-- Тело -->
+            <path d="M 35 55 L 50 75 L 65 55 Z" fill="url(#bodyMech)" />
+            <!-- Руки -->
+            <path d="M 40 60 L 25 55 M 60 60 L 70 45" stroke="url(#skinMech)" stroke-width="5" stroke-linecap="round" />
+            <!-- Голова -->
+            <circle cx="50" cy="35" r="12" fill="url(#skinMech)" />
+            <!-- Кепка -->
+            <path d="M 36 30 Q 50 20 64 30 L 66 28 Q 50 15 34 28 Z" fill="#1e293b" />
+            <path d="M 36 30 L 30 32" stroke="#1e293b" stroke-width="3" stroke-linecap="round" />
+            <!-- Глаза -->
+            <circle cx="46" cy="34" r="1.5" fill="#1e293b" />
+            <circle cx="54" cy="34" r="1.5" fill="#1e293b" />
+            <!-- Усы -->
+            <path d="M 44 40 Q 50 43 56 40" stroke="#78350f" stroke-width="2" fill="none" stroke-linecap="round" />
+            <!-- Ключ -->
+            <g class="wrench-arm" style="transform-origin: 70px 45px;">
+              <rect x="68" y="30" width="4" height="20" fill="#94a3b8" rx="1" />
+              <circle cx="70" cy="30" r="5" stroke="#94a3b8" stroke-width="3" fill="none" />
+            </g>
+            <!-- Капли пота -->
+            <path d="M 62 25 Q 63 28 62 30 Q 61 28 62 25 Z" fill="#38bdf8" class="sweat-drop show-sweat" />
           </g>
         </svg>
         <span class="text-[9px] font-bold text-gray-400 mt-1">Механик</span>
       </div>
 
-      <!-- Сергей (Учит ПДД) -->
-      <div class="relative flex flex-col items-center justify-end h-[80px]">
+      <!-- Сергей (С книгой ПДД) -->
+      <div class="relative flex flex-col items-center justify-end h-[90px]">
         <div id="bubbleSergey" class="story-bubble bubble-sergey"><div class="story-bubble-inner"></div></div>
-        <svg viewBox="0 0 100 80" class="w-full h-full text-gray-500 drop-shadow-sm">
-          <rect x="20" y="65" width="60" height="5" fill="#475569"/>
-          <circle cx="50" cy="25" r="8" fill="currentColor"/>
-          <path d="M 50 33 L 50 55 M 50 55 L 40 65 M 50 55 L 60 65" stroke="currentColor" stroke-width="3" fill="none"/>
-          <g class="anim-read" style="transform-origin: 50px 50px;">
-            <rect x="35" y="45" width="30" height="20" rx="2" fill="#ef4444"/>
-            <path d="M 50 45 L 50 65" stroke="#fff" stroke-width="1" opacity="0.5"/>
-            <text x="50" y="55" font-size="6" fill="white" text-anchor="middle" font-weight="bold">ПДД</text>
+        <svg viewBox="0 0 100 90" class="w-full h-full overflow-visible drop-shadow-md">
+          <defs>
+            <radialGradient id="skinSergey" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#fcdbb6"/><stop offset="100%" stop-color="#d99e66"/></radialGradient>
+            <linearGradient id="bodySergey" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fb923c"/><stop offset="100%" stop-color="#c2410c"/></linearGradient>
+          </defs>
+          
+          <!-- Сергей -->
+          <g class="anim-pixar-sergey" style="transform-origin: 50px 50px;">
+            <!-- Тело -->
+            <path d="M 35 55 L 50 75 L 65 55 Z" fill="url(#bodySergey)" />
+            <!-- Руки -->
+            <path d="M 40 60 L 30 70 M 60 60 L 70 70" stroke="url(#skinSergey)" stroke-width="5" stroke-linecap="round" />
+            <!-- Голова -->
+            <circle cx="50" cy="35" r="12" fill="url(#skinSergey)" />
+            <!-- Волосы -->
+            <path d="M 38 30 Q 50 20 62 30 Q 55 25 50 35 Q 45 25 38 30 Z" fill="#451a03" />
+            <!-- Очки -->
+            <circle cx="46" cy="34" r="4" stroke="#1e293b" stroke-width="1.5" fill="none" />
+            <circle cx="54" cy="34" r="4" stroke="#1e293b" stroke-width="1.5" fill="none" />
+            <path d="M 50 34 L 50 34" stroke="#1e293b" stroke-width="1.5" />
+            <!-- Книга -->
+            <g class="anim-read" style="transform-origin: 50px 70px;">
+              <rect x="35" y="60" width="30" height="20" rx="2" fill="#ef4444" />
+              <path d="M 50 60 L 50 80" stroke="#fff" stroke-width="1.5" opacity="0.5" />
+              <text x="50" y="72" font-size="7" fill="white" text-anchor="middle" font-weight="bold">ПДД</text>
+            </g>
           </g>
-          <path d="M 50 40 L 35 45 M 50 40 L 65 45" stroke="currentColor" stroke-width="2"/>
         </svg>
         <span class="text-[9px] font-bold text-gray-400 mt-1">Сергей</span>
       </div>
@@ -370,10 +447,10 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
     <!-- КОНЕЦ СЕТКИ -->
 
     <div class="space-y-2 relative z-10">
-      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="contact-icon w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-400 text-sm">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Сергей</div><div class="text-[8px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div></div><div class="contact-icon w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
-      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="contact-icon w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-sm">🔧</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Механик</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div></div><div class="contact-icon w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
-      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="contact-icon w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue dark:text-blue-400 text-sm">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Светлана</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="contact-icon w-8 h-8 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
-      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="contact-icon w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-600 dark:text-purple-400 text-sm">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Марина</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="contact-icon w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
+      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="contact-icon w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-400 text-sm shadow-inner">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Сергей</div><div class="text-[8px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div></div><div class="contact-icon w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
+      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="contact-icon w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-sm shadow-inner">🔧</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Механик</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div></div><div class="contact-icon w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
+      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="contact-icon w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue dark:text-blue-400 text-sm shadow-inner">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Светлана</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="contact-icon w-8 h-8 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
+      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="contact-icon w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-600 dark:text-purple-400 text-sm shadow-inner">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Марина</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="contact-icon w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
     </div>
   </div>
 </div>
@@ -1253,7 +1330,7 @@ window.executeNavigation = function(type) {
   } else {
     const encodedQuery = encodeURIComponent(currentNavQuery);
     if (type === 'yandex') {
-      navUrl = `https://yandex.ru/maps/?text=${encodedQuery}`;
+      navUrl = `https://yandex.ru/maps/?mode=search&text=${encodedQuery}`;
     } else if (type === '2gis') {
       navUrl = `https://2gis.ru/search/${encodedQuery}`;
     } else if (type === 'google') {
