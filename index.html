@@ -191,8 +191,9 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 #updateBanner { animation: slideDownBanner 0.4s cubic-bezier(0.16,1,0.3,1); }
 @keyframes slideDownBanner { 0% { transform: translate(-50%,-120%); } 100% { transform: translate(-50%,0); } }
 
-#calendarViewport { position: relative; overflow: hidden; touch-action: pan-y; }
-#calendarGrid { will-change: transform, opacity; }
+/* КАЛЕНДАРЬ: Фиксированная высота, чтобы он не прыгал */
+#calendarViewport { position: relative; overflow: hidden; touch-action: pan-y; height: 260px; } 
+#calendarGrid { display: grid; grid-template-columns: repeat(7, 1fr); grid-template-rows: repeat(6, 1fr); gap: 4px; height: 100%; }
 
 @media (orientation: landscape) and (max-height: 500px) {
   .glass-header { position: relative; border-radius: 0; padding-top: 8px; padding-bottom: 8px; }
@@ -278,7 +279,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
     </div>
     <div class="grid grid-cols-7 gap-1 mb-1 text-center text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-wider"><div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div class="text-red-400">Сб</div><div class="text-red-400">Вс</div></div>
     <div id="calendarViewport" class="mb-4">
-      <div id="calendarGrid" class="grid grid-cols-7 gap-1"></div>
+      <div id="calendarGrid"></div>
     </div>
     <div class="flex-1 bg-white/40 dark:bg-black/20 rounded-2xl border border-white/20 dark:border-white/5 p-3 flex flex-col min-h-[120px] overflow-hidden mb-4 shadow-inner">
       <div id="selectedDayTitle" class="text-[11px] sm:text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 border-b border-gray-200/50 dark:border-white/5 pb-2 flex justify-between"><span>Выберите день</span><span id="selectedDayCount" class="text-purple-600 dark:text-purple-400"></span></div>
@@ -503,8 +504,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 <script src="data.js"></script>
 <script src="data_services.js"></script>
 <script>
-// --- ВЕСЬ JS КОД ОСТАЛСЯ БЕЗ ИЗМЕНЕНИЙ, ЧТОБЫ НЕ СЛОМАТЬ ЛОГИКУ ---
-// (Включая календарь, навигацию, голосовой поиск, анимации, PWA и т.д.)
+// --- ЛОГИКА ПРИЛОЖЕНИЯ ---
 
 let myShifts = {};
 try { myShifts = JSON.parse(localStorage.getItem('lenta_shifts_v1')) || {}; } catch(e) { myShifts = {}; }
@@ -565,7 +565,10 @@ function renderCalendar() {
   const firstDay = new Date(currentCalYear, currentCalMonth, 1).getDay();
   const daysInMonth = new Date(currentCalYear, currentCalMonth + 1, 0).getDate();
   let startDay = firstDay - 1; if (startDay === -1) startDay = 6;
+  
+  // Заполняем пустые клетки в начале
   for (let i = 0; i < startDay; i++) grid.innerHTML += `<div class="aspect-square"></div>`;
+  
   const todayStr = getTodayStr();
   for (let day = 1; day <= daysInMonth; day++) {
     const m = String(currentCalMonth + 1).padStart(2, '0');
@@ -574,7 +577,7 @@ function renderCalendar() {
     const hasShift = myShifts[dateStr] && myShifts[dateStr].length > 0;
     const isSelected = dateStr === selectedDate;
     const isToday = dateStr === todayStr;
-    let classes = "flex flex-col items-center justify-center rounded-xl cursor-pointer transition-all tactile-btn relative border aspect-square text-[11px] sm:text-[13px] ";
+    let classes = "flex flex-col items-center justify-center rounded-xl cursor-pointer transition-all tactile-btn relative border aspect-square text-[12px] sm:text-[13px] ";
     if (isSelected) classes += "bg-purple-500 text-white border-purple-600 shadow-md font-bold scale-[1.05] z-10 ";
     else if (hasShift) classes += "bg-purple-500/10 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 border-purple-500/30 font-bold ";
     else if (isToday) classes += "bg-gray-100 dark:bg-white/10 text-gray-800 dark:text-gray-100 border-gray-300 dark:border-white/10 font-bold ";
@@ -585,6 +588,12 @@ function renderCalendar() {
       shiftIndicator = hasTask ? `<span class="absolute bottom-0.5 text-[8px] sm:text-[10px] leading-none">🛠️</span>` : `<span class="absolute bottom-0.5 text-[8px] sm:text-[10px] leading-none">🚛</span>`;
     }
     grid.innerHTML += `<div onclick="selectDate('${dateStr}')" class="${classes}"><span class="${hasShift ? 'mb-2' : ''}">${day}</span>${shiftIndicator}</div>`;
+  }
+  
+  // ДОБАВЛЯЕМ ПУСТЫЕ КЛЕТКИ В КОНЦЕ, ЧТОБЫ ВСЕГДА БЫЛО 6 РЯДОВ
+  const totalCells = startDay + daysInMonth;
+  for (let i = totalCells; i < 42; i++) {
+    grid.innerHTML += `<div class="aspect-square"></div>`;
   }
 }
 window.selectDate = function(dateStr) { if (window._calSwipeActive) return; playTickSound(); selectedDate = dateStr; renderCalendar(); showDayShifts(dateStr); };
@@ -1079,8 +1088,9 @@ function renderCards() {
       
       const roadB = st.roadService ? `<span class="road-badge bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"><img src="road-icon.png" class="w-3 h-3 object-contain inline" onerror="this.outerHTML='🛣️'"> Дорожная сеть</span>` : '';
       const deleteBtn = st.isCustom ? `<button onclick="deleteCustomTech('${st.id}')" class="absolute top-4 right-12 text-red-400 hover:text-red-600 bg-white/80 dark:bg-black/50 p-1.5 rounded-full z-10 tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>` : '';
-      const dTag = (window.isSortedByDistance && st.distance !== undefined && st.distance !== 999999) ? `<span class="text-[11px] font-black text-emerald-600 bg-emerald-500/10 px-2 py-1 rounded-md border border-emerald-500/20">${st.distance.toFixed(1)} км</span>` : '';
-      const phoneLink = st.phone ? `<a href="tel:${st.phone.replace(/[^0-9+]/g, '')}" class="text-[10px] font-bold text-blue-600 dark:text-blue-400 underline ml-1">📞 ${st.phone}</a>` : '';
+      const dTag = (window.isSortedByDistance && st.distance !== undefined && st.distance !== 999999) ? `<span class="text-[10px] font-black text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">${st.distance.toFixed(1)} км</span>` : '';
+      
+      const phoneLink = st.phone ? `<a href="tel:${st.phone.replace(/[^0-9+]/g, '')}" class="inline-flex items-center text-[11px] font-bold text-blue-600 dark:text-blue-400 underline decoration-blue-600/30 underline-offset-2 hover:decoration-blue-600 whitespace-nowrap mt-1">📞 ${st.phone}</a>` : '';
       
       const navQuery = (st.lat && st.lon) ? `${st.lat},${st.lon}` : st.address;
       const navAddr = navQuery; 
@@ -1091,10 +1101,39 @@ function renderCards() {
       if (st.type === 'АВТОМОЙКА') colorClass = 'card-type-avtomoyka';
       if (st.type === 'СЕРВИС') colorClass = 'card-type-servis';
 
-      html += `<div class="store-card premium-card animate-reveal ${colorClass}">
-        <div class="absolute top-4 right-4 flex gap-1 z-10">${deleteBtn}<button onclick="toggleFav('${st.id}', event)" class="text-xl tactile-btn transition-transform ${isFav ? 'scale-110 drop-shadow-md' : 'grayscale opacity-40 hover:grayscale-0 hover:opacity-100'}">⭐</button></div>
-        <div class="flex flex-col h-full justify-between"><div><div class="flex flex-wrap items-center gap-2 mb-3 pr-10"><span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wide text-white bg-slate-800 dark:bg-slate-700 shadow-sm">${st.type}</span>${roadB}<div class="ml-auto flex items-center gap-1.5 shrink-0">${dTag}<span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-lg border border-blue-500/20">${st.city || ''}</span></div></div><div class="text-[15px] font-display font-extrabold text-gray-900 dark:text-white leading-snug mb-1.5">${st.name}</div><div class="text-[12px] text-gray-500 dark:text-gray-400 font-medium mb-3">${st.address} ${phoneLink}</div><div class="text-[12px] text-gray-600 dark:text-gray-300 bg-black/[0.02] dark:bg-white/[0.02] p-3 rounded-xl border border-black/5 dark:border-white/5 mb-4 leading-relaxed shadow-inner">${st.desc || ''}</div></div>
-        <div class="space-y-4 mt-auto"><div class="flex justify-between items-center border-t border-gray-100 dark:border-white/5 pt-3"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Режим</span><span class="px-2.5 py-1 rounded-lg text-[10px] font-bold border ${is24C}">${is24T}</span></div><div class="grid grid-cols-3 gap-2 pt-1"><button onclick="openNavModal('${navAddr}');" class="flex items-center justify-center gap-1 py-2 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md shadow-orange-500/20 transition-all">🗺️ Поехать</button><button onclick="shareRoute('${st.name.replace(/'/g,"\\'")}','ТЕХПОМОЩЬ','${st.address.replace(/'/g,"\\'")}','',event)" class="flex items-center justify-center gap-1 py-2 bg-white/50 dark:bg-white/5 text-orange-600 dark:text-orange-400 border border-orange-500/20 rounded-xl text-[10px] font-bold tactile-btn hover:bg-white/80 transition-colors">📤 Отправить</button><button onclick="toggleFav('${st.id}', event)" class="flex items-center justify-center gap-1 py-2 bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-300 rounded-xl text-[10px] font-bold tactile-btn hover:bg-gray-100 transition-colors">${isFav ? '⭐ В избранном' : '☆ В избранное'}</button></div></div></div>
+      html += `<div class="store-card premium-card animate-reveal ${colorClass} p-4">
+        <div class="absolute top-3 right-3 flex gap-1 z-10">${deleteBtn}<button onclick="toggleFav('${st.id}', event)" class="text-lg tactile-btn transition-transform ${isFav ? 'scale-110 drop-shadow-md' : 'grayscale opacity-40 hover:grayscale-0 hover:opacity-100'}">⭐</button></div>
+        <div class="flex flex-col h-full justify-between">
+          <div>
+            <!-- Header tags -->
+            <div class="flex flex-wrap items-center gap-1.5 mb-2 pr-8">
+              <span class="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wide text-white bg-slate-800 dark:bg-slate-700 shadow-sm">${st.type}</span>
+              ${roadB}
+              <span class="text-[9px] font-bold text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20 ml-auto">${st.city || ''}</span>
+            </div>
+            <!-- Title -->
+            <div class="text-[14px] font-display font-extrabold text-gray-900 dark:text-white leading-snug mb-1 line-clamp-2">${st.name}</div>
+            <!-- Address -->
+            <div class="text-[11px] text-gray-500 font-medium leading-tight mb-1 line-clamp-2">${st.address}</div>
+            <!-- Phone -->
+            ${phoneLink}
+            <!-- Description -->
+            <div class="text-[11px] text-gray-600 dark:text-gray-400 bg-black/[0.02] dark:bg-white/[0.02] p-2.5 rounded-lg border border-black/5 dark:border-white/5 mb-3 mt-2 leading-relaxed line-clamp-3">${st.desc || ''}</div>
+          </div>
+          <!-- Footer -->
+          <div class="mt-auto">
+            <!-- Distance and Mode -->
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-[9px] font-bold text-gray-400 uppercase">Режим: <span class="text-gray-700 dark:text-gray-300">${is24T}</span></span>
+              ${dTag}
+            </div>
+            <!-- Buttons (2 columns) -->
+            <div class="grid grid-cols-2 gap-1.5">
+              <button onclick="openNavModal('${navAddr}');" class="flex items-center justify-center gap-1 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg text-[10px] font-bold tactile-btn shadow-sm">🗺️ Поехать</button>
+              <button onclick="toggleFav('${st.id}', event)" class="flex items-center justify-center gap-1 py-1.5 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 rounded-lg text-[10px] font-bold tactile-btn">${isFav ? '⭐ В избр.' : '☆ В избр.'}</button>
+            </div>
+          </div>
+        </div>
       </div>`;
     });
   } else {
@@ -1131,7 +1170,7 @@ function renderCards() {
       
       const encQ = navQ;
       const routeUrl = customRoutes[store.tk] || null;
-      const dTag = (window.isSortedByDistance && store.distance !== undefined && store.distance !== 999999) ? `<span class="text-[11px] font-black text-emerald-600 bg-emerald-500/10 px-2 py-1 rounded-md border border-emerald-500/20">${store.distance.toFixed(1)} км</span>` : '';
+      const dTag = (window.isSortedByDistance && store.distance !== undefined && store.distance !== 999999) ? `<span class="text-[10px] font-black text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">${store.distance.toFixed(1)} км</span>` : '';
       const extraBtn = brand === "МОНЕТКА" ? `<button onclick="openMonetkaModal();" class="mt-3 w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-orange-500/10 text-orange-600 border border-orange-500/20 rounded-xl text-xs font-bold tactile-btn hover:bg-orange-500/20 transition-colors">📖 Правила выгрузки</button>` : '';
       
       html += `<div class="store-card premium-card animate-reveal ${colorClass}">
