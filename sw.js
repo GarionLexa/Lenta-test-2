@@ -1,4 +1,5 @@
-const CACHE_NAME = 'lenta-cache-v13'; // ВЕРСИЯ ПОДНЯТА ДЛЯ ANDROID
+
+const CACHE_NAME = 'lenta-cache-v14'; // Версия поднята для принудительного обновления
 const ASSETS = [
   './',
   './index.html',
@@ -11,7 +12,8 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
-  self.skipWaiting(); // Принудительно активируем новый SW
+  // ВАЖНО: Мы убрали self.skipWaiting() отсюда!
+  // Теперь новая версия будет терпеливо ждать, пока пользователь сам не нажмет "Обновить".
   e.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(ASSETS);
@@ -31,6 +33,13 @@ self.addEventListener('activate', (e) => {
       );
     }).then(() => self.clients.claim())
   );
+});
+
+// Слушаем команду от index.html: если пришел сигнал SKIP_WAITING, значит пользователь нажал кнопку.
+self.addEventListener('message', (event) => {
+  if (event.data === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener('fetch', (e) => {
