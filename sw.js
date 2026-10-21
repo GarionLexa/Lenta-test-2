@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lenta-cache-v12'; // Версия поднята! Принудительное обновление
+const CACHE_NAME = 'lenta-cache-v13'; // ВЕРСИЯ ПОДНЯТА ДЛЯ ANDROID
 const ASSETS = [
   './',
   './index.html',
@@ -11,7 +11,7 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
-  self.skipWaiting();
+  self.skipWaiting(); // Принудительно активируем новый SW
   e.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(ASSETS);
@@ -25,7 +25,7 @@ self.addEventListener('activate', (e) => {
       return Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
-            return caches.delete(key);
+            return caches.delete(key); // Удаляем старый кэш
           }
         })
       );
