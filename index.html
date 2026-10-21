@@ -37,7 +37,10 @@
 <script>
   (function() {
     try {
-      if (localStorage.getItem('lenta_theme') === 'dark') document.documentElement.classList.add('dark');
+      const savedTheme = localStorage.getItem('lenta_theme');
+      if (savedTheme === 'dark') document.documentElement.classList.add('dark');
+      // Если темы нет в localStorage - по умолчанию светлая (ничего не добавляем)
+      
       const savedSize = localStorage.getItem('lenta_text_size');
       if (savedSize === '1') document.documentElement.classList.add('large-text');
       if (savedSize === '2') document.documentElement.classList.add('very-large-text');
@@ -244,10 +247,55 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
     <h3 class="text-xl font-display font-extrabold text-lentaDark dark:text-white mb-1 uppercase mt-2">Контакты</h3>
     <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 font-medium">Кому звоним?</p>
     <div class="space-y-3">
-      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-400 text-lg">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Сергей</div><div class="text-[9px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div></div><div class="w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
-      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-lg">🔧</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Механик</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div></div><div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
-      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue dark:text-blue-400 text-lg">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Светлана</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-10 h-10 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
-      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-600 dark:text-purple-400 text-lg">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Марина</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-10 h-10 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
+      
+      <!-- Сергей (Инженер) -->
+      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-400 text-lg relative overflow-hidden">
+             <!-- Анимация: Смотрит в планшет -->
+             <svg viewBox="0 0 24 24" class="w-6 h-6 contact-tablet" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          </div>
+          <div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Сергей</div><div class="text-[9px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div>
+      </a>
+
+      <!-- Механик -->
+      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-lg relative overflow-hidden">
+             <!-- Анимация: Крутит гаечный ключ -->
+             <svg viewBox="0 0 24 24" class="w-6 h-6 contact-wrench" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+          </div>
+          <div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Механик</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div>
+      </a>
+
+      <!-- Светлана (Диспетчер) -->
+      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue dark:text-blue-400 text-lg relative overflow-hidden">
+             <!-- Анимация: Печатает на клавиатуре -->
+             <svg viewBox="0 0 24 24" class="w-6 h-6 contact-typing-hands" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2" ry="2"></rect><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h.01M18 14h.01M8 18h8"></path></svg>
+          </div>
+          <div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Светлана</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-lg">📞</div>
+      </a>
+
+      <!-- Марина (Диспетчер) -->
+      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-600 dark:text-purple-400 text-lg relative overflow-hidden">
+             <!-- Анимация: Печатает на клавиатуре -->
+             <svg viewBox="0 0 24 24" class="w-6 h-6 contact-typing-hands" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2" ry="2"></rect><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h.01M18 14h.01M8 18h8"></path></svg>
+          </div>
+          <div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Марина</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div>
+      </a>
+
     </div>
   </div>
 </div>
@@ -459,7 +507,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
     
     <!-- ДИСКО-ШАР -->
     <div id="discoBall" class="disco-ball absolute top-0 left-1/2 -translate-x-1/2 z-40">
-      <svg viewBox="0 0 100 100" class="w-16 h-16 drop-shadow-2xl">
+      <svg viewBox="0 0 100 100" class="w-10 h-10 drop-shadow-2xl">
         <defs>
           <radialGradient id="discoGrad" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stop-color="#f8fafc" />
@@ -472,6 +520,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
         <path d="M 25 40 Q 50 55 75 40 M 20 55 Q 50 70 80 55 M 25 70 Q 50 85 75 70" stroke="#e2e8f0" stroke-width="1" fill="none" opacity="0.6"/>
         <path d="M 35 30 Q 40 55 35 80 M 50 25 Q 55 55 50 85 M 65 30 Q 60 55 65 80" stroke="#e2e8f0" stroke-width="1" fill="none" opacity="0.6"/>
       </svg>
+      <div class="disco-rays"></div>
     </div>
 
     <div id="visitContainer" class="flex flex-col items-center justify-center shrink-0 min-w-[70px] z-10" title="Счётчик визитов">
@@ -494,9 +543,9 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
           </g>
           <g id="mechGroup">
             <!-- Жонглирование -->
-            <g class="juggling-item jug-1"><circle cx="155" cy="10" r="3" fill="#9ca3af" stroke="none"/></g>
-            <g class="juggling-item jug-2"><rect x="170" y="5" width="5" height="5" rx="1" fill="#fbbf24" stroke="none" transform="rotate(45 172.5 7.5)"/></g>
-            <g class="juggling-item jug-3"><path d="M 180 15 L 185 10 L 190 15" stroke="#6b7280" stroke-width="2" fill="none"/></g>
+            <g class="juggling-item jug-1"><circle cx="170" cy="15" r="3" fill="#9ca3af" stroke="none"/></g>
+            <g class="juggling-item jug-2"><rect x="170" y="15" width="5" height="5" rx="1" fill="#fbbf24" stroke="none" transform="rotate(45 172.5 17.5)"/></g>
+            <g class="juggling-item jug-3"><path d="M 170 15 L 175 10 L 180 15" stroke="#6b7280" stroke-width="2" fill="none"/></g>
 
             <g id="mechBody" style="transform-origin: 170px 55px;"><circle cx="170" cy="22" r="5"/><path d="M 165 18 L 175 18 L 173 22 Z" fill="currentColor"/><path d="M 170 27 V 45"/><path d="M 170 45 L 163 55 M 170 45 L 177 55"/><g class="wrench-arm" style="transform-origin: 170px 29px;"><path d="M 170 29 L 155 36"/><path d="M 157 34 L 150 40" stroke-width="2"/><path d="M 148 37 C 152 35, 153 42, 150 40" stroke-width="2" fill="none"/></g><path d="M 170 29 L 178 35 L 172 40"/><path id="sweatDrop" d="M 176 16 Q 178 20 176 22 Q 174 20 176 16 Z" fill="#38bdf8" stroke="none" class="sweat-drop"/></g><circle cx="195" cy="45" r="10" stroke-width="3"/><circle cx="195" cy="45" r="3" fill="currentColor" stroke="none"/><path d="M 185 55 L 205 55" stroke-width="1.5"/></g>
         </svg>
@@ -902,12 +951,25 @@ citySlider.addEventListener('mouseleave', () => { isMouseDown = false; citySlide
 citySlider.addEventListener('mouseup', () => { isMouseDown = false; citySlider.style.cursor = 'grab'; });
 citySlider.addEventListener('mousemove', (e) => { if (!isMouseDown || isMusicPlaying) return; e.preventDefault(); const x = e.pageX - citySlider.offsetLeft; citySlider.scrollLeft = scrollLeftPos - (x - startX) * 2; });
 citySlider.style.cursor = 'grab';
+
+// Добавил звук скролла колесиком мыши
+citySlider.addEventListener('wheel', (e) => {
+    if (!isAudioUnlocked || !audioCtx) return;
+    const speed = Math.abs(e.deltaY) / 100;
+    if (speed > 0.1) playClickTick(speed);
+}, { passive: true });
+
 let lastLogoTapTime = 0, logoTapTimeout;
 function handleLogoTap() { unlockAudio(); const now = Date.now(); if (now - lastLogoTapTime < 400) { clearTimeout(logoTapTimeout); fullStopMusic(); } else logoTapTimeout = setTimeout(togglePlayPause, 400); lastLogoTapTime = now; }
 function togglePlayPause() {
   const logo = document.getElementById('logoImage');
   if (isMusicPlaying) { bgMusic.pause(); isMusicPlaying = false; logo.classList.remove('record-spin'); stopAutoScroll(); startStoryTimer(); document.getElementById('mechanicSvgElement').classList.remove('dancing'); document.getElementById('discoBall').classList.remove('dropped'); } 
-  else { abortStory(); clearTimeout(storyTimer); const p = bgMusic.play(); if (p !== undefined) { p.then(() => { isMusicPlaying = true; logo.classList.add('record-spin'); startAutoScroll(); document.getElementById('mechanicSvgElement').classList.add('dancing'); document.getElementById('discoBall').classList.add('dropped'); }).catch(() => showToast("Не удалось запустить музыку 🔇")); } }
+  else { abortStory(); clearTimeout(storyTimer); const p = bgMusic.play(); if (p !== undefined) { p.then(() => { isMusicPlaying = true; logo.classList.add('record-spin'); startAutoScroll(); document.getElementById('mechanicSvgElement').classList.add('dancing'); 
+    // Показываем диско-шар только в темное время суток или в темной теме
+    if (document.documentElement.classList.contains('dark') || parseFloat(document.getElementById('skyNight').style.opacity) > 0.5) {
+        document.getElementById('discoBall').classList.add('dropped');
+    }
+  }).catch(() => showToast("Не удалось запустить музыку 🔇")); } }
 }
 function fullStopMusic() { bgMusic.pause(); bgMusic.currentTime = 0; isMusicPlaying = false; document.getElementById('logoImage').classList.remove('record-spin'); stopAutoScroll(); resetTrucksToStart(); startStoryTimer(); document.getElementById('mechanicSvgElement').classList.remove('dancing'); document.getElementById('discoBall').classList.remove('dropped'); }
 function resetTrucksToStart() { buildCitySlider(); citySlider.scrollLeft = 0; virtualScrollX = 0; window.fractionalScroll = 0; lastActualScrollLeft = 0; updateParallax(0); }
@@ -968,6 +1030,15 @@ function updateParallax(vX) {
     if (progress <= 0.6) { const p = progress / 0.6; sun.style.transform = `translate3d(calc(${p * 100}vw + 20px), calc(-${Math.sin(p * Math.PI) * 50}px), 0)`; sun.style.opacity = 1; } else sun.style.opacity = 0;
     if (progress >= 0.4) { const p = (progress - 0.4) / 0.6; moon.style.transform = `translate3d(calc(${p * 100}vw + 20px), calc(-${Math.sin(p * Math.PI) * 50}px), 0)`; moon.style.opacity = 1; } else moon.style.opacity = 0;
   }
+
+  // Проверка для диско-шара (показывать только в ночь или темную тему)
+  if (isMusicPlaying) {
+    if (document.documentElement.classList.contains('dark') || progress > 0.6) {
+        document.getElementById('discoBall').classList.add('dropped');
+    } else {
+        document.getElementById('discoBall').classList.remove('dropped');
+    }
+  }
 }
 
 // ========== МОДАЛКИ, НАВИГАЦИЯ ==========
@@ -1010,9 +1081,10 @@ window.executeNavigation = function(type) {
   
   if (currentNavCoords) {
     const [lat, lon] = currentNavCoords;
-    if (type === 'yandex') navUrl = `https://yandex.ru/maps/?pt=${lon},${lat}&z=17&l=map`;
-    else if (type === '2gis') navUrl = `https://2gis.ru/geo/${lon},${lat}`;
-    else if (type === 'google') navUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+    // ИСПОЛЬЗУЕМ rtext для ПОСТРОЕНИЯ МАРШРУТА, а не просто pt для метки!
+    if (type === 'yandex') navUrl = `https://yandex.ru/maps/?rtext=~${lat},${lon}&rtt=auto`;
+    else if (type === '2gis') navUrl = `https://2gis.ru/routeSearch/rsType/car/to/${lon},${lat}`;
+    else if (type === 'google') navUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`;
   } else {
     if (type === 'yandex') navUrl = `https://yandex.ru/maps/?text=${currentNavQuery}`;
     else if (type === '2gis') navUrl = `https://2gis.ru/search/${currentNavQuery}`;
