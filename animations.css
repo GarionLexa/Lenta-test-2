@@ -1,0 +1,59 @@
+/* Танцы */
+.dancing #girlsGroup {
+    animation: danceGirls 0.5s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center bottom;
+}
+.dancing #mechGroup {
+    animation: danceMech 0.5s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center bottom;
+}
+@keyframes danceGirls {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-4px) rotate(3deg); }
+}
+@keyframes danceMech {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-4px) rotate(-3deg); }
+}
+
+/* Жонглирование */
+.juggling-active .wrench-arm {
+    animation: juggleArm 0.4s infinite alternate;
+}
+.juggling-active #mechBody {
+    animation: juggleBody 0.4s infinite alternate;
+}
+@keyframes juggleArm {
+    0% { transform: rotate(-20deg); }
+    100% { transform: rotate(40deg); }
+}
+@keyframes juggleBody {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-3px); }
+}
+
+/* Запчасти для жонглирования */
+.juggling-item { opacity: 0; transition: opacity 0.3s; }
+.juggling-active .juggling-item { opacity: 1; }
+.jug-1 { animation: juggle1 0.6s infinite alternate ease-in-out; }
+.jug-2 { animation: juggle2 0.7s infinite alternate ease-in-out; animation-delay: 0.1s; }
+.jug-3 { animation: juggle3 0.8s infinite alternate ease-in-out; animation-delay: 0.2s; }
+@keyframes juggle1 { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-30px) rotate(360deg); } }
+@keyframes juggle2 { 0% { transform: translateY(-10px) rotate(0deg); } 100% { transform: translateY(-40px) rotate(-360deg); } }
+@keyframes juggle3 { 0% { transform: translateY(-5px) scaleX(-1) rotate(0deg); } 100% { transform: translateY(-35px) scaleX(-1) rotate(360deg); } }
+
+/* Диско-шар */
+.disco-ball {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -150%);
+    transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+    opacity: 0;
+    z-index: 40;
+    pointer-events: none;
+}
+.disco-ball.dropped {
+    transform: translate(-50%, 10px);
+    opacity: 1;
+}
