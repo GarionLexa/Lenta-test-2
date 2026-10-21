@@ -150,20 +150,31 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 @keyframes typingArms { 0% { transform: rotate(0deg); } 100% { transform: rotate(10deg); } }
 .wrench-arm { animation: wrenchMotion 0.6s infinite alternate ease-in-out; }
 @keyframes wrenchMotion { 0% { transform: rotate(-15deg); } 100% { transform: rotate(20deg); } }
+
+/* NEW ANIMATIONS */
 .laughing { animation: bodyLaugh 0.3s infinite alternate; }
 @keyframes bodyLaugh { 0% { transform: translateY(0) scaleY(1); } 100% { transform: translateY(-2px) scaleY(1.05); } }
+
+.anim-bounce { animation: bounceAct 0.4s infinite alternate cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+@keyframes bounceAct { 0% { transform: translateY(0); } 100% { transform: translateY(-8px); } }
+
+.anim-shake { animation: shakeAct 0.2s infinite alternate; }
+@keyframes shakeAct { 0% { transform: rotate(-3deg); } 100% { transform: rotate(3deg); } }
+
 .sweat-drop { opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: translateY(-5px); }
 .show-sweat { opacity: 1; transform: translateY(0); animation: dripDown 1.5s forwards; }
 @keyframes dripDown { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
 
 .story-bubble { position: absolute; background: white; border: 1px solid #e4e4e7; color: #18181b; font-size: 11px; font-weight: 700; padding: 8px 12px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); opacity: 0; pointer-events: none; z-index: 1000; max-width: 150px; text-align: center; line-height: 1.3; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
 .dark .story-bubble { background: #27272a; border-color: #3f3f46; color: #f4f4f5; }
-.story-bubble.actor-sveta { bottom: 85%; left: 0; transform: scale(0.9) translateY(10px); }
+/* Сдвинул пузыри ниже, чтобы не обрезались об шапку */
+.story-bubble.actor-sveta { bottom: 80%; left: 0; transform: scale(0.9) translateY(10px); }
 .story-bubble.actor-sveta.active { transform: scale(1) translateY(0); opacity: 1; }
-.story-bubble.actor-marina { bottom: 85%; right: 0; transform: scale(0.9) translateY(10px); }
+.story-bubble.actor-marina { bottom: 80%; right: 0; transform: scale(0.9) translateY(10px); }
 .story-bubble.actor-marina.active { transform: scale(1) translateY(0); opacity: 1; }
-.story-bubble.actor-mech { bottom: 100%; left: 50%; margin-left: -50px; transform: scale(0.9) translateY(10px); }
+.story-bubble.actor-mech { bottom: 85%; left: 50%; margin-left: -50px; transform: scale(0.9) translateY(10px); }
 .story-bubble.actor-mech.active { transform: scale(1) translateY(0); opacity: 1; }
+
 .story-bubble::after { content: ''; position: absolute; top: 100%; border-width: 5px; border-style: solid; border-color: white transparent transparent transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05)); }
 .dark .story-bubble::after { border-color: #27272a transparent transparent transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); }
 .story-bubble.actor-sveta::after { left: 40px; }
@@ -1333,9 +1344,23 @@ window.startVoiceSearch = function() {
 const storyList = window.stories || []; let isStoryPlaying = false, storyTimer = null;
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 async function showBubble(actor, text, duration) { if (!isStoryPlaying) return; const target = actor === 'mech' ? document.getElementById('bubbleMech') : actor === 'sveta' ? document.getElementById('bubbleSveta') : document.getElementById('bubbleMarina'); if (!target) return; target.querySelector('.story-bubble-inner').innerText = text; target.classList.add('active'); await sleep(duration); target.classList.remove('active'); await sleep(400); }
-function triggerAction(actor, action) { if (!isStoryPlaying) return; const sveta = document.getElementById('svetaBody'), marina = document.getElementById('marinaBody'), mech = document.getElementById('mechBody'), sweat = document.getElementById('sweatDrop'); [sveta, marina, mech].forEach(el => el && el.classList.remove('laughing')); sweat && sweat.classList.remove('show-sweat'); const target = actor === 'sveta' ? sveta : actor === 'marina' ? marina : mech; if (target && action === 'laughing') target.classList.add('laughing'); if (actor === 'mech' && action === 'sweat' && sweat) sweat.classList.add('show-sweat'); }
+function triggerAction(actor, action) { 
+    if (!isStoryPlaying) return; 
+    const sveta = document.getElementById('svetaBody'), marina = document.getElementById('marinaBody'), mech = document.getElementById('mechBody'), sweat = document.getElementById('sweatDrop'); 
+    [sveta, marina, mech].forEach(el => { if(el) el.classList.remove('laughing', 'anim-bounce', 'anim-shake'); }); 
+    if(sweat) sweat.classList.remove('show-sweat'); 
+    
+    const target = actor === 'sveta' ? sveta : actor === 'marina' ? marina : mech; 
+    
+    if (target) {
+        if (action === 'laughing') target.classList.add('laughing');
+        if (action === 'bounce') target.classList.add('anim-bounce');
+        if (action === 'shake') target.classList.add('anim-shake');
+    }
+    if (actor === 'mech' && action === 'sweat' && sweat) sweat.classList.add('show-sweat'); 
+}
 async function playStory() { if (isMusicPlaying || isStoryPlaying || storyList.length === 0) return; isStoryPlaying = true; document.getElementById('controlPanel').classList.add('story-mode'); await sleep(800); if (!isStoryPlaying) return; const story = storyList[Math.floor(Math.random() * storyList.length)]; for (const line of story.dialogues) { if (!isStoryPlaying) break; triggerAction(line.actor, line.action); await showBubble(line.actor, line.text, line.time); } if (isStoryPlaying) abortStory(); }
-function abortStory() { isStoryPlaying = false; document.getElementById('controlPanel').classList.remove('story-mode'); ['bubbleSveta','bubbleMarina','bubbleMech'].forEach(id => document.getElementById(id).classList.remove('active')); ['svetaBody','marinaBody','mechBody'].forEach(id => document.getElementById(id).classList.remove('laughing')); document.getElementById('sweatDrop').classList.remove('show-sweat'); }
+function abortStory() { isStoryPlaying = false; document.getElementById('controlPanel').classList.remove('story-mode'); ['bubbleSveta','bubbleMarina','bubbleMech'].forEach(id => document.getElementById(id).classList.remove('active')); ['svetaBody','marinaBody','mechBody'].forEach(id => { const el = document.getElementById(id); if(el) el.classList.remove('laughing', 'anim-bounce', 'anim-shake'); }); const sweat = document.getElementById('sweatDrop'); if(sweat) sweat.classList.remove('show-sweat'); }
 function startStoryTimer() { clearTimeout(storyTimer); storyTimer = setInterval(() => { if (!isMusicPlaying && !isStoryPlaying) playStory(); }, 30000); }
 
 function updateSpeedLimit() { const m = new Date().getMonth(); const isWinter = m === 11 || m === 0 || m === 1 || m === 2 || m === 10; document.getElementById('speedLimitNumber').innerText = isWinter ? '60' : '80'; const icon = document.getElementById('seasonIcon'); if (isWinter) { icon.innerText = '❄️'; icon.className = 'absolute -bottom-1 -right-2 w-5 h-5 bg-blue-50 border-blue-200 flex items-center justify-center text-[10px] shadow-sm border rounded-full'; } else { icon.innerText = '☀️'; icon.className = 'absolute -bottom-1 -right-2 w-5 h-5 bg-amber-50 border-amber-200 flex items-center justify-center text-[10px] shadow-sm border rounded-full'; } }
