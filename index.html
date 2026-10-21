@@ -44,8 +44,8 @@
   })();
 </script>
 <style>
-:root { --truck-light-opacity: 0; --truck-body-brightness: 1; --glass-bg: rgba(255,255,255,0.7); --glass-border: rgba(255,255,255,0.5); }
-.dark { --glass-bg: rgba(24, 24, 27, 0.65); --glass-border: rgba(255,255,255,0.05); }
+:root { --truck-light-opacity: 0; --truck-body-brightness: 1; --glass-bg: rgba(255,255,255,0.85); --glass-border: rgba(255,255,255,0.6); }
+.dark { --glass-bg: rgba(24, 24, 27, 0.85); --glass-border: rgba(255,255,255,0.08); }
 
 body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; width: 100%; overflow-x: hidden; padding-bottom: env(safe-area-inset-bottom); transition: background-color 0.4s ease, color 0.4s ease; }
 .dark body { background-color: #0f1115; color: #e4e4e7; }
@@ -56,41 +56,43 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
   backdrop-filter: blur(24px); 
   -webkit-backdrop-filter: blur(24px); 
   border: 1px solid var(--glass-border); 
-  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08); 
+  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1); 
   transition: all 0.3s ease;
 }
-.dark .glass-panel { box-shadow: 0 10px 40px -10px rgba(0,0,0,0.4); }
+.dark .glass-panel { box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5); }
 
 .glass-header { padding-top: max(1rem, env(safe-area-inset-top)); position: sticky; top: 0; z-index: 50; border-radius: 0 0 32px 32px; transition: all 0.3s ease; }
 @media (max-height: 550px) { .glass-header { position: relative; border-radius: 0; } }
 
 /* Animations */
 @keyframes slideUpFade { 0% { opacity: 0; transform: translateY(20px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
-.animate-reveal { animation: slideUpFade 0.5s cubic-bezier(0.16,1,0.3,1) forwards; }
+.animate-reveal { animation: slideUpFade 0.4s cubic-bezier(0.16,1,0.3,1) forwards; }
 .tactile-btn { transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, box-shadow 0.2s ease; }
-.tactile-btn:active { transform: scale(0.93); opacity: 0.9; }
+.tactile-btn:active { transform: scale(0.94); opacity: 0.9; }
 
-/* Premium Cards */
-.premium-card {
+/* Volume Cards */
+.volume-card {
   background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.04);
-  box-shadow: 0 4px 20px -2px rgba(0,0,0,0.03), 0 0 0 1px rgba(0,0,0,0.01);
-  border-radius: 28px;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
+  border-radius: 20px;
   transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
   position: relative;
-  overflow: hidden;
 }
-.premium-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.02); }
-.dark .premium-card { background: #18181b; border-color: rgba(255,255,255,0.06); box-shadow: 0 4px 20px -2px rgba(0,0,0,0.3); }
-.dark .premium-card:hover { box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1); }
+.volume-card:hover { transform: translateY(-3px); box-shadow: 0 20px 30px -10px rgba(0,0,0,0.1), 0 10px 15px -5px rgba(0,0,0,0.04); }
+.dark .volume-card { background: #1c1c1f; border-color: rgba(255,255,255,0.05); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4); }
+.dark .volume-card:hover { box-shadow: 0 20px 30px -10px rgba(0,0,0,0.6); }
 
-/* Removing old colored borders, using subtle gradients instead */
-.card-brand-lenta { background-image: linear-gradient(135deg, rgba(253,203,5,0.05) 0%, transparent 40%); }
-.card-brand-monetka { background-image: linear-gradient(135deg, rgba(249,115,22,0.05) 0%, transparent 40%); }
-.card-brand-okey { background-image: linear-gradient(135deg, rgba(220,38,38,0.05) 0%, transparent 40%); }
-.card-brand-moll { background-image: linear-gradient(135deg, rgba(147,51,234,0.05) 0%, transparent 40%); }
-.card-type-servis { background-image: linear-gradient(135deg, rgba(139,92,246,0.05) 0%, transparent 40%); }
-.card-type-stoyanka { background-image: linear-gradient(135deg, rgba(59,130,246,0.05) 0%, transparent 40%); }
+/* Colored borders for brands and types */
+.border-brand-lenta { border-left: 6px solid #FDCB05; }
+.border-brand-monetka { border-left: 6px solid #f97316; }
+.border-brand-okey { border-left: 6px solid #dc2626; }
+.border-brand-moll { border-left: 6px solid #9333ea; }
+.border-type-servis { border-left: 6px solid #8b5cf6; }
+.border-type-stoyanka { border-left: 6px solid #3b82f6; }
+.border-type-shinomontazh { border-left: 6px solid #10b981; }
+.border-type-kafe { border-left: 6px solid #f97316; }
+.border-type-avtomoyka { border-left: 6px solid #0ea5e9; }
 
 /* Slider / Scenic */
 .record-spin { animation: recordSpin 4s linear infinite; }
@@ -191,9 +193,9 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 #updateBanner { animation: slideDownBanner 0.4s cubic-bezier(0.16,1,0.3,1); }
 @keyframes slideDownBanner { 0% { transform: translate(-50%,-120%); } 100% { transform: translate(-50%,0); } }
 
-/* КАЛЕНДАРЬ: Фиксированная высота, чтобы он не прыгал */
-#calendarViewport { position: relative; overflow: hidden; touch-action: pan-y; height: 260px; } 
-#calendarGrid { display: grid; grid-template-columns: repeat(7, 1fr); grid-template-rows: repeat(6, 1fr); gap: 4px; height: 100%; }
+/* КАЛЕНДАРЬ: Свободная высота, ячейки фиксированы */
+#calendarViewport { position: relative; overflow: hidden; touch-action: pan-y; } 
+#calendarGrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; height: auto; }
 
 @media (orientation: landscape) and (max-height: 500px) {
   .glass-header { position: relative; border-radius: 0; padding-top: 8px; padding-bottom: 8px; }
@@ -207,7 +209,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 <body class="relative flex flex-col min-h-screen antialiased">
 <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
 
-<!-- Модальные окна (навигация, контакты, инструкции) -->
+<!-- Модальные окна -->
 <!-- Навигация -->
 <div id="navModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4 transition-opacity">
   <div class="rounded-[32px] p-8 max-w-sm w-full text-center relative animate-reveal glass-panel shadow-2xl">
@@ -415,83 +417,91 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 </div>
 
 <header class="glass-header glass-panel border-t-0 border-l-0 border-r-0">
-<div class="max-w-[1600px] mx-auto px-4 sm:px-6 relative z-10 pb-5 pt-2">
-<div class="flex flex-row items-center justify-between gap-2 sm:gap-4 mb-5">
-  <div class="flex items-center gap-3 sm:gap-4 min-w-0 flex-1 pr-1">
-    <div onclick="handleLogoTap()" class="w-11 h-11 md:w-12 md:h-12 rounded-full bg-white shadow-lg flex items-center justify-center shrink-0 border border-white/50 overflow-hidden relative cursor-pointer tactile-btn z-50 group" title="1 тап: плей/пауза. 2 тапа: сброс">
-      <img id="logoImage" src="icon.png" alt="" class="w-full h-full object-cover transition-transform group-hover:scale-105" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23FDCB05\'/%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'20\' fill=\'%23004182\'/%3E%3C/svg%3E'">
-    </div>
-    <div class="min-w-0 flex-1">
-      <h1 class="text-[15px] sm:text-lg md:text-xl font-display font-extrabold text-lentaDark dark:text-white tracking-tight flex items-center gap-2 w-full"><span>ЛЕНТА</span><span class="bg-lentaYellow text-lentaDark px-2 py-0.5 rounded-md text-[9px] sm:text-[10px] font-black shadow-sm shrink-0 uppercase tracking-wide">Логистика</span></h1>
-      <div class="text-[11px] md:text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5 w-full">Мониторинг доставок</div>
-    </div>
+<div class="max-w-[1600px] mx-auto px-4 sm:px-6 relative z-10 pb-4 pt-2 flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-6">
+  
+  <!-- 1. Логотип и Кнопки (На мобильном в одной строке, на ПК разъезжаются по краям) -->
+  <div class="flex items-center justify-between w-full xl:w-auto xl:contents">
+      <!-- Логотип -->
+      <div class="flex items-center gap-3 shrink-0">
+        <div onclick="handleLogoTap()" class="w-11 h-11 md:w-12 md:h-12 rounded-full bg-white shadow-lg flex items-center justify-center shrink-0 border border-white/50 overflow-hidden relative cursor-pointer tactile-btn z-50 group" title="1 тап: плей/пауза. 2 тапа: сброс">
+          <img id="logoImage" src="icon.png" alt="" class="w-full h-full object-cover transition-transform group-hover:scale-105" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23FDCB05\'/%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'20\' fill=\'%23004182\'/%3E%3C/svg%3E'">
+        </div>
+        <div class="min-w-0 flex-1">
+          <h1 class="text-[15px] sm:text-lg md:text-xl font-display font-extrabold text-lentaDark dark:text-white tracking-tight flex items-center gap-2 w-full"><span>ЛЕНТА</span><span class="bg-lentaYellow text-lentaDark px-2 py-0.5 rounded-md text-[9px] sm:text-[10px] font-black shadow-sm shrink-0 uppercase tracking-wide">Логистика</span></h1>
+          <div class="text-[11px] md:text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5 w-full">Мониторинг доставок</div>
+        </div>
+      </div>
+      
+      <!-- Кнопки -->
+      <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0 xl:order-last">
+        <button id="installPwaBtn" onclick="installPwa()" class="hidden bg-emerald-500 text-white w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-lg flex items-center justify-center tactile-btn shrink-0 hover:bg-emerald-600" title="Установить"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></button>
+        <button id="textSizeBtn" onclick="toggleTextSize()" class="bg-white/50 dark:bg-white/5 text-sky-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-white/20 dark:border-white/5 flex items-center justify-center tactile-btn shrink-0 font-black text-sm hover:bg-white/80 transition-colors" title="Размер текста">A</button>
+        <button id="calendarBtn" onclick="openCalendarModal()" class="bg-white/50 dark:bg-white/5 text-purple-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-white/20 dark:border-white/5 flex items-center justify-center tactile-btn shrink-0 hover:bg-white/80 transition-colors" title="Календарь"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></button>
+        <button id="themeToggleBtn" onclick="toggleTheme()" class="bg-white/50 dark:bg-white/5 text-gray-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-white/20 dark:border-white/5 flex items-center justify-center tactile-btn shrink-0 hover:bg-white/80 transition-colors" title="Тема"><svg id="themeIcon" class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></button>
+      </div>
   </div>
-  <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-    <button id="installPwaBtn" onclick="installPwa()" class="hidden bg-emerald-500 text-white w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-lg flex items-center justify-center tactile-btn shrink-0 hover:bg-emerald-600" title="Установить"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></button>
-    <button id="textSizeBtn" onclick="toggleTextSize()" class="bg-white/50 dark:bg-white/5 text-sky-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-white/20 dark:border-white/5 flex items-center justify-center tactile-btn shrink-0 font-black text-sm hover:bg-white/80 transition-colors" title="Размер текста">A</button>
-    <button id="calendarBtn" onclick="openCalendarModal()" class="bg-white/50 dark:bg-white/5 text-purple-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-white/20 dark:border-white/5 flex items-center justify-center tactile-btn shrink-0 hover:bg-white/80 transition-colors" title="Календарь"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></button>
-    <button id="themeToggleBtn" onclick="toggleTheme()" class="bg-white/50 dark:bg-white/5 text-gray-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-white/20 dark:border-white/5 flex items-center justify-center tactile-btn shrink-0 hover:bg-white/80 transition-colors" title="Тема"><svg id="themeIcon" class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></button>
+
+  <!-- 2. Центральная панель (Анимация, Контакты, Спидометр) -->
+  <div id="controlPanel" class="flex-1 w-full xl:w-auto bg-white/60 dark:bg-black/30 backdrop-blur-xl rounded-[28px] shadow-sm border border-white/40 dark:border-white/5 py-2 px-4 flex items-center justify-between transition-all duration-700 min-h-[80px]">
+    <div id="visitContainer" class="flex flex-col items-center justify-center shrink-0 min-w-[70px] z-10" title="Счётчик визитов">
+      <img id="visitCounterBadge" alt="Визиты" class="h-[20px] rounded-md shadow-sm opacity-0 transition-opacity duration-300" onload="this.classList.remove('opacity-0')" onerror="this.style.display='none'">
+    </div>
+    <div id="centerStage" class="relative flex flex-col items-center flex-1 max-w-lg cursor-pointer tactile-btn mx-3 group z-20" onclick="playTickSound(); openContactsModal();">
+      <div id="bubbleSveta" class="story-bubble actor-sveta"><div class="story-bubble-inner"></div></div>
+      <div id="bubbleMarina" class="story-bubble actor-marina"><div class="story-bubble-inner"></div></div>
+      <div id="bubbleMech" class="story-bubble actor-mech"><div class="story-bubble-inner"></div></div>
+      <div class="w-full h-14 relative flex items-center justify-center overflow-visible" id="mechanicSvgContainer">
+        <svg viewBox="0 0 240 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-gray-500 dark:text-gray-400 group-hover:text-emerald-500 transition-colors normal-mode overflow-visible drop-shadow-sm" id="mechanicSvgElement">
+          <g id="girlsGroup">
+            <path d="M 15 48 L 85 48" stroke-width="2"/>
+            <g id="svetaBody" style="transform-origin: 30px 48px;"><rect x="15" y="32" width="10" height="7" rx="1"/><path d="M 20 39 V 48"/><circle cx="35" cy="22" r="5"/><path d="M 35 27 V 43"/><path d="M 35 43 L 30 55 M 35 43 L 40 55"/><path d="M 30 43 L 40 43 Z" fill="currentColor" stroke-width="1"/><g class="arm-typing" style="transform-origin: 35px 29px;"><path d="M 35 29 L 28 35 L 22 36"/><path d="M 35 29 L 25 36 L 20 38"/></g></g>
+            <g id="marinaBody" style="transform-origin: 70px 48px;"><rect x="75" y="32" width="10" height="7" rx="1"/><path d="M 80 39 V 48"/><circle cx="60" cy="22" r="5"/><path d="M 55 22 A 5 5 0 0 1 65 22" stroke-width="2"/><path d="M 60 27 V 43"/><path d="M 60 43 L 55 55 M 60 43 L 65 55"/><path d="M 55 43 L 65 43 Z" fill="currentColor" stroke-width="1"/><g class="arm-typing-delay" style="transform-origin: 60px 29px;"><path d="M 60 29 L 68 35 L 75 36"/><path d="M 60 29 L 71 36 L 78 38"/></g></g>
+          </g>
+          <g id="mechGroup">
+            <g id="mechBody" style="transform-origin: 170px 55px;"><circle cx="170" cy="22" r="5"/><path d="M 165 18 L 175 18 L 173 22 Z" fill="currentColor"/><path d="M 170 27 V 45"/><path d="M 170 45 L 163 55 M 170 45 L 177 55"/><g class="wrench-arm" style="transform-origin: 170px 29px;"><path d="M 170 29 L 155 36"/><path d="M 157 34 L 150 40" stroke-width="2"/><path d="M 148 37 C 152 35, 153 42, 150 40" stroke-width="2" fill="none"/></g><path d="M 170 29 L 178 35 L 172 40"/><path id="sweatDrop" d="M 176 16 Q 178 20 176 22 Q 174 20 176 16 Z" fill="#38bdf8" stroke="none" class="sweat-drop"/></g><circle cx="195" cy="45" r="10" stroke-width="3"/><circle cx="195" cy="45" r="3" fill="currentColor" stroke="none"/><path d="M 185 55 L 205 55" stroke-width="1.5"/></g>
+        </svg>
+      </div>
+      <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mt-0 text-center w-full z-20 relative bg-white/50 dark:bg-black/20 px-3 py-0.5 rounded-full inline-block">Контакты</div>
+    </div>
+    <div id="speedContainer" class="flex flex-col items-center justify-center cursor-default shrink-0 min-w-[50px] z-10 tactile-btn" onclick="playTickSound(); openMechanicModal();" title="Скорость / Инструктаж">
+      <div class="w-11 h-11 rounded-full border-[3px] border-red-500 bg-white flex items-center justify-center shadow-lg relative cursor-pointer group-hover:scale-105 transition-transform">
+        <span id="speedLimitNumber" class="text-slate-800 font-display font-black text-lg leading-none tracking-tighter">80</span>
+        <div id="seasonIcon" class="absolute -bottom-1 -right-2 w-5 h-5 rounded-full flex items-center justify-center text-[10px] shadow-sm border bg-white"></div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div id="controlPanel" class="mb-5 bg-white/60 dark:bg-black/30 backdrop-blur-xl rounded-[28px] shadow-sm border border-white/40 dark:border-white/5 py-3 px-5 relative flex items-center justify-between transition-all duration-700 min-h-[90px]">
-  <div id="visitContainer" class="flex flex-col items-center justify-center shrink-0 min-w-[70px] z-10" title="Счётчик визитов">
-    <img id="visitCounterBadge" alt="Визиты" class="h-[22px] rounded-md shadow-sm opacity-0 transition-opacity duration-300" onload="this.classList.remove('opacity-0')" onerror="this.style.display='none'">
-  </div>
-  <div id="centerStage" class="relative flex flex-col items-center flex-1 cursor-pointer tactile-btn mx-3 group z-20" onclick="playTickSound(); openContactsModal();">
-    <div id="bubbleSveta" class="story-bubble actor-sveta"><div class="story-bubble-inner"></div></div>
-    <div id="bubbleMarina" class="story-bubble actor-marina"><div class="story-bubble-inner"></div></div>
-    <div id="bubbleMech" class="story-bubble actor-mech"><div class="story-bubble-inner"></div></div>
-    <div class="w-full h-14 md:h-16 relative flex items-center justify-center overflow-visible" id="mechanicSvgContainer">
-      <svg viewBox="0 0 240 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-gray-500 dark:text-gray-400 group-hover:text-emerald-500 transition-colors normal-mode overflow-visible drop-shadow-sm" id="mechanicSvgElement">
-        <g id="girlsGroup">
-          <path d="M 15 48 L 85 48" stroke-width="2"/>
-          <g id="svetaBody" style="transform-origin: 30px 48px;"><rect x="15" y="32" width="10" height="7" rx="1"/><path d="M 20 39 V 48"/><circle cx="35" cy="22" r="5"/><path d="M 35 27 V 43"/><path d="M 35 43 L 30 55 M 35 43 L 40 55"/><path d="M 30 43 L 40 43 Z" fill="currentColor" stroke-width="1"/><g class="arm-typing" style="transform-origin: 35px 29px;"><path d="M 35 29 L 28 35 L 22 36"/><path d="M 35 29 L 25 36 L 20 38"/></g></g>
-          <g id="marinaBody" style="transform-origin: 70px 48px;"><rect x="75" y="32" width="10" height="7" rx="1"/><path d="M 80 39 V 48"/><circle cx="60" cy="22" r="5"/><path d="M 55 22 A 5 5 0 0 1 65 22" stroke-width="2"/><path d="M 60 27 V 43"/><path d="M 60 43 L 55 55 M 60 43 L 65 55"/><path d="M 55 43 L 65 43 Z" fill="currentColor" stroke-width="1"/><g class="arm-typing-delay" style="transform-origin: 60px 29px;"><path d="M 60 29 L 68 35 L 75 36"/><path d="M 60 29 L 71 36 L 78 38"/></g></g>
-        </g>
-        <g id="mechGroup">
-          <g id="mechBody" style="transform-origin: 170px 55px;"><circle cx="170" cy="22" r="5"/><path d="M 165 18 L 175 18 L 173 22 Z" fill="currentColor"/><path d="M 170 27 V 45"/><path d="M 170 45 L 163 55 M 170 45 L 177 55"/><g class="wrench-arm" style="transform-origin: 170px 29px;"><path d="M 170 29 L 155 36"/><path d="M 157 34 L 150 40" stroke-width="2"/><path d="M 148 37 C 152 35, 153 42, 150 40" stroke-width="2" fill="none"/></g><path d="M 170 29 L 178 35 L 172 40"/><path id="sweatDrop" d="M 176 16 Q 178 20 176 22 Q 174 20 176 16 Z" fill="#38bdf8" stroke="none" class="sweat-drop"/></g><circle cx="195" cy="45" r="10" stroke-width="3"/><circle cx="195" cy="45" r="3" fill="currentColor" stroke="none"/><path d="M 185 55 L 205 55" stroke-width="1.5"/></g>
-      </svg>
+<!-- 3. Поиск и Слайдер (под шапкой) -->
+<div class="max-w-[1600px] mx-auto px-4 sm:px-6 relative z-10 pb-4">
+  <div class="flex items-center gap-2 w-full mb-4 mt-2">
+    <div class="relative flex-1 group">
+      <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></div>
+      <input type="text" id="searchInput" placeholder="Поиск по ТК, адресу, городу..." class="bg-white/60 dark:bg-black/40 focus:bg-white dark:focus:bg-black/60 border border-white/40 dark:border-white/5 focus:border-lentaBlue/50 text-gray-800 dark:text-white placeholder-gray-500 text-sm rounded-2xl block w-full pl-11 pr-10 py-3 outline-none shadow-sm transition-all focus:ring-4 focus:ring-blue-500/10">
+      <button id="clearSearchBtn" onclick="clearSearch();" class="hidden absolute right-2 top-2 text-gray-400 bg-white dark:bg-zinc-800 p-1.5 rounded-full shadow-sm tactile-btn hover:text-gray-600 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      <div id="autocompleteList" class="absolute z-[100] w-full bg-white dark:bg-zinc-800 rounded-2xl hidden max-h-[40vh] overflow-y-auto mt-2 text-left text-gray-800 dark:text-gray-200 shadow-2xl border border-gray-100 dark:border-white/10 hide-scrollbar backdrop-blur-xl"></div>
     </div>
-    <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mt-0 text-center w-full z-20 relative bg-white/50 dark:bg-black/20 px-3 py-0.5 rounded-full inline-block">Контакты</div>
+    <button id="nearestBtn" onclick="sortByNearest();" class="relative bg-white/60 dark:bg-white/5 text-emerald-500 w-11 h-11 rounded-2xl shadow-sm border border-white/40 dark:border-white/5 flex items-center justify-center shrink-0 tactile-btn hover:bg-white transition-colors" title="Ближайшие ко мне"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></button>
+    <button id="voiceSearchBtn" onclick="startVoiceSearch();" class="bg-white/60 dark:bg-white/5 text-lentaBlue w-11 h-11 rounded-2xl shadow-sm border border-white/40 dark:border-white/5 flex items-center justify-center shrink-0 tactile-btn hover:bg-white transition-colors" title="Голос"><svg id="micIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg></button>
   </div>
-  <div id="speedContainer" class="flex flex-col items-center justify-center cursor-default shrink-0 min-w-[50px] z-10 tactile-btn" onclick="playTickSound(); openMechanicModal();" title="Скорость / Инструктаж">
-    <div class="w-11 h-11 rounded-full border-[3px] border-red-500 bg-white flex items-center justify-center shadow-lg relative cursor-pointer group-hover:scale-105 transition-transform">
-      <span id="speedLimitNumber" class="text-slate-800 font-display font-black text-lg leading-none tracking-tighter">80</span>
-      <div id="seasonIcon" class="absolute -bottom-1 -right-2 w-5 h-5 rounded-full flex items-center justify-center text-[10px] shadow-sm border bg-white"></div>
+  <div class="relative overflow-hidden rounded-[28px] shadow-lg border border-white/20 dark:border-white/5 bg-white dark:bg-black">
+    <div class="scenic-bg group">
+      <div id="skyDay" class="sky-layer sky-day"></div>
+      <div id="skySunset" class="sky-layer sky-sunset"></div>
+      <div id="skyNight" class="sky-layer sky-night"></div>
+      <div id="skyStars" class="sky-stars"></div>
+      <div id="sunBody" class="celestial-body w-10 h-10 bg-gradient-to-tr from-yellow-400 to-yellow-200 shadow-[0_0_30px_rgba(250,204,21,1)]" style="left:-10%; bottom:-10%; opacity:0;"></div>
+      <div id="moonBody" class="celestial-body w-8 h-8 bg-blue-50 shadow-[0_0_20px_rgba(219,234,254,0.8)]" style="left:-10%; bottom:-10%; opacity:0;"></div>
+      <div id="layerMountains" class="parallax-layer parallax-mountains"></div>
+      <div id="layerTrees" class="parallax-layer parallax-trees"></div>
+      <div id="layerLeaves" class="weather-layer leaves-anim"></div>
+      <div id="layerSnow" class="weather-layer snow-anim"></div>
+      <div id="layerSigns" class="parallax-signs"></div>
+      <div id="layerRoad" class="parallax-road"></div>
+      <div id="policeCar" class="police-car"><div class="police-siren-red"></div><div class="police-siren-blue"></div></div>
+      <div id="citySlider" class="city-slider relative z-30 cursor-pointer"></div>
     </div>
   </div>
-</div>
-
-<div class="flex items-center gap-2 w-full mb-4 mt-2">
-  <div class="relative flex-1 group">
-    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></div>
-    <input type="text" id="searchInput" placeholder="Поиск по ТК, адресу, городу..." class="bg-white/60 dark:bg-black/40 focus:bg-white dark:focus:bg-black/60 border border-white/40 dark:border-white/5 focus:border-lentaBlue/50 text-gray-800 dark:text-white placeholder-gray-500 text-sm rounded-2xl block w-full pl-11 pr-10 py-3 outline-none shadow-sm transition-all focus:ring-4 focus:ring-blue-500/10">
-    <button id="clearSearchBtn" onclick="clearSearch();" class="hidden absolute right-2 top-2 text-gray-400 bg-white dark:bg-zinc-800 p-1.5 rounded-full shadow-sm tactile-btn hover:text-gray-600 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
-    <div id="autocompleteList" class="absolute z-[100] w-full bg-white dark:bg-zinc-800 rounded-2xl hidden max-h-[40vh] overflow-y-auto mt-2 text-left text-gray-800 dark:text-gray-200 shadow-2xl border border-gray-100 dark:border-white/10 hide-scrollbar backdrop-blur-xl"></div>
-  </div>
-  <button id="nearestBtn" onclick="sortByNearest();" class="relative bg-white/60 dark:bg-white/5 text-emerald-500 w-11 h-11 rounded-2xl shadow-sm border border-white/40 dark:border-white/5 flex items-center justify-center shrink-0 tactile-btn hover:bg-white transition-colors" title="Ближайшие ко мне"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></button>
-  <button id="voiceSearchBtn" onclick="startVoiceSearch();" class="bg-white/60 dark:bg-white/5 text-lentaBlue w-11 h-11 rounded-2xl shadow-sm border border-white/40 dark:border-white/5 flex items-center justify-center shrink-0 tactile-btn hover:bg-white transition-colors" title="Голос"><svg id="micIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg></button>
-</div>
-
-<div class="relative overflow-hidden rounded-[28px] shadow-lg border border-white/20 dark:border-white/5 bg-white dark:bg-black">
-  <div class="scenic-bg group">
-    <div id="skyDay" class="sky-layer sky-day"></div>
-    <div id="skySunset" class="sky-layer sky-sunset"></div>
-    <div id="skyNight" class="sky-layer sky-night"></div>
-    <div id="skyStars" class="sky-stars"></div>
-    <div id="sunBody" class="celestial-body w-10 h-10 bg-gradient-to-tr from-yellow-400 to-yellow-200 shadow-[0_0_30px_rgba(250,204,21,1)]" style="left:-10%; bottom:-10%; opacity:0;"></div>
-    <div id="moonBody" class="celestial-body w-8 h-8 bg-blue-50 shadow-[0_0_20px_rgba(219,234,254,0.8)]" style="left:-10%; bottom:-10%; opacity:0;"></div>
-    <div id="layerMountains" class="parallax-layer parallax-mountains"></div>
-    <div id="layerTrees" class="parallax-layer parallax-trees"></div>
-    <div id="layerLeaves" class="weather-layer leaves-anim"></div>
-    <div id="layerSnow" class="weather-layer snow-anim"></div>
-    <div id="layerSigns" class="parallax-signs"></div>
-    <div id="layerRoad" class="parallax-road"></div>
-    <div id="policeCar" class="police-car"><div class="police-siren-red"></div><div class="police-siren-blue"></div></div>
-    <div id="citySlider" class="city-slider relative z-30 cursor-pointer"></div>
-  </div>
-</div>
 </div>
 </header>
 
@@ -566,8 +576,8 @@ function renderCalendar() {
   const daysInMonth = new Date(currentCalYear, currentCalMonth + 1, 0).getDate();
   let startDay = firstDay - 1; if (startDay === -1) startDay = 6;
   
-  // Заполняем пустые клетки в начале
-  for (let i = 0; i < startDay; i++) grid.innerHTML += `<div class="aspect-square"></div>`;
+  // Пустые клетки в начале
+  for (let i = 0; i < startDay; i++) grid.innerHTML += `<div class="h-9 sm:h-10"></div>`;
   
   const todayStr = getTodayStr();
   for (let day = 1; day <= daysInMonth; day++) {
@@ -577,7 +587,7 @@ function renderCalendar() {
     const hasShift = myShifts[dateStr] && myShifts[dateStr].length > 0;
     const isSelected = dateStr === selectedDate;
     const isToday = dateStr === todayStr;
-    let classes = "flex flex-col items-center justify-center rounded-xl cursor-pointer transition-all tactile-btn relative border aspect-square text-[12px] sm:text-[13px] ";
+    let classes = "flex flex-col items-center justify-center rounded-xl cursor-pointer transition-all tactile-btn relative border h-9 sm:h-10 text-[12px] sm:text-[13px] ";
     if (isSelected) classes += "bg-purple-500 text-white border-purple-600 shadow-md font-bold scale-[1.05] z-10 ";
     else if (hasShift) classes += "bg-purple-500/10 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 border-purple-500/30 font-bold ";
     else if (isToday) classes += "bg-gray-100 dark:bg-white/10 text-gray-800 dark:text-gray-100 border-gray-300 dark:border-white/10 font-bold ";
@@ -587,13 +597,13 @@ function renderCalendar() {
       const hasTask = myShifts[dateStr].some(s => s.brand === 'ЗАДАЧА' || s.brand === 'СЕРВИС');
       shiftIndicator = hasTask ? `<span class="absolute bottom-0.5 text-[8px] sm:text-[10px] leading-none">🛠️</span>` : `<span class="absolute bottom-0.5 text-[8px] sm:text-[10px] leading-none">🚛</span>`;
     }
-    grid.innerHTML += `<div onclick="selectDate('${dateStr}')" class="${classes}"><span class="${hasShift ? 'mb-2' : ''}">${day}</span>${shiftIndicator}</div>`;
+    grid.innerHTML += `<div onclick="selectDate('${dateStr}')" class="${classes}"><span class="${hasShift ? 'mb-1' : ''}">${day}</span>${shiftIndicator}</div>`;
   }
   
-  // ДОБАВЛЯЕМ ПУСТЫЕ КЛЕТКИ В КОНЦЕ, ЧТОБЫ ВСЕГДА БЫЛО 6 РЯДОВ
+  // Добавляем пустые клетки в конце, чтобы сетка была ровной
   const totalCells = startDay + daysInMonth;
   for (let i = totalCells; i < 42; i++) {
-    grid.innerHTML += `<div class="aspect-square"></div>`;
+    grid.innerHTML += `<div class="h-9 sm:h-10"></div>`;
   }
 }
 window.selectDate = function(dateStr) { if (window._calSwipeActive) return; playTickSound(); selectedDate = dateStr; renderCalendar(); showDayShifts(dateStr); };
@@ -971,15 +981,32 @@ window.addEventListener('scroll', () => {
   if (now - _cardsScrollAt < minInterval) return; const accumThreshold = Math.max(15, speed * 4);
   if (_cardScrollAccum >= accumThreshold) { playClickTick(speed); _cardsScrollAt = now; _cardScrollAccum = 0; }
 }, { passive: true });
+
 window.sortByNearest = function() {
   playTickSound(); const btn = document.getElementById('nearestBtn');
-  if (window.isSortedByDistance) { window.isSortedByDistance = false; btn.classList.remove('bg-emerald-100', 'dark:bg-emerald-900/50', 'text-emerald-700', 'radar-active'); btn.classList.add('bg-white/60', 'dark:bg-white/5', 'text-emerald-500'); renderCards(); return; }
+  if (window.isSortedByDistance) { window.isSortedByDistance = false; btn.classList.remove('bg-emerald-100', 'dark:bg-emerald-900/50', 'text-emerald-700', 'radar-active'); btn.classList.add('bg-white', 'dark:bg-slate-800', 'text-emerald-500'); renderCards(); return; }
   if (!navigator.geolocation) { showToast("Геолокация не поддерживается 😔"); return; }
   btn.classList.add('radar-active');
   navigator.geolocation.getCurrentPosition(
-    (position) => { window.userLocation = { lat: position.coords.latitude, lon: position.coords.longitude }; window.isSortedByDistance = true; btn.classList.remove('radar-active', 'bg-white/60', 'dark:bg-white/5', 'text-emerald-500'); btn.classList.add('bg-emerald-100', 'dark:bg-emerald-900/50', 'text-emerald-700'); renderCards(); showToast("Сортировка по удалённости применена 📍"); },
-    () => { btn.classList.remove('radar-active'); showToast("Геолокация запрещена ❌"); },
-    { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+    (position) => { 
+        window.userLocation = { lat: position.coords.latitude, lon: position.coords.longitude }; 
+        window.isSortedByDistance = true; 
+        btn.classList.remove('radar-active', 'bg-white/60', 'dark:bg-white/5', 'text-emerald-500'); 
+        btn.classList.add('bg-emerald-100', 'dark:bg-emerald-900/50', 'text-emerald-700'); 
+        renderCards(); showToast("Сортировка по удалённости применена 📍"); 
+    },
+    (error) => { 
+        console.warn("Ошибка геолокации:", error);
+        btn.classList.remove('radar-active'); 
+        if (!window.isSortedByDistance) {
+            window.userLocation = { lat: 56.8389, lon: 60.6057 }; // Фолбэк: Екатеринбург
+            window.isSortedByDistance = true;
+            btn.classList.add('bg-emerald-100', 'dark:bg-emerald-900/50', 'text-emerald-700');
+            renderCards();
+            showToast("Геолокация недоступна. Расстояния от Екатеринбурга.");
+        }
+    },
+    { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 }
   );
 };
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) { const R = 6371; const dLat = (lat2 - lat1) * Math.PI / 180; const dLon = (lon2 - lon1) * Math.PI / 180; const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2; return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); }
@@ -1086,7 +1113,9 @@ function renderCards() {
       const isFav = favorites.includes(st.id); const is24C = st.is24_7 ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-gray-500/10 text-gray-500 border-gray-500/20';
       const is24T = st.is24_7 ? '24/7' : (st.start ? `${st.start}–${st.end || ''}` : '—');
       
-      const roadB = st.roadService ? `<span class="road-badge bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"><img src="road-icon.png" class="w-3 h-3 object-contain inline" onerror="this.outerHTML='🛣️'"> Дорожная сеть</span>` : '';
+      // Дорожная сеть теперь кликабельная ссылка
+      const roadB = st.roadService ? `<a href="https://dornet.ru/" target="_blank" class="road-badge bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 transition-colors"><img src="road-icon.png" class="w-3 h-3 object-contain inline" onerror="this.outerHTML='🛣️'"> Дорожная сеть</a>` : '';
+      
       const deleteBtn = st.isCustom ? `<button onclick="deleteCustomTech('${st.id}')" class="absolute top-4 right-12 text-red-400 hover:text-red-600 bg-white/80 dark:bg-black/50 p-1.5 rounded-full z-10 tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>` : '';
       const dTag = (window.isSortedByDistance && st.distance !== undefined && st.distance !== 999999) ? `<span class="text-[10px] font-black text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">${st.distance.toFixed(1)} км</span>` : '';
       
@@ -1095,13 +1124,13 @@ function renderCards() {
       const navQuery = (st.lat && st.lon) ? `${st.lat},${st.lon}` : st.address;
       const navAddr = navQuery; 
       
-      let colorClass = 'card-type-kafe';
-      if (st.type === 'СТОЯНКА') colorClass = 'card-type-stoyanka';
-      if (st.type === 'ШИНОМОНТАЖ') colorClass = 'card-type-shinomontazh';
-      if (st.type === 'АВТОМОЙКА') colorClass = 'card-type-avtomoyka';
-      if (st.type === 'СЕРВИС') colorClass = 'card-type-servis';
+      let colorClass = 'border-type-kafe';
+      if (st.type === 'СТОЯНКА') colorClass = 'border-type-stoyanka';
+      if (st.type === 'ШИНОМОНТАЖ') colorClass = 'border-type-shinomontazh';
+      if (st.type === 'АВТОМОЙКА') colorClass = 'border-type-avtomoyka';
+      if (st.type === 'СЕРВИС') colorClass = 'border-type-servis';
 
-      html += `<div class="store-card premium-card animate-reveal ${colorClass} p-4">
+      html += `<div class="store-card volume-card animate-reveal ${colorClass} p-4">
         <div class="absolute top-3 right-3 flex gap-1 z-10">${deleteBtn}<button onclick="toggleFav('${st.id}', event)" class="text-lg tactile-btn transition-transform ${isFav ? 'scale-110 drop-shadow-md' : 'grayscale opacity-40 hover:grayscale-0 hover:opacity-100'}">⭐</button></div>
         <div class="flex flex-col h-full justify-between">
           <div>
@@ -1153,11 +1182,11 @@ function renderCards() {
       if (!match) return; count++;
       
       let dispBrand = "ЛЕНТА", badge = "bg-lentaYellow text-lentaDark", num = store.tk !== '-' ? `ТК ${store.tk}` : '';
-      let colorClass = 'card-brand-lenta';
+      let colorClass = 'border-brand-lenta';
       
-      if (brand === "О'КЕЙ") { dispBrand = "О'КЕЙ"; badge = "bg-red-500 text-white"; num = "ГИПЕРМАРКЕТ"; colorClass = 'card-brand-okey'; }
-      else if (brand === "РЦ МОЛЛ") { dispBrand = "РЦ МОЛЛ"; badge = "bg-purple-500 text-white"; num = "СКЛАД"; colorClass = 'card-brand-moll'; }
-      else if (brand === "МОНЕТКА") { dispBrand = "МОНЕТКА"; badge = "bg-orange-500 text-white"; num = store.tk !== '-' ? `РЦ ${store.tk}` : "РЦ"; colorClass = 'card-brand-monetka'; }
+      if (brand === "О'КЕЙ") { dispBrand = "О'КЕЙ"; badge = "bg-red-500 text-white"; num = "ГИПЕРМАРКЕТ"; colorClass = 'border-brand-okey'; }
+      else if (brand === "РЦ МОЛЛ") { dispBrand = "РЦ МОЛЛ"; badge = "bg-purple-500 text-white"; num = "СКЛАД"; colorClass = 'border-brand-moll'; }
+      else if (brand === "МОНЕТКА") { dispBrand = "МОНЕТКА"; badge = "bg-orange-500 text-white"; num = store.tk !== '-' ? `РЦ ${store.tk}` : "РЦ"; colorClass = 'border-brand-monetka'; }
       
       const is24C = store.is24_7 ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-gray-500/10 text-gray-500 border-gray-500/20';
       const is24T = store.is24_7 ? '24/7' : `${store.start}–${store.end}`;
@@ -1173,9 +1202,9 @@ function renderCards() {
       const dTag = (window.isSortedByDistance && store.distance !== undefined && store.distance !== 999999) ? `<span class="text-[10px] font-black text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">${store.distance.toFixed(1)} км</span>` : '';
       const extraBtn = brand === "МОНЕТКА" ? `<button onclick="openMonetkaModal();" class="mt-3 w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-orange-500/10 text-orange-600 border border-orange-500/20 rounded-xl text-xs font-bold tactile-btn hover:bg-orange-500/20 transition-colors">📖 Правила выгрузки</button>` : '';
       
-      html += `<div class="store-card premium-card animate-reveal ${colorClass}">
+      html += `<div class="store-card volume-card animate-reveal ${colorClass}">
         <button onclick="closeCard(this)" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 bg-gray-100/50 dark:bg-white/5 p-1.5 rounded-full z-10 tactile-btn transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
-        <div class="flex flex-col h-full justify-between"><div><div class="flex flex-wrap items-center gap-2 mb-3 pr-8"><span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase ${badge} shadow-sm tracking-wide">${dispBrand}</span><span class="text-xs font-bold text-gray-500 dark:text-gray-300">${num}</span><div class="ml-auto flex items-center gap-1.5 shrink-0">${dTag}<span class="text-[11px] font-extrabold text-lentaBlue bg-blue-500/10 px-2.5 py-1 rounded-lg border border-blue-500/20">${store.city}</span></div></div><div class="text-[15px] font-display font-extrabold text-gray-800 dark:text-white leading-snug mb-5">${cleanAddr}</div></div>
+        <div class="flex flex-col h-full justify-between p-4"><div><div class="flex flex-wrap items-center gap-2 mb-3 pr-8"><span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase ${badge} shadow-sm tracking-wide">${dispBrand}</span><span class="text-xs font-bold text-gray-500 dark:text-gray-300">${num}</span><div class="ml-auto flex items-center gap-1.5 shrink-0">${dTag}<span class="text-[11px] font-extrabold text-lentaBlue bg-blue-500/10 px-2.5 py-1 rounded-lg border border-blue-500/20">${store.city}</span></div></div><div class="text-[15px] font-display font-extrabold text-gray-800 dark:text-white leading-snug mb-5">${cleanAddr}</div></div>
         <div class="space-y-4 pt-4 border-t border-gray-100 dark:border-white/5 mt-auto"><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Время приёма</span>${rc1}</div><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Режим</span><span class="px-2.5 py-1 rounded-lg text-[10px] font-bold border ${is24C}">${is24T}</span></div>${extraBtn}<button onclick="addToShifts('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${store.city}')" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 rounded-xl text-xs font-bold tactile-btn hover:bg-purple-500/20 transition-colors">📝 Учесть рейс</button><div class="grid grid-cols-3 gap-2 pt-1"><button onclick="openApproachMap('${routeUrl}')" class="flex items-center justify-center gap-1 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md shadow-emerald-500/20 transition-all">🛣️ Подъезд</button><button onclick="openNavModal('${encQ}')" class="flex items-center justify-center gap-1 py-2 bg-gradient-to-r from-lentaBlue to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md shadow-blue-500/20 transition-all">🧭 Навигатор</button><button onclick="shareRoute('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${routeUrl}',event)" class="flex items-center justify-center gap-1 py-2 bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-300 rounded-xl text-[10px] font-bold tactile-btn hover:bg-gray-100 transition-colors">📤 Отправить</button></div></div></div>
       </div>`;
     });
