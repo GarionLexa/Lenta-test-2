@@ -166,8 +166,28 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .show-sweat { opacity: 1; transform: translateY(0); animation: dripDown 1.5s forwards; }
 @keyframes dripDown { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
 
-/* ПУЗЫРИ */
-.story-bubble { position: absolute; background: white; border: 1px solid #e4e4e7; color: #18181b; font-size: 11px; font-weight: 700; padding: 8px 12px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); opacity: 0; pointer-events: none; z-index: 9999; max-width: 180px; text-align: center; line-height: 1.3; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+/* ПУЗЫРИ (ИСПРАВЛЕНО) */
+.story-bubble { 
+  position: absolute; 
+  background: white; 
+  border: 1px solid #e4e4e7; 
+  color: #18181b; 
+  font-size: 11px; 
+  font-weight: 700; 
+  padding: 8px 12px; 
+  border-radius: 16px; 
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); 
+  opacity: 0; 
+  pointer-events: none; 
+  z-index: 9999; 
+  max-width: 280px; 
+  width: max-content;
+  white-space: normal; 
+  word-break: break-word; 
+  text-align: center; 
+  line-height: 1.3; 
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1); 
+}
 .dark .story-bubble { background: #27272a; border-color: #3f3f46; color: #f4f4f5; }
 
 .story-bubble.actor-sveta { bottom: 100%; left: 0; transform: scale(0.9) translateY(10px); }
@@ -239,11 +259,36 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 
 <!-- Контакты -->
 <div id="contactsModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-  <div class="rounded-[32px] p-6 max-w-sm w-full text-center relative animate-reveal glass-panel shadow-2xl max-h-[90vh] overflow-y-auto hide-scrollbar">
-    <button onclick="closeContactsModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
-    <h3 class="text-xl font-display font-extrabold text-lentaDark dark:text-white mb-1 uppercase mt-2">Контакты</h3>
-    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 font-medium">Кому звоним?</p>
-    <div class="space-y-3">
+  <div class="rounded-[32px] p-6 max-w-sm w-full relative animate-reveal glass-panel shadow-2xl max-h-[90vh] overflow-y-auto hide-scrollbar">
+    <button onclick="closeContactsModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-50"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    <h3 class="text-xl font-display font-extrabold text-lentaDark dark:text-white mb-1 uppercase mt-2 text-center">Контакты</h3>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium text-center">Кому звоним?</p>
+    
+    <!-- Анимированная сценка внутри окна -->
+    <div class="relative w-full h-[130px] mb-4 flex flex-col items-center justify-end overflow-visible">
+        <!-- Пузыри для диалогов в модалке -->
+        <div id="modalBubbleSveta" class="story-bubble actor-sveta" style="bottom: 100%; left: 0;"><div class="story-bubble-inner"></div></div>
+        <div id="modalBubbleMarina" class="story-bubble actor-marina" style="bottom: 100%; right: 0;"><div class="story-bubble-inner"></div></div>
+        <div id="modalBubbleMech" class="story-bubble actor-mech" style="bottom: 100%; left: 50%; margin-left: -60px;"><div class="story-bubble-inner"></div></div>
+
+        <!-- SVG персонажи -->
+        <svg viewBox="0 0 240 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-64 h-full text-gray-500 dark:text-gray-400 overflow-visible drop-shadow-sm" id="modalSvgElement">
+          <g id="modalGirlsGroup">
+            <path d="M 15 48 L 85 48" stroke-width="2"/>
+            <g id="modalSvetaBody" style="transform-origin: 30px 48px;"><rect x="15" y="32" width="10" height="7" rx="1"/><path d="M 20 39 V 48"/><circle cx="35" cy="22" r="5"/><path d="M 35 27 V 43"/><path d="M 35 43 L 30 55 M 35 43 L 40 55"/><path d="M 30 43 L 40 43 Z" fill="currentColor" stroke-width="1"/><g class="arm-typing" style="transform-origin: 35px 29px;"><path d="M 35 29 L 28 35 L 22 36"/><path d="M 35 29 L 25 36 L 20 38"/></g></g>
+            <g id="modalMarinaBody" style="transform-origin: 70px 48px;"><rect x="75" y="32" width="10" height="7" rx="1"/><path d="M 80 39 V 48"/><circle cx="60" cy="22" r="5"/><path d="M 55 22 A 5 5 0 0 1 65 22" stroke-width="2"/><path d="M 60 27 V 43"/><path d="M 60 43 L 55 55 M 60 43 L 65 55"/><path d="M 55 43 L 65 43 Z" fill="currentColor" stroke-width="1"/><g class="arm-typing-delay" style="transform-origin: 60px 29px;"><path d="M 60 29 L 68 35 L 75 36"/><path d="M 60 29 L 71 36 L 78 38"/></g></g>
+          </g>
+          <g id="modalMechGroup">
+            <g class="juggling-item jug-1"><circle cx="155" cy="10" r="3" fill="#9ca3af" stroke="none"/></g>
+            <g class="juggling-item jug-2"><rect x="170" y="5" width="5" height="5" rx="1" fill="#fbbf24" stroke="none" transform="rotate(45 172.5 7.5)"/></g>
+            <g class="juggling-item jug-3"><path d="M 180 15 L 185 10 L 190 15" stroke="#6b7280" stroke-width="2" fill="none"/></g>
+            <g id="modalMechBody" style="transform-origin: 170px 55px;"><circle cx="170" cy="22" r="5"/><path d="M 165 18 L 175 18 L 173 22 Z" fill="currentColor"/><path d="M 170 27 V 45"/><path d="M 170 45 L 163 55 M 170 45 L 177 55"/><g class="wrench-arm" style="transform-origin: 170px 29px;"><path d="M 170 29 L 155 36"/><path d="M 157 34 L 150 40" stroke-width="2"/><path d="M 148 37 C 152 35, 153 42, 150 40" stroke-width="2" fill="none"/></g><path d="M 170 29 L 178 35 L 172 40"/><path id="modalSweatDrop" d="M 176 16 Q 178 20 176 22 Q 174 20 176 16 Z" fill="#38bdf8" stroke="none" class="sweat-drop"/></g><circle cx="195" cy="45" r="10" stroke-width="3"/><circle cx="195" cy="45" r="3" fill="currentColor" stroke="none"/><path d="M 185 55 L 205 55" stroke-width="1.5"/>
+          </g>
+        </svg>
+    </div>
+    <!-- Конец сценки -->
+
+    <div class="space-y-3 relative z-10">
       <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-400 text-lg">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Сергей</div><div class="text-[9px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div></div><div class="w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
       <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-lg">🔧</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Механик</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div></div><div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
       <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue dark:text-blue-400 text-lg">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Светлана</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-10 h-10 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
@@ -478,8 +523,8 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
       <img id="visitCounterBadge" alt="Визиты" class="h-[20px] rounded-md shadow-sm opacity-0 transition-opacity duration-300" onload="this.classList.remove('opacity-0')" onerror="this.style.display='none'">
     </div>
     
-    <!-- Добавил pt-10 для места под пузыри -->
-    <div id="centerStage" class="relative flex flex-col items-center flex-1 max-w-lg cursor-pointer tactile-btn mx-3 group z-20 pt-10" onclick="playTickSound(); openContactsModal();">
+    <!-- Добавил pt-16 для места под пузыри -->
+    <div id="centerStage" class="relative flex flex-col items-center flex-1 max-w-lg cursor-pointer tactile-btn mx-3 group z-20 pt-16" onclick="playTickSound(); openContactsModal();">
       <!-- Пузыри -->
       <div id="bubbleSveta" class="story-bubble actor-sveta"><div class="story-bubble-inner"></div></div>
       <div id="bubbleMarina" class="story-bubble actor-marina"><div class="story-bubble-inner"></div></div>
@@ -971,8 +1016,100 @@ function updateParallax(vX) {
 }
 
 // ========== МОДАЛКИ, НАВИГАЦИЯ ==========
-window.openContactsModal = function() { document.getElementById('contactsModal').classList.remove('hidden'); };
-window.closeContactsModal = function() { document.getElementById('contactsModal').classList.add('hidden'); };
+window.openContactsModal = function() { 
+    document.getElementById('contactsModal').classList.remove('hidden'); 
+    startModalStory(); // Запускаем анимацию при открытии
+};
+
+window.closeContactsModal = function() { 
+    document.getElementById('contactsModal').classList.add('hidden'); 
+    stopModalStory(); // Останавливаем при закрытии
+};
+
+// --- Логика анимации внутри окна контактов ---
+let isModalStoryPlaying = false;
+let modalStoryTimeout = null;
+
+const modalDialogues = [
+    { actor: 'sveta', text: 'Сергей на линии?', time: 2000, action: 'none' },
+    { actor: 'marina', text: 'Да, переключаю!', time: 2000, action: 'bounce' },
+    { actor: 'mech', text: 'А мне кто-нибудь позвонит? Мой ключ на 32 застрял...', time: 3000, action: 'shake' },
+    { actor: 'sveta', text: 'Сейчас наберем! 😂', time: 2000, action: 'laughing' },
+    { actor: 'marina', text: 'Механик, хватит жонглировать, бери трубку!', time: 2500, action: 'laughing' }
+];
+
+async function startModalStory() {
+    if (isModalStoryPlaying) return;
+    isModalStoryPlaying = true;
+    
+    // Небольшая задержка перед стартом, чтобы модалка успела открыться
+    await new Promise(r => setTimeout(r, 500)); 
+
+    while (isModalStoryPlaying) {
+        for (const line of modalDialogues) {
+            if (!isModalStoryPlaying) break;
+            
+            triggerModalAction(line.actor, line.action);
+            await showModalBubble(line.actor, line.text, line.time);
+            await new Promise(r => setTimeout(r, 300)); // Пауза между репликами
+        }
+        await new Promise(r => setTimeout(r, 1500)); // Пауза перед новым кругом
+    }
+}
+
+function stopModalStory() {
+    isModalStoryPlaying = false;
+    clearTimeout(modalStoryTimeout);
+    
+    // Сбрасываем анимации и скрываем пузыри
+    ['modalBubbleSveta','modalBubbleMarina','modalBubbleMech'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('active');
+    });
+    ['modalSvetaBody','modalMarinaBody','modalMechBody'].forEach(id => { 
+        const el = document.getElementById(id); 
+        if (el) el.classList.remove('laughing', 'anim-bounce', 'anim-shake'); 
+    });
+    const mechGroup = document.getElementById('modalMechGroup');
+    if (mechGroup) mechGroup.classList.remove('juggling-active');
+    const sweat = document.getElementById('modalSweatDrop'); 
+    if (sweat) sweat.classList.remove('show-sweat'); 
+}
+
+function triggerModalAction(actor, action) {
+    const sveta = document.getElementById('modalSvetaBody');
+    const marina = document.getElementById('modalMarinaBody');
+    const mech = document.getElementById('modalMechBody');
+    const mechGroup = document.getElementById('modalMechGroup');
+    const sweat = document.getElementById('modalSweatDrop');
+
+    [sveta, marina, mech].forEach(el => { if(el) el.classList.remove('laughing', 'anim-bounce', 'anim-shake'); }); 
+    if(sweat) sweat.classList.remove('show-sweat'); 
+    if(mechGroup) mechGroup.classList.remove('juggling-active');
+    
+    const target = actor === 'sveta' ? sveta : actor === 'marina' ? marina : mech; 
+    if (target) {
+        if (action === 'laughing') target.classList.add('laughing');
+        if (action === 'bounce') target.classList.add('anim-bounce');
+        if (action === 'shake') target.classList.add('anim-shake');
+    }
+    if (actor === 'mech' && mechGroup) mechGroup.classList.add('juggling-active');
+    if (actor === 'mech' && action === 'sweat' && sweat) sweat.classList.add('show-sweat'); 
+}
+
+async function showModalBubble(actor, text, duration) {
+    if (!isModalStoryPlaying) return;
+    const target = actor === 'mech' ? document.getElementById('modalBubbleMech') : actor === 'sveta' ? document.getElementById('modalBubbleSveta') : document.getElementById('modalBubbleMarina');
+    if (!target) return;
+    
+    target.querySelector('.story-bubble-inner').innerText = text;
+    target.classList.add('active');
+    await new Promise(r => setTimeout(r, duration));
+    target.classList.remove('active');
+    await new Promise(r => setTimeout(r, 300));
+}
+// ==============================================
+
 window.openMonetkaModal = function() { document.getElementById('monetkaModal').classList.remove('hidden'); };
 window.closeMonetkaModal = function() { document.getElementById('monetkaModal').classList.add('hidden'); };
 window.openMechanicModal = function() { document.getElementById('mechanicModal').classList.remove('hidden'); };
@@ -1189,17 +1326,19 @@ function renderCards() {
       
       const phoneLink = st.phone ? `<a href="tel:${st.phone.replace(/[^0-9+]/g, '')}" class="inline-flex items-center text-[11px] font-bold text-blue-600 dark:text-blue-400 underline decoration-blue-600/30 underline-offset-2 hover:decoration-blue-600 whitespace-nowrap mt-1">📞 ${st.phone}</a>` : '';
       
-      const navQuery = (st.lat && st.lon) ? `${st.lat},${st.lon}` : st.address;
-      const navAddr = navQuery; 
-      
+      // ИСПРАВЛЕНО: Используем текстовый адрес для точного поиска
+      let navAddr = st.address;
+      if (st.city && !navAddr.toLowerCase().includes(st.city.toLowerCase())) {
+        navAddr = st.city + ', ' + navAddr;
+      }
+
       let colorClass = 'border-type-kafe';
       if (st.type === 'СТОЯНКА') colorClass = 'border-type-stoyanka';
       if (st.type === 'ШИНОМОНТАЖ') colorClass = 'border-type-shinomontazh';
       if (st.type === 'АВТОМОЙКА') colorClass = 'border-type-avtomoyka';
       if (st.type === 'СЕРВИС') colorClass = 'border-type-servis';
 
-      // === УМНЫЕ ИКОНКИ ДЛЯ СЕРВИСОВ ===
-      let iconEmoji = '🔧'; // по умолчанию
+      let iconEmoji = '🔧'; 
       let iconBg = 'bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400';
       
       if (st.type === 'СТОЯНКА') { iconEmoji = '🅿️'; iconBg = 'bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400'; }
@@ -1217,9 +1356,7 @@ function renderCards() {
         <div class="flex flex-col h-full justify-between">
           <div>
             <div class="flex flex-wrap items-center gap-1.5 mb-2 pr-8">
-              <!-- Иконка сервиса -->
               <div class="w-8 h-8 rounded-lg flex items-center justify-center text-lg shadow-sm shrink-0 ${iconBg}">${iconEmoji}</div>
-              
               <span class="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wide text-white bg-slate-800 dark:bg-slate-700 shadow-sm">${st.type}</span>
               ${roadB}
               <span class="text-[9px] font-bold text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20 ml-auto">${st.city || ''}</span>
@@ -1235,7 +1372,7 @@ function renderCards() {
               ${dTag}
             </div>
             <div class="grid grid-cols-2 gap-1.5">
-              <button onclick="openNavModal('${navAddr}');" class="flex items-center justify-center gap-1 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg text-[10px] font-bold tactile-btn shadow-sm">🗺️ Поехать</button>
+              <button onclick="openNavModal('${navAddr.replace(/'/g,"\\'")}');" class="flex items-center justify-center gap-1 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg text-[10px] font-bold tactile-btn shadow-sm">🗺️ Поехать</button>
               <button onclick="toggleFav('${st.id}', event)" class="flex items-center justify-center gap-1 py-1.5 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 rounded-lg text-[10px] font-bold tactile-btn">${isFav ? '⭐ В избр.' : '☆ В избр.'}</button>
             </div>
           </div>
@@ -1270,9 +1407,10 @@ function renderCards() {
       const rc1 = store.rc1 !== '-' ? `<div class="flex flex-col items-end"><span class="px-2 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold rounded-lg text-[10px] border border-emerald-500/20">${store.rc1}</span>${getTimeLeftHtml(store.rc1)}</div>` : '<span class="text-gray-300 font-bold">—</span>';
       const cleanAddr = store.address.replace('ООО "Лента", ','').replace('ООО "Лента" ','').replace('РЦ "Монетка", ','');
       
+      // ИСПРАВЛЕНО: Используем текстовый адрес для точного поиска
       let navQ = getSmartNavQuery(store.city, store.address, store.tk);
       const coords = window.storeCoords ? window.storeCoords[store.tk] : null;
-      if (coords) navQ = `${coords.lat},${coords.lon}`;
+      if (!navQ.trim() && coords) navQ = `${coords.lat},${coords.lon}`;
       
       const encQ = navQ;
       const routeUrl = customRoutes[store.tk] || null;
@@ -1282,7 +1420,7 @@ function renderCards() {
       html += `<div class="store-card volume-card animate-reveal ${colorClass}">
         <button onclick="closeCard(this)" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 bg-gray-100/50 dark:bg-white/5 p-1.5 rounded-full z-10 tactile-btn transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
         <div class="flex flex-col h-full justify-between p-4"><div><div class="flex flex-wrap items-center gap-2 mb-3 pr-8"><span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase ${badge} shadow-sm tracking-wide">${dispBrand}</span><span class="text-xs font-bold text-gray-500 dark:text-gray-300">${num}</span><div class="ml-auto flex items-center gap-1.5 shrink-0">${dTag}<span class="text-[11px] font-extrabold text-lentaBlue bg-blue-500/10 px-2.5 py-1 rounded-lg border border-blue-500/20">${store.city}</span></div></div><div class="text-[15px] font-display font-extrabold text-gray-800 dark:text-white leading-snug mb-5">${cleanAddr}</div></div>
-        <div class="space-y-4 pt-4 border-t border-gray-100 dark:border-white/5 mt-auto"><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Время приёма</span>${rc1}</div><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Режим</span><span class="px-2.5 py-1 rounded-lg text-[10px] font-bold border ${is24C}">${is24T}</span></div>${extraBtn}<button onclick="addToShifts('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${store.city}')" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 rounded-xl text-xs font-bold tactile-btn hover:bg-purple-500/20 transition-colors mb-2">📝 Учесть рейс</button><div class="grid grid-cols-3 gap-1.5 pt-1"><button onclick="openApproachMap('${routeUrl}')" class="flex items-center justify-center gap-1 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md shadow-emerald-500/20 transition-all">🛣️ Подъезд</button><button onclick="openNavModal('${encQ}')" class="flex items-center justify-center gap-1 py-2 bg-gradient-to-r from-lentaBlue to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md shadow-blue-500/20 transition-all">🧭 Навигатор</button><button onclick="shareRoute('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${routeUrl}',event)" class="flex items-center justify-center gap-1 py-2 bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-300 rounded-xl text-[10px] font-bold tactile-btn hover:bg-gray-100 transition-colors">📤 Отправить</button></div></div></div>
+        <div class="space-y-4 pt-4 border-t border-gray-100 dark:border-white/5 mt-auto"><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Время приёма</span>${rc1}</div><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Режим</span><span class="px-2.5 py-1 rounded-lg text-[10px] font-bold border ${is24C}">${is24T}</span></div>${extraBtn}<button onclick="addToShifts('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${store.city}')" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 rounded-xl text-xs font-bold tactile-btn hover:bg-purple-500/20 transition-colors mb-2">📝 Учесть рейс</button><div class="grid grid-cols-3 gap-1.5 pt-1"><button onclick="openApproachMap('${routeUrl}')" class="flex items-center justify-center gap-1 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md shadow-emerald-500/20 transition-all">🛣️ Подъезд</button><button onclick="openNavModal('${encQ.replace(/'/g,"\\'")}')" class="flex items-center justify-center gap-1 py-2 bg-gradient-to-r from-lentaBlue to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md shadow-blue-500/20 transition-all">🧭 Навигатор</button><button onclick="shareRoute('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${routeUrl}',event)" class="flex items-center justify-center gap-1 py-2 bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-300 rounded-xl text-[10px] font-bold tactile-btn hover:bg-gray-100 transition-colors">📤 Отправить</button></div></div></div>
       </div>`;
     });
   }
@@ -1427,7 +1565,6 @@ function triggerAction(actor, action) {
         if (action === 'shake') target.classList.add('anim-shake');
     }
 
-    // Если механик говорит, он жонглирует!
     if (actor === 'mech' && mechGroup) {
         mechGroup.classList.add('juggling-active');
     }
