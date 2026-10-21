@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lenta-cache-v5'; // ОБЯЗАТЕЛЬНО МЕНЯЙТЕ ЭТУ ЦИФРУ ПРИ КАЖДОМ ОБНОВЛЕНИИ!
+const CACHE_NAME = 'lenta-cache-v6'; // ОБЯЗАТЕЛЬНО МЕНЯЙТЕ ЭТУ ЦИФРУ ПРИ КАЖДОМ ОБНОВЛЕНИИ!
 const ASSETS = [
   './',
   './index.html',
