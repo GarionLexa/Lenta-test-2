@@ -994,7 +994,7 @@ let currentNavCoords = null;
 
 window.openNavModal = function(query) {
   if (query && query.match(/^-?\d+\.\d+,\s*-?\d+\.\d+$/)) {
-    currentNavCoords = query.split(',').map(s => s.trim());
+    currentNavCoords = query.split(',').map(s => parseFloat(s.trim()));
     currentNavQuery = query;
   } else {
     currentNavCoords = null;
@@ -1006,20 +1006,31 @@ window.openNavModal = function(query) {
 window.closeNavModal = function() { document.getElementById('navModal').classList.add('hidden'); };
 
 window.executeNavigation = function(type) {
-  playTickSound(); let navUrl = '';
+  playTickSound(); 
+  let navUrl = '';
   
   if (currentNavCoords) {
     const [lat, lon] = currentNavCoords;
-    if (type === 'yandex') navUrl = `https://yandex.ru/maps/?pt=${lon},${lat}&z=17&l=map`;
-    else if (type === '2gis') navUrl = `https://2gis.ru/geo/${lon},${lat}`;
-    else if (type === 'google') navUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+    if (type === 'yandex') {
+      navUrl = `https://yandex.ru/maps/?ll=${lon},${lat}&pt=${lon},${lat}&z=17`;
+    } else if (type === '2gis') {
+      navUrl = `https://2gis.ru/geo/${lon},${lat}`;
+    } else if (type === 'google') {
+      navUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+    }
   } else {
-    if (type === 'yandex') navUrl = `https://yandex.ru/maps/?text=${currentNavQuery}`;
-    else if (type === '2gis') navUrl = `https://2gis.ru/search/${currentNavQuery}`;
-    else if (type === 'google') navUrl = `https://www.google.com/maps/search/?api=1&query=${currentNavQuery}`;
+    const encodedQuery = encodeURIComponent(currentNavQuery);
+    if (type === 'yandex') {
+      navUrl = `https://yandex.ru/maps/?mode=search&text=${encodedQuery}`;
+    } else if (type === '2gis') {
+      navUrl = `https://2gis.ru/search/${encodedQuery}`;
+    } else if (type === 'google') {
+      navUrl = `https://www.google.com/maps/search/?api=1&query=${encodedQuery}`;
+    }
   }
   
-  window.location.href = navUrl; closeNavModal();
+  window.location.href = navUrl; 
+  closeNavModal();
 };
 
 window.shareRoute = function(tk, brandName, address, routeUrl, e) {
