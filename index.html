@@ -67,7 +67,7 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 /* Animations */
 @keyframes slideUpFade { 0% { opacity: 0; transform: translateY(20px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
 .animate-reveal { animation: slideUpFade 0.4s cubic-bezier(0.16,1,0.3,1) forwards; }
-.tactile-btn { transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, box-shadow 0.2s ease; }
+.tactile-btn { transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, box-shadow 0.1s ease; }
 .tactile-btn:active { transform: scale(0.94); opacity: 0.9; }
 
 /* Volume Cards */
@@ -175,13 +175,15 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .show-sweat { opacity: 1; transform: translateY(0); animation: dripDown 1.5s forwards; }
 @keyframes dripDown { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
 
-.story-bubble { position: absolute; background: white; border: 1px solid #e4e4e7; color: #18181b; font-size: 11px; font-weight: 700; padding: 8px 12px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); opacity: 0; pointer-events: none; z-index: 1000; max-width: 150px; text-align: center; line-height: 1.3; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+/* ПУЗЫРИ */
+.story-bubble { position: absolute; background: white; border: 1px solid #e4e4e7; color: #18181b; font-size: 11px; font-weight: 700; padding: 8px 12px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); opacity: 0; pointer-events: none; z-index: 9999; max-width: 180px; text-align: center; line-height: 1.3; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
 .dark .story-bubble { background: #27272a; border-color: #3f3f46; color: #f4f4f5; }
-.story-bubble.actor-sveta { bottom: 80%; left: 0; transform: scale(0.9) translateY(10px); }
+
+.story-bubble.actor-sveta { bottom: 100%; left: 0; transform: scale(0.9) translateY(10px); }
 .story-bubble.actor-sveta.active { transform: scale(1) translateY(0); opacity: 1; }
-.story-bubble.actor-marina { bottom: 80%; right: 0; transform: scale(0.9) translateY(10px); }
+.story-bubble.actor-marina { bottom: 100%; right: 0; transform: scale(0.9) translateY(10px); }
 .story-bubble.actor-marina.active { transform: scale(1) translateY(0); opacity: 1; }
-.story-bubble.actor-mech { bottom: 85%; left: 50%; margin-left: -50px; transform: scale(0.9) translateY(10px); }
+.story-bubble.actor-mech { bottom: 100%; left: 50%; margin-left: -60px; transform: scale(0.9) translateY(10px); }
 .story-bubble.actor-mech.active { transform: scale(1) translateY(0); opacity: 1; }
 
 .story-bubble::after { content: ''; position: absolute; top: 100%; border-width: 5px; border-style: solid; border-color: white transparent transparent transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05)); }
@@ -213,7 +215,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 #updateBanner { animation: slideDownBanner 0.4s cubic-bezier(0.16,1,0.3,1); }
 @keyframes slideDownBanner { 0% { transform: translate(-50%,-120%); } 100% { transform: translate(-50%,0); } }
 
-/* КАЛЕНДАРЬ: Свободная высота, ячейки фиксированы */
+/* КАЛЕНДАРЬ */
 #calendarViewport { position: relative; overflow: hidden; touch-action: pan-y; } 
 #calendarGrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; height: auto; }
 
@@ -462,14 +464,16 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   </div>
 
   <!-- 2. Центральная панель (Анимация, Контакты, Спидометр) -->
-  <div id="controlPanel" class="flex-1 w-full xl:w-auto bg-white/60 dark:bg-black/30 backdrop-blur-xl rounded-[28px] shadow-sm border border-white/40 dark:border-white/5 py-2 px-4 flex items-center justify-between transition-all duration-700 min-h-[80px]">
+  <div id="controlPanel" class="flex-1 w-full xl:w-auto bg-white/60 dark:bg-black/30 backdrop-blur-xl rounded-[28px] shadow-sm border border-white/40 dark:border-white/5 py-2 px-4 flex items-center justify-between transition-all duration-700 min-h-[80px] overflow-visible">
     <div id="visitContainer" class="flex flex-col items-center justify-center shrink-0 min-w-[70px] z-10" title="Счётчик визитов">
       <img id="visitCounterBadge" alt="Визиты" class="h-[20px] rounded-md shadow-sm opacity-0 transition-opacity duration-300" onload="this.classList.remove('opacity-0')" onerror="this.style.display='none'">
     </div>
     <div id="centerStage" class="relative flex flex-col items-center flex-1 max-w-lg cursor-pointer tactile-btn mx-3 group z-20" onclick="playTickSound(); openContactsModal();">
+      <!-- Пузыри -->
       <div id="bubbleSveta" class="story-bubble actor-sveta"><div class="story-bubble-inner"></div></div>
       <div id="bubbleMarina" class="story-bubble actor-marina"><div class="story-bubble-inner"></div></div>
       <div id="bubbleMech" class="story-bubble actor-mech"><div class="story-bubble-inner"></div></div>
+      
       <div class="w-full h-14 relative flex items-center justify-center overflow-visible" id="mechanicSvgContainer">
         <svg viewBox="0 0 240 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-gray-500 dark:text-gray-400 group-hover:text-emerald-500 transition-colors normal-mode overflow-visible drop-shadow-sm" id="mechanicSvgElement">
           <g id="girlsGroup">
@@ -601,7 +605,6 @@ function renderCalendar() {
   const daysInMonth = new Date(currentCalYear, currentCalMonth + 1, 0).getDate();
   let startDay = firstDay - 1; if (startDay === -1) startDay = 6;
   
-  // Пустые клетки в начале
   for (let i = 0; i < startDay; i++) grid.innerHTML += `<div class="h-9 sm:h-10"></div>`;
   
   const todayStr = getTodayStr();
@@ -625,7 +628,6 @@ function renderCalendar() {
     grid.innerHTML += `<div onclick="selectDate('${dateStr}')" class="${classes}"><span class="${hasShift ? 'mb-1' : ''}">${day}</span>${shiftIndicator}</div>`;
   }
   
-  // Добавляем пустые клетки в конце, чтобы сетка была ровной
   const totalCells = startDay + daysInMonth;
   for (let i = totalCells; i < 42; i++) {
     grid.innerHTML += `<div class="h-9 sm:h-10"></div>`;
@@ -899,8 +901,8 @@ function resetTrucksToStart() { buildCitySlider(); citySlider.scrollLeft = 0; vi
 
 let lastSliderScrollTime = 0;
 citySlider.addEventListener('scroll', () => {
-  if (isMusicPlaying) return; const currentScroll = citySlider.scrollLeft; const dx = currentScroll - lastActualScrollLeft;
-  if (Math.abs(dx) > 0) { virtualScrollX += Math.abs(dx); const now = Date.now(); const dt = now - lastSliderScrollTime; if (dt > 16) { const speed = Math.abs(dx) / dt; if (speed > 0.05) playEngineSound(speed); } lastSliderScrollTime = now; updateParallax(virtualScrollX); }
+  const currentScroll = citySlider.scrollLeft; const dx = currentScroll - lastActualScrollLeft;
+  if (Math.abs(dx) > 0) { virtualScrollX += Math.abs(dx); const now = Date.now(); const dt = now - lastSliderScrollTime; if (dt > 16) { const speed = Math.abs(dx) / dt; if (speed > 0.05 && isMusicPlaying) playEngineSound(speed); } lastSliderScrollTime = now; updateParallax(virtualScrollX); }
   lastActualScrollLeft = currentScroll;
 }, { passive: true });
 function startAutoScroll() { if (!autoScrollAnimationId) { lastActualScrollLeft = citySlider.scrollLeft; citySlider.classList.add('auto-driving'); autoScrollLoop(); } }
@@ -916,25 +918,43 @@ function autoScrollLoop() {
   updateParallax(virtualScrollX); autoScrollAnimationId = requestAnimationFrame(autoScrollLoop);
 }
 function updateParallax(vX) {
-  document.getElementById('layerMountains').style.transform = `translate3d(-${(vX * 0.2) % 200}px, 0, 0)`;
-  document.getElementById('layerTrees').style.transform = `translate3d(-${(vX * 0.5) % 100}px, 0, 0)`;
-  document.getElementById('layerRoad').style.transform = `translate3d(-${(vX * 0.9) % 40}px, 0, 0)`;
-  document.getElementById('layerSigns').style.transform = `translate3d(-${(vX * 0.9) % 2200}px, 0, 0)`;
+  const mountains = document.getElementById('layerMountains');
+  const trees = document.getElementById('layerTrees');
+  const road = document.getElementById('layerRoad');
+  const signs = document.getElementById('layerSigns');
+  if (mountains) mountains.style.transform = `translate3d(-${(vX * 0.2) % 200}px, 0, 0)`;
+  if (trees) trees.style.transform = `translate3d(-${(vX * 0.5) % 100}px, 0, 0)`;
+  if (road) road.style.transform = `translate3d(-${(vX * 0.9) % 40}px, 0, 0)`;
+  if (signs) signs.style.transform = `translate3d(-${(vX * 0.9) % 2200}px, 0, 0)`;
+
   const cycle = 3000; const raw = (Math.abs(vX) % cycle) / cycle; const progress = 1 - Math.abs(raw * 2 - 1);
-  document.getElementById('skyDay').style.opacity = Math.max(0, 1 - progress * 2);
-  document.getElementById('skySunset').style.opacity = progress < 0.5 ? progress * 2 : Math.max(0, 1 - (progress - 0.5) * 2);
-  document.getElementById('skyNight').style.opacity = progress > 0.4 ? (progress - 0.4) / 0.6 : 0;
-  document.getElementById('skyStars').style.opacity = progress > 0.5 ? (progress - 0.5) / 0.5 : 0;
+  
+  const skyDay = document.getElementById('skyDay');
+  const skySunset = document.getElementById('skySunset');
+  const skyNight = document.getElementById('skyNight');
+  const skyStars = document.getElementById('skyStars');
+
+  if (skyDay) skyDay.style.opacity = Math.max(0, 1 - progress * 2);
+  if (skySunset) skySunset.style.opacity = progress < 0.5 ? progress * 2 : Math.max(0, 1 - (progress - 0.5) * 2);
+  if (skyNight) skyNight.style.opacity = progress > 0.4 ? (progress - 0.4) / 0.6 : 0;
+  if (skyStars) skyStars.style.opacity = progress > 0.5 ? (progress - 0.5) / 0.5 : 0;
+
   const darkness = 1 - progress * 0.7;
   if (progress > 0.6) { document.documentElement.style.setProperty('--truck-light-opacity', '1'); document.documentElement.style.setProperty('--truck-body-brightness', '0.6'); } else { document.documentElement.style.setProperty('--truck-light-opacity', '0'); document.documentElement.style.setProperty('--truck-body-brightness', '1'); }
+  
   const layerTrees = document.getElementById('layerTrees'); const layerLeaves = document.getElementById('layerLeaves'); const layerSnow = document.getElementById('layerSnow');
-  if (progress < 0.25) { layerLeaves.style.opacity = 0; layerSnow.style.opacity = 0; layerTrees.style.filter = `brightness(${darkness}) hue-rotate(-20deg) saturate(1.5)`; }
-  else if (progress < 0.5) { layerLeaves.style.opacity = 0; layerSnow.style.opacity = 0; layerTrees.style.filter = `brightness(${darkness})`; }
-  else if (progress < 0.75) { const p = (progress - 0.5) / 0.25; layerLeaves.style.opacity = p; layerSnow.style.opacity = 0; layerTrees.style.filter = `brightness(${darkness}) sepia(${p * 0.6}) hue-rotate(-${p * 40}deg)`; }
-  else { const p = (progress - 0.75) / 0.25; layerLeaves.style.opacity = 0; layerSnow.style.opacity = p; layerTrees.style.filter = `brightness(${darkness}) grayscale(${p * 0.8}) brightness(${1 + p * 0.5})`; }
+  if (layerTrees && layerLeaves && layerSnow) {
+    if (progress < 0.25) { layerLeaves.style.opacity = 0; layerSnow.style.opacity = 0; layerTrees.style.filter = `brightness(${darkness}) hue-rotate(-20deg) saturate(1.5)`; }
+    else if (progress < 0.5) { layerLeaves.style.opacity = 0; layerSnow.style.opacity = 0; layerTrees.style.filter = `brightness(${darkness})`; }
+    else if (progress < 0.75) { const p = (progress - 0.5) / 0.25; layerLeaves.style.opacity = p; layerSnow.style.opacity = 0; layerTrees.style.filter = `brightness(${darkness}) sepia(${p * 0.6}) hue-rotate(-${p * 40}deg)`; }
+    else { const p = (progress - 0.75) / 0.25; layerLeaves.style.opacity = 0; layerSnow.style.opacity = p; layerTrees.style.filter = `brightness(${darkness}) grayscale(${p * 0.8}) brightness(${1 + p * 0.5})`; }
+  }
+
   const sun = document.getElementById('sunBody'), moon = document.getElementById('moonBody');
-  if (progress <= 0.6) { const p = progress / 0.6; sun.style.transform = `translate3d(calc(${p * 100}vw + 20px), calc(-${Math.sin(p * Math.PI) * 50}px), 0)`; sun.style.opacity = 1; } else sun.style.opacity = 0;
-  if (progress >= 0.4) { const p = (progress - 0.4) / 0.6; moon.style.transform = `translate3d(calc(${p * 100}vw + 20px), calc(-${Math.sin(p * Math.PI) * 50}px), 0)`; moon.style.opacity = 1; } else moon.style.opacity = 0;
+  if (sun && moon) {
+    if (progress <= 0.6) { const p = progress / 0.6; sun.style.transform = `translate3d(calc(${p * 100}vw + 20px), calc(-${Math.sin(p * Math.PI) * 50}px), 0)`; sun.style.opacity = 1; } else sun.style.opacity = 0;
+    if (progress >= 0.4) { const p = (progress - 0.4) / 0.6; moon.style.transform = `translate3d(calc(${p * 100}vw + 20px), calc(-${Math.sin(p * Math.PI) * 50}px), 0)`; moon.style.opacity = 1; } else moon.style.opacity = 0;
+  }
 }
 
 // ========== МОДАЛКИ, НАВИГАЦИЯ ==========
@@ -1154,11 +1174,28 @@ function renderCards() {
       if (st.type === 'АВТОМОЙКА') colorClass = 'border-type-avtomoyka';
       if (st.type === 'СЕРВИС') colorClass = 'border-type-servis';
 
+      // === УМНЫЕ ИКОНКИ ДЛЯ СЕРВИСОВ ===
+      let iconEmoji = '🔧'; // по умолчанию
+      let iconBg = 'bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400';
+      
+      if (st.type === 'СТОЯНКА') { iconEmoji = '🅿️'; iconBg = 'bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400'; }
+      else if (st.type === 'ШИНОМОНТАЖ') { iconEmoji = '🛞'; iconBg = 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400'; }
+      else if (st.type === 'АВТОМОЙКА') { iconEmoji = '🚿'; iconBg = 'bg-sky-100 dark:bg-sky-900/50 text-sky-600 dark:text-sky-400'; }
+      else if (st.type === 'КАФЕ') { iconEmoji = '☕'; iconBg = 'bg-orange-100 dark:bg-orange-900/50 text-orange-600 dark:text-orange-400'; }
+      else if (st.type === 'СЕРВИС') { 
+        const isRef = (st.name + ' ' + (st.desc || '')).toLowerCase().match(/реф|холод|термо|king|carrier/);
+        if (isRef) { iconEmoji = '❄️'; iconBg = 'bg-cyan-100 dark:bg-cyan-900/50 text-cyan-600 dark:text-cyan-400'; }
+        else { iconEmoji = '⚙️'; iconBg = 'bg-violet-100 dark:bg-violet-900/50 text-violet-600 dark:text-violet-400'; }
+      }
+
       html += `<div class="store-card volume-card animate-reveal ${colorClass} p-4">
         <div class="absolute top-3 right-3 flex gap-1 z-10">${deleteBtn}<button onclick="toggleFav('${st.id}', event)" class="text-lg tactile-btn transition-transform ${isFav ? 'scale-110 drop-shadow-md' : 'grayscale opacity-40 hover:grayscale-0 hover:opacity-100'}">⭐</button></div>
         <div class="flex flex-col h-full justify-between">
           <div>
             <div class="flex flex-wrap items-center gap-1.5 mb-2 pr-8">
+              <!-- Иконка сервиса -->
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center text-lg shadow-sm shrink-0 ${iconBg}">${iconEmoji}</div>
+              
               <span class="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wide text-white bg-slate-800 dark:bg-slate-700 shadow-sm">${st.type}</span>
               ${roadB}
               <span class="text-[9px] font-bold text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20 ml-auto">${st.city || ''}</span>
@@ -1351,9 +1388,12 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 async function showBubble(actor, text, duration) { if (!isStoryPlaying) return; const target = actor === 'mech' ? document.getElementById('bubbleMech') : actor === 'sveta' ? document.getElementById('bubbleSveta') : document.getElementById('bubbleMarina'); if (!target) return; target.querySelector('.story-bubble-inner').innerText = text; target.classList.add('active'); await sleep(duration); target.classList.remove('active'); await sleep(400); }
 function triggerAction(actor, action) { 
     if (!isStoryPlaying) return; 
-    const sveta = document.getElementById('svetaBody'), marina = document.getElementById('marinaBody'), mech = document.getElementById('mechBody'), sweat = document.getElementById('sweatDrop'); 
+    const sveta = document.getElementById('svetaBody'), marina = document.getElementById('marinaBody'), mech = document.getElementById('mechBody'), sweat = document.getElementById('sweatDrop');
+    const mechGroup = document.getElementById('mechGroup');
+
     [sveta, marina, mech].forEach(el => { if(el) el.classList.remove('laughing', 'anim-bounce', 'anim-shake'); }); 
     if(sweat) sweat.classList.remove('show-sweat'); 
+    if(mechGroup) mechGroup.classList.remove('juggling-active');
     
     const target = actor === 'sveta' ? sveta : actor === 'marina' ? marina : mech; 
     
@@ -1362,11 +1402,45 @@ function triggerAction(actor, action) {
         if (action === 'bounce') target.classList.add('anim-bounce');
         if (action === 'shake') target.classList.add('anim-shake');
     }
+
+    // Если механик говорит, он жонглирует!
+    if (actor === 'mech' && mechGroup) {
+        mechGroup.classList.add('juggling-active');
+    }
+
     if (actor === 'mech' && action === 'sweat' && sweat) sweat.classList.add('show-sweat'); 
 }
-async function playStory() { if (isMusicPlaying || isStoryPlaying || storyList.length === 0) return; isStoryPlaying = true; document.getElementById('controlPanel').classList.add('story-mode'); await sleep(800); if (!isStoryPlaying) return; const story = storyList[Math.floor(Math.random() * storyList.length)]; for (const line of story.dialogues) { if (!isStoryPlaying) break; triggerAction(line.actor, line.action); await showBubble(line.actor, line.text, line.time); } if (isStoryPlaying) abortStory(); }
-function abortStory() { isStoryPlaying = false; document.getElementById('controlPanel').classList.remove('story-mode'); ['bubbleSveta','bubbleMarina','bubbleMech'].forEach(id => document.getElementById(id).classList.remove('active')); ['svetaBody','marinaBody','mechBody'].forEach(id => { const el = document.getElementById(id); if(el) el.classList.remove('laughing', 'anim-bounce', 'anim-shake'); }); const sweat = document.getElementById('sweatDrop'); if(sweat) sweat.classList.remove('show-sweat'); }
-function startStoryTimer() { clearTimeout(storyTimer); storyTimer = setInterval(() => { if (!isMusicPlaying && !isStoryPlaying) playStory(); }, 30000); }
+
+async function playStory() { 
+  if (isMusicPlaying || isStoryPlaying || storyList.length === 0) return; 
+  isStoryPlaying = true; 
+  document.getElementById('controlPanel').classList.add('story-mode'); 
+  await sleep(800); 
+  if (!isStoryPlaying) return; 
+  const story = storyList[Math.floor(Math.random() * storyList.length)]; 
+  for (const line of story.dialogues) { 
+    if (!isStoryPlaying) break; 
+    triggerAction(line.actor, line.action); 
+    await showBubble(line.actor, line.text, line.time); 
+  } 
+  if (isStoryPlaying) abortStory(); 
+}
+
+function abortStory() { 
+  isStoryPlaying = false; 
+  document.getElementById('controlPanel').classList.remove('story-mode'); 
+  ['bubbleSveta','bubbleMarina','bubbleMech'].forEach(id => document.getElementById(id).classList.remove('active')); 
+  ['svetaBody','marinaBody','mechBody'].forEach(id => { const el = document.getElementById(id); if(el) el.classList.remove('laughing', 'anim-bounce', 'anim-shake'); }); 
+  const mechGroup = document.getElementById('mechGroup');
+  if(mechGroup) mechGroup.classList.remove('juggling-active');
+  const sweat = document.getElementById('sweatDrop'); 
+  if(sweat) sweat.classList.remove('show-sweat'); 
+}
+
+function startStoryTimer() { 
+  clearTimeout(storyTimer); 
+  storyTimer = setInterval(() => { if (!isMusicPlaying && !isStoryPlaying) playStory(); }, 30000); 
+}
 
 function updateSpeedLimit() { const m = new Date().getMonth(); const isWinter = m === 11 || m === 0 || m === 1 || m === 2 || m === 10; document.getElementById('speedLimitNumber').innerText = isWinter ? '60' : '80'; const icon = document.getElementById('seasonIcon'); if (isWinter) { icon.innerText = '❄️'; icon.className = 'absolute -bottom-1 -right-2 w-5 h-5 bg-blue-50 border-blue-200 flex items-center justify-center text-[10px] shadow-sm border rounded-full'; } else { icon.innerText = '☀️'; icon.className = 'absolute -bottom-1 -right-2 w-5 h-5 bg-amber-50 border-amber-200 flex items-center justify-center text-[10px] shadow-sm border rounded-full'; } }
 
