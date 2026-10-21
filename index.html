@@ -598,7 +598,7 @@ window.deleteShift = function(dateStr, index) {
 window.addToShifts = function(tk, brand, address, city) {
   playTickSound();
   const today = getTodayStr();
-  const dateToUse = selectedDate || today; // УЛУЧШЕНИЕ: Если день не выбран, добавляем на сегодня
+  const dateToUse = selectedDate || today;
   if (!myShifts[dateToUse]) myShifts[dateToUse] = [];
   const now = new Date();
   const timeStr = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
@@ -1003,7 +1003,10 @@ function renderCards() {
       const deleteBtn = st.isCustom ? `<button onclick="deleteCustomTech('${st.id}')" class="absolute top-4 right-12 text-red-400 hover:text-red-600 bg-white/80 dark:bg-slate-800/80 p-1.5 rounded-full z-10 tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>` : '';
       const dTag = (window.isSortedByDistance && st.distance !== undefined && st.distance !== 999999) ? `<span class="text-[11px] font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">${st.distance.toFixed(1)} км</span>` : '';
       const phoneLink = st.phone ? `<a href="tel:${st.phone.replace(/[^0-9+]/g, '')}" class="text-[10px] font-bold text-blue-600 dark:text-blue-400 underline ml-1">📞 ${st.phone}</a>` : '';
-      const navAddr = encodeURIComponent(st.address);
+      
+      // ИСПОЛЬЗУЕМ КООРДИНАТЫ, ЕСЛИ ЕСТЬ, ДЛЯ ТОЧНОГО МАРШРУТА
+      const navQuery = (st.lat && st.lon) ? `${st.lat},${st.lon}` : st.address;
+      const navAddr = encodeURIComponent(navQuery);
       
       let colorClass = 'card-type-kafe';
       if (st.type === 'СТОЯНКА') colorClass = 'card-type-stoyanka';
@@ -1044,7 +1047,13 @@ function renderCards() {
       const is24T = store.is24_7 ? '24/7' : `${store.start}–${store.end}`;
       const rc1 = store.rc1 !== '-' ? `<div class="flex flex-col items-end"><span class="px-2 py-1 bg-emerald-500 text-white font-bold rounded-md text-[10px]">${store.rc1}</span>${getTimeLeftHtml(store.rc1)}</div>` : '<span class="text-gray-300 font-bold">—</span>';
       const cleanAddr = store.address.replace('ООО "Лента", ','').replace('ООО "Лента" ','').replace('РЦ "Монетка", ','');
-      const navQ = getSmartNavQuery(store.city, store.address, store.tk); const encQ = encodeURIComponent(navQ);
+      
+      // ИСПОЛЬЗУЕМ КООРДИНАТЫ ДЛЯ МАГАЗИНОВ
+      let navQ = getSmartNavQuery(store.city, store.address, store.tk);
+      const coords = window.storeCoords ? window.storeCoords[store.tk] : null;
+      if (coords) navQ = `${coords.lat},${coords.lon}`;
+      
+      const encQ = encodeURIComponent(navQ);
       const routeUrl = customRoutes[store.tk] || null;
       const dTag = (window.isSortedByDistance && store.distance !== undefined && store.distance !== 999999) ? `<span class="text-[11px] font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">${store.distance.toFixed(1)} км</span>` : '';
       const extraBtn = brand === "МОНЕТКА" ? `<button onclick="openMonetkaModal();" class="mt-3 w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-orange-50 text-orange-600 border border-orange-200 rounded-xl text-xs font-bold tactile-btn">📖 Правила выгрузки</button>` : '';
@@ -1088,6 +1097,7 @@ const handleSearchInput = function() {
 searchInput.addEventListener('input', debounce(handleSearchInput, 250));
 document.addEventListener('click', (e) => { if (!searchInput.contains(e.target) && !autocompleteList.contains(e.target)) autocompleteList.classList.add('hidden'); });
 
+// ========== УЛУЧШЕННЫЙ ГОЛОСОВОЙ ПОИСК ==========
 window.startVoiceSearch = function() {
   const micBtn = document.getElementById('voiceSearchBtn'); const el = document.getElementById('searchInput'); const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) { showToast("Голосовой поиск не поддерживается 🎙"); return; }
@@ -1096,18 +1106,37 @@ window.startVoiceSearch = function() {
     const r = new SR(); r.lang = 'ru-RU'; r.interimResults = false; r.maxAlternatives = 1; 
     r.onstart = () => { micBtn.classList.add('mic-listening'); micBtn.classList.remove('text-lentaBlue'); el.value = ''; el.placeholder = "Слушаю..."; }; 
     r.onresult = (ev) => { 
-      let rawText = ev.results[0][0].transcript.toLowerCase(); 
+      let rawText = ev.results[0][0].transcript.toLowerCase().replace(/ё/g, 'е'); 
+      
+      // 1. Распознавание чисел
       let s = rawText.replace(/\bсто\b/gi,'100').replace(/\bдвести\b/gi,'200').replace(/\bтриста\b/gi,'300')
-                      .replace(/двести тридцатый/gi, '230').replace(/двести тридцать/gi, '230')
-                      .replace(/стоянку/gi, 'стоянка').replace(/шинку/gi, 'шиномонтаж').replace(/кафешку/gi, 'кафе').replace(/мойку/gi, 'мойка')
-                      .replace(/гипер/gi, '').replace(/магазин/gi, '').replace(/\.$/,'').trim(); 
+                      .replace(/\bчетыреста\b/gi,'400').replace(/\bпятьсот\b/gi,'500').replace(/\bшестьсот\b/gi,'600')
+                      .replace(/\bсемьсот\b/gi,'700').replace(/\bвосемьсот\b/gi,'800').replace(/\bдевятьсот\b/gi,'900')
+                      .replace(/двести тридцатый/gi, '230').replace(/двести тридцать/gi, '230');
       
-      const techKeywords = ['стоянка', 'шинка', 'шиномонтаж', 'кафе', 'мойка', 'сервис', 'техпомощь', 'уют', 'туртас', 'ремонт', 'камаз', 'ман'];
-      const storeKeywords = ['лента', 'монетка', 'окей', 'рц', 'тк'];
+      // 2. Словарь синонимов для Техпомощи
+      const techSynonyms = {
+        'шинк': 'шиномонтаж', 'колес': 'шиномонтаж', 'покрышк': 'шиномонтаж', 'резин': 'шиномонтаж',
+        'поесть': 'кафе', 'покушать': 'кафе', 'столов': 'кафе', 'кушать': 'кафе', 'обед': 'кафе', 'перекусить': 'кафе',
+        'помыть': 'автомойка', 'мойк': 'автомойка', 'помыться': 'автомойка', 'баня': 'автомойка',
+        'поспать': 'стоянка', 'отдохнуть': 'стоянка', 'стоянк': 'стоянка', 'парковк': 'стоянка', 'ночлег': 'стоянка',
+        'починить': 'сервис', 'поломк': 'сервис', 'ремонт': 'сервис', 'сломался': 'сервис', 'техпомощь': 'сервис'
+      };
       
-      let isTechQuery = techKeywords.some(kw => rawText.includes(kw));
-      let isStoreQuery = storeKeywords.some(kw => rawText.includes(kw));
+      let isTechQuery = false;
+      for (const [key, value] of Object.entries(techSynonyms)) {
+        if (s.includes(key)) { s += ' ' + value; isTechQuery = true; }
+      }
       
+      // 3. Команда "Ближайшие"
+      if (s.includes('ближайш') || s.includes('рядом') || s.includes('около меня')) {
+        if (!window.isSortedByDistance) sortByNearest();
+      }
+      
+      const storeKeywords = ['лента', 'монетка', 'окей', 'рц', 'тк', 'молл'];
+      let isStoreQuery = storeKeywords.some(kw => s.includes(kw));
+      
+      // Переключение режимов
       if (isTechQuery && !isStoreQuery) {
         if (!isTechMode) {
           isTechMode = true;
@@ -1127,6 +1156,7 @@ window.startVoiceSearch = function() {
         }
       }
       
+      s = s.replace(/\.$/,'').trim();
       el.value = s; 
       el.dispatchEvent(new Event('input')); 
     }; 
