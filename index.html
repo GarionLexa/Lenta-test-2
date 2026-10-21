@@ -598,12 +598,16 @@ window.deleteShift = function(dateStr, index) {
 window.addToShifts = function(tk, brand, address, city) {
   playTickSound();
   const today = getTodayStr();
-  if (!myShifts[today]) myShifts[today] = [];
+  const dateToUse = selectedDate || today; // УЛУЧШЕНИЕ: Если день не выбран, добавляем на сегодня
+  if (!myShifts[dateToUse]) myShifts[dateToUse] = [];
   const now = new Date();
   const timeStr = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
-  myShifts[today].push({ tk, brand, address, city, time: timeStr, timestamp: now.getTime() });
-  saveShifts(); showToast("✅ Рейс учтён в календаре!");
-  if (!document.getElementById('calendarModal').classList.contains('hidden')) { renderCalendar(); showDayShifts(today); }
+  myShifts[dateToUse].push({ tk, brand, address, city, time: timeStr, timestamp: now.getTime() });
+  saveShifts(); showToast(`✅ Рейс добавлен на ${dateToUse === today ? 'сегодня' : dateToUse}!`);
+  if (!document.getElementById('calendarModal').classList.contains('hidden')) { 
+    selectedDate = dateToUse;
+    renderCalendar(); showDayShifts(dateToUse); 
+  }
 };
 let customTechStations = [];
 try { customTechStations = JSON.parse(localStorage.getItem('lenta_custom_tech')) || []; } catch(e) { customTechStations = []; }
@@ -1098,7 +1102,7 @@ window.startVoiceSearch = function() {
                       .replace(/стоянку/gi, 'стоянка').replace(/шинку/gi, 'шиномонтаж').replace(/кафешку/gi, 'кафе').replace(/мойку/gi, 'мойка')
                       .replace(/гипер/gi, '').replace(/магазин/gi, '').replace(/\.$/,'').trim(); 
       
-      const techKeywords = ['стоянка', 'шинка', 'шиномонтаж', 'кафе', 'мойка', 'сервис', 'техпомощь', 'уют', 'туртас', 'ремонт', 'камаз'];
+      const techKeywords = ['стоянка', 'шинка', 'шиномонтаж', 'кафе', 'мойка', 'сервис', 'техпомощь', 'уют', 'туртас', 'ремонт', 'камаз', 'ман'];
       const storeKeywords = ['лента', 'монетка', 'окей', 'рц', 'тк'];
       
       let isTechQuery = techKeywords.some(kw => rawText.includes(kw));
