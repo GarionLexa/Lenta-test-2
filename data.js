@@ -107,4 +107,31 @@ window.customRoutes = {
   '297':'https://yandex.ru/maps/?um=constructor%3Aa75a129315b7f4355b33394b2dded4d76289b970a370396ca356e21b366c8630&source=constructorLink',
   '929455':'https://yandex.ru/maps/?um=constructor%3Ac3eb4d903ec83ebc36245fe59ee27a74dc740149432bfd08dfd7cae7ed0a9ce9&source=constructorLink',
   '309':'https://yandex.ru/maps/?um=constructor%3A6c20f09c2c83dbff2ae0fdc57bcbd3842cc814f45a5ca51befc29afd04188ee4&source=constructorLink',
-  '91':'https://
+  '91':'https://yandex.ru/maps/?um=constructor%3A7e3843dbf95debeb6f394b571d74764ba3c05757a160b806c2d09a4dcbfc033c&source=constructorLink',
+  '146':'https://yandex.ru/maps/?um=constructor%3Abec93239bb8b5780b81bf27b15ba9597b3853ad57a51a8ba72c6fb767027504e&source=constructorLink',
+  '209':'https://yandex.ru/maps/?um=constructor%3A5a8b96301fa84a9e1e2d1d13622b1c5c80c7eb4426a067e288505878a2d4434a&source=constructorLink',
+  '245':'https://yandex.ru/maps/?um=constructor%3A0de529f08593916d036e3fca75948e592e4e96dc5118d168264bf495de2c276a&source=constructorLink',
+  '389':'https://yandex.ru/maps/?um=constructor%3A3be5b677130256c73ee1b60e7db0c567da71f4033c1962b9ad6ba45523b67e8e&source=constructorLink',
+  '390':'https://yandex.ru/maps/?um=constructor%3A9d4973b3dea5e62b714c6109398e8ebd433ce93fabef64fa451d1773554393b0&source=constructorLink',
+  '929453':'https://yandex.ru/maps/?um=constructor%3A3028b973ac29acd5f685ca7ef7bce016a464bf3321b24bf9f4095e8e752d017c&source=constructorLink',
+  '135':'https://yandex.ru/maps/?um=constructor%3Ab4f7660388443e0ecd9dfafa18b7746795f0d279b1e0fe50744c1b4a44363bd7&source=constructorLink',
+  '100':'https://yandex.ru/maps/?um=constructor%3Ab5b3bfc3e1865f88d5bcaa8282519968b4c0ed6a7477fab024157b3cf2228957&source=constructorLink',
+  '343':'https://yandex.ru/maps/?um=constructor%3A5e9eb6d507f8ecee001eb446ff2579cef0685ac55cf32d267e912db1931b6653&source=constructorLink',
+  '929451':'https://yandex.ru/maps/?um=constructor%3A420a9f2db340ceeb397fa5e7e7f12c68857b9bc6aaf2b35b61004c020c1bd139&source=constructorLink',
+  '92':'https://yandex.ru/maps/?um=constructor%3Abefa7b198663f4f9dac1b28be923906d1bd235f6ecf8660606e0431ca73895da&source=constructorLink',
+  '93':'https://yandex.ru/maps/?um=constructor%3A4a3c5ef8a9c36c3a6268e32da5b2367d0e211814f580f4fc734487ba1154cc7e&source=constructorLink',
+  '321':'https://yandex.ru/maps/?um=constructor%3Ac107808e783d8f04dbe1c6e31db9c0741ef497a3bdde9d59c569e3bbd0c6ae21&source=constructorLink',
+  '411':'https://yandex.ru/maps/?um=constructor%3A470180351824d49a21b4401d1920add69200f18e2562b41b1e1c21a61543a89b&source=constructorLink',
+  '285':'https://yandex.ru/maps/?um=constructor%3Ad570fc5ad7b24b26c62c97f6c9eeff0a2329bb71c99e20e804f721f7d48b6930&source=constructorLink',
+  '94':'https://yandex.ru/maps/?um=constructor%3A80d2266d0be153d3f15728239c6084256047cb996bd39ac8fc4f78b2d51a904b&source=constructorLink',
+  '368':'https://yandex.ru/maps/?um=constructor%3A151b677d3b24e5df2ebe6b33ae80a1f4be00314930619040658a6cd4a76487a8&source=constructorLink',
+  '317':'https://yandex.ru/maps/?um=constructor%3A5f0fb3706ed1ecc385fdf70ddc878fc1b9ed849e91bb04e5cd628df6fb1a899f&source=constructorLink'
+};
+window.stories = [
+  { dialogues: [{ actor:'mech', text:'Девчонки, где мой ключ на 32?! 🔧 Я его три часа ищу!', time:3000, action:'shake' },{ actor:'marina', text:'Мы им ножку стола подперли, чтобы не шаталась 😂', time:3000, action:'laughing' },{ actor:'mech', text:'А мне теперь кардан руками крутить?! 😤', time:3000, action:'bounce' },{ actor:'sveta', text:'Ты же сильный! Крути давай! 💪😎', time:2500, action:'laughing' }]},
+  { dialogues: [{ actor:'sveta', text:'Водитель на 203-й спрашивает: «А вы точно Лента, а не Пятерочка?» 🛒😂', time:3500, action:'laughing' },{ actor:'marina', text:'Скажи ему: «Мы Лента, но с колёсами от Монетки!» 🪙🚛', time:3500, action:'bounce' },{ actor:'mech', text:'А я думал, он спросит про скидку на шиномонтаж... 🤦‍♂️', time:3000, action:'sweat' }]},
+  { dialogues: [{ actor:'mech', text:'Кто выпил весь мой кофе?! Я же умру без кофеина! ☕💀', time:3000, action:'shake' },{ actor:'marina', text:'Это не мы, это водители на весовом контроле! ⚖️🚛', time:3000, action:'none' },{ actor:'sveta', text:'Он теперь весит 120 тонн, но зато не спит! 🚀', time:2500, action:'laughing' }]},
+  { dialogues: [{ actor:'sveta', text:'А куда делась моя любимая ручка для путевок?! 🖊️😱', time:2500, action:'shake' },{ actor:'mech', text:'Я ей карбюратор чистил, извини... 🛠️🤷‍♂️', time:3000, action:'sweat' },{ actor:'marina', text:'Теперь у нас путевки с запахом бензина! ⛽️😂', time:3000, action:'laughing' }]},
+  { dialogues: [{ actor:'marina', text:'Водитель спрашивает: «А где у вас тут можно поспать?» 😴', time:3000, action:'none' },{ actor:'mech', text:'В машине! Мы же не отель! 🏨😂', time:2500, action:'laughing' },{ actor:'sveta', text:'Скажи ему про стоянку в Туртасе, там хоть кафе есть! ☕️🚛', time:3500, action:'bounce' }]},
+  { dialogues: [{ actor:'mech', text:'О нет, опять рефрижератор сломался! ❄️🚛', time:3000, action:'sweat' },{ actor:'sveta', text:'Не переживай, мы найдем сервис «МАН» в Бобровке! 🛠️', time:3500, action:'bounce' },{ actor:'marina', text:'А если не найдем, то груз сам себя заморозит! 🥶😂', time:3000, action:'laughing' }]}
+];
