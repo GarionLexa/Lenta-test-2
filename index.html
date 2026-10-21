@@ -166,7 +166,7 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .show-sweat { opacity: 1; transform: translateY(0); animation: dripDown 1.5s forwards; }
 @keyframes dripDown { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
 
-/* ПУЗЫРИ (ИСПРАВЛЕНО) */
+/* ПУЗЫРИ */
 .story-bubble { 
   position: absolute; 
   background: white; 
@@ -951,8 +951,30 @@ let lastLogoTapTime = 0, logoTapTimeout;
 function handleLogoTap() { unlockAudio(); const now = Date.now(); if (now - lastLogoTapTime < 400) { clearTimeout(logoTapTimeout); fullStopMusic(); } else logoTapTimeout = setTimeout(togglePlayPause, 400); lastLogoTapTime = now; }
 function togglePlayPause() {
   const logo = document.getElementById('logoImage');
-  if (isMusicPlaying) { bgMusic.pause(); isMusicPlaying = false; logo.classList.remove('record-spin'); stopAutoScroll(); startStoryTimer(); document.getElementById('mechanicSvgElement').classList.remove('dancing'); document.getElementById('discoBall').classList.remove('dropped'); } 
-  else { abortStory(); clearTimeout(storyTimer); const p = bgMusic.play(); if (p !== undefined) { p.then(() => { isMusicPlaying = true; logo.classList.add('record-spin'); startAutoScroll(); document.getElementById('mechanicSvgElement').classList.add('dancing'); document.getElementById('discoBall').classList.add('dropped'); }).catch(() => showToast("Не удалось запустить музыку 🔇")); } }
+  if (isMusicPlaying) { 
+    bgMusic.pause(); 
+    isMusicPlaying = false; 
+    logo.classList.remove('record-spin'); 
+    stopAutoScroll(); 
+    startStoryTimer(); 
+    document.getElementById('mechanicSvgElement').classList.remove('dancing'); 
+    document.getElementById('discoBall').classList.remove('dropped'); 
+  } else { 
+    abortStory(); 
+    clearTimeout(storyTimer); 
+    const p = bgMusic.play(); 
+    
+    // Запускаем анимацию В ЛЮБОМ СЛУЧАЕ, даже если музыка заблокирована
+    isMusicPlaying = true; 
+    logo.classList.add('record-spin'); 
+    startAutoScroll(); 
+    document.getElementById('mechanicSvgElement').classList.add('dancing'); 
+    document.getElementById('discoBall').classList.add('dropped'); 
+    
+    if (p !== undefined) { 
+      p.catch(() => showToast("Музыка не запущена (нет звука) 🔇")); 
+    } 
+  }
 }
 function fullStopMusic() { bgMusic.pause(); bgMusic.currentTime = 0; isMusicPlaying = false; document.getElementById('logoImage').classList.remove('record-spin'); stopAutoScroll(); resetTrucksToStart(); startStoryTimer(); document.getElementById('mechanicSvgElement').classList.remove('dancing'); document.getElementById('discoBall').classList.remove('dropped'); }
 function resetTrucksToStart() { buildCitySlider(); citySlider.scrollLeft = 0; virtualScrollX = 0; window.fractionalScroll = 0; lastActualScrollLeft = 0; updateParallax(0); }
@@ -1158,7 +1180,7 @@ window.executeNavigation = function(type) {
   } else {
     const encodedQuery = encodeURIComponent(currentNavQuery);
     if (type === 'yandex') {
-      navUrl = `https://yandex.ru/maps/?mode=search&text=${encodedQuery}`;
+      navUrl = `https://yandex.ru/maps/?text=${encodedQuery}`;
     } else if (type === '2gis') {
       navUrl = `https://2gis.ru/search/${encodedQuery}`;
     } else if (type === 'google') {
@@ -1326,8 +1348,8 @@ function renderCards() {
       
       const phoneLink = st.phone ? `<a href="tel:${st.phone.replace(/[^0-9+]/g, '')}" class="inline-flex items-center text-[11px] font-bold text-blue-600 dark:text-blue-400 underline decoration-blue-600/30 underline-offset-2 hover:decoration-blue-600 whitespace-nowrap mt-1">📞 ${st.phone}</a>` : '';
       
-      // ИСПРАВЛЕНО: Используем текстовый адрес для точного поиска
-      let navAddr = st.address;
+      // ИСПРАВЛЕНО: Используем текстовый адрес + НАЗВАНИЕ для точного поиска в Яндексе
+      let navAddr = st.name;
       if (st.city && !navAddr.toLowerCase().includes(st.city.toLowerCase())) {
         navAddr = st.city + ', ' + navAddr;
       }
@@ -1407,7 +1429,6 @@ function renderCards() {
       const rc1 = store.rc1 !== '-' ? `<div class="flex flex-col items-end"><span class="px-2 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold rounded-lg text-[10px] border border-emerald-500/20">${store.rc1}</span>${getTimeLeftHtml(store.rc1)}</div>` : '<span class="text-gray-300 font-bold">—</span>';
       const cleanAddr = store.address.replace('ООО "Лента", ','').replace('ООО "Лента" ','').replace('РЦ "Монетка", ','');
       
-      // ИСПРАВЛЕНО: Используем текстовый адрес для точного поиска
       let navQ = getSmartNavQuery(store.city, store.address, store.tk);
       const coords = window.storeCoords ? window.storeCoords[store.tk] : null;
       if (!navQ.trim() && coords) navQ = `${coords.lat},${coords.lon}`;
@@ -1643,6 +1664,10 @@ if ('serviceWorker' in navigator) {
   buildCitySlider(); updateSpeedLimit(); renderCards();
   setTimeout(() => citySlider.dispatchEvent(new Event('scroll')), 100);
   setTimeout(() => { if (!isMusicPlaying) playStory(); startStoryTimer(); }, 5000);
+  
+  // Добавляем класс для анимации покачивания грузовиков даже без музыки
+  citySlider.classList.add('auto-driving');
+  
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { ['navModal','contactsModal','monetkaModal','mechanicModal','calendarModal','storePickerModal','techPickerModal','customTaskModal','importConfirmModal','timePickerModal','addTechModal'].forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('hidden'); }); } });
 })();
 </script>
