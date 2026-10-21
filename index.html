@@ -303,11 +303,8 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
             <radialGradient id="skinSveta" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#fcdbb6"/><stop offset="100%" stop-color="#d99e66"/></radialGradient>
             <linearGradient id="bodySveta" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#1d4ed8"/></linearGradient>
           </defs>
-          <!-- Дорожка -->
           <rect x="5" y="80" width="90" height="8" rx="4" fill="#475569" />
           <line x1="10" y1="84" x2="90" y2="84" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 4" style="animation: spinBelt 1s linear infinite;" />
-          
-          <!-- Светлана -->
           <g class="anim-pixar-sveta" style="transform-origin: 50px 50px;">
             <path d="M 30 35 Q 25 50 35 60 Q 45 65 50 55" fill="#78350f" />
             <path d="M 35 55 L 50 70 L 65 55 Z" fill="url(#bodySveta)" />
@@ -918,7 +915,10 @@ window.addToShifts = function(tk, brand, address, city) {
 };
 let customTechStations = [];
 try { customTechStations = JSON.parse(localStorage.getItem('lenta_custom_tech')) || []; } catch(e) { customTechStations = []; }
-function getTechStations() { return [...window.techStations, ...customTechStations]; }
+function getTechStations() { 
+    const base = window.techStations || [];
+    return [...base, ...customTechStations]; 
+}
 window.openCustomTaskModal = function() {
   if (!selectedDate) { showToast("Сначала выберите день в календаре!"); return; }
   playTickSound(); document.getElementById('customTaskModal').classList.remove('hidden');
@@ -979,7 +979,7 @@ window.renderTechPicker = function() {
   const container = document.getElementById('techPickerList'); container.innerHTML = ''; const words = query.split(/\s+/).filter(w => w.length > 0);
   const filtered = getTechStations().filter(st => {
     if (st.type !== 'СЕРВИС') return false;
-    const full = `${st.type} ${st.name} ${st.address} ${st.desc || ''} ${st.city || ''}`.toLowerCase();
+    const full = `${st.type} ${st.name} ${st.address} ${st.desc || ''} ${st.city || ''}`.toLowerCase().replace(/['"`]/g, '');
     return words.every(w => full.includes(w));
   });
   if (filtered.length === 0) { container.innerHTML = `<div class="text-center text-gray-400 py-6 text-sm">Ничего не найдено</div>`; return; }
@@ -1462,7 +1462,7 @@ function renderCards() {
     list.forEach(st => {
       if (selectedTechType === 'favorites' && !favorites.includes(st.id)) return;
       if (selectedTechType !== 'all' && selectedTechType !== 'favorites' && st.type !== selectedTechType) return;
-      let match = true; if (words.length > 0) { const full = `${st.type} ${st.name} ${st.address} ${st.desc || ''} ${st.city || ''}`.toLowerCase(); match = words.every(w => full.includes(w)); }
+      let match = true; if (words.length > 0) { const full = `${st.type} ${st.name} ${st.address} ${st.desc || ''} ${st.city || ''}`.toLowerCase().replace(/['"`]/g, ''); match = words.every(w => full.includes(w)); }
       if (!match) return; count++;
       const isFav = favorites.includes(st.id); const is24C = st.is24_7 ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-gray-500/10 text-gray-500 border-gray-500/20';
       const is24T = st.is24_7 ? '24/7' : (st.start ? `${st.start}–${st.end || ''}` : '—');
@@ -1522,7 +1522,7 @@ function renderCards() {
             </div>
             <div class="grid ${routeUrl ? 'grid-cols-3' : 'grid-cols-2'} gap-1.5">
               ${routeUrl ? `<button onclick="openApproachMap('${routeUrl}')" class="flex items-center justify-center gap-1 py-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg text-[10px] font-bold tactile-btn shadow-sm">🛣️ Подъезд</button>` : ''}
-              <button onclick="openNavModal('${navAddr.replace(/'/g,"\\'")}');" class="flex items-center justify-center gap-1 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg text-[10px] font-bold tactile-btn shadow-sm">🗺️ Поехать</button>
+              <button onclick="openNavModal('${navAddr.replace(/'/g, "\\'").replace(/"/g, '&quot;')}');" class="flex items-center justify-center gap-1 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg text-[10px] font-bold tactile-btn shadow-sm">🗺️ Поехать</button>
               <button onclick="toggleFav('${st.id}', event)" class="flex items-center justify-center gap-1 py-1.5 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 rounded-lg text-[10px] font-bold tactile-btn">${isFav ? '⭐' : '☆'}</button>
             </div>
           </div>
@@ -1569,7 +1569,7 @@ function renderCards() {
       html += `<div class="store-card volume-card animate-reveal ${colorClass}">
         <button onclick="closeCard(this)" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 bg-gray-100/50 dark:bg-white/5 p-1.5 rounded-full z-10 tactile-btn transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
         <div class="flex flex-col h-full justify-between p-4"><div><div class="flex flex-wrap items-center gap-2 mb-3 pr-8"><span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase ${badge} shadow-sm tracking-wide">${dispBrand}</span><span class="text-xs font-bold text-gray-500 dark:text-gray-300">${num}</span><div class="ml-auto flex items-center gap-1.5 shrink-0">${dTag}<span class="text-[11px] font-extrabold text-lentaBlue bg-blue-500/10 px-2.5 py-1 rounded-lg border border-blue-500/20">${store.city}</span></div></div><div class="text-[15px] font-display font-extrabold text-gray-800 dark:text-white leading-snug mb-5">${cleanAddr}</div></div>
-        <div class="space-y-4 pt-4 border-t border-gray-100 dark:border-white/5 mt-auto"><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Время приёма</span>${rc1}</div><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Режим</span><span class="px-2.5 py-1 rounded-lg text-[10px] font-bold border ${is24C}">${is24T}</span></div>${extraBtn}<button onclick="addToShifts('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${store.city}')" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 rounded-xl text-xs font-bold tactile-btn hover:bg-purple-500/20 transition-colors mb-2">📝 Учесть рейс</button><div class="grid grid-cols-3 gap-1.5 pt-1"><button onclick="openApproachMap('${routeUrl}')" class="flex items-center justify-center gap-1 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md shadow-emerald-500/20 transition-all">🛣️ Подъезд</button><button onclick="openNavModal('${encQ.replace(/'/g,"\\'")}')" class="flex items-center justify-center gap-1 py-2 bg-gradient-to-r from-lentaBlue to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md shadow-blue-500/20 transition-all">🧭 Навигатор</button><button onclick="shareRoute('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${routeUrl}',event)" class="flex items-center justify-center gap-1 py-2 bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-300 rounded-xl text-[10px] font-bold tactile-btn hover:bg-gray-100 transition-colors">📤 Отправить</button></div></div></div>
+        <div class="space-y-4 pt-4 border-t border-gray-100 dark:border-white/5 mt-auto"><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Время приёма</span>${rc1}</div><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Режим</span><span class="px-2.5 py-1 rounded-lg text-[10px] font-bold border ${is24C}">${is24T}</span></div>${extraBtn}<button onclick="addToShifts('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g, "\\'").replace(/"/g, '&quot;')}','${store.city.replace(/'/g, "\\'").replace(/"/g, '&quot;')}')" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 rounded-xl text-xs font-bold tactile-btn hover:bg-purple-500/20 transition-colors mb-2">📝 Учесть рейс</button><div class="grid grid-cols-3 gap-1.5 pt-1"><button onclick="openApproachMap('${routeUrl ? routeUrl.replace(/'/g, "\\'") : ''}')" class="flex items-center justify-center gap-1 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md shadow-emerald-500/20 transition-all">🛣️ Подъезд</button><button onclick="openNavModal('${encQ.replace(/'/g, "\\'").replace(/"/g, '&quot;')}')" class="flex items-center justify-center gap-1 py-2 bg-gradient-to-r from-lentaBlue to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md shadow-blue-500/20 transition-all">🧭 Навигатор</button><button onclick="shareRoute('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g, "\\'").replace(/"/g, '&quot;')}','${routeUrl ? routeUrl.replace(/'/g, "\\'") : ''}',event)" class="flex items-center justify-center gap-1 py-2 bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-300 rounded-xl text-[10px] font-bold tactile-btn hover:bg-gray-100 transition-colors">📤 Отправить</button></div></div></div>
       </div>`;
     });
   }
@@ -1593,16 +1593,18 @@ function getDropdownItemHTML(item, isTech) {
 }
 const handleSearchInput = function() {
   let v = this.value.toLowerCase().trim().replace(/['"`]/g, '').replace('окэй','окей');
+  const words = v.split(/\s+/).filter(w => w.length > 0);
   
-  if (v.length > 0) {
+  if (words.length > 0) {
       if (isTechMode && selectedTechType !== 'all') {
           selectedTechType = 'all';
       }
       
       if (!isTechMode) {
-          const isTechMatch = getTechStations().some(st => 
-              `${st.name} ${st.address} ${st.city} ${st.desc}`.toLowerCase().includes(v)
-          );
+          const isTechMatch = getTechStations().some(st => {
+              const full = `${st.type} ${st.name} ${st.address} ${st.city || ''} ${st.desc || ''}`.toLowerCase().replace(/['"`]/g, '');
+              return words.every(w => full.includes(w));
+          });
           if (isTechMatch) {
               isTechMode = true;
               selectedTechType = 'all';
@@ -1616,8 +1618,8 @@ const handleSearchInput = function() {
 
   if (/^\d+$/.test(v) && !isTechMode) { const all = document.querySelector('[data-city="all"]'); if (all && !all.classList.contains('active')) { document.querySelectorAll('.truck-chip').forEach(el => el.classList.remove('active')); all.classList.add('active'); } }
   renderCards(); autocompleteList.innerHTML = ''; if (!v) { autocompleteList.classList.add('hidden'); return; }
-  const words = v.split(/\s+/).filter(w => w.length > 0); let suggestions = [];
-  if (isTechMode) { const allTech = getTechStations(); suggestions = allTech.filter(st => { const full = `${st.type} ${st.name} ${st.address} ${st.desc || ''} ${st.city || ''}`.toLowerCase(); return words.every(w => full.includes(w)); }); }
+  let suggestions = [];
+  if (isTechMode) { const allTech = getTechStations(); suggestions = allTech.filter(st => { const full = `${st.type} ${st.name} ${st.address} ${st.desc || ''} ${st.city || ''}`.toLowerCase().replace(/['"`]/g, ''); return words.every(w => full.includes(w)); }); }
   else { suggestions = stores.filter(store => { let brand = "ЛЕНТА"; if (store.address.includes("ОКЕЙ") || store.tk === "929929") brand = "О'КЕЙ"; else if (store.address.includes("Молл")) brand = "РЦ МОЛЛ"; else if (store.address.includes("Монетка") || (store.tk.startsWith("92") && store.tk.length > 3)) brand = "МОНЕТКА"; const clean = store.address.replace(/\b\d{6}\b,?\s*/g, ''); const full = `тк ${store.tk} рц ${store.tk} ${store.city} ${clean} ${brand}`.toLowerCase().replace(/['"`]/g, ''); const m = words.every(w => /^\d+$/.test(w) ? (store.tk === w || new RegExp(`\\b${w}\\b`).test(clean.toLowerCase())) : full.includes(w)); if (selectedCityFilter !== 'all' && store.city !== selectedCityFilter) return false; return m; }); }
   if (suggestions.length === 0) { autocompleteList.classList.add('hidden'); return; }
   autocompleteList.classList.remove('hidden');
