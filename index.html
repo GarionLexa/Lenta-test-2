@@ -1671,11 +1671,35 @@ window.addEventListener('appinstalled', () => { const b = document.getElementByI
 if (window.matchMedia('(display-mode: standalone)').matches) { const b = document.getElementById('installPwaBtn'); if (b) b.classList.add('hidden'); }
 window.showUpdateBanner = function(hasData) { const el = document.getElementById('updateBanner'); const txt = document.getElementById('updateBannerText'); txt.innerHTML = hasData ? '⚠️ Обновление. <b>Сначала сделайте бэкап календаря!</b>' : '✨ Доступно обновление приложения.'; el.classList.remove('hidden'); };
 window.applyUpdate = function() {
+  // Проверяем, есть ли сохраненные рейсы в календаре
+  const hasData = typeof myShifts !== 'undefined' && Object.keys(myShifts).length > 0;
+  
+  // Формируем текст предупреждения
+  const warningText = hasData 
+    ? "⚠️ ВНИМАНИЕ!\n\nУ вас есть сохраненные рейсы в календаре.\nНастоятельно рекомендуем сделать БЭКАП (кнопка 💾 в календаре) перед обновлением!\n\nВы уверены, что хотите обновиться?" 
+    : "Вы уверены, что хотите обновить приложение до новой версии?";
+
+  // Показываем окно подтверждения
+  if (!confirm(warningText)) {
+    return; // Если пользователь нажал "Отмена", ничего не делаем
+  }
+
+  // Если пользователь нажал "ОК", запускаем процесс
   showToast("⏳ Обновляем приложение...");
   const btn = document.querySelector('#updateBanner button');
-  if (btn) { btn.textContent = 'Ждите...'; btn.style.opacity = '0.7'; btn.disabled = true; }
-  if (waitingWorker) waitingWorker.postMessage('SKIP_WAITING');
-  setTimeout(() => { window.location.reload(); }, 800);
+  if (btn) { 
+    btn.textContent = 'Ждите...'; 
+    btn.style.opacity = '0.7'; 
+    btn.disabled = true; 
+  }
+  
+  if (waitingWorker) {
+    waitingWorker.postMessage('SKIP_WAITING');
+  }
+  
+  setTimeout(() => { 
+    window.location.reload(); 
+  }, 800);
 };
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
