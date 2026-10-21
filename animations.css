@@ -71,7 +71,7 @@
     animation: lookTablet 2s infinite ease-in-out;
 }
 
-/* Диско-шар (уменьшен) */
+/* Диско-шар */
 .disco-ball {
     position: absolute;
     top: 0;
@@ -86,7 +86,6 @@
     transform: translate(-50%, 5px);
     opacity: 1;
 }
-/* Лучи от диско-шара */
 .disco-rays {
     position: absolute;
     top: 50%;
