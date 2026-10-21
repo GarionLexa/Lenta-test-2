@@ -125,13 +125,6 @@ window.customRoutes = {
   '285':'https://yandex.ru/maps/?um=constructor%3Ad570fc5ad7b24b26c62c97f6c9eeff0a2329bb71c99e20e804f721f7d48b6930&source=constructorLink',
   '94':'https://yandex.ru/maps/?um=constructor%3A80d2266d0be153d3f15728239c6084256047cb996bd39ac8fc4f78b2d51a904b&source=constructorLink',
   '368':'https://yandex.ru/maps/?um=constructor%3A151b677d3b24e5df2ebe6b33ae80a1f4be00314930619040658a6cd4a76487a8&source=constructorLink',
-  '317':'https://yandex.ru/maps/?um=constructor%3A5f0fb3706ed1ecc385fdf70ddc878fc1b9ed849e91bb04e5cd628df6fb1a899f&source=constructorLink'
+  '317':'https://yandex.ru/maps/?um=constructor%3A5f0fb3706ed1ecc385fdf70ddc878fc1b9ed849e91bb04e5cd628df6fb1a899f&source=constructorLink',
+  '929452':'https://yandex.ru/maps/?um=constructor%3A2d69e020330b5de9fcaf9be28162879623304c89be25eb613ade27fcc2172dee&source=constructorLink'
 };
-window.stories = [
-  { dialogues: [{ actor:'mech', text:'Девчонки, где мой ключ на 32?! 🔧 Я его три часа ищу!', time:3000, action:'shake' },{ actor:'marina', text:'Мы им ножку стола подперли, чтобы не шаталась 😂', time:3000, action:'laughing' },{ actor:'mech', text:'А мне теперь кардан руками крутить?! 😤', time:3000, action:'bounce' },{ actor:'sveta', text:'Ты же сильный! Крути давай! 💪😎', time:2500, action:'laughing' }]},
-  { dialogues: [{ actor:'sveta', text:'Водитель на 203-й спрашивает: «А вы точно Лента, а не Пятерочка?» 🛒😂', time:3500, action:'laughing' },{ actor:'marina', text:'Скажи ему: «Мы Лента, но с колёсами от Монетки!» 🪙🚛', time:3500, action:'bounce' },{ actor:'mech', text:'А я думал, он спросит про скидку на шиномонтаж... 🤦‍♂️', time:3000, action:'sweat' }]},
-  { dialogues: [{ actor:'mech', text:'Кто выпил весь мой кофе?! Я же умру без кофеина! ☕💀', time:3000, action:'shake' },{ actor:'marina', text:'Это не мы, это водители на весовом контроле! ⚖️🚛', time:3000, action:'none' },{ actor:'sveta', text:'Он теперь весит 120 тонн, но зато не спит! 🚀', time:2500, action:'laughing' }]},
-  { dialogues: [{ actor:'sveta', text:'А куда делась моя любимая ручка для путевок?! 🖊️😱', time:2500, action:'shake' },{ actor:'mech', text:'Я ей карбюратор чистил, извини... 🛠️🤷‍♂️', time:3000, action:'sweat' },{ actor:'marina', text:'Теперь у нас путевки с запахом бензина! ⛽️😂', time:3000, action:'laughing' }]},
-  { dialogues: [{ actor:'marina', text:'Водитель спрашивает: «А где у вас тут можно поспать?» 😴', time:3000, action:'none' },{ actor:'mech', text:'В машине! Мы же не отель! 🏨😂', time:2500, action:'laughing' },{ actor:'sveta', text:'Скажи ему про стоянку в Туртасе, там хоть кафе есть! ☕️🚛', time:3500, action:'bounce' }]},
-  { dialogues: [{ actor:'mech', text:'О нет, опять рефрижератор сломался! ❄️🚛', time:3000, action:'sweat' },{ actor:'sveta', text:'Не переживай, мы найдем сервис «МАН» в Бобровке! 🛠️', time:3500, action:'bounce' },{ actor:'marina', text:'А если не найдем, то груз сам себя заморозит! 🥶😂', time:3000, action:'laughing' }]}
-];
