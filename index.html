@@ -51,10 +51,10 @@
 body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; width: 100%; overflow-x: hidden; padding-bottom: env(safe-area-inset-bottom); transition: background-color 0.4s ease, color 0.4s ease; }
 .dark body { background-color: #0f1115; color: #e4e4e7; }
 
-/* Premium Glassmorphism */
 .glass-panel { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--glass-border); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1); transition: all 0.3s ease; }
 .dark .glass-panel { box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5); }
-.glass-header { padding-top: max(1rem, env(safe-area-inset-top)); position: sticky; top: 0; z-index: 50; border-radius: 0 0 32px 32px; transition: all 0.3s ease; overflow: visible !important; }
+
+.glass-header { padding-top: max(1rem, env(safe-area-inset-top)); position: sticky; top: 0; z-index: 50; border-radius: 0 0 32px 32px; transition: all 0.3s ease; }
 @media (max-height: 550px) { .glass-header { position: relative; border-radius: 0; } }
 
 @keyframes slideUpFade { 0% { opacity: 0; transform: translateY(20px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
@@ -190,21 +190,102 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   </div>
 </div>
 
+<!-- КОНТАКТЫ С АНИМИРОВАННЫМИ ЧЕЛОВЕЧКАМИ -->
 <div id="contactsModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
   <div class="rounded-[32px] p-6 max-w-sm w-full text-center relative animate-reveal glass-panel shadow-2xl max-h-[90vh] overflow-y-auto hide-scrollbar">
     <button onclick="closeContactsModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
     <h3 class="text-xl font-display font-extrabold text-lentaDark dark:text-white mb-1 uppercase mt-2">Контакты</h3>
     <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 font-medium">Кому звоним?</p>
     <div class="space-y-3">
-      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-400 text-xl contact-icon-sergey">🏹</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Сергей</div><div class="text-[9px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div></div><div class="w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
-      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-xl contact-icon-mech">🎧</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Механик</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div></div><div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
-      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue dark:text-blue-400 text-xl contact-icon-sveta">💨</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Светлана</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-10 h-10 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
-      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-600 dark:text-purple-400 text-xl contact-icon-marina">☕</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Марина</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-10 h-10 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
+      
+      <!-- Сергей (Лучник) -->
+      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center overflow-hidden shrink-0">
+            <svg viewBox="0 0 50 50" class="w-10 h-10 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="15" cy="18" r="5" />
+              <path d="M 15 23 V 38 L 10 48 M 15 38 L 20 48" />
+              <path d="M 30 10 Q 40 25 30 40" stroke-width="2" />
+              <path d="M 30 10 L 30 40" stroke-width="1" />
+              <g class="archer-arm" style="transform-origin: 15px 25px;">
+                <path d="M 15 25 L 25 28 L 30 28" />
+                <path d="M 15 25 L 22 32 L 28 32" />
+              </g>
+            </svg>
+          </div>
+          <div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Сергей</div><div class="text-[9px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div>
+      </a>
+
+      <!-- Механик (Сушит голову) -->
+      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center overflow-hidden shrink-0">
+            <svg viewBox="0 0 50 50" class="w-10 h-10 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="25" cy="18" r="6" />
+              <path d="M 25 24 V 40 M 25 40 L 20 50 M 25 40 L 30 50" />
+              <g class="hairdryer" style="transform-origin: 25px 15px;">
+                <rect x="30" y="10" width="10" height="6" rx="2" />
+                <path d="M 35 16 L 35 20" stroke-width="2" />
+                <path d="M 38 10 L 42 10" stroke-width="2" />
+              </g>
+              <g class="hair-blowing">
+                <path d="M 21 13 Q 15 10 10 15" stroke-width="1.5" />
+                <path d="M 22 15 Q 12 15 8 20" stroke-width="1.5" />
+              </g>
+            </svg>
+          </div>
+          <div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Механик</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div>
+      </a>
+
+      <!-- Светлана (Печатает) -->
+      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center overflow-hidden shrink-0">
+            <svg viewBox="0 0 50 50" class="w-10 h-10 text-lentaBlue dark:text-blue-400" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="25" cy="18" r="5" />
+              <path d="M 25 23 V 38 M 25 38 L 20 48 M 25 38 L 30 48" />
+              <rect x="15" y="38" width="20" height="8" rx="2" />
+              <g class="typing-arm" style="transform-origin: 25px 26px;">
+                <path d="M 25 26 L 18 36 L 15 38" />
+              </g>
+              <g class="typing-arm-delay" style="transform-origin: 25px 26px;">
+                <path d="M 25 26 L 32 36 L 35 38" />
+              </g>
+            </svg>
+          </div>
+          <div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Светлана</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-lg">📞</div>
+      </a>
+
+      <!-- Марина (Пьет кофе) -->
+      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center overflow-hidden shrink-0">
+            <svg viewBox="0 0 50 50" class="w-10 h-10 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="25" cy="18" r="5" />
+              <path d="M 25 23 V 38 M 25 38 L 20 48 M 25 38 L 30 48" />
+              <g class="coffee-cup" style="transform-origin: 25px 28px;">
+                <path d="M 35 28 L 38 33 L 32 33 Z" />
+                <path d="M 35 28 L 35 25" stroke-width="2" />
+              </g>
+              <path d="M 25 26 L 35 28" />
+            </svg>
+          </div>
+          <div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Марина</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div>
+      </a>
+
     </div>
   </div>
 </div>
 
-<!-- Остальные модалки идут без изменений, скопируйте их из предыдущего ответа -->
+<!-- Остальные модалки без изменений -->
 <div id="monetkaModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4"><div class="rounded-[32px] p-6 max-w-md w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh]"><button onclick="closeMonetkaModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button><h3 class="text-lg font-display font-extrabold text-lentaDark dark:text-white mb-2 uppercase pr-8 mt-1">Инструкция РЦ Монетка</h3><div class="overflow-y-auto pr-2 pb-2 space-y-4 text-sm"><div class="bg-blue-500/10 dark:bg-blue-400/10 border border-blue-500/20 rounded-2xl p-4"><div class="font-bold text-blue-700 dark:text-blue-300 mb-1 flex items-center gap-2"><span>❄️</span> ВАЖНО: ЗАМОРОЗКА</div><p class="text-xs text-blue-800/80 dark:text-blue-200/80 leading-relaxed">Доставка заморозки — <b class="uppercase">приоритет</b>. Чётко доводите информацию о заморозке сотрудникам Монетки!</p></div><div class="bg-emerald-500/10 dark:bg-emerald-400/10 border border-emerald-500/20 rounded-2xl p-4"><div class="font-bold text-emerald-700 dark:text-emerald-300 mb-1 flex items-center gap-2"><span>⚡</span> ЛАЙФХАК</div><p class="text-xs text-emerald-800/80 dark:text-emerald-200/80 leading-relaxed">Можно <b>зайти на склад</b> и обозначить присутствие <b>Старшему смены</b>, чтобы не ждать звонка!</p></div><div class="bg-purple-500/10 dark:bg-purple-400/10 border border-purple-500/20 rounded-2xl p-4"><div class="font-bold text-purple-700 dark:text-purple-300 mb-2 flex items-center gap-2"><span>📞</span> ТЕЛЕФОНЫ РЦ ТЭЦ (ЕКБ)</div><div class="flex flex-wrap items-center gap-2 mb-3"><a href="tel:+73432930001" class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold tactile-btn transition-colors shadow-sm">+7 (343) 293-00-01</a><span class="text-[11px] text-purple-600 dark:text-purple-400 font-medium">в тоновом режиме жмём <b class="bg-purple-200 dark:bg-purple-800 px-1.5 py-0.5 rounded text-purple-800 dark:text-purple-200">1</b></span></div><div class="grid grid-cols-2 gap-2 text-xs"><div class="bg-white/50 dark:bg-black/20 border border-purple-200/50 dark:border-purple-700/50 p-2 rounded-xl text-center shadow-sm"><div class="text-gray-500 text-[9px] uppercase font-bold mb-0.5">Старый склад</div><div class="font-black text-purple-700 dark:text-purple-300 text-sm">доб. 22204</div></div><div class="bg-white/50 dark:bg-black/20 border border-purple-200/50 dark:border-purple-700/50 p-2 rounded-xl text-center shadow-sm"><div class="text-gray-500 text-[9px] uppercase font-bold mb-0.5">Новый склад</div><div class="font-black text-purple-700 dark:text-purple-300 text-sm">доб. 22537</div></div></div></div></div></div></div>
 
 <div id="mechanicModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4"><div class="rounded-[32px] p-6 max-w-md w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh]"><button onclick="closeMechanicModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button><h3 class="text-lg font-display font-extrabold text-lentaDark dark:text-white mb-2 uppercase pr-8 mt-1">Инструктаж от механика</h3><div class="overflow-y-auto pr-2 pb-2 space-y-4 text-sm"><div class="bg-amber-500/10 dark:bg-amber-400/10 border border-amber-500/20 rounded-2xl p-4"><div class="font-bold text-amber-700 dark:text-amber-300 mb-2 flex items-center gap-2"><span>⚠️</span> Режим и скорость</div><ul class="text-xs text-amber-800/80 dark:text-amber-200/80 leading-relaxed list-disc pl-4 space-y-1"><li><b>Скорость 80 км/час!</b> Учитываем погоду.</li><li>Соблюдаем РТО.</li><li>Не забываем ставить карту СКЗИ.</li></ul></div><div class="bg-blue-500/10 dark:bg-blue-400/10 border border-blue-500/20 rounded-2xl p-4"><div class="font-bold text-blue-700 dark:text-blue-300 mb-2 flex items-center gap-2"><span>📄</span> Документы</div><ul class="text-xs text-blue-800/80 dark:text-blue-200/80 leading-relaxed list-disc pl-4 space-y-1"><li>Смотрим документы — куда ехать.</li><li><b>Путёвки закрываем после каждого рейса</b>.</li><li>Не сидим в машине с путёвками!</li><li>По прибытию на РЦ — звоним механику.</li></ul></div><div class="bg-red-500/10 dark:bg-red-400/10 border border-red-500/20 rounded-2xl p-4"><div class="font-bold text-red-700 dark:text-red-300 mb-2 flex items-center gap-2"><span>🚭</span> Порядок и ДТП</div><ul class="text-xs text-red-800/80 dark:text-red-200/80 leading-relaxed list-disc pl-4 space-y-1"><li><b>В машинах не курим!</b></li><li>Предельно аккуратно в манёврах.</li><li><b>ДТП или повредили</b> — сразу механику!</li><li>После рейса — звоним, сдаём ТС.</li></ul></div></div></div></div>
@@ -255,10 +336,8 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
       <div id="bubbleMarina" class="story-bubble actor-marina"><div class="story-bubble-inner"></div></div>
       <div id="bubbleMech" class="story-bubble actor-mech"><div class="story-bubble-inner"></div></div>
       
-      <!-- Окно с персонажами -->
-      <div class="w-full h-16 relative flex items-center justify-center overflow-hidden" id="mechanicSvgContainer">
-        <div class="window-glare"></div>
-        <svg viewBox="0 0 240 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-gray-600 dark:text-gray-300 transition-colors normal-mode overflow-visible z-20" id="mechanicSvgElement">
+      <div class="w-full h-14 relative flex items-center justify-center overflow-visible" id="mechanicSvgContainer">
+        <svg viewBox="0 0 240 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-gray-500 dark:text-gray-400 group-hover:text-emerald-500 transition-colors normal-mode overflow-visible drop-shadow-sm" id="mechanicSvgElement">
           <g id="girlsGroup">
             <path d="M 15 48 L 85 48" stroke-width="2"/>
             <g id="svetaBody" style="transform-origin: 30px 48px;">
@@ -278,11 +357,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
               <path d="M 60 27 V 43"/>
               <path d="M 60 43 L 55 55 M 60 43 L 65 55"/>
               <path d="M 55 43 L 65 43 Z" fill="currentColor" stroke-width="1"/>
-              <!-- Рука с кофе -->
-              <g class="arm-drink" style="transform-origin: 60px 29px;">
-                <path d="M 60 29 L 68 35 L 75 36"/>
-                <circle cx="76" cy="35" r="2.5" fill="currentColor" stroke="none"/>
-              </g>
+              <g class="arm-typing-delay" style="transform-origin: 60px 29px;"><path d="M 60 29 L 68 35 L 75 36"/><path d="M 60 29 L 71 36 L 78 38"/></g>
             </g>
           </g>
           <g id="mechGroup">
@@ -304,7 +379,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
           </g>
         </svg>
       </div>
-      <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mt-1 text-center w-full z-20 relative bg-white/50 dark:bg-black/20 px-3 py-0.5 rounded-full inline-block">Контакты</div>
+      <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mt-0 text-center w-full z-20 relative bg-white/50 dark:bg-black/20 px-3 py-0.5 rounded-full inline-block">Контакты</div>
     </div>
     
     <div id="speedContainer" class="flex flex-col items-center justify-center cursor-default shrink-0 min-w-[50px] z-10 tactile-btn" onclick="playTickSound(); openMechanicModal();" title="Скорость / Инструктаж">
@@ -844,17 +919,18 @@ window.closeNavModal = function() { document.getElementById('navModal').classLis
 
 window.executeNavigation = function(type) {
   playTickSound(); let navUrl = '';
+  
   if (currentNavCoords) {
     const [lat, lon] = currentNavCoords;
-    if (type === 'yandex') navUrl = `https://yandex.ru/maps/?text=${lat},${lon}`; // ИСПРАВЛЕНО
+    if (type === 'yandex') navUrl = `https://yandex.ru/maps/?pt=${lon},${lat}&z=17&l=map`;
     else if (type === '2gis') navUrl = `https://2gis.ru/geo/${lon},${lat}`;
     else if (type === 'google') navUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
   } else {
-    const q = encodeURIComponent(currentNavQuery); // ИСПРАВЛЕНО
-    if (type === 'yandex') navUrl = `https://yandex.ru/maps/?text=${q}`;
-    else if (type === '2gis') navUrl = `https://2gis.ru/search/${q}`;
-    else if (type === 'google') navUrl = `https://www.google.com/maps/search/?api=1&query=${q}`;
+    if (type === 'yandex') navUrl = `https://yandex.ru/maps/?text=${currentNavQuery}`;
+    else if (type === '2gis') navUrl = `https://2gis.ru/search/${currentNavQuery}`;
+    else if (type === 'google') navUrl = `https://www.google.com/maps/search/?api=1&query=${currentNavQuery}`;
   }
+  
   window.location.href = navUrl; closeNavModal();
 };
 
@@ -1027,7 +1103,7 @@ function renderCards() {
       const phoneLink = st.phone ? `<a href="tel:${st.phone.replace(/[^0-9+]/g, '')}" class="inline-flex items-center text-[11px] font-bold text-blue-600 dark:text-blue-400 underline decoration-blue-600/30 underline-offset-2 hover:decoration-blue-600 whitespace-nowrap mt-1">📞 ${st.phone}</a>` : '';
       
       const navQuery = (st.lat && st.lon) ? `${st.lat},${st.lon}` : st.address;
-      const navAddr = String(navQuery).replace(/'/g, "\\'");
+      const navAddr = navQuery; 
       
       let colorClass = 'border-type-kafe';
       if (st.type === 'СТОЯНКА') colorClass = 'border-type-stoyanka';
@@ -1106,7 +1182,7 @@ function renderCards() {
       const coords = window.storeCoords ? window.storeCoords[store.tk] : null;
       if (coords) navQ = `${coords.lat},${coords.lon}`;
       
-      const encQ = navQ.replace(/'/g, "\\'");
+      const encQ = navQ;
       const safeAddress = cleanAddr.replace(/'/g, "\\'");
       const rawRouteUrl = customRoutes[store.tk] || '';
       const safeRouteUrl = rawRouteUrl.replace(/'/g, "\\'");
