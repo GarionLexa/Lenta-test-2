@@ -1,3 +1,164 @@
+/* Танцы */
+.dancing #girlsGroup {
+    animation: danceGirls 0.5s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center bottom;
+}
+.dancing #mechGroup {
+    animation: danceMech 0.5s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center bottom;
+}
+@keyframes danceGirls {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-4px) rotate(3deg); }
+}
+@keyframes danceMech {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-4px) rotate(-3deg); }
+}
+
+/* Жонглирование */
+.juggling-active .wrench-arm {
+    animation: juggleArm 0.4s infinite alternate;
+}
+.juggling-active #mechBody {
+    animation: juggleBody 0.4s infinite alternate;
+}
+@keyframes juggleArm {
+    0% { transform: rotate(-20deg); }
+    100% { transform: rotate(40deg); }
+}
+@keyframes juggleBody {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-3px); }
+}
+
+/* Запчасти для жонглирования (Летают по кругу) */
+.juggling-item { opacity: 0; transition: opacity 0.3s; }
+.juggling-active .juggling-item { opacity: 1; }
+.jug-1 { animation: juggleCircle1 1.2s infinite linear; transform-origin: 170px 20px; }
+.jug-2 { animation: juggleCircle2 1.2s infinite linear; transform-origin: 170px 20px; animation-delay: -0.4s; }
+.jug-3 { animation: juggleCircle3 1.2s infinite linear; transform-origin: 170px 20px; animation-delay: -0.8s; }
+
+@keyframes juggleCircle1 { 0% { transform: rotate(0deg) translateX(25px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(25px) rotate(-360deg); } }
+@keyframes juggleCircle2 { 0% { transform: rotate(0deg) translateX(35px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(35px) rotate(-360deg); } }
+@keyframes juggleCircle3 { 0% { transform: rotate(0deg) translateX(20px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(20px) rotate(-360deg); } }
+
+/* Анимации для Контактов */
+@keyframes typingKeys {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+.contact-typing-hands {
+    animation: typingKeys 0.2s infinite;
+}
+
+@keyframes turnWrench {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-30deg); }
+    75% { transform: rotate(30deg); }
+    100% { transform: rotate(0deg); }
+}
+.contact-wrench {
+    animation: turnWrench 1s infinite ease-in-out;
+    transform-origin: center;
+}
+
+@keyframes lookTablet {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-2px) rotate(5deg); }
+}
+.contact-tablet {
+    animation: lookTablet 2s infinite ease-in-out;
+}
+
+/* --- НОВЫЙ АККУРАТНЫЙ ДИСКО-ШАР --- */
+.disco-ball {
+    position: absolute;
+    top: -10px; 
+    left: 50%;
+    transform: translate(-50%, -150%);
+    transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+    opacity: 0;
+    z-index: 40;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.disco-ball.dropped {
+    transform: translate(-50%, 15px);
+    opacity: 1;
+}
+
+/* Ниточка, на которой висит шар */
+.disco-ball::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    width: 2px;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+/* Сам шар (маленький, как голова) */
+.disco-ball-inner {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffffff, #d1d5db, #6b7280);
+    box-shadow: inset -2px -2px 4px rgba(0,0,0,0.4), 0 0 10px rgba(255,255,255,0.6);
+    position: relative;
+    z-index: 2;
+}
+
+/* Разноцветные лучи света */
+.disco-rays {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150px; /* Уменьшено, чтобы не перекрывать всё */
+    height: 150px;
+    margin-left: -75px;
+    margin-top: -75px;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg, rgba(239, 68, 68, 0.5) 10deg, transparent 20deg,
+        rgba(59, 130, 246, 0.5) 30deg, transparent 40deg,
+        rgba(16, 185, 129, 0.5) 50deg, transparent 60deg,
+        rgba(245, 158, 11, 0.5) 70deg, transparent 80deg,
+        rgba(168, 85, 247, 0.5) 90deg, transparent 100deg,
+        rgba(239, 68, 68, 0.5) 110deg, transparent 120deg,
+        rgba(59, 130, 246, 0.5) 130deg, transparent 140deg,
+        rgba(16, 185, 129, 0.5) 150deg, transparent 160deg,
+        rgba(245, 158, 11, 0.5) 170deg, transparent 180deg,
+        rgba(168, 85, 247, 0.5) 190deg, transparent 200deg,
+        rgba(239, 68, 68, 0.5) 210deg, transparent 220deg,
+        rgba(59, 130, 246, 0.5) 230deg, transparent 240deg,
+        rgba(16, 185, 129, 0.5) 250deg, transparent 260deg,
+        rgba(245, 158, 11, 0.5) 270deg, transparent 280deg,
+        rgba(168, 85, 247, 0.5) 290deg, transparent 300deg,
+        rgba(239, 68, 68, 0.5) 310deg, transparent 320deg,
+        rgba(59, 130, 246, 0.5) 330deg, transparent 340deg,
+        rgba(16, 185, 129, 0.5) 350deg, transparent 360deg
+    );
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.5s;
+    animation: spinRays 8s linear infinite;
+    z-index: 1;
+    filter: blur(4px); /* Делает лучи мягкими, как свет */
+    mix-blend-mode: screen; /* Свет "накладывается" на персонажей */
+}
+
+.disco-ball.dropped .disco-rays {
+    opacity: 1;
+}
+@keyframes spinRays {
+    100% { transform: rotate(360deg); }
+}
+
 /* --- АНИМАЦИИ ДЛЯ МИКРОФОНА И РАДАРА --- */
 @keyframes micPulse {
   0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); background-color: rgba(239, 68, 68, 0.1); color: #ef4444 !important; }
@@ -42,16 +203,3 @@
   position: relative;
   z-index: 10;
 }
-
-/* --- ТАНЦЫ И ДИСКОШАР --- */
-.dancing #girlsGroup, .dancing #svetaBody, .dancing #marinaBody { animation: danceGirls 0.5s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); transform-origin: center bottom; }
-.dancing #mechGroup, .dancing #mechBody { animation: danceMech 0.5s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); transform-origin: center bottom; }
-@keyframes danceGirls { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-4px) rotate(4deg); } }
-@keyframes danceMech { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-4px) rotate(-4deg); } }
-
-.disco-ball { position: absolute; top: 0; left: 50%; transform: translate(-50%, -150%); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease; opacity: 0; z-index: 40; pointer-events: none; }
-.disco-ball.dropped { transform: translate(-50%, 5px); opacity: 1; }
-.disco-ball-inner { width: 40px; height: 40px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #fff, #d1d5db, #6b7280); box-shadow: inset -5px -5px 10px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.4); position: relative; z-index: 2; }
-.disco-rays { position: absolute; top: 50%; left: 50%; width: 200px; height: 200px; margin-left: -100px; margin-top: -100px; background: conic-gradient(from 0deg, transparent 0deg 20deg, rgba(255, 255, 255, 0.4) 20deg 40deg, transparent 40deg 60deg, rgba(255, 255, 255, 0.4) 60deg 80deg, transparent 80deg 100deg, rgba(255, 255, 255, 0.4) 100deg 120deg, transparent 120deg 140deg, rgba(255, 255, 255, 0.4) 140deg 160deg, transparent 160deg 180deg, rgba(255, 255, 255, 0.4) 180deg 200deg, transparent 200deg 220deg, rgba(255, 255, 255, 0.4) 220deg 240deg, transparent 240deg 260deg, rgba(255, 255, 255, 0.4) 260deg 280deg, transparent 280deg 300deg, rgba(255, 255, 255, 0.4) 300deg 320deg, transparent 320deg 340deg, rgba(255, 255, 255, 0.4) 340deg 360deg); border-radius: 50%; opacity: 0; transition: opacity 0.3s; animation: spinRays 6s linear infinite; z-index: 1; }
-.disco-ball.dropped .disco-rays { opacity: 1; }
-@keyframes spinRays { 100% { transform: rotate(360deg); } }
