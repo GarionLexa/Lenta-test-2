@@ -51,7 +51,6 @@
 body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; width: 100%; overflow-x: hidden; padding-bottom: env(safe-area-inset-bottom); transition: background-color 0.4s ease, color 0.4s ease; }
 .dark body { background-color: #0f1115; color: #e4e4e7; }
 
-/* Premium Glassmorphism */
 .glass-panel { 
   background: var(--glass-bg); 
   backdrop-filter: blur(24px); 
@@ -65,13 +64,11 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .glass-header { padding-top: max(1rem, env(safe-area-inset-top)); position: sticky; top: 0; z-index: 50; border-radius: 0 0 32px 32px; transition: all 0.3s ease; }
 @media (max-height: 550px) { .glass-header { position: relative; border-radius: 0; } }
 
-/* Animations */
 @keyframes slideUpFade { 0% { opacity: 0; transform: translateY(20px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
 .animate-reveal { animation: slideUpFade 0.4s cubic-bezier(0.16,1,0.3,1) forwards; }
-.tactile-btn { transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, box-shadow 0.1s ease; }
+.tactile-btn { transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, box-shadow 0.2s ease; }
 .tactile-btn:active { transform: scale(0.94); opacity: 0.9; }
 
-/* Volume Cards */
 .volume-card {
   background: #ffffff;
   border: 1px solid rgba(0,0,0,0.05);
@@ -84,7 +81,6 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .dark .volume-card { background: #1c1c1f; border-color: rgba(255,255,255,0.05); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4); }
 .dark .volume-card:hover { box-shadow: 0 20px 30px -10px rgba(0,0,0,0.6); }
 
-/* Colored borders for brands and types */
 .border-brand-lenta { border-left: 6px solid #FDCB05; }
 .border-brand-monetka { border-left: 6px solid #f97316; }
 .border-brand-okey { border-left: 6px solid #dc2626; }
@@ -95,7 +91,6 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .border-type-kafe { border-left: 6px solid #f97316; }
 .border-type-avtomoyka { border-left: 6px solid #0ea5e9; }
 
-/* Slider / Scenic */
 .record-spin { animation: recordSpin 4s linear infinite; }
 @keyframes recordSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 .scenic-bg { background-color: #0f1115; overflow: hidden; position: relative; height: 140px; width: 100%; border-radius: 24px; box-shadow: inset 0 4px 20px rgba(0,0,0,0.5); }
@@ -124,7 +119,6 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 @keyframes sirenBlue { 0%, 49% { box-shadow: none; background: #1e3a8a; } 50%, 100% { box-shadow: 0 0 16px 6px rgba(59,130,246,0.95); background: #60a5fa; } }
 @keyframes driveOpposite { 0% { left: 120vw; } 100% { left: -150px; } }
 
-/* Trucks */
 .city-slider { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; overscroll-behavior-x: contain; height: 100%; align-items: flex-end; padding-bottom: 2px; padding-left: 10px; padding-right: 10px; will-change: scroll-position; }
 .city-slider::-webkit-scrollbar { display: none; }
 .truck-chip { outline: none; opacity: 0.8; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); margin-right: 20px; filter: saturate(0.8); }
@@ -139,7 +133,6 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .marker-light { position: absolute; top: 2px; width: 4px; height: 2px; background-color: #fde047; box-shadow: 0 0 8px 2px rgba(253,224,71,0.9); opacity: var(--truck-light-opacity); transition: opacity 0.3s; border-radius: 1px; }
 .dark .city-name-plaque { background-color: #27272a !important; color: #f4f4f5 !important; border-color: #3f3f46 !important; }
 
-/* Story panel */
 #visitContainer { transition: all 0.6s cubic-bezier(0.4,0,0.2,1); overflow: hidden; }
 .story-mode #visitContainer { width: 0 !important; min-width: 0 !important; opacity: 0; padding: 0; margin: 0; transform: scale(0.8); pointer-events: none; }
 .story-mode #centerStage { width: 100%; flex: 1; }
@@ -151,57 +144,29 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 @keyframes typingArms { 0% { transform: rotate(0deg); } 100% { transform: rotate(10deg); } }
 .wrench-arm { animation: wrenchMotion 0.6s infinite alternate ease-in-out; }
 @keyframes wrenchMotion { 0% { transform: rotate(-15deg); } 100% { transform: rotate(20deg); } }
+.laughing { animation: bodyLaugh 0.3s infinite alternate; }
+@keyframes bodyLaugh { 0% { transform: translateY(0) scaleY(1); } 100% { transform: translateY(-2px) scaleY(1.05); } }
+.sweat-drop { opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: translateY(-5px); }
+.show-sweat { opacity: 1; transform: translateY(0); animation: dripDown 1.5s forwards; }
+@keyframes dripDown { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
 
-/* NEW ANIMATIONS FOR CONTACTS MODAL */
-@keyframes runTreadmill { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-.anim-treadmill { animation: runTreadmill 0.4s infinite ease-in-out; }
-@keyframes spinBelt { 100% { stroke-dashoffset: -20; } }
-@keyframes blowHair { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
-.anim-hairdryer { animation: blowHair 0.15s infinite alternate; }
-@keyframes lookAround { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
-.anim-look { animation: lookAround 3s infinite ease-in-out; }
-@keyframes readBook { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(2deg); } }
-.anim-read { animation: readBook 2s infinite ease-in-out; }
-
-/* Story bubble */
-.story-bubble { 
-  position: absolute; 
-  background: white; 
-  border: 1px solid #e4e4e7; 
-  color: #18181b; 
-  font-size: 11px; 
-  font-weight: 700; 
-  padding: 6px 10px; 
-  border-radius: 12px; 
-  box-shadow: 0 4px 15px -3px rgba(0,0,0,0.1); 
-  opacity: 0; 
-  pointer-events: none; 
-  z-index: 9999; 
-  max-width: 120px; 
-  width: max-content;
-  white-space: normal; 
-  word-break: break-word; 
-  text-align: center; 
-  line-height: 1.2; 
-  transition: all 0.3s cubic-bezier(0.4,0,0.2,1); 
-}
+.story-bubble { position: absolute; background: white; border: 1px solid #e4e4e7; color: #18181b; font-size: 11px; font-weight: 700; padding: 8px 12px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); opacity: 0; pointer-events: none; z-index: 1000; max-width: 150px; text-align: center; line-height: 1.3; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
 .dark .story-bubble { background: #27272a; border-color: #3f3f46; color: #f4f4f5; }
-
-.story-bubble.active { transform: scale(1) translateY(0) !important; opacity: 1 !important; }
-
-.story-bubble::after { content: ''; position: absolute; top: 100%; border-width: 4px; border-style: solid; border-color: white transparent transparent transparent; }
-.dark .story-bubble::after { border-color: #27272a transparent transparent transparent; }
-
-/* Позиции для пузырей в сетке 2х2 */
-.bubble-sveta { bottom: 100%; left: 0; margin-bottom: 5px; transform: scale(0.9) translateY(5px); }
-.bubble-marina { bottom: 100%; right: 0; margin-bottom: 5px; transform: scale(0.9) translateY(5px); }
-.bubble-mech { bottom: 100%; left: 0; margin-bottom: 5px; transform: scale(0.9) translateY(5px); }
-.bubble-sergey { bottom: 100%; right: 0; margin-bottom: 5px; transform: scale(0.9) translateY(5px); }
+.story-bubble.actor-sveta { bottom: 85%; left: 0; transform: scale(0.9) translateY(10px); }
+.story-bubble.actor-sveta.active { transform: scale(1) translateY(0); opacity: 1; }
+.story-bubble.actor-marina { bottom: 85%; right: 0; transform: scale(0.9) translateY(10px); }
+.story-bubble.actor-marina.active { transform: scale(1) translateY(0); opacity: 1; }
+.story-bubble.actor-mech { bottom: 100%; left: 50%; margin-left: -50px; transform: scale(0.9) translateY(10px); }
+.story-bubble.actor-mech.active { transform: scale(1) translateY(0); opacity: 1; }
+.story-bubble::after { content: ''; position: absolute; top: 100%; border-width: 5px; border-style: solid; border-color: white transparent transparent transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05)); }
+.dark .story-bubble::after { border-color: #27272a transparent transparent transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); }
+.story-bubble.actor-sveta::after { left: 40px; }
+.story-bubble.actor-marina::after { right: 40px; }
+.story-bubble.actor-mech::after { left: 50%; margin-left: -5px; }
 
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Text size classes */
 html.large-text { font-size: 18px; }
 html.large-text .text-\[8px\]  { font-size: 11px !important; }
 html.large-text .text-\[9px\]  { font-size: 12px !important; }
@@ -221,7 +186,6 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 #updateBanner { animation: slideDownBanner 0.4s cubic-bezier(0.16,1,0.3,1); }
 @keyframes slideDownBanner { 0% { transform: translate(-50%,-120%); } 100% { transform: translate(-50%,0); } }
 
-/* КАЛЕНДАРЬ */
 #calendarViewport { position: relative; overflow: hidden; touch-action: pan-y; } 
 #calendarGrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; height: auto; }
 
@@ -237,7 +201,13 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 <body class="relative flex flex-col min-h-screen antialiased">
 <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
 
-<!-- Модальные окна -->
+<!-- Офлайн-баннер -->
+<div id="offlineBanner" class="hidden fixed top-0 left-0 right-0 bg-red-500 text-white text-center py-2 text-xs font-bold z-[999] shadow-lg">
+  📡 Вы офлайн. Некоторые функции могут быть недоступны.
+</div>
+
+<!-- ===================== МОДАЛЬНЫЕ ОКНА ===================== -->
+
 <!-- Навигация -->
 <div id="navModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4 transition-opacity">
   <div class="rounded-[32px] p-8 max-w-sm w-full text-center relative animate-reveal glass-panel shadow-2xl">
@@ -252,102 +222,17 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   </div>
 </div>
 
-<!-- Контакты (Обновленный с 4 сценками) -->
+<!-- Контакты -->
 <div id="contactsModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-  <div class="rounded-[32px] p-5 max-w-md w-full relative animate-reveal glass-panel shadow-2xl max-h-[90vh] overflow-y-auto hide-scrollbar">
-    <button onclick="closeContactsModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-50"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
-    <h3 class="text-xl font-display font-extrabold text-lentaDark dark:text-white mb-1 uppercase mt-2 text-center">Контакты</h3>
-    <p class="text-sm text-gray-500 dark:text-gray-400 mb-2 font-medium text-center">Кому звоним?</p>
-    
-    <!-- СЕТКА 2x2 С АНИМАЦИЯМИ -->
-    <div class="grid grid-cols-2 gap-4 mb-4 mt-2 bg-white/30 dark:bg-black/20 rounded-2xl p-3 border border-white/40 dark:border-white/5 shadow-inner relative">
-      
-      <!-- Светлана (Беговая дорожка) -->
-      <div class="relative flex flex-col items-center justify-end h-[80px]">
-        <div id="bubbleSveta" class="story-bubble bubble-sveta"><div class="story-bubble-inner"></div></div>
-        <svg viewBox="0 0 100 80" class="w-full h-full text-gray-500 drop-shadow-sm">
-          <!-- Дорожка -->
-          <rect x="10" y="65" width="80" height="8" rx="3" fill="#475569" />
-          <line x1="15" y1="68" x2="85" y2="68" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 5" style="animation: spinBelt 1s linear infinite;" />
-          <path d="M 10 65 L 5 73 M 90 65 L 95 73" stroke="#334155" stroke-width="3" />
-          
-          <!-- Светлана бежит -->
-          <g class="anim-treadmill" style="transform-origin: 50px 60px;">
-            <circle cx="50" cy="25" r="7" fill="currentColor"/>
-            <path d="M 50 32 L 50 50" stroke="currentColor" stroke-width="3"/>
-            <path d="M 50 50 L 40 60 M 50 50 L 60 60" stroke="currentColor" stroke-width="3"/>
-            <path d="M 50 38 L 35 45 M 50 38 L 65 40" stroke="currentColor" stroke-width="3" class="arm-typing"/>
-          </g>
-        </svg>
-        <span class="text-[9px] font-bold text-gray-400 mt-1">Светлана</span>
-      </div>
-
-      <!-- Марина (Фен) -->
-      <div class="relative flex flex-col items-center justify-end h-[80px]">
-        <div id="bubbleMarina" class="story-bubble bubble-marina"><div class="story-bubble-inner"></div></div>
-        <svg viewBox="0 0 100 80" class="w-full h-full text-gray-500 drop-shadow-sm">
-          <!-- Марина -->
-          <circle cx="40" cy="30" r="8" fill="currentColor"/>
-          <path d="M 40 38 L 40 60 M 40 60 L 30 75 M 40 60 L 50 75" stroke="currentColor" stroke-width="3" fill="none"/>
-          <path d="M 32 25 Q 40 15 48 25 Q 50 35 40 38" stroke="currentColor" stroke-width="2" fill="none" class="anim-hairdryer"/>
-          
-          <!-- Фен -->
-          <g class="anim-hairdryer" style="transform-origin: 50px 40px;">
-            <rect x="50" y="35" width="15" height="10" rx="3" fill="#64748b"/>
-            <path d="M 50 40 L 45 40" stroke="#64748b" stroke-width="4"/>
-            <path d="M 65 40 L 75 35 M 65 40 L 75 45" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
-          </g>
-        </svg>
-        <span class="text-[9px] font-bold text-gray-400 mt-1">Марина</span>
-      </div>
-
-      <!-- Механик (Смотрит) -->
-      <div class="relative flex flex-col items-center justify-end h-[80px]">
-        <div id="bubbleMech" class="story-bubble bubble-mech"><div class="story-bubble-inner"></div></div>
-        <svg viewBox="0 0 100 80" class="w-full h-full text-gray-500 drop-shadow-sm">
-          <g class="anim-look" style="transform-origin: 50px 40px;">
-            <circle cx="50" cy="30" r="8" fill="currentColor"/>
-            <!-- Глаза -->
-            <circle cx="47" cy="28" r="1.5" fill="#fff" />
-            <circle cx="53" cy="28" r="1.5" fill="#fff" />
-            <path d="M 50 38 L 50 60 M 50 60 L 40 75 M 50 60 L 60 75" stroke="currentColor" stroke-width="3" fill="none"/>
-            <path d="M 50 45 L 40 55 M 50 45 L 60 50" stroke="currentColor" stroke-width="3" class="wrench-arm" style="transform-origin: 50px 45px;"/>
-            <!-- Ключ -->
-            <circle cx="62" cy="50" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
-          </g>
-        </svg>
-        <span class="text-[9px] font-bold text-gray-400 mt-1">Механик</span>
-      </div>
-
-      <!-- Сергей (Учит ПДД) -->
-      <div class="relative flex flex-col items-center justify-end h-[80px]">
-        <div id="bubbleSergey" class="story-bubble bubble-sergey"><div class="story-bubble-inner"></div></div>
-        <svg viewBox="0 0 100 80" class="w-full h-full text-gray-500 drop-shadow-sm">
-          <!-- Стол -->
-          <rect x="20" y="65" width="60" height="5" fill="#475569"/>
-          <!-- Сергей -->
-          <circle cx="50" cy="25" r="8" fill="currentColor"/>
-          <path d="M 50 33 L 50 55 M 50 55 L 40 65 M 50 55 L 60 65" stroke="currentColor" stroke-width="3" fill="none"/>
-          <!-- Книга ПДД -->
-          <g class="anim-read" style="transform-origin: 50px 50px;">
-            <rect x="35" y="45" width="30" height="20" rx="2" fill="#ef4444"/>
-            <path d="M 50 45 L 50 65" stroke="#fff" stroke-width="1" opacity="0.5"/>
-            <text x="50" y="55" font-size="6" fill="white" text-anchor="middle" font-weight="bold">ПДД</text>
-          </g>
-          <!-- Руки -->
-          <path d="M 50 40 L 35 45 M 50 40 L 65 45" stroke="currentColor" stroke-width="2"/>
-        </svg>
-        <span class="text-[9px] font-bold text-gray-400 mt-1">Сергей</span>
-      </div>
-
-    </div>
-    <!-- КОНЕЦ СЕТКИ -->
-
-    <div class="space-y-2 relative z-10">
-      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-400 text-sm">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Сергей</div><div class="text-[8px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div></div><div class="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
-      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-sm">🔧</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Механик</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div></div><div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
-      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue dark:text-blue-400 text-sm">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Светлана</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-8 h-8 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
-      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-600 dark:text-purple-400 text-sm">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Марина</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
+  <div class="rounded-[32px] p-6 max-w-sm w-full text-center relative animate-reveal glass-panel shadow-2xl max-h-[90vh] overflow-y-auto hide-scrollbar">
+    <button onclick="closeContactsModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    <h3 class="text-xl font-display font-extrabold text-lentaDark dark:text-white mb-1 uppercase mt-2">Контакты</h3>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 font-medium">Кому звоним?</p>
+    <div class="space-y-3">
+      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-400 text-lg">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Сергей</div><div class="text-[9px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div></div><div class="w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
+      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-lg">🔧</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Механик</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div></div><div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
+      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue dark:text-blue-400 text-lg">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Светлана</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-10 h-10 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
+      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-600 dark:text-purple-400 text-lg">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Марина</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-10 h-10 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
     </div>
   </div>
 </div>
@@ -479,7 +364,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   </div>
 </div>
 
-<!-- Добавить сервис (своя точка) -->
+<!-- Добавить сервис -->
 <div id="addTechModal" class="fixed inset-0 z-[120] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
   <div class="rounded-[28px] p-5 max-w-sm w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh] overflow-y-auto hide-scrollbar">
     <button onclick="closeAddTechModal()" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2 rounded-full tactile-btn z-10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
@@ -529,15 +414,14 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   <button onclick="applyUpdate()" class="bg-white text-indigo-600 px-4 py-1.5 rounded-xl text-xs font-bold tactile-btn shadow-sm hover:bg-gray-50">Обновить</button>
 </div>
 
+<!-- ===================== ШАПКА ===================== -->
 <header class="glass-header glass-panel border-t-0 border-l-0 border-r-0">
 <div class="max-w-[1600px] mx-auto px-4 sm:px-6 relative z-10 pb-4 pt-2 flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-6">
   
-  <!-- 1. Логотип и Кнопки -->
   <div class="flex items-center justify-between w-full xl:w-auto xl:contents">
-      <!-- Логотип -->
       <div class="flex items-center gap-3 shrink-0">
         <div onclick="handleLogoTap()" class="w-11 h-11 md:w-12 md:h-12 rounded-full bg-white shadow-lg flex items-center justify-center shrink-0 border border-white/50 overflow-hidden relative cursor-pointer tactile-btn z-50 group" title="1 тап: плей/пауза. 2 тапа: сброс">
-          <img id="logoImage" src="icon.png" alt="" class="w-full h-full object-cover transition-transform group-hover:scale-105" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23FDCB05\'/%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'20\' fill=\'%23004182\'/%3E%3C/svg%3E'">
+          <img id="logoImage" src="icon.png" alt="" loading="lazy" class="w-full h-full object-cover transition-transform group-hover:scale-105" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23FDCB05\'/%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'20\' fill=\'%23004182\'/%3E%3C/svg%3E'">
         </div>
         <div class="min-w-0 flex-1">
           <h1 class="text-[15px] sm:text-lg md:text-xl font-display font-extrabold text-lentaDark dark:text-white tracking-tight flex items-center gap-2 w-full"><span>ЛЕНТА</span><span class="bg-lentaYellow text-lentaDark px-2 py-0.5 rounded-md text-[9px] sm:text-[10px] font-black shadow-sm shrink-0 uppercase tracking-wide">Логистика</span></h1>
@@ -545,7 +429,6 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
         </div>
       </div>
       
-      <!-- Кнопки -->
       <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0 xl:order-last">
         <button id="installPwaBtn" onclick="installPwa()" class="hidden bg-emerald-500 text-white w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-lg flex items-center justify-center tactile-btn shrink-0 hover:bg-emerald-600" title="Установить"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></button>
         <button id="textSizeBtn" onclick="toggleTextSize()" class="bg-white/50 dark:bg-white/5 text-sky-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-white/20 dark:border-white/5 flex items-center justify-center tactile-btn shrink-0 font-black text-sm hover:bg-white/80 transition-colors" title="Размер текста">A</button>
@@ -554,37 +437,14 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
       </div>
   </div>
 
-  <!-- 2. Центральная панель (Анимация, Контакты, Спидометр) -->
-  <div id="controlPanel" class="flex-1 w-full xl:w-auto bg-white/60 dark:bg-black/30 backdrop-blur-xl rounded-[28px] shadow-sm border border-white/40 dark:border-white/5 py-2 px-4 flex items-center justify-between transition-all duration-700 min-h-[80px] overflow-visible">
-    
-    <!-- ДИСКО-ШАР -->
-    <div id="discoBall" class="disco-ball absolute top-0 left-1/2 -translate-x-1/2 z-40">
-      <svg viewBox="0 0 100 100" class="w-16 h-16 drop-shadow-2xl">
-        <defs>
-          <radialGradient id="discoGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#f8fafc" />
-            <stop offset="70%" stop-color="#94a3b8" />
-            <stop offset="100%" stop-color="#475569" />
-          </radialGradient>
-        </defs>
-        <line x1="50" y1="0" x2="50" y2="20" stroke="#cbd5e1" stroke-width="2" />
-        <circle cx="50" cy="55" r="30" fill="url(#discoGrad)" />
-        <path d="M 25 40 Q 50 55 75 40 M 20 55 Q 50 70 80 55 M 25 70 Q 50 85 75 70" stroke="#e2e8f0" stroke-width="1" fill="none" opacity="0.6"/>
-        <path d="M 35 30 Q 40 55 35 80 M 50 25 Q 55 55 50 85 M 65 30 Q 60 55 65 80" stroke="#e2e8f0" stroke-width="1" fill="none" opacity="0.6"/>
-      </svg>
-    </div>
-
+  <div id="controlPanel" class="flex-1 w-full xl:w-auto bg-white/60 dark:bg-black/30 backdrop-blur-xl rounded-[28px] shadow-sm border border-white/40 dark:border-white/5 py-2 px-4 flex items-center justify-between transition-all duration-700 min-h-[80px]">
     <div id="visitContainer" class="flex flex-col items-center justify-center shrink-0 min-w-[70px] z-10" title="Счётчик визитов">
-      <img id="visitCounterBadge" alt="Визиты" class="h-[20px] rounded-md shadow-sm opacity-0 transition-opacity duration-300" onload="this.classList.remove('opacity-0')" onerror="this.style.display='none'">
+      <img id="visitCounterBadge" alt="Визиты" loading="lazy" class="h-[20px] rounded-md shadow-sm opacity-0 transition-opacity duration-300" onload="this.classList.remove('opacity-0')" onerror="this.style.display='none'">
     </div>
-    
-    <!-- Добавил pt-16 для места под пузыри -->
-    <div id="centerStage" class="relative flex flex-col items-center flex-1 max-w-lg cursor-pointer tactile-btn mx-3 group z-20 pt-16" onclick="playTickSound(); openContactsModal();">
-      <!-- Пузыри -->
+    <div id="centerStage" class="relative flex flex-col items-center flex-1 max-w-lg cursor-pointer tactile-btn mx-3 group z-20" onclick="playTickSound(); openContactsModal();">
       <div id="bubbleSveta" class="story-bubble actor-sveta"><div class="story-bubble-inner"></div></div>
       <div id="bubbleMarina" class="story-bubble actor-marina"><div class="story-bubble-inner"></div></div>
       <div id="bubbleMech" class="story-bubble actor-mech"><div class="story-bubble-inner"></div></div>
-      
       <div class="w-full h-14 relative flex items-center justify-center overflow-visible" id="mechanicSvgContainer">
         <svg viewBox="0 0 240 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-gray-500 dark:text-gray-400 group-hover:text-emerald-500 transition-colors normal-mode overflow-visible drop-shadow-sm" id="mechanicSvgElement">
           <g id="girlsGroup">
@@ -593,17 +453,11 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
             <g id="marinaBody" style="transform-origin: 70px 48px;"><rect x="75" y="32" width="10" height="7" rx="1"/><path d="M 80 39 V 48"/><circle cx="60" cy="22" r="5"/><path d="M 55 22 A 5 5 0 0 1 65 22" stroke-width="2"/><path d="M 60 27 V 43"/><path d="M 60 43 L 55 55 M 60 43 L 65 55"/><path d="M 55 43 L 65 43 Z" fill="currentColor" stroke-width="1"/><g class="arm-typing-delay" style="transform-origin: 60px 29px;"><path d="M 60 29 L 68 35 L 75 36"/><path d="M 60 29 L 71 36 L 78 38"/></g></g>
           </g>
           <g id="mechGroup">
-            <!-- Жонглирование -->
-            <g class="juggling-item jug-1"><circle cx="155" cy="10" r="3" fill="#9ca3af" stroke="none"/></g>
-            <g class="juggling-item jug-2"><rect x="170" y="5" width="5" height="5" rx="1" fill="#fbbf24" stroke="none" transform="rotate(45 172.5 7.5)"/></g>
-            <g class="juggling-item jug-3"><path d="M 180 15 L 185 10 L 190 15" stroke="#6b7280" stroke-width="2" fill="none"/></g>
-
             <g id="mechBody" style="transform-origin: 170px 55px;"><circle cx="170" cy="22" r="5"/><path d="M 165 18 L 175 18 L 173 22 Z" fill="currentColor"/><path d="M 170 27 V 45"/><path d="M 170 45 L 163 55 M 170 45 L 177 55"/><g class="wrench-arm" style="transform-origin: 170px 29px;"><path d="M 170 29 L 155 36"/><path d="M 157 34 L 150 40" stroke-width="2"/><path d="M 148 37 C 152 35, 153 42, 150 40" stroke-width="2" fill="none"/></g><path d="M 170 29 L 178 35 L 172 40"/><path id="sweatDrop" d="M 176 16 Q 178 20 176 22 Q 174 20 176 16 Z" fill="#38bdf8" stroke="none" class="sweat-drop"/></g><circle cx="195" cy="45" r="10" stroke-width="3"/><circle cx="195" cy="45" r="3" fill="currentColor" stroke="none"/><path d="M 185 55 L 205 55" stroke-width="1.5"/></g>
         </svg>
       </div>
       <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mt-0 text-center w-full z-20 relative bg-white/50 dark:bg-black/20 px-3 py-0.5 rounded-full inline-block">Контакты</div>
     </div>
-    
     <div id="speedContainer" class="flex flex-col items-center justify-center cursor-default shrink-0 min-w-[50px] z-10 tactile-btn" onclick="playTickSound(); openMechanicModal();" title="Скорость / Инструктаж">
       <div class="w-11 h-11 rounded-full border-[3px] border-red-500 bg-white flex items-center justify-center shadow-lg relative cursor-pointer group-hover:scale-105 transition-transform">
         <span id="speedLimitNumber" class="text-slate-800 font-display font-black text-lg leading-none tracking-tighter">80</span>
@@ -613,7 +467,6 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   </div>
 </div>
 
-<!-- 3. Поиск и Слайдер (под шапкой) -->
 <div class="max-w-[1600px] mx-auto px-4 sm:px-6 relative z-10 pb-4">
   <div class="flex items-center gap-2 w-full mb-4 mt-2">
     <div class="relative flex-1 group">
@@ -646,7 +499,15 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 </div>
 </header>
 
+<!-- ===================== ОСНОВНОЙ КОНТЕНТ ===================== -->
 <main class="max-w-[1600px] mx-auto px-4 sm:px-6 py-6 relative z-10 flex-1">
+  <!-- Скелетоны первичной загрузки -->
+  <div id="skeletonGrid" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 mb-8">
+    <div class="volume-card p-4 animate-pulse"><div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div><div class="h-20 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div><div class="h-10 bg-gray-200 dark:bg-gray-700 rounded"></div></div>
+    <div class="volume-card p-4 animate-pulse"><div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div><div class="h-20 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div><div class="h-10 bg-gray-200 dark:bg-gray-700 rounded"></div></div>
+    <div class="volume-card p-4 animate-pulse"><div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div><div class="h-20 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div><div class="h-10 bg-gray-200 dark:bg-gray-700 rounded"></div></div>
+    <div class="volume-card p-4 animate-pulse"><div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div><div class="h-20 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div><div class="h-10 bg-gray-200 dark:bg-gray-700 rounded"></div></div>
+  </div>
   <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 mb-8"></div>
 </main>
 
@@ -655,17 +516,6 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 <script src="data.js"></script>
 <script src="data_services.js"></script>
 <script src="stories.js"></script>
-
-<!-- ВАША НОВАЯ ССЫЛКА НА СХЕМУ ЗАЕЗДА -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    if (window.customRoutes) {
-      window.customRoutes['YOUR_TK'] = 'https://yandex.ru/maps/?um=constructor%3Af2cd3724d301f3fe3b7c39731d8a78a0374d7e5d924083e42ab669fe140f78bd&source=constructorLink';
-    }
-  });
-</script>
-<!-- ============================================== -->
-
 <script>
 // --- ЛОГИКА ПРИЛОЖЕНИЯ ---
 
@@ -901,10 +751,9 @@ window.renderTechPicker = function() {
   });
   if (filtered.length === 0) { container.innerHTML = `<div class="text-center text-gray-400 py-6 text-sm">Ничего не найдено</div>`; return; }
   filtered.forEach(st => {
-    const badgeClass = 'bg-purple-500';
     const btn = document.createElement('div'); btn.className = "bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 p-3 rounded-xl border border-white/20 dark:border-white/5 cursor-pointer tactile-btn transition-colors shadow-sm";
     btn.onclick = () => { playTickSound(); saveTechToDate(st); };
-    btn.innerHTML = `<div class="flex items-center gap-2 mb-1"><span class="px-2 py-0.5 rounded text-[10px] font-black uppercase text-white ${badgeClass}">${st.type}</span><span class="text-xs font-bold text-gray-800 dark:text-gray-200">${st.name}</span><span class="text-[10px] text-gray-500 ml-auto">${st.city || ''}</span></div><div class="text-[10px] text-gray-500 dark:text-gray-400 leading-tight">${st.address}</div>`;
+    btn.innerHTML = `<div class="flex items-center gap-2 mb-1"><span class="px-2 py-0.5 rounded text-[10px] font-black uppercase text-white bg-purple-500">${st.type}</span><span class="text-xs font-bold text-gray-800 dark:text-gray-200">${st.name}</span><span class="text-[10px] text-gray-500 ml-auto">${st.city || ''}</span></div><div class="text-[10px] text-gray-500 dark:text-gray-400 leading-tight">${st.address}</div>`;
     container.appendChild(btn);
   });
 };
@@ -987,21 +836,17 @@ function toggleTheme() {
 function toggleTextSize() {
   const html = document.documentElement;
   let currentSize = parseInt(localStorage.getItem('lenta_text_size') || '0');
-  currentSize = (currentSize + 1) % 3; // 0 -> 1 -> 2 -> 0
-  
+  currentSize = (currentSize + 1) % 3;
   html.classList.remove('large-text', 'very-large-text');
   if (currentSize === 1) html.classList.add('large-text');
   if (currentSize === 2) html.classList.add('very-large-text');
-  
   localStorage.setItem('lenta_text_size', currentSize.toString());
-  
   const btn = document.getElementById('textSizeBtn');
   if (btn) {
     if (currentSize === 0) btn.textContent = 'A';
     else if (currentSize === 1) btn.textContent = 'A+';
     else btn.textContent = 'A++';
   }
-  
   showToast(currentSize === 0 ? "Текст обычного размера" : (currentSize === 1 ? "🔎 Крупный текст" : "🔎 Очень крупный текст"));
 }
 
@@ -1017,26 +862,16 @@ let lastLogoTapTime = 0, logoTapTimeout;
 function handleLogoTap() { unlockAudio(); const now = Date.now(); if (now - lastLogoTapTime < 400) { clearTimeout(logoTapTimeout); fullStopMusic(); } else logoTapTimeout = setTimeout(togglePlayPause, 400); lastLogoTapTime = now; }
 function togglePlayPause() {
   const logo = document.getElementById('logoImage');
-  if (isMusicPlaying) { 
-    bgMusic.pause(); isMusicPlaying = false; logo.classList.remove('record-spin'); stopAutoScroll(); startStoryTimer(); document.getElementById('mechanicSvgElement').classList.remove('dancing'); document.getElementById('discoBall').classList.remove('dropped'); 
-  } else { 
-    abortStory(); clearTimeout(storyTimer); 
-    isMusicPlaying = true; // Запускаем анимацию В ЛЮБОМ СЛУЧАЕ
-    logo.classList.add('record-spin'); startAutoScroll(); document.getElementById('mechanicSvgElement').classList.add('dancing'); document.getElementById('discoBall').classList.add('dropped'); 
-    
-    const p = bgMusic.play(); 
-    if (p !== undefined) { 
-      p.catch(() => showToast("Музыка не запущена (нет звука) 🔇")); 
-    } 
-  }
+  if (isMusicPlaying) { bgMusic.pause(); isMusicPlaying = false; logo.classList.remove('record-spin'); stopAutoScroll(); startStoryTimer(); } 
+  else { abortStory(); clearTimeout(storyTimer); const p = bgMusic.play(); if (p !== undefined) { p.then(() => { isMusicPlaying = true; logo.classList.add('record-spin'); startAutoScroll(); }).catch(() => showToast("Не удалось запустить музыку 🔇")); } }
 }
-function fullStopMusic() { bgMusic.pause(); bgMusic.currentTime = 0; isMusicPlaying = false; document.getElementById('logoImage').classList.remove('record-spin'); stopAutoScroll(); resetTrucksToStart(); startStoryTimer(); document.getElementById('mechanicSvgElement').classList.remove('dancing'); document.getElementById('discoBall').classList.remove('dropped'); }
+function fullStopMusic() { bgMusic.pause(); bgMusic.currentTime = 0; isMusicPlaying = false; document.getElementById('logoImage').classList.remove('record-spin'); stopAutoScroll(); resetTrucksToStart(); startStoryTimer(); }
 function resetTrucksToStart() { buildCitySlider(); citySlider.scrollLeft = 0; virtualScrollX = 0; window.fractionalScroll = 0; lastActualScrollLeft = 0; updateParallax(0); }
 
 let lastSliderScrollTime = 0;
 citySlider.addEventListener('scroll', () => {
-  const currentScroll = citySlider.scrollLeft; const dx = currentScroll - lastActualScrollLeft;
-  if (Math.abs(dx) > 0) { virtualScrollX += Math.abs(dx); const now = Date.now(); const dt = now - lastSliderScrollTime; if (dt > 16) { const speed = Math.abs(dx) / dt; if (speed > 0.05 && isMusicPlaying) playEngineSound(speed); } lastSliderScrollTime = now; updateParallax(virtualScrollX); }
+  if (isMusicPlaying) return; const currentScroll = citySlider.scrollLeft; const dx = currentScroll - lastActualScrollLeft;
+  if (Math.abs(dx) > 0) { virtualScrollX += Math.abs(dx); const now = Date.now(); const dt = now - lastSliderScrollTime; if (dt > 16) { const speed = Math.abs(dx) / dt; if (speed > 0.05) playEngineSound(speed); } lastSliderScrollTime = now; updateParallax(virtualScrollX); }
   lastActualScrollLeft = currentScroll;
 }, { passive: true });
 function startAutoScroll() { if (!autoScrollAnimationId) { lastActualScrollLeft = citySlider.scrollLeft; citySlider.classList.add('auto-driving'); autoScrollLoop(); } }
@@ -1052,114 +887,30 @@ function autoScrollLoop() {
   updateParallax(virtualScrollX); autoScrollAnimationId = requestAnimationFrame(autoScrollLoop);
 }
 function updateParallax(vX) {
-  const mountains = document.getElementById('layerMountains');
-  const trees = document.getElementById('layerTrees');
-  const road = document.getElementById('layerRoad');
-  const signs = document.getElementById('layerSigns');
-  if (mountains) mountains.style.transform = `translate3d(-${(vX * 0.2) % 200}px, 0, 0)`;
-  if (trees) trees.style.transform = `translate3d(-${(vX * 0.5) % 100}px, 0, 0)`;
-  if (road) road.style.transform = `translate3d(-${(vX * 0.9) % 40}px, 0, 0)`;
-  if (signs) signs.style.transform = `translate3d(-${(vX * 0.9) % 2200}px, 0, 0)`;
-
+  document.getElementById('layerMountains').style.transform = `translate3d(-${(vX * 0.2) % 200}px, 0, 0)`;
+  document.getElementById('layerTrees').style.transform = `translate3d(-${(vX * 0.5) % 100}px, 0, 0)`;
+  document.getElementById('layerRoad').style.transform = `translate3d(-${(vX * 0.9) % 40}px, 0, 0)`;
+  document.getElementById('layerSigns').style.transform = `translate3d(-${(vX * 0.9) % 2200}px, 0, 0)`;
   const cycle = 3000; const raw = (Math.abs(vX) % cycle) / cycle; const progress = 1 - Math.abs(raw * 2 - 1);
-  
-  const skyDay = document.getElementById('skyDay');
-  const skySunset = document.getElementById('skySunset');
-  const skyNight = document.getElementById('skyNight');
-  const skyStars = document.getElementById('skyStars');
-
-  if (skyDay) skyDay.style.opacity = Math.max(0, 1 - progress * 2);
-  if (skySunset) skySunset.style.opacity = progress < 0.5 ? progress * 2 : Math.max(0, 1 - (progress - 0.5) * 2);
-  if (skyNight) skyNight.style.opacity = progress > 0.4 ? (progress - 0.4) / 0.6 : 0;
-  if (skyStars) skyStars.style.opacity = progress > 0.5 ? (progress - 0.5) / 0.5 : 0;
-
+  document.getElementById('skyDay').style.opacity = Math.max(0, 1 - progress * 2);
+  document.getElementById('skySunset').style.opacity = progress < 0.5 ? progress * 2 : Math.max(0, 1 - (progress - 0.5) * 2);
+  document.getElementById('skyNight').style.opacity = progress > 0.4 ? (progress - 0.4) / 0.6 : 0;
+  document.getElementById('skyStars').style.opacity = progress > 0.5 ? (progress - 0.5) / 0.5 : 0;
   const darkness = 1 - progress * 0.7;
   if (progress > 0.6) { document.documentElement.style.setProperty('--truck-light-opacity', '1'); document.documentElement.style.setProperty('--truck-body-brightness', '0.6'); } else { document.documentElement.style.setProperty('--truck-light-opacity', '0'); document.documentElement.style.setProperty('--truck-body-brightness', '1'); }
-  
   const layerTrees = document.getElementById('layerTrees'); const layerLeaves = document.getElementById('layerLeaves'); const layerSnow = document.getElementById('layerSnow');
-  if (layerTrees && layerLeaves && layerSnow) {
-    if (progress < 0.25) { layerLeaves.style.opacity = 0; layerSnow.style.opacity = 0; layerTrees.style.filter = `brightness(${darkness}) hue-rotate(-20deg) saturate(1.5)`; }
-    else if (progress < 0.5) { layerLeaves.style.opacity = 0; layerSnow.style.opacity = 0; layerTrees.style.filter = `brightness(${darkness})`; }
-    else if (progress < 0.75) { const p = (progress - 0.5) / 0.25; layerLeaves.style.opacity = p; layerSnow.style.opacity = 0; layerTrees.style.filter = `brightness(${darkness}) sepia(${p * 0.6}) hue-rotate(-${p * 40}deg)`; }
-    else { const p = (progress - 0.75) / 0.25; layerLeaves.style.opacity = 0; layerSnow.style.opacity = p; layerTrees.style.filter = `brightness(${darkness}) grayscale(${p * 0.8}) brightness(${1 + p * 0.5})`; }
-  }
-
+  if (progress < 0.25) { layerLeaves.style.opacity = 0; layerSnow.style.opacity = 0; layerTrees.style.filter = `brightness(${darkness}) hue-rotate(-20deg) saturate(1.5)`; }
+  else if (progress < 0.5) { layerLeaves.style.opacity = 0; layerSnow.style.opacity = 0; layerTrees.style.filter = `brightness(${darkness})`; }
+  else if (progress < 0.75) { const p = (progress - 0.5) / 0.25; layerLeaves.style.opacity = p; layerSnow.style.opacity = 0; layerTrees.style.filter = `brightness(${darkness}) sepia(${p * 0.6}) hue-rotate(-${p * 40}deg)`; }
+  else { const p = (progress - 0.75) / 0.25; layerLeaves.style.opacity = 0; layerSnow.style.opacity = p; layerTrees.style.filter = `brightness(${darkness}) grayscale(${p * 0.8}) brightness(${1 + p * 0.5})`; }
   const sun = document.getElementById('sunBody'), moon = document.getElementById('moonBody');
-  if (sun && moon) {
-    if (progress <= 0.6) { const p = progress / 0.6; sun.style.transform = `translate3d(calc(${p * 100}vw + 20px), calc(-${Math.sin(p * Math.PI) * 50}px), 0)`; sun.style.opacity = 1; } else sun.style.opacity = 0;
-    if (progress >= 0.4) { const p = (progress - 0.4) / 0.6; moon.style.transform = `translate3d(calc(${p * 100}vw + 20px), calc(-${Math.sin(p * Math.PI) * 50}px), 0)`; moon.style.opacity = 1; } else moon.style.opacity = 0;
-  }
+  if (progress <= 0.6) { const p = progress / 0.6; sun.style.transform = `translate3d(calc(${p * 100}vw + 20px), calc(-${Math.sin(p * Math.PI) * 50}px), 0)`; sun.style.opacity = 1; } else sun.style.opacity = 0;
+  if (progress >= 0.4) { const p = (progress - 0.4) / 0.6; moon.style.transform = `translate3d(calc(${p * 100}vw + 20px), calc(-${Math.sin(p * Math.PI) * 50}px), 0)`; moon.style.opacity = 1; } else moon.style.opacity = 0;
 }
 
 // ========== МОДАЛКИ, НАВИГАЦИЯ ==========
-window.openContactsModal = function() { 
-    document.getElementById('contactsModal').classList.remove('hidden'); 
-    startModalStory(); // Запускаем анимацию при открытии
-};
-
-window.closeContactsModal = function() { 
-    document.getElementById('contactsModal').classList.add('hidden'); 
-    stopModalStory(); // Останавливаем при закрытии
-};
-
-// --- Логика анимации внутри окна контактов ---
-let isModalStoryPlaying = false;
-let modalStoryTimeout = null;
-
-const modalDialogues = [
-    { actor: 'sveta', text: 'Ух, 5 км пробежала! 🏃‍♀️', time: 2000, action: 'run' },
-    { actor: 'sergey', text: 'Так, пункт 8.23... уступаем... 📖', time: 2500, action: 'read' },
-    { actor: 'marina', text: 'Ветер в лицо! Освежаюсь 💨', time: 2000, action: 'dry' },
-    { actor: 'mech', text: 'Эх, кто бы мне ключ подал...', time: 2500, action: 'look' }
-];
-
-async function startModalStory() {
-    if (isModalStoryPlaying) return;
-    isModalStoryPlaying = true;
-    
-    // Небольшая задержка перед стартом, чтобы модалка успела открыться
-    await new Promise(r => setTimeout(r, 500)); 
-
-    while (isModalStoryPlaying) {
-        for (const line of modalDialogues) {
-            if (!isModalStoryPlaying) break;
-            
-            triggerModalAction(line.actor, line.action);
-            await showModalBubble(line.actor, line.text, line.time);
-            await new Promise(r => setTimeout(r, 300)); // Пауза между репликами
-        }
-        await new Promise(r => setTimeout(r, 1500)); // Пауза перед новым кругом
-    }
-}
-
-function stopModalStory() {
-    isModalStoryPlaying = false;
-    clearTimeout(modalStoryTimeout);
-    
-    // Сбрасываем анимации и скрываем пузыри
-    ['bubbleSveta','bubbleMarina','bubbleMech','bubbleSergey'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.classList.remove('active');
-    });
-}
-
-function triggerModalAction(actor, action) {
-    // (Анимации в CSS уже зациклены, здесь только визуальный триггер при желании)
-}
-
-async function showModalBubble(actor, text, duration) {
-    if (!isModalStoryPlaying) return;
-    const target = document.getElementById('bubble' + actor.charAt(0).toUpperCase() + actor.slice(1));
-    if (!target) return;
-    
-    target.querySelector('.story-bubble-inner').innerText = text;
-    target.classList.add('active');
-    await new Promise(r => setTimeout(r, duration));
-    target.classList.remove('active');
-    await new Promise(r => setTimeout(r, 300));
-}
-// ==============================================
-
+window.openContactsModal = function() { document.getElementById('contactsModal').classList.remove('hidden'); };
+window.closeContactsModal = function() { document.getElementById('contactsModal').classList.add('hidden'); };
 window.openMonetkaModal = function() { document.getElementById('monetkaModal').classList.remove('hidden'); };
 window.closeMonetkaModal = function() { document.getElementById('monetkaModal').classList.add('hidden'); };
 window.openMechanicModal = function() { document.getElementById('mechanicModal').classList.remove('hidden'); };
@@ -1181,7 +932,7 @@ let currentNavCoords = null;
 
 window.openNavModal = function(query) {
   if (query && query.match(/^-?\d+\.\d+,\s*-?\d+\.\d+$/)) {
-    currentNavCoords = query.split(',').map(s => parseFloat(s.trim()));
+    currentNavCoords = query.split(',').map(s => s.trim());
     currentNavQuery = query;
   } else {
     currentNavCoords = null;
@@ -1193,31 +944,18 @@ window.openNavModal = function(query) {
 window.closeNavModal = function() { document.getElementById('navModal').classList.add('hidden'); };
 
 window.executeNavigation = function(type) {
-  playTickSound(); 
-  let navUrl = '';
-  
+  playTickSound(); let navUrl = '';
   if (currentNavCoords) {
     const [lat, lon] = currentNavCoords;
-    if (type === 'yandex') {
-      navUrl = `https://yandex.ru/maps/?ll=${lon},${lat}&pt=${lon},${lat}&z=17`;
-    } else if (type === '2gis') {
-      navUrl = `https://2gis.ru/geo/${lon},${lat}`;
-    } else if (type === 'google') {
-      navUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
-    }
+    if (type === 'yandex') navUrl = `https://yandex.ru/maps/?pt=${lon},${lat}&z=17&l=map`;
+    else if (type === '2gis') navUrl = `https://2gis.ru/geo/${lon},${lat}`;
+    else if (type === 'google') navUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
   } else {
-    const encodedQuery = encodeURIComponent(currentNavQuery);
-    if (type === 'yandex') {
-      navUrl = `https://yandex.ru/maps/?text=${encodedQuery}`;
-    } else if (type === '2gis') {
-      navUrl = `https://2gis.ru/search/${encodedQuery}`;
-    } else if (type === 'google') {
-      navUrl = `https://www.google.com/maps/search/?api=1&query=${encodedQuery}`;
-    }
+    if (type === 'yandex') navUrl = `https://yandex.ru/maps/?text=${currentNavQuery}`;
+    else if (type === '2gis') navUrl = `https://2gis.ru/search/${currentNavQuery}`;
+    else if (type === 'google') navUrl = `https://www.google.com/maps/search/?api=1&query=${currentNavQuery}`;
   }
-  
-  window.location.href = navUrl; 
-  closeNavModal();
+  window.location.href = navUrl; closeNavModal();
 };
 
 window.shareRoute = function(tk, brandName, address, routeUrl, e) {
@@ -1255,7 +993,7 @@ window.sortByNearest = function() {
         console.warn("Ошибка геолокации:", error);
         btn.classList.remove('radar-active'); 
         if (!window.isSortedByDistance) {
-            window.userLocation = { lat: 56.8389, lon: 60.6057 }; // Фолбэк: Екатеринбург
+            window.userLocation = { lat: 56.8389, lon: 60.6057 };
             window.isSortedByDistance = true;
             btn.classList.add('bg-emerald-100', 'dark:bg-emerald-900/50', 'text-emerald-700');
             renderCards();
@@ -1280,7 +1018,8 @@ function getSmartNavQuery(city, address, tk) {
   text = text.replace(/\b\d{6}\b,?/g, '');
   text = text.replace(/Свердловская обл(?:асть|\.)?,?/gi, '').replace(/Тюменская обл(?:асть|\.)?,?/gi, '').replace(/Челябинская обл(?:асть|\.)?,?/gi, '').replace(/Курганская обл(?:асть|\.)?,?/gi, '').replace(/Ханты-?Мансийский Автономный округ.*?АО,?/gi, '').replace(/Ханты-Мансийский Автономный округ - Югра,?/gi, '').replace(/Ямало-Ненецкий АО,?/gi, '').replace(/Пермский край,?/gi, '').replace(/город Екатеринбург г\.о\.?,?/gi, '').replace(/Екатеринбург г\.о\.?,?/gi, '').replace(/г\.о\.,?/gi, '');
   text = text.replace(/г\.\s*[А-Яа-я-]+,?/g, '');
-  text = text.replace(new RegExp(`\\b${city}\\b,`, 'gi'), '');
+  const escapedCity = city.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  text = text.replace(new RegExp(`\\b${escapedCity}\\b,`, 'gi'), '');
   text = text.replace(/посёлок.*?(?=\s*$)/gi, '');
   text = text.replace(/[\/\\]/g, ' ').replace(/,/g, ' ').replace(/\s+/g, ' ').trim();
   return city + ' ' + text;
@@ -1339,10 +1078,15 @@ window.filterByCity = function(city) {
 let favorites = [];
 try { favorites = JSON.parse(localStorage.getItem('lenta_favs')) || []; } catch(e) { favorites = []; }
 
+let _firstRenderDone = false;
 function renderCards() {
   const rawSearch = searchInput.value.toLowerCase().trim();
   const q = rawSearch.replace(/['"`]/g, '').replace('окэй','окей');
   if (q) clearSearchBtn.classList.remove('hidden'); else clearSearchBtn.classList.add('hidden');
+  
+  const skeleton = document.getElementById('skeletonGrid');
+  if (skeleton && !_firstRenderDone && !q) skeleton.classList.remove('hidden');
+  
   cardsGrid.innerHTML = ''; let count = 0; const words = q.split(/\s+/).filter(w => w.length > 0); let html = '';
   
   if (isTechMode) {
@@ -1369,27 +1113,25 @@ function renderCards() {
       const isFav = favorites.includes(st.id); const is24C = st.is24_7 ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-gray-500/10 text-gray-500 border-gray-500/20';
       const is24T = st.is24_7 ? '24/7' : (st.start ? `${st.start}–${st.end || ''}` : '—');
       
-      const roadB = st.roadService ? `<span class="road-badge bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"><img src="road-icon.png" class="w-3 h-3 object-contain inline" onerror="this.outerHTML='🛣️'"> Дорожная сеть</span>` : '';
+      // Безопасная ссылка «Дорожная сеть» (без внешнего домена)
+      const roadB = st.roadService ? `<span class="road-badge bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"><img src="road-icon.png" class="w-3 h-3 object-contain inline" onerror="this.outerHTML='🛣️'" loading="lazy"> Дорожная сеть</span>` : '';
       
       const deleteBtn = st.isCustom ? `<button onclick="deleteCustomTech('${st.id}')" class="absolute top-4 right-12 text-red-400 hover:text-red-600 bg-white/80 dark:bg-black/50 p-1.5 rounded-full z-10 tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>` : '';
       const dTag = (window.isSortedByDistance && st.distance !== undefined && st.distance !== 999999) ? `<span class="text-[10px] font-black text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">${st.distance.toFixed(1)} км</span>` : '';
       
       const phoneLink = st.phone ? `<a href="tel:${st.phone.replace(/[^0-9+]/g, '')}" class="inline-flex items-center text-[11px] font-bold text-blue-600 dark:text-blue-400 underline decoration-blue-600/30 underline-offset-2 hover:decoration-blue-600 whitespace-nowrap mt-1">📞 ${st.phone}</a>` : '';
       
-      let navAddr = st.name;
-      if (st.city && !navAddr.toLowerCase().includes(st.city.toLowerCase())) {
-        navAddr = st.city + ', ' + navAddr;
-      }
-
+      // ЭКРАНИРОВАНИЕ одинарных кавычек для безопасности
+      const navQuery = (st.lat && st.lon) ? `${st.lat},${st.lon}` : st.address;
+      const navAddr = String(navQuery).replace(/'/g, "\\'");
+      
       let colorClass = 'border-type-kafe';
       if (st.type === 'СТОЯНКА') colorClass = 'border-type-stoyanka';
       if (st.type === 'ШИНОМОНТАЖ') colorClass = 'border-type-shinomontazh';
       if (st.type === 'АВТОМОЙКА') colorClass = 'border-type-avtomoyka';
       if (st.type === 'СЕРВИС') colorClass = 'border-type-servis';
 
-      let iconEmoji = '🔧'; 
-      let iconBg = 'bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400';
-      
+      let iconEmoji = '🔧'; let iconBg = 'bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400';
       if (st.type === 'СТОЯНКА') { iconEmoji = '🅿️'; iconBg = 'bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400'; }
       else if (st.type === 'ШИНОМОНТАЖ') { iconEmoji = '🛞'; iconBg = 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400'; }
       else if (st.type === 'АВТОМОЙКА') { iconEmoji = '🚿'; iconBg = 'bg-sky-100 dark:bg-sky-900/50 text-sky-600 dark:text-sky-400'; }
@@ -1400,8 +1142,6 @@ function renderCards() {
         else { iconEmoji = '⚙️'; iconBg = 'bg-violet-100 dark:bg-violet-900/50 text-violet-600 dark:text-violet-400'; }
       }
 
-      const routeUrl = st.route || (window.customRoutes ? window.customRoutes[st.id] : null);
-      
       html += `<div class="store-card volume-card animate-reveal ${colorClass} p-4">
         <div class="absolute top-3 right-3 flex gap-1 z-10">${deleteBtn}<button onclick="toggleFav('${st.id}', event)" class="text-lg tactile-btn transition-transform ${isFav ? 'scale-110 drop-shadow-md' : 'grayscale opacity-40 hover:grayscale-0 hover:opacity-100'}">⭐</button></div>
         <div class="flex flex-col h-full justify-between">
@@ -1422,10 +1162,9 @@ function renderCards() {
               <span class="text-[9px] font-bold text-gray-400 uppercase">Режим: <span class="text-gray-700 dark:text-gray-300">${is24T}</span></span>
               ${dTag}
             </div>
-            <div class="grid ${routeUrl ? 'grid-cols-3' : 'grid-cols-2'} gap-1.5">
-              ${routeUrl ? `<button onclick="openApproachMap('${routeUrl}')" class="flex items-center justify-center gap-1 py-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg text-[10px] font-bold tactile-btn shadow-sm">🛣️ Подъезд</button>` : ''}
-              <button onclick="openNavModal('${navAddr.replace(/'/g,"\\'")}');" class="flex items-center justify-center gap-1 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg text-[10px] font-bold tactile-btn shadow-sm">🗺️ Поехать</button>
-              <button onclick="toggleFav('${st.id}', event)" class="flex items-center justify-center gap-1 py-1.5 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 rounded-lg text-[10px] font-bold tactile-btn">${isFav ? '⭐' : '☆'}</button>
+            <div class="grid grid-cols-2 gap-1.5">
+              <button onclick="openNavModal('${navAddr}');" class="flex items-center justify-center gap-1 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg text-[10px] font-bold tactile-btn shadow-sm">🗺️ Поехать</button>
+              <button onclick="toggleFav('${st.id}', event)" class="flex items-center justify-center gap-1 py-1.5 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 rounded-lg text-[10px] font-bold tactile-btn">${isFav ? '⭐ В избр.' : '☆ В избр.'}</button>
             </div>
           </div>
         </div>
@@ -1459,24 +1198,36 @@ function renderCards() {
       const rc1 = store.rc1 !== '-' ? `<div class="flex flex-col items-end"><span class="px-2 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold rounded-lg text-[10px] border border-emerald-500/20">${store.rc1}</span>${getTimeLeftHtml(store.rc1)}</div>` : '<span class="text-gray-300 font-bold">—</span>';
       const cleanAddr = store.address.replace('ООО "Лента", ','').replace('ООО "Лента" ','').replace('РЦ "Монетка", ','');
       
+      // ЭКРАНИРОВАНИЕ кавычек и URL
       let navQ = getSmartNavQuery(store.city, store.address, store.tk);
       const coords = window.storeCoords ? window.storeCoords[store.tk] : null;
-      if (!navQ.trim() && coords) navQ = `${coords.lat},${coords.lon}`;
+      if (coords) navQ = `${coords.lat},${coords.lon}`;
       
-      const encQ = navQ;
-      const routeUrl = customRoutes[store.tk] || null;
+      const encQ = navQ.replace(/'/g, "\\'");
+      const safeAddress = cleanAddr.replace(/'/g, "\\'");
+      const rawRouteUrl = customRoutes[store.tk] || '';
+      const safeRouteUrl = rawRouteUrl.replace(/'/g, "\\'");
+      
       const dTag = (window.isSortedByDistance && store.distance !== undefined && store.distance !== 999999) ? `<span class="text-[10px] font-black text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">${store.distance.toFixed(1)} км</span>` : '';
       const extraBtn = brand === "МОНЕТКА" ? `<button onclick="openMonetkaModal();" class="mt-3 w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-orange-500/10 text-orange-600 border border-orange-500/20 rounded-xl text-xs font-bold tactile-btn hover:bg-orange-500/20 transition-colors">📖 Правила выгрузки</button>` : '';
       
       html += `<div class="store-card volume-card animate-reveal ${colorClass}">
         <button onclick="closeCard(this)" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 bg-gray-100/50 dark:bg-white/5 p-1.5 rounded-full z-10 tactile-btn transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
         <div class="flex flex-col h-full justify-between p-4"><div><div class="flex flex-wrap items-center gap-2 mb-3 pr-8"><span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase ${badge} shadow-sm tracking-wide">${dispBrand}</span><span class="text-xs font-bold text-gray-500 dark:text-gray-300">${num}</span><div class="ml-auto flex items-center gap-1.5 shrink-0">${dTag}<span class="text-[11px] font-extrabold text-lentaBlue bg-blue-500/10 px-2.5 py-1 rounded-lg border border-blue-500/20">${store.city}</span></div></div><div class="text-[15px] font-display font-extrabold text-gray-800 dark:text-white leading-snug mb-5">${cleanAddr}</div></div>
-        <div class="space-y-4 pt-4 border-t border-gray-100 dark:border-white/5 mt-auto"><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Время приёма</span>${rc1}</div><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Режим</span><span class="px-2.5 py-1 rounded-lg text-[10px] font-bold border ${is24C}">${is24T}</span></div>${extraBtn}<button onclick="addToShifts('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${store.city}')" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 rounded-xl text-xs font-bold tactile-btn hover:bg-purple-500/20 transition-colors mb-2">📝 Учесть рейс</button><div class="grid grid-cols-3 gap-1.5 pt-1"><button onclick="openApproachMap('${routeUrl}')" class="flex items-center justify-center gap-1 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md shadow-emerald-500/20 transition-all">🛣️ Подъезд</button><button onclick="openNavModal('${encQ.replace(/'/g,"\\'")}')" class="flex items-center justify-center gap-1 py-2 bg-gradient-to-r from-lentaBlue to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md shadow-blue-500/20 transition-all">🧭 Навигатор</button><button onclick="shareRoute('${store.tk}','${dispBrand}','${cleanAddr.replace(/'/g,"\\'")}','${routeUrl}',event)" class="flex items-center justify-center gap-1 py-2 bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-300 rounded-xl text-[10px] font-bold tactile-btn hover:bg-gray-100 transition-colors">📤 Отправить</button></div></div></div>
+        <div class="space-y-4 pt-4 border-t border-gray-100 dark:border-white/5 mt-auto"><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Время приёма</span>${rc1}</div><div class="flex justify-between items-center"><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Режим</span><span class="px-2.5 py-1 rounded-lg text-[10px] font-bold border ${is24C}">${is24T}</span></div>${extraBtn}<button onclick="addToShifts('${store.tk}','${dispBrand}','${safeAddress}','${store.city}')" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 rounded-xl text-xs font-bold tactile-btn hover:bg-purple-500/20 transition-colors mb-2">📝 Учесть рейс</button><div class="grid grid-cols-3 gap-1.5 pt-1"><button onclick="openApproachMap('${safeRouteUrl}')" class="flex items-center justify-center gap-1 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md shadow-emerald-500/20 transition-all">🛣️ Подъезд</button><button onclick="openNavModal('${encQ}')" class="flex items-center justify-center gap-1 py-2 bg-gradient-to-r from-lentaBlue to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md shadow-blue-500/20 transition-all">🧭 Навигатор</button><button onclick="shareRoute('${store.tk}','${dispBrand}','${safeAddress}','${safeRouteUrl}',event)" class="flex items-center justify-center gap-1 py-2 bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-300 rounded-xl text-[10px] font-bold tactile-btn hover:bg-gray-100 transition-colors">📤 Отправить</button></div></div></div>
       </div>`;
     });
   }
+  
   if (count === 0) cardsGrid.innerHTML = `<div class="col-span-full py-16 text-center text-gray-400 font-medium bg-white/50 dark:bg-white/5 rounded-[28px] border border-white/20 backdrop-blur-md">По запросу ничего не найдено</div>`;
-  else { cardsGrid.innerHTML = html; }
+  else cardsGrid.innerHTML = html;
+  
+  if (!_firstRenderDone) {
+    _firstRenderDone = true;
+    setTimeout(() => { if (skeleton) skeleton.classList.add('hidden'); }, 250);
+  } else {
+    if (skeleton) skeleton.classList.add('hidden');
+  }
 }
 window.toggleFav = function(id, e) { if (e) e.stopPropagation(); playTickSound(); if (favorites.includes(id)) { favorites = favorites.filter(f => f !== id); showToast("Удалено из избранного"); } else { favorites.push(id); showToast("Добавлено в избранное ⭐"); } try { localStorage.setItem('lenta_favs', JSON.stringify(favorites)); } catch(e) {} renderCards(); };
 
@@ -1500,7 +1251,6 @@ const handleSearchInput = function() {
       if (isTechMode && selectedTechType !== 'all') {
           selectedTechType = 'all';
       }
-      
       if (!isTechMode) {
           const isTechMatch = getTechStations().some(st => 
               `${st.name} ${st.address} ${st.city} ${st.desc}`.toLowerCase().includes(v)
@@ -1537,43 +1287,25 @@ window.startVoiceSearch = function() {
     r.onstart = () => { micBtn.classList.add('mic-listening'); micBtn.classList.remove('text-lentaBlue'); el.value = ''; el.placeholder = "Слушаю..."; }; 
     r.onresult = (ev) => { 
       let rawText = ev.results[0][0].transcript.toLowerCase().replace(/ё/g, 'е'); 
-      
       let s = rawText.replace(/\bсто\b/gi,'100').replace(/\bдвести\b/gi,'200').replace(/\bтриста\b/gi,'300')
                       .replace(/\bчетыреста\b/gi,'400').replace(/\bпятьсот\b/gi,'500').replace(/\bшестьсот\b/gi,'600')
                       .replace(/\bсемьсот\b/gi,'700').replace(/\bвосемьсот\b/gi,'800').replace(/\bдевятьсот\b/gi,'900')
                       .replace(/двести тридцатый/gi, '230').replace(/двести тридцать/gi, '230');
-      
       const techSynonyms = {
         'шинк': 'шиномонтаж', 'колес': 'шиномонтаж', 'покрышк': 'шиномонтаж', 'резин': 'шиномонтаж',
         'поесть': 'кафе', 'покушать': 'кафе', 'столов': 'кафе', 'кушать': 'кафе', 'обед': 'кафе', 'перекусить': 'кафе',
-        'беляш': 'кафе', 'еда': 'кафе', 'голод': 'кафе', 'перекус': 'кафе', 'пирожок': 'кафе', 'столовая': 'кафе',
         'помыть': 'автомойка', 'мойк': 'автомойка', 'помыться': 'автомойка', 'баня': 'автомойка',
         'поспать': 'стоянка', 'отдохнуть': 'стоянка', 'стоянк': 'стоянка', 'парковк': 'стоянка', 'ночлег': 'стоянка',
         'починить': 'сервис', 'поломк': 'сервис', 'ремонт': 'сервис', 'сломался': 'сервис', 'техпомощь': 'сервис'
       };
-      
       let isTechQuery = false;
       for (const [key, value] of Object.entries(techSynonyms)) {
         if (s.includes(key)) { s += ' ' + value; isTechQuery = true; }
       }
-      
-      // Если сказали "стоянка с беляшами", ищем и кафе, и стоянки
-      if (s.includes('стоянка') && (s.includes('беляш') || s.includes('еда') || s.includes('поесть'))) {
-         isTechQuery = true;
-         s += ' кафе стоянка';
-      }
-      
-      if (s.includes('уют') || s.includes('туртас') || s.includes('ман') || s.includes('камаз') || s.includes('гарион')) {
-          isTechQuery = true;
-      }
-      
-      if (s.includes('ближайш') || s.includes('рядом') || s.includes('около меня')) {
-        if (!window.isSortedByDistance) sortByNearest();
-      }
-      
+      if (s.includes('уют') || s.includes('туртас') || s.includes('ман') || s.includes('камаз')) { isTechQuery = true; }
+      if (s.includes('ближайш') || s.includes('рядом') || s.includes('около меня')) { if (!window.isSortedByDistance) sortByNearest(); }
       const storeKeywords = ['лента', 'монетка', 'окей', 'рц', 'тк', 'молл'];
       let isStoreQuery = storeKeywords.some(kw => s.includes(kw));
-      
       if (isTechQuery && !isStoreQuery) {
         if (!isTechMode) {
           isTechMode = true;
@@ -1593,7 +1325,6 @@ window.startVoiceSearch = function() {
           });
         }
       }
-      
       s = s.replace(/\.$/,'').trim();
       el.value = s; 
       el.dispatchEvent(new Event('input')); 
@@ -1606,60 +1337,10 @@ window.startVoiceSearch = function() {
 const storyList = window.stories || []; let isStoryPlaying = false, storyTimer = null;
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 async function showBubble(actor, text, duration) { if (!isStoryPlaying) return; const target = actor === 'mech' ? document.getElementById('bubbleMech') : actor === 'sveta' ? document.getElementById('bubbleSveta') : document.getElementById('bubbleMarina'); if (!target) return; target.querySelector('.story-bubble-inner').innerText = text; target.classList.add('active'); await sleep(duration); target.classList.remove('active'); await sleep(400); }
-function triggerAction(actor, action) { 
-    if (!isStoryPlaying) return; 
-    const sveta = document.getElementById('svetaBody'), marina = document.getElementById('marinaBody'), mech = document.getElementById('mechBody'), sweat = document.getElementById('sweatDrop');
-    const mechGroup = document.getElementById('mechGroup');
-
-    [sveta, marina, mech].forEach(el => { if(el) el.classList.remove('laughing', 'anim-bounce', 'anim-shake'); }); 
-    if(sweat) sweat.classList.remove('show-sweat'); 
-    if(mechGroup) mechGroup.classList.remove('juggling-active');
-    
-    const target = actor === 'sveta' ? sveta : actor === 'marina' ? marina : mech; 
-    
-    if (target) {
-        if (action === 'laughing') target.classList.add('laughing');
-        if (action === 'bounce') target.classList.add('anim-bounce');
-        if (action === 'shake') target.classList.add('anim-shake');
-    }
-
-    if (actor === 'mech' && mechGroup) {
-        mechGroup.classList.add('juggling-active');
-    }
-
-    if (actor === 'mech' && action === 'sweat' && sweat) sweat.classList.add('show-sweat'); 
-}
-
-async function playStory() { 
-  if (isMusicPlaying || isStoryPlaying || storyList.length === 0) return; 
-  isStoryPlaying = true; 
-  document.getElementById('controlPanel').classList.add('story-mode'); 
-  await sleep(800); 
-  if (!isStoryPlaying) return; 
-  const story = storyList[Math.floor(Math.random() * storyList.length)]; 
-  for (const line of story.dialogues) { 
-    if (!isStoryPlaying) break; 
-    triggerAction(line.actor, line.action); 
-    await showBubble(line.actor, line.text, line.time); 
-  } 
-  if (isStoryPlaying) abortStory(); 
-}
-
-function abortStory() { 
-  isStoryPlaying = false; 
-  document.getElementById('controlPanel').classList.remove('story-mode'); 
-  ['bubbleSveta','bubbleMarina','bubbleMech'].forEach(id => document.getElementById(id).classList.remove('active')); 
-  ['svetaBody','marinaBody','mechBody'].forEach(id => { const el = document.getElementById(id); if(el) el.classList.remove('laughing', 'anim-bounce', 'anim-shake'); }); 
-  const mechGroup = document.getElementById('mechGroup');
-  if(mechGroup) mechGroup.classList.remove('juggling-active');
-  const sweat = document.getElementById('sweatDrop'); 
-  if(sweat) sweat.classList.remove('show-sweat'); 
-}
-
-function startStoryTimer() { 
-  clearTimeout(storyTimer); 
-  storyTimer = setInterval(() => { if (!isMusicPlaying && !isStoryPlaying) playStory(); }, 30000); 
-}
+function triggerAction(actor, action) { if (!isStoryPlaying) return; const sveta = document.getElementById('svetaBody'), marina = document.getElementById('marinaBody'), mech = document.getElementById('mechBody'), sweat = document.getElementById('sweatDrop'); [sveta, marina, mech].forEach(el => el && el.classList.remove('laughing')); sweat && sweat.classList.remove('show-sweat'); const target = actor === 'sveta' ? sveta : actor === 'marina' ? marina : mech; if (target && action === 'laughing') target.classList.add('laughing'); if (actor === 'mech' && action === 'sweat' && sweat) sweat.classList.add('show-sweat'); }
+async function playStory() { if (isMusicPlaying || isStoryPlaying || storyList.length === 0) return; isStoryPlaying = true; document.getElementById('controlPanel').classList.add('story-mode'); await sleep(800); if (!isStoryPlaying) return; const story = storyList[Math.floor(Math.random() * storyList.length)]; for (const line of story.dialogues) { if (!isStoryPlaying) break; triggerAction(line.actor, line.action); await showBubble(line.actor, line.text, line.time); } if (isStoryPlaying) abortStory(); }
+function abortStory() { isStoryPlaying = false; document.getElementById('controlPanel').classList.remove('story-mode'); ['bubbleSveta','bubbleMarina','bubbleMech'].forEach(id => document.getElementById(id).classList.remove('active')); ['svetaBody','marinaBody','mechBody'].forEach(id => document.getElementById(id).classList.remove('laughing')); document.getElementById('sweatDrop').classList.remove('show-sweat'); }
+function startStoryTimer() { clearTimeout(storyTimer); storyTimer = setInterval(() => { if (!isMusicPlaying && !isStoryPlaying) playStory(); }, 30000); }
 
 function updateSpeedLimit() { const m = new Date().getMonth(); const isWinter = m === 11 || m === 0 || m === 1 || m === 2 || m === 10; document.getElementById('speedLimitNumber').innerText = isWinter ? '60' : '80'; const icon = document.getElementById('seasonIcon'); if (isWinter) { icon.innerText = '❄️'; icon.className = 'absolute -bottom-1 -right-2 w-5 h-5 bg-blue-50 border-blue-200 flex items-center justify-center text-[10px] shadow-sm border rounded-full'; } else { icon.innerText = '☀️'; icon.className = 'absolute -bottom-1 -right-2 w-5 h-5 bg-amber-50 border-amber-200 flex items-center justify-center text-[10px] shadow-sm border rounded-full'; } }
 
@@ -1671,35 +1352,11 @@ window.addEventListener('appinstalled', () => { const b = document.getElementByI
 if (window.matchMedia('(display-mode: standalone)').matches) { const b = document.getElementById('installPwaBtn'); if (b) b.classList.add('hidden'); }
 window.showUpdateBanner = function(hasData) { const el = document.getElementById('updateBanner'); const txt = document.getElementById('updateBannerText'); txt.innerHTML = hasData ? '⚠️ Обновление. <b>Сначала сделайте бэкап календаря!</b>' : '✨ Доступно обновление приложения.'; el.classList.remove('hidden'); };
 window.applyUpdate = function() {
-  // Проверяем, есть ли сохраненные рейсы в календаре
-  const hasData = typeof myShifts !== 'undefined' && Object.keys(myShifts).length > 0;
-  
-  // Формируем текст предупреждения
-  const warningText = hasData 
-    ? "⚠️ ВНИМАНИЕ!\n\nУ вас есть сохраненные рейсы в календаре.\nНастоятельно рекомендуем сделать БЭКАП (кнопка 💾 в календаре) перед обновлением!\n\nВы уверены, что хотите обновиться?" 
-    : "Вы уверены, что хотите обновить приложение до новой версии?";
-
-  // Показываем окно подтверждения
-  if (!confirm(warningText)) {
-    return; // Если пользователь нажал "Отмена", ничего не делаем
-  }
-
-  // Если пользователь нажал "ОК", запускаем процесс
   showToast("⏳ Обновляем приложение...");
   const btn = document.querySelector('#updateBanner button');
-  if (btn) { 
-    btn.textContent = 'Ждите...'; 
-    btn.style.opacity = '0.7'; 
-    btn.disabled = true; 
-  }
-  
-  if (waitingWorker) {
-    waitingWorker.postMessage('SKIP_WAITING');
-  }
-  
-  setTimeout(() => { 
-    window.location.reload(); 
-  }, 800);
+  if (btn) { btn.textContent = 'Ждите...'; btn.style.opacity = '0.7'; btn.disabled = true; }
+  if (waitingWorker) waitingWorker.postMessage('SKIP_WAITING');
+  setTimeout(() => { window.location.reload(); }, 800);
 };
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -1713,6 +1370,11 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener('controllerchange', () => { if (refreshing) return; refreshing = true; window.location.reload(); });
 }
 
+// ========== ИНИЦИАЛИЗАЦИЯ ==========
+window.addEventListener('online', () => { const b = document.getElementById('offlineBanner'); if (b) b.classList.add('hidden'); });
+window.addEventListener('offline', () => { const b = document.getElementById('offlineBanner'); if (b) b.classList.remove('hidden'); });
+if (!navigator.onLine) { const b = document.getElementById('offlineBanner'); if (b) b.classList.remove('hidden'); }
+
 (function init() {
   const txtBtn = document.getElementById('textSizeBtn');
   const savedSize = parseInt(localStorage.getItem('lenta_text_size') || '0');
@@ -1725,10 +1387,6 @@ if ('serviceWorker' in navigator) {
   buildCitySlider(); updateSpeedLimit(); renderCards();
   setTimeout(() => citySlider.dispatchEvent(new Event('scroll')), 100);
   setTimeout(() => { if (!isMusicPlaying) playStory(); startStoryTimer(); }, 5000);
-  
-  // Добавляем класс для анимации покачивания грузовиков даже без музыки
-  citySlider.classList.add('auto-driving');
-  
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { ['navModal','contactsModal','monetkaModal','mechanicModal','calendarModal','storePickerModal','techPickerModal','customTaskModal','importConfirmModal','timePickerModal','addTechModal'].forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('hidden'); }); } });
 })();
 </script>
