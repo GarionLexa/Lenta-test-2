@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lenta-cache-v1'; // Версия поднята
+const CACHE_NAME = 'lenta-cache-v2'; // Версия поднята
 const ASSETS = [
   './',
   './index.html',
