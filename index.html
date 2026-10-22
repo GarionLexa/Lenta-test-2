@@ -150,13 +150,14 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .show-sweat { opacity: 1; transform: translateY(0); animation: dripDown 1.5s forwards; }
 @keyframes dripDown { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
 
+/* ИЗМЕНЕНИЕ: Уменьшили bottom, чтобы диалоги не обрезались на ПК */
 .story-bubble { position: absolute; background: white; border: 1px solid #e4e4e7; color: #18181b; font-size: 11px; font-weight: 700; padding: 8px 12px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); opacity: 0; pointer-events: none; z-index: 1000; max-width: 150px; text-align: center; line-height: 1.3; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
 .dark .story-bubble { background: #27272a; border-color: #3f3f46; color: #f4f4f5; }
-.story-bubble.actor-sveta { bottom: 85%; left: 0; transform: scale(0.9) translateY(10px); }
+.story-bubble.actor-sveta { bottom: 70px; left: 0; transform: scale(0.9) translateY(10px); }
 .story-bubble.actor-sveta.active { transform: scale(1) translateY(0); opacity: 1; }
-.story-bubble.actor-marina { bottom: 85%; right: 0; transform: scale(0.9) translateY(10px); }
+.story-bubble.actor-marina { bottom: 70px; right: 0; transform: scale(0.9) translateY(10px); }
 .story-bubble.actor-marina.active { transform: scale(1) translateY(0); opacity: 1; }
-.story-bubble.actor-mech { bottom: 100%; left: 50%; margin-left: -50px; transform: scale(0.9) translateY(10px); }
+.story-bubble.actor-mech { bottom: 80px; left: 50%; margin-left: -50px; transform: scale(0.9) translateY(10px); }
 .story-bubble.actor-mech.active { transform: scale(1) translateY(0); opacity: 1; }
 .story-bubble::after { content: ''; position: absolute; top: 100%; border-width: 5px; border-style: solid; border-color: white transparent transparent transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05)); }
 .dark .story-bubble::after { border-color: #27272a transparent transparent transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); }
@@ -520,6 +521,10 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
       <button id="clearSearchBtn" onclick="clearSearch();" class="hidden absolute right-2 top-2 text-gray-400 bg-white dark:bg-zinc-800 p-1.5 rounded-full shadow-sm tactile-btn hover:text-gray-600 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
       <div id="autocompleteList" class="absolute z-[100] w-full bg-white dark:bg-zinc-800 rounded-2xl hidden max-h-[40vh] overflow-y-auto mt-2 text-left text-gray-800 dark:text-gray-200 shadow-2xl border border-gray-100 dark:border-white/10 hide-scrollbar backdrop-blur-xl"></div>
     </div>
+    <!-- КНОПКА ДОМОЙ -->
+    <button id="homeBtn" onclick="filterByCity('all');" class="relative bg-white/60 dark:bg-white/5 text-indigo-500 w-11 h-11 rounded-2xl shadow-sm border border-white/40 dark:border-white/5 flex items-center justify-center shrink-0 tactile-btn hover:bg-white transition-colors" title="Все магазины">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+    </button>
     <button id="nearestBtn" onclick="sortByNearest();" class="relative bg-white/60 dark:bg-white/5 text-emerald-500 w-11 h-11 rounded-2xl shadow-sm border border-white/40 dark:border-white/5 flex items-center justify-center shrink-0 tactile-btn hover:bg-white transition-colors overflow-visible" title="Ближайшие ко мне"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></button>
     <button id="voiceSearchBtn" onclick="startVoiceSearch();" class="bg-white/60 dark:bg-white/5 text-lentaBlue w-11 h-11 rounded-2xl shadow-sm border border-white/40 dark:border-white/5 flex items-center justify-center shrink-0 tactile-btn hover:bg-white transition-colors" title="Голос"><svg id="micIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg></button>
   </div>
@@ -1114,7 +1119,10 @@ function createTechTruckButton() {
 function buildCitySlider() {
   citySlider.innerHTML = ''; const cities = [...new Set(stores.map(s => s.city))]; const all = ['all', ...cities];
   all.forEach((c, i) => citySlider.appendChild(createTruckButton(c, c === 'all', i))); citySlider.appendChild(createTechTruckButton());
-  const sp = document.createElement('div'); sp.style.width = '60px'; sp.style.flexShrink = '0'; citySlider.appendChild(sp);
+  const sp = document.createElement('div');
+  sp.style.width = '100vw'; // УВЕЛИЧЕННЫЙ ОТСТУП ДЛЯ ЦЕНТРИРОВАНИЯ ТЕХПОМОЩИ
+  sp.style.flexShrink = '0';
+  citySlider.appendChild(sp);
 }
 window.filterByTechSupport = function() {
   isTechMode = true; selectedTechType = 'all'; searchInput.value = ''; clearSearchBtn.classList.add('hidden');
@@ -1297,8 +1305,8 @@ function renderCards() {
 window.toggleFav = function(id, e) { if (e) e.stopPropagation(); playTickSound(); if (favorites.includes(id)) { favorites = favorites.filter(f => f !== id); showToast("Удалено из избранного"); } else { favorites.push(id); showToast("Добавлено в избранное ⭐"); } try { localStorage.setItem('lenta_favs', JSON.stringify(favorites)); } catch(e) {} renderCards(); };
 
 function debounce(fn, delay) { let t; return function(...a) { clearTimeout(t); t = setTimeout(() => fn.apply(this, a), delay); }; }
-function getDropdownItemHTML(item, isTech) {
-  if (isTech) return `<div class="flex items-center gap-2 mb-1"><span class="text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded font-black uppercase shadow-sm">${item.type}</span><span class="font-bold text-xs text-orange-600">${item.city || ''}</span></div><div class="text-[11px] font-bold text-gray-800 dark:text-gray-200">${item.name}</div><div class="text-[10px] text-gray-500">${item.address}</div>`;
+function getDropdownItemHTML(item) {
+  if (item.isTech) return `<div class="flex items-center gap-2 mb-1"><span class="text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded font-black uppercase shadow-sm">${item.type}</span><span class="font-bold text-xs text-orange-600">${item.city || ''}</span></div><div class="text-[11px] font-bold text-gray-800 dark:text-gray-200">${item.name}</div><div class="text-[10px] text-gray-500">${item.address}</div>`;
   let b = "ЛЕНТА", badge = "bg-lentaYellow text-lentaDark";
   if (item.address.includes("ОКЕЙ") || item.tk === "929929") { b = "О'КЕЙ"; badge = "bg-red-600 text-white"; }
   else if (item.address.includes("Молл")) { b = "РЦ МОЛЛ"; badge = "bg-purple-600 text-white"; }
@@ -1333,12 +1341,48 @@ const handleSearchInput = function() {
 
   if (/^\d+$/.test(v) && !isTechMode) { const all = document.querySelector('[data-city="all"]'); if (all && !all.classList.contains('active')) { document.querySelectorAll('.truck-chip').forEach(el => el.classList.remove('active')); all.classList.add('active'); } }
   renderCards(); autocompleteList.innerHTML = ''; if (!v) { autocompleteList.classList.add('hidden'); return; }
-  const words = v.split(/\s+/).filter(w => w.length > 0); let suggestions = [];
-  if (isTechMode) { const allTech = getTechStations(); suggestions = allTech.filter(st => { const full = `${st.type} ${st.name} ${st.address} ${st.desc || ''} ${st.city || ''}`.toLowerCase(); return words.every(w => full.includes(w)); }); }
-  else { suggestions = stores.filter(store => { let brand = "ЛЕНТА"; if (store.address.includes("ОКЕЙ") || store.tk === "929929") brand = "О'КЕЙ"; else if (store.address.includes("Молл")) brand = "РЦ МОЛЛ"; else if (store.address.includes("Монетка") || (store.tk.startsWith("92") && store.tk.length > 3)) brand = "МОНЕТКА"; const clean = store.address.replace(/\b\d{6}\b,?\s*/g, ''); const full = `тк ${store.tk} рц ${store.tk} ${store.city} ${clean} ${brand}`.toLowerCase().replace(/['"`]/g, ''); const m = words.every(w => /^\d+$/.test(w) ? (store.tk === w || new RegExp(`\\b${w}\\b`).test(clean.toLowerCase())) : full.includes(w)); if (selectedCityFilter !== 'all' && store.city !== selectedCityFilter) return false; return m; }); }
+  
+  const words = v.split(/\s+/).filter(w => w.length > 0);
+  const allTech = getTechStations();
+  
+  // УНИВЕРСАЛЬНЫЙ ПОИСК (ТЕХПОМОЩЬ + МАГАЗИНЫ)
+  const techMatches = allTech.filter(st => { const full = `${st.type} ${st.name} ${st.address} ${st.desc || ''} ${st.city || ''}`.toLowerCase(); return words.every(w => full.includes(w)); }).map(st => ({...st, isTech: true}));
+  const storeMatches = stores.filter(store => { let brand = "ЛЕНТА"; if (store.address.includes("ОКЕЙ") || store.tk === "929929") brand = "О'КЕЙ"; else if (store.address.includes("Молл")) brand = "РЦ МОЛЛ"; else if (store.address.includes("Монетка") || (store.tk.startsWith("92") && store.tk.length > 3)) brand = "МОНЕТКА"; const clean = store.address.replace(/\b\d{6}\b,?\s*/g, ''); const full = `тк ${store.tk} рц ${store.tk} ${store.city} ${clean} ${brand}`.toLowerCase().replace(/['"`]/g, ''); return words.every(w => /^\d+$/.test(w) ? (store.tk === w || new RegExp(`\\b${w}\\b`).test(clean.toLowerCase())) : full.includes(w)); }).map(store => ({...store, isTech: false}));
+  
+  const suggestions = [...techMatches, ...storeMatches];
+  
   if (suggestions.length === 0) { autocompleteList.classList.add('hidden'); return; }
   autocompleteList.classList.remove('hidden');
-  suggestions.slice(0, 20).forEach(item => { const div = document.createElement('div'); div.className = 'px-4 py-3 hover:bg-blue-50 dark:hover:bg-slate-700 cursor-pointer border-b border-gray-50 dark:border-slate-700 last:border-none mx-1 my-0.5 text-gray-800 dark:text-gray-200 transition-colors'; div.innerHTML = getDropdownItemHTML(item, isTechMode); div.addEventListener('click', () => { playTickSound(); vibrateShort(); searchInput.value = isTechMode ? item.name : (item.tk !== '-' ? item.tk : item.city); autocompleteList.classList.add('hidden'); searchInput.blur(); renderCards(); }); autocompleteList.appendChild(div); });
+  
+  suggestions.slice(0, 20).forEach(item => { 
+    const div = document.createElement('div'); 
+    div.className = 'px-4 py-3 hover:bg-blue-50 dark:hover:bg-slate-700 cursor-pointer border-b border-gray-50 dark:border-slate-700 last:border-none mx-1 my-0.5 text-gray-800 dark:text-gray-200 transition-colors'; 
+    div.innerHTML = getDropdownItemHTML(item); 
+    div.addEventListener('click', () => { 
+      playTickSound(); vibrateShort(); 
+      if (item.isTech) {
+        isTechMode = true;
+        selectedTechType = 'all';
+        searchInput.value = item.name;
+        document.querySelectorAll('.truck-chip').forEach(el => {
+            if (el.getAttribute('data-city') === 'TECH_SUPPORT') el.classList.add('active');
+            else el.classList.remove('active');
+        });
+      } else {
+        isTechMode = false;
+        selectedCityFilter = 'all';
+        searchInput.value = item.tk !== '-' ? item.tk : item.city;
+        document.querySelectorAll('.truck-chip').forEach(el => {
+            if (el.getAttribute('data-city') === 'all') el.classList.add('active');
+            else el.classList.remove('active');
+        });
+      }
+      autocompleteList.classList.add('hidden'); 
+      searchInput.blur(); 
+      renderCards(); 
+    }); 
+    autocompleteList.appendChild(div); 
+  });
 };
 searchInput.addEventListener('input', debounce(handleSearchInput, 250));
 document.addEventListener('click', (e) => { if (!searchInput.contains(e.target) && !autocompleteList.contains(e.target)) autocompleteList.classList.add('hidden'); });
