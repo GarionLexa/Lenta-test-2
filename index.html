@@ -52,39 +52,21 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .dark body { background-color: #0f1115; color: #e4e4e7; }
 
 /* Premium Glassmorphism */
-.glass-panel { 
-  background: var(--glass-bg); 
-  backdrop-filter: blur(24px); 
-  -webkit-backdrop-filter: blur(24px); 
-  border: 1px solid var(--glass-border); 
-  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1); 
-  transition: all 0.3s ease;
-}
+.glass-panel { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--glass-border); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1); transition: all 0.3s ease; }
 .dark .glass-panel { box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5); }
-
 .glass-header { padding-top: max(1rem, env(safe-area-inset-top)); position: sticky; top: 0; z-index: 50; border-radius: 0 0 32px 32px; transition: all 0.3s ease; overflow: visible !important; }
 @media (max-height: 550px) { .glass-header { position: relative; border-radius: 0; } }
 
-/* Animations */
 @keyframes slideUpFade { 0% { opacity: 0; transform: translateY(20px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
 .animate-reveal { animation: slideUpFade 0.4s cubic-bezier(0.16,1,0.3,1) forwards; }
 .tactile-btn { transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, box-shadow 0.2s ease; }
 .tactile-btn:active { transform: scale(0.94); opacity: 0.9; }
 
-/* Volume Cards */
-.volume-card {
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.05);
-  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
-  border-radius: 20px;
-  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
-  position: relative;
-}
+.volume-card { background: #ffffff; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01); border-radius: 20px; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); position: relative; }
 .volume-card:hover { transform: translateY(-3px); box-shadow: 0 20px 30px -10px rgba(0,0,0,0.1), 0 10px 15px -5px rgba(0,0,0,0.04); }
 .dark .volume-card { background: #1c1c1f; border-color: rgba(255,255,255,0.05); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4); }
 .dark .volume-card:hover { box-shadow: 0 20px 30px -10px rgba(0,0,0,0.6); }
 
-/* Colored borders */
 .border-brand-lenta { border-left: 6px solid #FDCB05; }
 .border-brand-monetka { border-left: 6px solid #f97316; }
 .border-brand-okey { border-left: 6px solid #dc2626; }
@@ -95,7 +77,6 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .border-type-kafe { border-left: 6px solid #f97316; }
 .border-type-avtomoyka { border-left: 6px solid #0ea5e9; }
 
-/* Slider / Scenic */
 .record-spin { animation: recordSpin 4s linear infinite; }
 @keyframes recordSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 .scenic-bg { background-color: #0f1115; overflow: hidden; position: relative; height: 140px; width: 100%; border-radius: 24px; box-shadow: inset 0 4px 20px rgba(0,0,0,0.5); }
@@ -109,7 +90,6 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .parallax-mountains { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='70' viewBox='0 0 160 70'%3E%3Cpath d='M0,70 L40,20 L80,70 Z' fill='%2394a3b8' opacity='0.5'/%3E%3Cpath d='M50,70 L90,10 L130,70 Z' fill='%23cbd5e1' opacity='0.7'/%3E%3C/svg%3E"); background-size: 200px auto; z-index: 6; }
 .parallax-trees { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='50' viewBox='0 0 120 50'%3E%3Cpath d='M20,50 L20,35 L10,35 L25,15 L15,15 L30,-5 L45,15 L35,15 L50,35 L40,35 L40,50 Z' fill='%23064e3b' opacity='0.9'/%3E%3Cpath d='M70,50 L70,30 L60,30 L75,5 L65,5 L80,-15 L95,5 L85,5 L100,30 L90,30 L90,50 Z' fill='%230f766e' opacity='0.8'/%3E%3C/svg%3E"); background-size: 100px auto; z-index: 7; }
 .parallax-road { position: absolute; bottom: 0; left: 0; width: 5000px; height: 18px; z-index: 10; background-color: #475569; background-image: linear-gradient(90deg, transparent 50%, #cbd5e1 50%); background-size: 40px 2px; background-position: top 4px left 0; background-repeat: repeat-x; border-top: 3px solid #64748b; will-change: transform; }
-
 .weather-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; transition: opacity 0.2s ease-out; z-index: 8; }
 .snow-anim { background-image: radial-gradient(circle, white 1.5px, transparent 1.5px), radial-gradient(circle, white 1px, transparent 1px); background-size: 60px 60px, 40px 40px; background-position: 0 0, 20px 20px; animation: weatherFallSnow 3s linear infinite; opacity: 0; }
 .leaves-anim { background-image: radial-gradient(ellipse at center, #ea580c 2px, transparent 3px), radial-gradient(ellipse at center, #dc2626 2px, transparent 3px), radial-gradient(ellipse at center, #eab308 1.5px, transparent 2.5px); background-size: 70px 70px, 90px 90px, 50px 50px; background-position: 0 0, 30px 30px, 15px 15px; animation: weatherFallLeaves 4s linear infinite; opacity: 0; }
@@ -124,7 +104,6 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 @keyframes sirenBlue { 0%, 49% { box-shadow: none; background: #1e3a8a; } 50%, 100% { box-shadow: 0 0 16px 6px rgba(59,130,246,0.95); background: #60a5fa; } }
 @keyframes driveOpposite { 0% { left: 120vw; } 100% { left: -150px; } }
 
-/* Trucks */
 .city-slider { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; overscroll-behavior-x: contain; height: 100%; align-items: flex-end; padding-bottom: 2px; padding-left: 10px; padding-right: 10px; will-change: scroll-position; }
 .city-slider::-webkit-scrollbar { display: none; }
 .truck-chip { outline: none; opacity: 0.8; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); margin-right: 20px; filter: saturate(0.8); }
@@ -139,53 +118,21 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .marker-light { position: absolute; top: 2px; width: 4px; height: 2px; background-color: #fde047; box-shadow: 0 0 8px 2px rgba(253,224,71,0.9); opacity: var(--truck-light-opacity); transition: opacity 0.3s; border-radius: 1px; }
 .dark .city-name-plaque { background-color: #27272a !important; color: #f4f4f5 !important; border-color: #3f3f46 !important; }
 
-/* Story panel */
 #visitContainer { transition: all 0.6s cubic-bezier(0.4,0,0.2,1); overflow: hidden; }
 .story-mode #visitContainer { width: 0 !important; min-width: 0 !important; opacity: 0; padding: 0; margin: 0; transform: scale(0.8); pointer-events: none; }
 .story-mode #centerStage { width: 100%; flex: 1; }
 #girlsGroup, #mechGroup { transition: transform 0.8s cubic-bezier(0.4,0,0.2,1); }
 .story-mode #girlsGroup { transform: translateX(-25px); }
 .story-mode #mechGroup { transform: translateX(25px); }
-.arm-typing { animation: typingArms 0.25s infinite alternate; }
-.arm-typing-delay { animation: typingArms 0.3s infinite alternate; animation-delay: 0.1s; }
-@keyframes typingArms { 0% { transform: rotate(0deg); } 100% { transform: rotate(10deg); } }
-.wrench-arm { animation: wrenchMotion 0.6s infinite alternate ease-in-out; }
-@keyframes wrenchMotion { 0% { transform: rotate(-15deg); } 100% { transform: rotate(20deg); } }
-.laughing { animation: bodyLaugh 0.3s infinite alternate; }
-@keyframes bodyLaugh { 0% { transform: translateY(0) scaleY(1); } 100% { transform: translateY(-2px) scaleY(1.05); } }
-.sweat-drop { opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: translateY(-5px); }
-.show-sweat { opacity: 1; transform: translateY(0); animation: dripDown 1.5s forwards; }
-@keyframes dripDown { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
 
-/* ПУЗЫРИ (исправлено для ПК) */
-.story-bubble { 
-  position: absolute; 
-  background: white; 
-  border: 1px solid #e4e4e7; 
-  color: #18181b; 
-  font-size: 11px; 
-  font-weight: 700; 
-  padding: 8px 12px; 
-  border-radius: 16px; 
-  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); 
-  opacity: 0; 
-  pointer-events: none; 
-  z-index: 9999; 
-  max-width: 200px; 
-  text-align: center; 
-  line-height: 1.3; 
-  transition: all 0.3s cubic-bezier(0.4,0,0.2,1); 
-  word-wrap: break-word;
-}
+.story-bubble { position: absolute; background: white; border: 1px solid #e4e4e7; color: #18181b; font-size: 11px; font-weight: 700; padding: 8px 12px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); opacity: 0; pointer-events: none; z-index: 9999; max-width: 200px; text-align: center; line-height: 1.3; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); word-wrap: break-word; }
 .dark .story-bubble { background: #27272a; border-color: #3f3f46; color: #f4f4f5; }
-
 .story-bubble.actor-sveta { bottom: 100%; left: 0; margin-bottom: 10px; transform: scale(0.9) translateY(10px); }
 .story-bubble.actor-sveta.active { transform: scale(1) translateY(0); opacity: 1; }
 .story-bubble.actor-marina { bottom: 100%; right: 0; margin-bottom: 10px; transform: scale(0.9) translateY(10px); }
 .story-bubble.actor-marina.active { transform: scale(1) translateY(0); opacity: 1; }
 .story-bubble.actor-mech { bottom: 100%; left: 50%; margin-left: -60px; margin-bottom: 10px; transform: scale(0.9) translateY(10px); }
 .story-bubble.actor-mech.active { transform: scale(1) translateY(0); opacity: 1; }
-
 .story-bubble::after { content: ''; position: absolute; top: 100%; border-width: 5px; border-style: solid; border-color: white transparent transparent transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05)); }
 .dark .story-bubble::after { border-color: #27272a transparent transparent transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); }
 .story-bubble.actor-sveta::after { left: 40px; }
@@ -195,7 +142,6 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Text size classes */
 html.large-text { font-size: 18px; }
 html.large-text .text-\[8px\]  { font-size: 11px !important; }
 html.large-text .text-\[9px\]  { font-size: 12px !important; }
@@ -215,7 +161,6 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 #updateBanner { animation: slideDownBanner 0.4s cubic-bezier(0.16,1,0.3,1); }
 @keyframes slideDownBanner { 0% { transform: translate(-50%,-120%); } 100% { transform: translate(-50%,0); } }
 
-/* КАЛЕНДАРЬ */
 #calendarViewport { position: relative; overflow: hidden; touch-action: pan-y; } 
 #calendarGrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; height: auto; }
 
@@ -232,8 +177,6 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
 
 <!-- Модальные окна -->
-
-<!-- Навигация -->
 <div id="navModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4 transition-opacity">
   <div class="rounded-[32px] p-8 max-w-sm w-full text-center relative animate-reveal glass-panel shadow-2xl">
     <button onclick="closeNavModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 hover:bg-gray-200/50 dark:hover:bg-white/10 p-2.5 rounded-full tactile-btn transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
@@ -247,207 +190,31 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   </div>
 </div>
 
-<!-- Контакты (с новыми анимациями) -->
 <div id="contactsModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
   <div class="rounded-[32px] p-6 max-w-sm w-full text-center relative animate-reveal glass-panel shadow-2xl max-h-[90vh] overflow-y-auto hide-scrollbar">
     <button onclick="closeContactsModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
     <h3 class="text-xl font-display font-extrabold text-lentaDark dark:text-white mb-1 uppercase mt-2">Контакты</h3>
     <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 font-medium">Кому звоним?</p>
     <div class="space-y-3">
-      <!-- Сергей - Лучник -->
-      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-400 text-xl contact-icon-sergey">🏹</div>
-          <div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Сергей</div><div class="text-[9px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div>
-        </div>
-        <div class="w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div>
-      </a>
-      <!-- Механик - Слушает музыку -->
-      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-xl contact-icon-mech">🎧</div>
-          <div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Механик</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div>
-        </div>
-        <div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div>
-      </a>
-      <!-- Светлана - Сушит голову -->
-      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue dark:text-blue-400 text-xl contact-icon-sveta">💨</div>
-          <div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Светлана</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div>
-        </div>
-        <div class="w-10 h-10 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-lg">📞</div>
-      </a>
-      <!-- Марина - Пьет кофе -->
-      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-600 dark:text-purple-400 text-xl contact-icon-marina">☕</div>
-          <div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Марина</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div>
-        </div>
-        <div class="w-10 h-10 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div>
-      </a>
+      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-400 text-xl contact-icon-sergey">🏹</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Сергей</div><div class="text-[9px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div></div><div class="w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
+      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-xl contact-icon-mech">🎧</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Механик</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div></div><div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
+      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue dark:text-blue-400 text-xl contact-icon-sveta">💨</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Светлана</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-10 h-10 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
+      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-4 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-600 dark:text-purple-400 text-xl contact-icon-marina">☕</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Марина</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-10 h-10 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
     </div>
   </div>
 </div>
 
-<!-- Остальные модалки (без изменений) -->
-<div id="monetkaModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-  <div class="rounded-[32px] p-6 max-w-md w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh]">
-    <button onclick="closeMonetkaModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
-    <h3 class="text-lg font-display font-extrabold text-lentaDark dark:text-white mb-2 uppercase pr-8 mt-1">Инструкция РЦ Монетка</h3>
-    <div class="overflow-y-auto pr-2 pb-2 space-y-4 text-sm">
-      <div class="bg-blue-500/10 dark:bg-blue-400/10 border border-blue-500/20 rounded-2xl p-4"><div class="font-bold text-blue-700 dark:text-blue-300 mb-1 flex items-center gap-2"><span>❄️</span> ВАЖНО: ЗАМОРОЗКА</div><p class="text-xs text-blue-800/80 dark:text-blue-200/80 leading-relaxed">Доставка заморозки — <b class="uppercase">приоритет</b>. Чётко доводите информацию о заморозке сотрудникам Монетки!</p></div>
-      <div class="bg-emerald-500/10 dark:bg-emerald-400/10 border border-emerald-500/20 rounded-2xl p-4"><div class="font-bold text-emerald-700 dark:text-emerald-300 mb-1 flex items-center gap-2"><span>⚡</span> ЛАЙФХАК</div><p class="text-xs text-emerald-800/80 dark:text-emerald-200/80 leading-relaxed">Можно <b>зайти на склад</b> и обозначить присутствие <b>Старшему смены</b>, чтобы не ждать звонка!</p></div>
-      <div class="bg-purple-500/10 dark:bg-purple-400/10 border border-purple-500/20 rounded-2xl p-4">
-        <div class="font-bold text-purple-700 dark:text-purple-300 mb-2 flex items-center gap-2"><span>📞</span> ТЕЛЕФОНЫ РЦ ТЭЦ (ЕКБ)</div>
-        <div class="flex flex-wrap items-center gap-2 mb-3"><a href="tel:+73432930001" class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold tactile-btn transition-colors shadow-sm">+7 (343) 293-00-01</a><span class="text-[11px] text-purple-600 dark:text-purple-400 font-medium">в тоновом режиме жмём <b class="bg-purple-200 dark:bg-purple-800 px-1.5 py-0.5 rounded text-purple-800 dark:text-purple-200">1</b></span></div>
-        <div class="grid grid-cols-2 gap-2 text-xs"><div class="bg-white/50 dark:bg-black/20 border border-purple-200/50 dark:border-purple-700/50 p-2 rounded-xl text-center shadow-sm"><div class="text-gray-500 text-[9px] uppercase font-bold mb-0.5">Старый склад</div><div class="font-black text-purple-700 dark:text-purple-300 text-sm">доб. 22204</div></div><div class="bg-white/50 dark:bg-black/20 border border-purple-200/50 dark:border-purple-700/50 p-2 rounded-xl text-center shadow-sm"><div class="text-gray-500 text-[9px] uppercase font-bold mb-0.5">Новый склад</div><div class="font-black text-purple-700 dark:text-purple-300 text-sm">доб. 22537</div></div></div>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- Остальные модалки идут без изменений, скопируйте их из предыдущего ответа -->
+<div id="monetkaModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4"><div class="rounded-[32px] p-6 max-w-md w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh]"><button onclick="closeMonetkaModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button><h3 class="text-lg font-display font-extrabold text-lentaDark dark:text-white mb-2 uppercase pr-8 mt-1">Инструкция РЦ Монетка</h3><div class="overflow-y-auto pr-2 pb-2 space-y-4 text-sm"><div class="bg-blue-500/10 dark:bg-blue-400/10 border border-blue-500/20 rounded-2xl p-4"><div class="font-bold text-blue-700 dark:text-blue-300 mb-1 flex items-center gap-2"><span>❄️</span> ВАЖНО: ЗАМОРОЗКА</div><p class="text-xs text-blue-800/80 dark:text-blue-200/80 leading-relaxed">Доставка заморозки — <b class="uppercase">приоритет</b>. Чётко доводите информацию о заморозке сотрудникам Монетки!</p></div><div class="bg-emerald-500/10 dark:bg-emerald-400/10 border border-emerald-500/20 rounded-2xl p-4"><div class="font-bold text-emerald-700 dark:text-emerald-300 mb-1 flex items-center gap-2"><span>⚡</span> ЛАЙФХАК</div><p class="text-xs text-emerald-800/80 dark:text-emerald-200/80 leading-relaxed">Можно <b>зайти на склад</b> и обозначить присутствие <b>Старшему смены</b>, чтобы не ждать звонка!</p></div><div class="bg-purple-500/10 dark:bg-purple-400/10 border border-purple-500/20 rounded-2xl p-4"><div class="font-bold text-purple-700 dark:text-purple-300 mb-2 flex items-center gap-2"><span>📞</span> ТЕЛЕФОНЫ РЦ ТЭЦ (ЕКБ)</div><div class="flex flex-wrap items-center gap-2 mb-3"><a href="tel:+73432930001" class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold tactile-btn transition-colors shadow-sm">+7 (343) 293-00-01</a><span class="text-[11px] text-purple-600 dark:text-purple-400 font-medium">в тоновом режиме жмём <b class="bg-purple-200 dark:bg-purple-800 px-1.5 py-0.5 rounded text-purple-800 dark:text-purple-200">1</b></span></div><div class="grid grid-cols-2 gap-2 text-xs"><div class="bg-white/50 dark:bg-black/20 border border-purple-200/50 dark:border-purple-700/50 p-2 rounded-xl text-center shadow-sm"><div class="text-gray-500 text-[9px] uppercase font-bold mb-0.5">Старый склад</div><div class="font-black text-purple-700 dark:text-purple-300 text-sm">доб. 22204</div></div><div class="bg-white/50 dark:bg-black/20 border border-purple-200/50 dark:border-purple-700/50 p-2 rounded-xl text-center shadow-sm"><div class="text-gray-500 text-[9px] uppercase font-bold mb-0.5">Новый склад</div><div class="font-black text-purple-700 dark:text-purple-300 text-sm">доб. 22537</div></div></div></div></div></div></div>
 
-<div id="mechanicModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-  <div class="rounded-[32px] p-6 max-w-md w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh]">
-    <button onclick="closeMechanicModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
-    <h3 class="text-lg font-display font-extrabold text-lentaDark dark:text-white mb-2 uppercase pr-8 mt-1">Инструктаж от механика</h3>
-    <div class="overflow-y-auto pr-2 pb-2 space-y-4 text-sm">
-      <div class="bg-amber-500/10 dark:bg-amber-400/10 border border-amber-500/20 rounded-2xl p-4"><div class="font-bold text-amber-700 dark:text-amber-300 mb-2 flex items-center gap-2"><span>⚠️</span> Режим и скорость</div><ul class="text-xs text-amber-800/80 dark:text-amber-200/80 leading-relaxed list-disc pl-4 space-y-1"><li><b>Скорость 80 км/час!</b> Учитываем погоду.</li><li>Соблюдаем РТО.</li><li>Не забываем ставить карту СКЗИ.</li></ul></div>
-      <div class="bg-blue-500/10 dark:bg-blue-400/10 border border-blue-500/20 rounded-2xl p-4"><div class="font-bold text-blue-700 dark:text-blue-300 mb-2 flex items-center gap-2"><span>📄</span> Документы</div><ul class="text-xs text-blue-800/80 dark:text-blue-200/80 leading-relaxed list-disc pl-4 space-y-1"><li>Смотрим документы — куда ехать.</li><li><b>Путёвки закрываем после каждого рейса</b>.</li><li>Не сидим в машине с путёвками!</li><li>По прибытию на РЦ — звоним механику.</li></ul></div>
-      <div class="bg-red-500/10 dark:bg-red-400/10 border border-red-500/20 rounded-2xl p-4"><div class="font-bold text-red-700 dark:text-red-300 mb-2 flex items-center gap-2"><span>🚭</span> Порядок и ДТП</div><ul class="text-xs text-red-800/80 dark:text-red-200/80 leading-relaxed list-disc pl-4 space-y-1"><li><b>В машинах не курим!</b></li><li>Предельно аккуратно в манёврах.</li><li><b>ДТП или повредили</b> — сразу механику!</li><li>После рейса — звоним, сдаём ТС.</li></ul></div>
-    </div>
-  </div>
-</div>
+<div id="mechanicModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4"><div class="rounded-[32px] p-6 max-w-md w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh]"><button onclick="closeMechanicModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button><h3 class="text-lg font-display font-extrabold text-lentaDark dark:text-white mb-2 uppercase pr-8 mt-1">Инструктаж от механика</h3><div class="overflow-y-auto pr-2 pb-2 space-y-4 text-sm"><div class="bg-amber-500/10 dark:bg-amber-400/10 border border-amber-500/20 rounded-2xl p-4"><div class="font-bold text-amber-700 dark:text-amber-300 mb-2 flex items-center gap-2"><span>⚠️</span> Режим и скорость</div><ul class="text-xs text-amber-800/80 dark:text-amber-200/80 leading-relaxed list-disc pl-4 space-y-1"><li><b>Скорость 80 км/час!</b> Учитываем погоду.</li><li>Соблюдаем РТО.</li><li>Не забываем ставить карту СКЗИ.</li></ul></div><div class="bg-blue-500/10 dark:bg-blue-400/10 border border-blue-500/20 rounded-2xl p-4"><div class="font-bold text-blue-700 dark:text-blue-300 mb-2 flex items-center gap-2"><span>📄</span> Документы</div><ul class="text-xs text-blue-800/80 dark:text-blue-200/80 leading-relaxed list-disc pl-4 space-y-1"><li>Смотрим документы — куда ехать.</li><li><b>Путёвки закрываем после каждого рейса</b>.</li><li>Не сидим в машине с путёвками!</li><li>По прибытию на РЦ — звоним механику.</li></ul></div><div class="bg-red-500/10 dark:bg-red-400/10 border border-red-500/20 rounded-2xl p-4"><div class="font-bold text-red-700 dark:text-red-300 mb-2 flex items-center gap-2"><span>🚭</span> Порядок и ДТП</div><ul class="text-xs text-red-800/80 dark:text-red-200/80 leading-relaxed list-disc pl-4 space-y-1"><li><b>В машинах не курим!</b></li><li>Предельно аккуратно в манёврах.</li><li><b>ДТП или повредили</b> — сразу механику!</li><li>После рейса — звоним, сдаём ТС.</li></ul></div></div></div></div>
 
-<div id="calendarModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-5">
-  <div class="rounded-[32px] p-5 sm:p-7 w-full max-w-sm relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh]">
-    <button onclick="closeCalendarModal();" class="absolute top-3 right-3 sm:top-5 sm:right-5 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2 sm:p-2.5 rounded-full tactile-btn z-10"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
-    <h3 class="text-base sm:text-lg font-display font-extrabold text-purple-600 dark:text-purple-400 mb-4 uppercase pr-8 mt-1 flex items-center gap-2"><span>📅</span> Мои смены</h3>
-    <div class="flex justify-between items-center mb-4 bg-white/50 dark:bg-black/20 p-1.5 rounded-2xl border border-white/20 dark:border-white/5 shadow-sm">
-      <button onclick="changeMonth(-1)" class="w-8 h-8 flex items-center justify-center bg-white dark:bg-zinc-800 rounded-full shadow-sm text-gray-600 dark:text-gray-300 tactile-btn hover:bg-gray-50 dark:hover:bg-zinc-700">◀</button>
-      <div id="calendarMonthYear" class="font-display font-bold text-gray-800 dark:text-white capitalize text-xs sm:text-sm truncate px-2">Октябрь 2026</div>
-      <button onclick="changeMonth(1)" class="w-8 h-8 flex items-center justify-center bg-white dark:bg-zinc-800 rounded-full shadow-sm text-gray-600 dark:text-gray-300 tactile-btn hover:bg-gray-50 dark:hover:bg-zinc-700">▶</button>
-    </div>
-    <div class="grid grid-cols-7 gap-1 mb-1 text-center text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-wider"><div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div class="text-red-400">Сб</div><div class="text-red-400">Вс</div></div>
-    <div id="calendarViewport" class="mb-4"><div id="calendarGrid"></div></div>
-    <div class="flex-1 bg-white/40 dark:bg-black/20 rounded-2xl border border-white/20 dark:border-white/5 p-3 flex flex-col min-h-[120px] overflow-hidden mb-4 shadow-inner">
-      <div id="selectedDayTitle" class="text-[11px] sm:text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 border-b border-gray-200/50 dark:border-white/5 pb-2 flex justify-between"><span>Выберите день</span><span id="selectedDayCount" class="text-purple-600 dark:text-purple-400"></span></div>
-      <div id="selectedDayShifts" class="flex-1 overflow-y-auto hide-scrollbar space-y-2 pr-1"><div class="text-center text-gray-400 text-xs mt-4 font-medium">В этот день смен нет</div></div>
-    </div>
-    <div class="grid grid-cols-3 gap-2 shrink-0">
-      <button onclick="openStorePicker()" class="flex flex-col items-center justify-center py-2.5 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"><span class="text-base mb-0.5">➕</span>ТК</button>
-      <button onclick="openTechPicker()" class="flex flex-col items-center justify-center py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"><span class="text-base mb-0.5">🔧</span>Сервис</button>
-      <button onclick="openCustomTaskModal()" class="flex flex-col items-center justify-center py-2.5 bg-teal-500 hover:bg-teal-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"><span class="text-base mb-0.5">➕</span>Точка</button>
-      <button onclick="exportMonthReport()" class="flex flex-col items-center justify-center py-2.5 bg-purple-500 hover:bg-purple-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"><span class="text-base mb-0.5">📥</span>Отчёт</button>
-      <button onclick="exportCalendarBackup()" class="flex flex-col items-center justify-center py-2.5 bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 text-gray-700 dark:text-gray-200 rounded-xl text-[10px] font-bold tactile-btn transition-colors"><span class="text-base mb-0.5">💾</span>Бэкап</button>
-      <button onclick="importCalendarBackup()" class="flex flex-col items-center justify-center py-2.5 bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 text-gray-700 dark:text-gray-200 rounded-xl text-[10px] font-bold tactile-btn transition-colors"><span class="text-base mb-0.5">📂</span>Загрузить</button>
-    </div>
-  </div>
-</div>
+<div id="calendarModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-5"><div class="rounded-[32px] p-5 sm:p-7 w-full max-w-sm relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh]"><button onclick="closeCalendarModal();" class="absolute top-3 right-3 sm:top-5 sm:right-5 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2 sm:p-2.5 rounded-full tactile-btn z-10"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button><h3 class="text-base sm:text-lg font-display font-extrabold text-purple-600 dark:text-purple-400 mb-4 uppercase pr-8 mt-1 flex items-center gap-2"><span>📅</span> Мои смены</h3><div class="flex justify-between items-center mb-4 bg-white/50 dark:bg-black/20 p-1.5 rounded-2xl border border-white/20 dark:border-white/5 shadow-sm"><button onclick="changeMonth(-1)" class="w-8 h-8 flex items-center justify-center bg-white dark:bg-zinc-800 rounded-full shadow-sm text-gray-600 dark:text-gray-300 tactile-btn hover:bg-gray-50 dark:hover:bg-zinc-700">◀</button><div id="calendarMonthYear" class="font-display font-bold text-gray-800 dark:text-white capitalize text-xs sm:text-sm truncate px-2">Октябрь 2026</div><button onclick="changeMonth(1)" class="w-8 h-8 flex items-center justify-center bg-white dark:bg-zinc-800 rounded-full shadow-sm text-gray-600 dark:text-gray-300 tactile-btn hover:bg-gray-50 dark:hover:bg-zinc-700">▶</button></div><div class="grid grid-cols-7 gap-1 mb-1 text-center text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-wider"><div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div class="text-red-400">Сб</div><div class="text-red-400">Вс</div></div><div id="calendarViewport" class="mb-4"><div id="calendarGrid"></div></div><div class="flex-1 bg-white/40 dark:bg-black/20 rounded-2xl border border-white/20 dark:border-white/5 p-3 flex flex-col min-h-[120px] overflow-hidden mb-4 shadow-inner"><div id="selectedDayTitle" class="text-[11px] sm:text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 border-b border-gray-200/50 dark:border-white/5 pb-2 flex justify-between"><span>Выберите день</span><span id="selectedDayCount" class="text-purple-600 dark:text-purple-400"></span></div><div id="selectedDayShifts" class="flex-1 overflow-y-auto hide-scrollbar space-y-2 pr-1"><div class="text-center text-gray-400 text-xs mt-4 font-medium">В этот день смен нет</div></div></div><div class="grid grid-cols-3 gap-2 shrink-0"><button onclick="openStorePicker()" class="flex flex-col items-center justify-center py-2.5 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"><span class="text-base mb-0.5">➕</span>ТК</button><button onclick="openTechPicker()" class="flex flex-col items-center justify-center py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"><span class="text-base mb-0.5">🔧</span>Сервис</button><button onclick="openCustomTaskModal()" class="flex flex-col items-center justify-center py-2.5 bg-teal-500 hover:bg-teal-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"><span class="text-base mb-0.5">➕</span>Точка</button><button onclick="exportMonthReport()" class="flex flex-col items-center justify-center py-2.5 bg-purple-500 hover:bg-purple-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"><span class="text-base mb-0.5">📥</span>Отчёт</button><button onclick="exportCalendarBackup()" class="flex flex-col items-center justify-center py-2.5 bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 text-gray-700 dark:text-gray-200 rounded-xl text-[10px] font-bold tactile-btn transition-colors"><span class="text-base mb-0.5">💾</span>Бэкап</button><button onclick="importCalendarBackup()" class="flex flex-col items-center justify-center py-2.5 bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 text-gray-700 dark:text-gray-200 rounded-xl text-[10px] font-bold tactile-btn transition-colors"><span class="text-base mb-0.5">📂</span>Загрузить</button></div></div></div>
 
-<div id="storePickerModal" class="fixed inset-0 z-[110] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-end justify-center sm:items-center p-0 sm:p-4">
-  <div class="rounded-t-[32px] sm:rounded-[32px] w-full max-w-md relative animate-slide-up sm:animate-reveal glass-panel shadow-2xl flex flex-col h-[80vh] sm:h-auto sm:max-h-[90vh]">
-    <div class="p-4 border-b border-white/20 dark:border-white/5 flex justify-between items-center bg-white/40 dark:bg-black/40 rounded-t-[32px]">
-      <h3 class="font-display font-extrabold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider text-sm">Добавить магазин</h3>
-      <button onclick="closeStorePicker()" class="p-2 bg-white/50 dark:bg-white/10 text-gray-500 hover:text-gray-700 dark:text-gray-300 rounded-full tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
-    </div>
-    <div class="p-3 bg-white/20 dark:bg-black/20"><input type="text" id="pickerSearch" oninput="renderPickerStores()" placeholder="Поиск по ТК, адресу..." class="w-full bg-white/80 dark:bg-zinc-800/80 rounded-xl px-4 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-inner border border-transparent transition-all"></div>
-    <div id="pickerStoreList" class="flex-1 overflow-y-auto p-3 pt-0 space-y-2 hide-scrollbar rounded-b-[32px]"></div>
-  </div>
-</div>
-
-<div id="techPickerModal" class="fixed inset-0 z-[110] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-end justify-center sm:items-center p-0 sm:p-4">
-  <div class="rounded-t-[32px] sm:rounded-[32px] w-full max-w-md relative animate-slide-up sm:animate-reveal glass-panel shadow-2xl flex flex-col h-[80vh] sm:h-auto sm:max-h-[90vh]">
-    <div class="p-4 border-b border-white/20 dark:border-white/5 flex justify-between items-center bg-white/40 dark:bg-black/40 rounded-t-[32px]">
-      <h3 class="font-display font-extrabold text-orange-600 dark:text-orange-400 uppercase tracking-wider text-sm">Добавить сервис</h3>
-      <button onclick="closeTechPicker()" class="p-2 bg-white/50 dark:bg-white/10 text-gray-500 hover:text-gray-700 dark:text-gray-300 rounded-full tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
-    </div>
-    <div class="p-3 bg-white/20 dark:bg-black/20"><input type="text" id="techPickerSearch" oninput="renderTechPicker()" placeholder="Поиск по названию, городу..." class="w-full bg-white/80 dark:bg-zinc-800/80 rounded-xl px-4 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500/50 shadow-inner border border-transparent transition-all"></div>
-    <div id="techPickerList" class="flex-1 overflow-y-auto p-3 pt-0 space-y-2 hide-scrollbar rounded-b-[32px]"></div>
-  </div>
-</div>
-
-<div id="timePickerModal" class="fixed inset-0 z-[120] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-  <div class="rounded-[24px] p-6 max-w-xs w-full relative animate-reveal glass-panel shadow-2xl flex flex-col text-center">
-    <h3 class="text-base font-display font-extrabold text-gray-800 dark:text-white mb-4">Укажите время</h3>
-    <input type="time" id="modalTimeInput" value="12:00" class="w-full bg-white/50 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-4 py-3 text-lg font-bold text-center text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/50 mb-6 shadow-inner">
-    <div class="flex gap-2">
-      <button onclick="closeTimePicker()" class="flex-1 py-3 bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300 rounded-xl text-sm font-bold tactile-btn transition-colors">Отмена</button>
-      <button onclick="confirmTimePicker()" class="flex-1 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl text-sm font-bold tactile-btn shadow-lg shadow-blue-500/30 transition-all">OK</button>
-    </div>
-  </div>
-</div>
-
-<div id="customTaskModal" class="fixed inset-0 z-[110] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-  <div class="rounded-[28px] p-5 max-w-sm w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh] overflow-y-auto hide-scrollbar">
-    <button onclick="closeCustomTaskModal()" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2 rounded-full tactile-btn z-10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
-    <h3 class="text-base font-display font-extrabold text-teal-600 dark:text-teal-400 mb-4 uppercase pr-8 mt-1">Добавить точку</h3>
-    <p class="text-xs text-gray-500 font-bold mb-2 uppercase tracking-wide">Выберите тип:</p>
-    <div class="grid grid-cols-2 gap-2 mb-5">
-      <button onclick="setTaskPreset('🛞 Шиномонтаж', this)" class="task-preset-btn flex items-center gap-2 p-2.5 bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200 hover:bg-white/80 transition-colors"><span class="text-lg">🛞</span> Шиномонтаж</button>
-      <button onclick="setTaskPreset('🚿 Автомойка', this)" class="task-preset-btn flex items-center gap-2 p-2.5 bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200 hover:bg-white/80 transition-colors"><span class="text-lg">🚿</span> Автомойка</button>
-      <button onclick="setTaskPreset('📦 Оборотная тара', this)" class="task-preset-btn flex items-center gap-2 p-2.5 bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200 hover:bg-white/80 transition-colors"><span class="text-lg">📦</span> Оборотная тара</button>
-      <button onclick="setTaskPreset('📍 Доп. точка', this)" class="task-preset-btn flex items-center gap-2 p-2.5 bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200 hover:bg-white/80 transition-colors"><span class="text-lg">📍</span> Доп. точка</button>
-    </div>
-    <p class="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wide">Название:</p>
-    <input type="text" id="customTaskName" placeholder="Название..." class="w-full bg-white/60 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500/50 mb-4 shadow-sm">
-    <div id="customTaskDropdownContainer" class="hidden mb-4">
-      <p class="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wide">Или выберите из базы:</p>
-      <select id="customTaskDropdown" onchange="fillTaskFromDropdown()" class="w-full bg-white/60 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500/50 appearance-none shadow-sm"><option value="">-- Выберите адрес --</option></select>
-    </div>
-    <p class="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wide">Куда заезжали / Описание:</p>
-    <input type="text" id="customTaskDesc" placeholder="Например: ул. Ленина 5..." class="w-full bg-white/60 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500/50 mb-4 shadow-sm">
-    <p class="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wide">Время:</p>
-    <input type="time" id="customTaskTime" value="12:00" class="w-full bg-white/60 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500/50 mb-6 shadow-sm">
-    <button onclick="saveCustomTask()" class="w-full py-3 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-lg shadow-teal-500/30 shrink-0 transition-all">Сохранить точку</button>
-  </div>
-</div>
-
-<div id="addTechModal" class="fixed inset-0 z-[120] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-  <div class="rounded-[28px] p-5 max-w-sm w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh] overflow-y-auto hide-scrollbar">
-    <button onclick="closeAddTechModal()" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2 rounded-full tactile-btn z-10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
-    <h3 class="text-base font-display font-extrabold text-emerald-600 dark:text-emerald-400 mb-4 uppercase pr-8 mt-1">Добавить свою точку</h3>
-    <p class="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wide">Тип:</p>
-    <select id="newTechType" class="w-full bg-white/60 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500/50 mb-4 appearance-none shadow-sm"><option value="ШИНОМОНТАЖ">🛞 Шиномонтаж</option><option value="СТОЯНКА">🅿️ Стоянка</option><option value="АВТОМОЙКА">🚿 Автомойка</option><option value="КАФЕ">☕ Кафе</option><option value="СЕРВИС">🔧 Сервис / Ремонт</option></select>
-    <p class="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wide">Название:</p>
-    <input type="text" id="newTechName" placeholder="Например: Шиномонтаж у дяди Васи" class="w-full bg-white/60 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500/50 mb-4 shadow-sm">
-    <p class="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wide">Адрес (город, улица, дом):</p>
-    <input type="text" id="newTechAddress" placeholder="Например: Тюмень, ул. Ленина, 10" class="w-full bg-white/60 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500/50 mb-4 shadow-sm">
-    <p class="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wide">Город (для фильтра):</p>
-    <input type="text" id="newTechCity" placeholder="Например: Тюмень" class="w-full bg-white/60 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500/50 mb-4 shadow-sm">
-    <p class="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wide">Описание (необязательно):</p>
-    <input type="text" id="newTechDesc" placeholder="Например: Круглосуточно, есть эстакада" class="w-full bg-white/60 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500/50 mb-4 shadow-sm">
-    <p class="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wide">Телефон (необязательно):</p>
-    <input type="tel" id="newTechPhone" placeholder="+7..." class="w-full bg-white/60 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500/50 mb-4 shadow-sm">
-    <div class="bg-blue-500/10 dark:bg-blue-400/10 p-3.5 rounded-xl border border-blue-500/20 mb-5">
-      <p class="text-[11px] text-blue-700 dark:text-blue-300 font-bold mb-1 uppercase tracking-wide">Координаты (необязательно):</p>
-      <p class="text-[10px] text-blue-600/70 dark:text-blue-400/70 leading-tight mb-2 font-medium">Скопируйте из Яндекс.Карт.</p>
-      <input type="text" id="newTechCoords" placeholder="57.152, 65.541" class="w-full bg-white/80 dark:bg-black/40 border border-white/30 dark:border-white/10 rounded-lg px-3 py-2 text-xs text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/50 shadow-inner">
-    </div>
-    <button onclick="saveCustomTech()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white rounded-xl text-sm font-bold tactile-btn shadow-lg shadow-emerald-500/30 shrink-0 transition-all">Сохранить точку</button>
-  </div>
-</div>
-
-<div id="importConfirmModal" class="fixed inset-0 z-[110] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-  <div class="rounded-[28px] p-6 max-w-sm w-full relative animate-reveal glass-panel shadow-2xl text-center">
-    <h3 class="text-lg font-display font-extrabold text-blue-600 dark:text-blue-400 mb-2">Загрузка данных</h3>
-    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 font-medium">Файл прочитан. Как поступить?</p>
-    <div class="flex flex-col gap-3">
-      <button onclick="confirmImport(true)" class="w-full py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-md">Объединить</button>
-      <button onclick="confirmImport(false)" class="w-full py-3 bg-gradient-to-r from-red-500 to-rose-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-md">Заменить</button>
-      <button onclick="document.getElementById('importConfirmModal').classList.add('hidden');" class="w-full py-2 bg-white/50 dark:bg-white/5 text-gray-600 dark:text-gray-300 rounded-xl text-sm font-bold tactile-btn transition-colors">Отмена</button>
-    </div>
-  </div>
-</div>
-
-<div id="updateBanner" class="hidden fixed top-4 left-1/2 -translate-x-1/2 z-[300] bg-indigo-600 text-white px-6 py-3.5 rounded-2xl shadow-2xl shadow-indigo-500/40 max-w-sm flex items-center gap-4 animate-reveal border border-white/10 backdrop-blur-md">
-  <div class="flex-1 text-xs font-bold leading-tight" id="updateBannerText">Доступно обновление</div>
-  <button onclick="applyUpdate()" class="bg-white text-indigo-600 px-4 py-1.5 rounded-xl text-xs font-bold tactile-btn shadow-sm hover:bg-gray-50">Обновить</button>
-</div>
+<!-- ОСТАЛЬНЫЕ МОДАЛКИ (storePicker, techPicker, timePicker, customTask, addTech, importConfirm, updateBanner) скопируйте без изменений из предыдущего кода -->
 
 <header class="glass-header glass-panel border-t-0 border-l-0 border-r-0">
 <div class="max-w-[1600px] mx-auto px-4 sm:px-6 relative z-10 pb-4 pt-2 flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-6">
-  
   <div class="flex items-center justify-between w-full xl:w-auto xl:contents">
       <div class="flex items-center gap-3 shrink-0">
         <div onclick="handleLogoTap()" class="w-11 h-11 md:w-12 md:h-12 rounded-full bg-white shadow-lg flex items-center justify-center shrink-0 border border-white/50 overflow-hidden relative cursor-pointer tactile-btn z-50 group" title="1 тап: плей/пауза. 2 тапа: сброс">
@@ -458,7 +225,6 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
           <div class="text-[11px] md:text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5 w-full">Мониторинг доставок</div>
         </div>
       </div>
-      
       <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0 xl:order-last">
         <button id="installPwaBtn" onclick="installPwa()" class="hidden bg-emerald-500 text-white w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-lg flex items-center justify-center tactile-btn shrink-0 hover:bg-emerald-600" title="Установить"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></button>
         <button id="textSizeBtn" onclick="toggleTextSize()" class="bg-white/50 dark:bg-white/5 text-sky-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-white/20 dark:border-white/5 flex items-center justify-center tactile-btn shrink-0 font-black text-sm hover:bg-white/80 transition-colors" title="Размер текста">A</button>
@@ -473,24 +239,72 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
     </div>
     
     <div id="centerStage" class="relative flex flex-col items-center flex-1 max-w-lg cursor-pointer tactile-btn mx-3 group z-30 pt-12" onclick="playTickSound(); openContactsModal();">
+      <!-- Диско-шар -->
+      <div id="discoBall" class="disco-ball">
+        <svg viewBox="0 0 100 100" class="w-16 h-16 drop-shadow-2xl">
+          <defs><radialGradient id="discoGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f8fafc" /><stop offset="70%" stop-color="#94a3b8" /><stop offset="100%" stop-color="#475569" /></radialGradient></defs>
+          <line x1="50" y1="0" x2="50" y2="20" stroke="#cbd5e1" stroke-width="2" />
+          <circle cx="50" cy="55" r="30" fill="url(#discoGrad)" />
+          <path d="M 25 40 Q 50 55 75 40 M 20 55 Q 50 70 80 55 M 25 70 Q 50 85 75 70" stroke="#e2e8f0" stroke-width="1" fill="none" opacity="0.6"/>
+          <path d="M 35 30 Q 40 55 35 80 M 50 25 Q 55 55 50 85 M 65 30 Q 60 55 65 80" stroke="#e2e8f0" stroke-width="1" fill="none" opacity="0.6"/>
+        </svg>
+        <div class="disco-rays"></div>
+      </div>
+
       <div id="bubbleSveta" class="story-bubble actor-sveta"><div class="story-bubble-inner"></div></div>
       <div id="bubbleMarina" class="story-bubble actor-marina"><div class="story-bubble-inner"></div></div>
       <div id="bubbleMech" class="story-bubble actor-mech"><div class="story-bubble-inner"></div></div>
-      <div class="w-full h-14 relative flex items-center justify-center overflow-visible" id="mechanicSvgContainer">
-        <svg viewBox="0 0 240 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-gray-500 dark:text-gray-400 group-hover:text-emerald-500 transition-colors normal-mode overflow-visible drop-shadow-sm" id="mechanicSvgElement">
+      
+      <!-- Окно с персонажами -->
+      <div class="w-full h-16 relative flex items-center justify-center overflow-hidden" id="mechanicSvgContainer">
+        <div class="window-glare"></div>
+        <svg viewBox="0 0 240 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-gray-600 dark:text-gray-300 transition-colors normal-mode overflow-visible z-20" id="mechanicSvgElement">
           <g id="girlsGroup">
             <path d="M 15 48 L 85 48" stroke-width="2"/>
-            <g id="svetaBody" style="transform-origin: 30px 48px;"><rect x="15" y="32" width="10" height="7" rx="1"/><path d="M 20 39 V 48"/><circle cx="35" cy="22" r="5"/><path d="M 35 27 V 43"/><path d="M 35 43 L 30 55 M 35 43 L 40 55"/><path d="M 30 43 L 40 43 Z" fill="currentColor" stroke-width="1"/><g class="arm-typing" style="transform-origin: 35px 29px;"><path d="M 35 29 L 28 35 L 22 36"/><path d="M 35 29 L 25 36 L 20 38"/></g></g>
-            <g id="marinaBody" style="transform-origin: 70px 48px;"><rect x="75" y="32" width="10" height="7" rx="1"/><path d="M 80 39 V 48"/><circle cx="60" cy="22" r="5"/><path d="M 55 22 A 5 5 0 0 1 65 22" stroke-width="2"/><path d="M 60 27 V 43"/><path d="M 60 43 L 55 55 M 60 43 L 65 55"/><path d="M 55 43 L 65 43 Z" fill="currentColor" stroke-width="1"/><g class="arm-typing-delay" style="transform-origin: 60px 29px;"><path d="M 60 29 L 68 35 L 75 36"/><path d="M 60 29 L 71 36 L 78 38"/></g></g>
+            <g id="svetaBody" style="transform-origin: 30px 48px;">
+              <rect x="15" y="32" width="10" height="7" rx="1"/>
+              <path d="M 20 39 V 48"/>
+              <circle cx="35" cy="22" r="5"/>
+              <path d="M 35 27 V 43"/>
+              <path d="M 35 43 L 30 55 M 35 43 L 40 55"/>
+              <path d="M 30 43 L 40 43 Z" fill="currentColor" stroke-width="1"/>
+              <g class="arm-typing" style="transform-origin: 35px 29px;"><path d="M 35 29 L 28 35 L 22 36"/><path d="M 35 29 L 25 36 L 20 38"/></g>
+            </g>
+            <g id="marinaBody" style="transform-origin: 70px 48px;">
+              <rect x="75" y="32" width="10" height="7" rx="1"/>
+              <path d="M 80 39 V 48"/>
+              <circle cx="60" cy="22" r="5"/>
+              <path d="M 55 22 A 5 5 0 0 1 65 22" stroke-width="2"/>
+              <path d="M 60 27 V 43"/>
+              <path d="M 60 43 L 55 55 M 60 43 L 65 55"/>
+              <path d="M 55 43 L 65 43 Z" fill="currentColor" stroke-width="1"/>
+              <!-- Рука с кофе -->
+              <g class="arm-drink" style="transform-origin: 60px 29px;">
+                <path d="M 60 29 L 68 35 L 75 36"/>
+                <circle cx="76" cy="35" r="2.5" fill="currentColor" stroke="none"/>
+              </g>
+            </g>
           </g>
           <g id="mechGroup">
             <g class="juggling-item jug-1"><circle cx="155" cy="10" r="3" fill="#9ca3af" stroke="none"/></g>
             <g class="juggling-item jug-2"><rect x="170" y="5" width="5" height="5" rx="1" fill="#fbbf24" stroke="none" transform="rotate(45 172.5 7.5)"/></g>
             <g class="juggling-item jug-3"><path d="M 180 15 L 185 10 L 190 15" stroke="#6b7280" stroke-width="2" fill="none"/></g>
-            <g id="mechBody" style="transform-origin: 170px 55px;"><circle cx="170" cy="22" r="5"/><path d="M 165 18 L 175 18 L 173 22 Z" fill="currentColor"/><path d="M 170 27 V 45"/><path d="M 170 45 L 163 55 M 170 45 L 177 55"/><g class="wrench-arm" style="transform-origin: 170px 29px;"><path d="M 170 29 L 155 36"/><path d="M 157 34 L 150 40" stroke-width="2"/><path d="M 148 37 C 152 35, 153 42, 150 40" stroke-width="2" fill="none"/></g><path d="M 170 29 L 178 35 L 172 40"/><path id="sweatDrop" d="M 176 16 Q 178 20 176 22 Q 174 20 176 16 Z" fill="#38bdf8" stroke="none" class="sweat-drop"/></g><circle cx="195" cy="45" r="10" stroke-width="3"/><circle cx="195" cy="45" r="3" fill="currentColor" stroke="none"/><path d="M 185 55 L 205 55" stroke-width="1.5"/></g>
+            <g id="mechBody" style="transform-origin: 170px 55px;">
+              <circle cx="170" cy="22" r="5"/>
+              <path d="M 165 18 L 175 18 L 173 22 Z" fill="currentColor"/>
+              <path d="M 170 27 V 45"/>
+              <path d="M 170 45 L 163 55 M 170 45 L 177 55"/>
+              <g class="wrench-arm" style="transform-origin: 170px 29px;"><path d="M 170 29 L 155 36"/><path d="M 157 34 L 150 40" stroke-width="2"/><path d="M 148 37 C 152 35, 153 42, 150 40" stroke-width="2" fill="none"/></g>
+              <path d="M 170 29 L 178 35 L 172 40"/>
+              <path id="sweatDrop" d="M 176 16 Q 178 20 176 22 Q 174 20 176 16 Z" fill="#38bdf8" stroke="none" class="sweat-drop"/>
+            </g>
+            <circle cx="195" cy="45" r="10" stroke-width="3"/>
+            <circle cx="195" cy="45" r="3" fill="currentColor" stroke="none"/>
+            <path d="M 185 55 L 205 55" stroke-width="1.5"/>
+          </g>
         </svg>
       </div>
-      <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mt-0 text-center w-full z-20 relative bg-white/50 dark:bg-black/20 px-3 py-0.5 rounded-full inline-block">Контакты</div>
+      <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mt-1 text-center w-full z-20 relative bg-white/50 dark:bg-black/20 px-3 py-0.5 rounded-full inline-block">Контакты</div>
     </div>
     
     <div id="speedContainer" class="flex flex-col items-center justify-center cursor-default shrink-0 min-w-[50px] z-10 tactile-btn" onclick="playTickSound(); openMechanicModal();" title="Скорость / Инструктаж">
@@ -535,6 +349,12 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 </header>
 
 <main class="max-w-[1600px] mx-auto px-4 sm:px-6 py-6 relative z-10 flex-1">
+  <div id="skeletonGrid" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 mb-8">
+    <div class="volume-card p-4 animate-pulse"><div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div><div class="h-20 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div><div class="h-10 bg-gray-200 dark:bg-gray-700 rounded"></div></div>
+    <div class="volume-card p-4 animate-pulse"><div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div><div class="h-20 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div><div class="h-10 bg-gray-200 dark:bg-gray-700 rounded"></div></div>
+    <div class="volume-card p-4 animate-pulse"><div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div><div class="h-20 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div><div class="h-10 bg-gray-200 dark:bg-gray-700 rounded"></div></div>
+    <div class="volume-card p-4 animate-pulse"><div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div><div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div><div class="h-20 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div><div class="h-10 bg-gray-200 dark:bg-gray-700 rounded"></div></div>
+  </div>
   <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 mb-8"></div>
 </main>
 
@@ -877,7 +697,7 @@ function toggleTextSize() {
   showToast(currentSize === 0 ? "Текст обычного размера" : (currentSize === 1 ? "🔎 Крупный текст" : "🔎 Очень крупный текст"));
 }
 
-// ========== СЛАЙДЕР ==========
+// ========== СЛАЙДЕР И ПАРАЛЛАКС ==========
 const bgMusic = document.getElementById('bgMusic'); bgMusic.volume = 0.45; let isMusicPlaying = false;
 let autoScrollAnimationId = null; const citySlider = document.getElementById('citySlider'); let virtualScrollX = 0; let lastActualScrollLeft = 0; let isMouseDown = false, startX, scrollLeftPos;
 citySlider.addEventListener('mousedown', (e) => { if (isMusicPlaying) return; isMouseDown = true; citySlider.style.cursor = 'grabbing'; startX = e.pageX - citySlider.offsetLeft; scrollLeftPos = citySlider.scrollLeft; });
@@ -889,10 +709,24 @@ let lastLogoTapTime = 0, logoTapTimeout;
 function handleLogoTap() { unlockAudio(); const now = Date.now(); if (now - lastLogoTapTime < 400) { clearTimeout(logoTapTimeout); fullStopMusic(); } else logoTapTimeout = setTimeout(togglePlayPause, 400); lastLogoTapTime = now; }
 function togglePlayPause() {
   const logo = document.getElementById('logoImage');
-  if (isMusicPlaying) { bgMusic.pause(); isMusicPlaying = false; logo.classList.remove('record-spin'); stopAutoScroll(); startStoryTimer(); } 
-  else { abortStory(); clearTimeout(storyTimer); const p = bgMusic.play(); if (p !== undefined) { p.then(() => { isMusicPlaying = true; logo.classList.add('record-spin'); startAutoScroll(); }).catch(() => showToast("Не удалось запустить музыку 🔇")); } }
+  if (isMusicPlaying) { 
+    bgMusic.pause(); isMusicPlaying = false; logo.classList.remove('record-spin'); stopAutoScroll(); startStoryTimer(); 
+    document.getElementById('mechanicSvgElement').classList.remove('dancing');
+    document.body.classList.remove('disco-mode');
+  } 
+  else { 
+    abortStory(); clearTimeout(storyTimer); 
+    const p = bgMusic.play(); 
+    if (p !== undefined) { 
+      p.then(() => { 
+        isMusicPlaying = true; logo.classList.add('record-spin'); startAutoScroll(); 
+        document.getElementById('mechanicSvgElement').classList.add('dancing');
+        document.body.classList.add('disco-mode');
+      }).catch(() => showToast("Не удалось запустить музыку 🔇")); 
+    } 
+  }
 }
-function fullStopMusic() { bgMusic.pause(); bgMusic.currentTime = 0; isMusicPlaying = false; document.getElementById('logoImage').classList.remove('record-spin'); stopAutoScroll(); resetTrucksToStart(); startStoryTimer(); }
+function fullStopMusic() { bgMusic.pause(); bgMusic.currentTime = 0; isMusicPlaying = false; document.getElementById('logoImage').classList.remove('record-spin'); stopAutoScroll(); resetTrucksToStart(); startStoryTimer(); document.getElementById('mechanicSvgElement').classList.remove('dancing'); document.body.classList.remove('disco-mode'); }
 function resetTrucksToStart() { buildCitySlider(); citySlider.scrollLeft = 0; virtualScrollX = 0; window.fractionalScroll = 0; lastActualScrollLeft = 0; updateParallax(0); }
 
 let lastSliderScrollTime = 0;
@@ -913,6 +747,7 @@ function autoScrollLoop() {
   }
   updateParallax(virtualScrollX); autoScrollAnimationId = requestAnimationFrame(autoScrollLoop);
 }
+
 function updateParallax(vX) {
   const mountains = document.getElementById('layerMountains');
   const trees = document.getElementById('layerTrees');
@@ -948,19 +783,27 @@ function updateParallax(vX) {
 
   const sun = document.getElementById('sunBody'), moon = document.getElementById('moonBody');
   if (sun && moon) {
-    if (progress <= 0.6) {
-      const p = progress / 0.6;
-      sun.style.left = `calc(${p * 100}% - 20px)`;
-      sun.style.bottom = `calc(10% + ${Math.sin(p * Math.PI) * 50}px)`;
-      sun.style.opacity = 1;
-    } else sun.style.opacity = 0;
-    
-    if (progress >= 0.4) {
-      const p = (progress - 0.4) / 0.6;
-      moon.style.left = `calc(${p * 100}% - 20px)`;
-      moon.style.bottom = `calc(10% + ${Math.sin(p * Math.PI) * 50}px)`;
-      moon.style.opacity = 1;
-    } else moon.style.opacity = 0;
+    if (progress <= 0.6) { const p = progress / 0.6; sun.style.left = `calc(${p * 100}% - 20px)`; sun.style.bottom = `calc(10% + ${Math.sin(p * Math.PI) * 50}px)`; sun.style.opacity = 1; } else sun.style.opacity = 0;
+    if (progress >= 0.4) { const p = (progress - 0.4) / 0.6; moon.style.left = `calc(${p * 100}% - 20px)`; moon.style.bottom = `calc(10% + ${Math.sin(p * Math.PI) * 50}px)`; moon.style.opacity = 1; } else moon.style.opacity = 0;
+  }
+
+  // НОЧНОЙ ДИСКО-РЕЖИМ
+  const isNight = progress > 0.6;
+  const discoBall = document.getElementById('discoBall');
+  if (discoBall) {
+    if (isNight && isMusicPlaying) {
+      discoBall.classList.add('dropped');
+      document.getElementById('mechanicSvgElement').classList.add('dancing');
+      document.body.classList.add('disco-mode');
+    } else {
+      discoBall.classList.remove('dropped');
+      document.body.classList.remove('disco-mode');
+      if (!isMusicPlaying) {
+        document.getElementById('mechanicSvgElement').classList.remove('dancing');
+      } else {
+        document.getElementById('mechanicSvgElement').classList.add('dancing');
+      }
+    }
   }
 }
 
@@ -1003,13 +846,14 @@ window.executeNavigation = function(type) {
   playTickSound(); let navUrl = '';
   if (currentNavCoords) {
     const [lat, lon] = currentNavCoords;
-    if (type === 'yandex') navUrl = `https://yandex.ru/maps/?pt=${lon},${lat}&z=17&l=map`;
+    if (type === 'yandex') navUrl = `https://yandex.ru/maps/?text=${lat},${lon}`; // ИСПРАВЛЕНО
     else if (type === '2gis') navUrl = `https://2gis.ru/geo/${lon},${lat}`;
     else if (type === 'google') navUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
   } else {
-    if (type === 'yandex') navUrl = `https://yandex.ru/maps/?text=${currentNavQuery}`;
-    else if (type === '2gis') navUrl = `https://2gis.ru/search/${currentNavQuery}`;
-    else if (type === 'google') navUrl = `https://www.google.com/maps/search/?api=1&query=${currentNavQuery}`;
+    const q = encodeURIComponent(currentNavQuery); // ИСПРАВЛЕНО
+    if (type === 'yandex') navUrl = `https://yandex.ru/maps/?text=${q}`;
+    else if (type === '2gis') navUrl = `https://2gis.ru/search/${q}`;
+    else if (type === 'google') navUrl = `https://www.google.com/maps/search/?api=1&query=${q}`;
   }
   window.location.href = navUrl; closeNavModal();
 };
