@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lenta-cache-v2'; // Версия поднята
+const CACHE_NAME = 'lenta-cache-v13'; // Повышаем версию при каждом обновлении
 const ASSETS = [
   './',
   './index.html',
@@ -7,43 +7,63 @@ const ASSETS = [
   './stories.js',
   './animations.css',
   './icon.png',
-  './manifest.json'
+  './manifest.json',
+  './offline.html' // создадим ниже
 ];
 
+// Установка: кэшируем все основные ресурсы
 self.addEventListener('install', (e) => {
-  // НЕ вызываем skipWaiting() здесь, чтобы приложение ждало кнопку "Обновить"
+  self.skipWaiting();
   e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS);
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
   );
 });
 
+// Активация: удаляем старые кэши
 self.addEventListener('activate', (e) => {
   e.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key); // Удаляем старый кэш
-          }
-        })
-      );
-    }).then(() => self.clients.claim())
+    caches.keys().then((keys) =>
+      Promise.all(keys.map((key) => key !== CACHE_NAME ? caches.delete(key) : null))
+    ).then(() => self.clients.claim())
   );
 });
 
-// Ждем команду от index.html для запуска обновления
-self.addEventListener('message', (event) => {
-  if (event.data === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-});
-
+// Стратегия кэширования
 self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request).then((res) => {
-      return res || fetch(e.request);
-    })
-  );
+  const request = e.request;
+  const url = new URL(request.url);
+
+  // 1. Навигационные запросы (HTML) — Network First с fallback на кэш и offline.html
+  if (request.mode === 'navigate') {
+    e.respondWith(
+      fetch(request)
+        .then((response) => {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+          return response;
+        })
+        .catch(() =>
+          caches.match(request).then((cached) => cached || caches.match('./offline.html'))
+        )
+    );
+    return;
+  }
+
+  // 2. Статика (CSS, JS, изображения, шрифты) — Stale-While-Revalidate
+  if (url.origin === location.origin || url.pathname.match(/\.(css|js|png|jpg|jpeg|svg|woff2?|ttf|eot)$/)) {
+    e.respondWith(
+      caches.match(request).then((cached) => {
+        const fetchPromise = fetch(request).then((response) => {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+          return response;
+        }).catch(() => cached);
+        return cached || fetchPromise;
+      })
+    );
+    return;
+  }
+
+  // 3. Остальные запросы — просто из сети
+  e.respondWith(fetch(request));
 });
