@@ -1,109 +1,68 @@
-/* Танцы */
-.dancing #girlsGroup {
-    animation: danceGirls 0.5s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: center bottom;
-}
-.dancing #mechGroup {
-    animation: danceMech 0.5s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: center bottom;
-}
-@keyframes danceGirls {
-    0% { transform: translateY(0) rotate(0deg); }
-    100% { transform: translateY(-4px) rotate(3deg); }
-}
-@keyframes danceMech {
-    0% { transform: translateY(0) rotate(0deg); }
-    100% { transform: translateY(-4px) rotate(-3deg); }
-}
+/* === НОВЫЕ АНИМАЦИИ ВЗАИМОДЕЙСТВИЯ === */
 
-/* Жонглирование */
-.juggling-active .wrench-arm {
-    animation: juggleArm 0.4s infinite alternate;
+/* 1. Пятюня (персонажи двигаются навстречу и вверх) */
+@keyframes highFiveGirls {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(15px) translateY(-10px); }
 }
-.juggling-active #mechBody {
-    animation: juggleBody 0.4s infinite alternate;
+@keyframes highFiveMech {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-15px) translateY(-10px); }
 }
-@keyframes juggleArm {
-    0% { transform: rotate(-20deg); }
-    100% { transform: rotate(40deg); }
-}
-@keyframes juggleBody {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-3px); }
-}
+.anim-highfive-girls { animation: highFiveGirls 0.6s ease-in-out; }
+.anim-highfive-mech { animation: highFiveMech 0.6s ease-in-out; }
 
-/* Запчасти для жонглирования (Летают по кругу) */
-.juggling-item { opacity: 0; transition: opacity 0.3s; }
-.juggling-active .juggling-item { opacity: 1; }
-.jug-1 { animation: juggleCircle1 1.2s infinite linear; transform-origin: 170px 20px; }
-.jug-2 { animation: juggleCircle2 1.2s infinite linear; transform-origin: 170px 20px; animation-delay: -0.4s; }
-.jug-3 { animation: juggleCircle3 1.2s infinite linear; transform-origin: 170px 20px; animation-delay: -0.8s; }
+/* 2. Толкание (Bump) - легкий наклон друг к другу */
+@keyframes bumpGirls {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  50% { transform: translateX(10px) rotate(5deg); }
+}
+@keyframes bumpMech {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  50% { transform: translateX(-10px) rotate(-5deg); }
+}
+.anim-bump-girls { animation: bumpGirls 0.4s ease-in-out; }
+.anim-bump-mech { animation: bumpMech 0.4s ease-in-out; }
 
-@keyframes juggleCircle1 { 0% { transform: rotate(0deg) translateX(25px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(25px) rotate(-360deg); } }
-@keyframes juggleCircle2 { 0% { transform: rotate(0deg) translateX(35px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(35px) rotate(-360deg); } }
-@keyframes juggleCircle3 { 0% { transform: rotate(0deg) translateX(20px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(20px) rotate(-360deg); } }
+/* 3. Указание пальцем (Pointing) */
+@keyframes pointArm {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-20deg); }
+}
+.anim-point .arm-typing { animation: pointArm 0.5s infinite alternate; }
 
-/* Анимации для Контактов */
-@keyframes typingKeys {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-2px); }
-}
-.contact-typing-hands {
-    animation: typingKeys 0.2s infinite;
-}
-
-@keyframes turnWrench {
-    0% { transform: rotate(0deg); }
-    25% { transform: rotate(-30deg); }
-    75% { transform: rotate(30deg); }
-    100% { transform: rotate(0deg); }
-}
-.contact-wrench {
-    animation: turnWrench 1s infinite ease-in-out;
-    transform-origin: center;
-}
-
-@keyframes lookTablet {
-    0%, 100% { transform: translateY(0) rotate(0); }
-    50% { transform: translateY(-2px) rotate(5deg); }
-}
-.contact-tablet {
-    animation: lookTablet 2s infinite ease-in-out;
-}
-
-/* Диско-шар */
-.disco-ball {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -150%);
-    transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
-    opacity: 0;
-    z-index: 40;
-    pointer-events: none;
-}
-.disco-ball.dropped {
-    transform: translate(-50%, 5px);
-    opacity: 1;
-}
+/* === ПОЧИНКА ДИСКО-ШАРА (ЛУЧИ) === */
+/* Делаем лучи ярче и добавляем им свечение */
 .disco-rays {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 200px;
-    height: 200px;
-    margin-left: -100px;
-    margin-top: -100px;
-    background: conic-gradient(from 0deg, transparent 0deg 20deg, rgba(255, 255, 255, 0.4) 20deg 40deg, transparent 40deg 60deg, rgba(255, 255, 255, 0.4) 60deg 80deg, transparent 80deg 100deg, rgba(255, 255, 255, 0.4) 100deg 120deg, transparent 120deg 140deg, rgba(255, 255, 255, 0.4) 140deg 160deg, transparent 160deg 180deg, rgba(255, 255, 255, 0.4) 180deg 200deg, transparent 200deg 220deg, rgba(255, 255, 255, 0.4) 220deg 240deg, transparent 240deg 260deg, rgba(255, 255, 255, 0.4) 260deg 280deg, transparent 280deg 300deg, rgba(255, 255, 255, 0.4) 300deg 320deg, transparent 320deg 340deg, rgba(255, 255, 255, 0.4) 340deg 360deg);
+    width: 300px; /* Увеличили размер */
+    height: 300px;
+    margin-left: -150px;
+    margin-top: -150px;
+    background: conic-gradient(
+        from 0deg, transparent 0deg 20deg, rgba(255, 255, 255, 0.6) 20deg 40deg, 
+        transparent 40deg 60deg, rgba(255, 255, 255, 0.6) 60deg 80deg, 
+        transparent 80deg 100deg, rgba(255, 255, 255, 0.6) 100deg 120deg, 
+        transparent 120deg 140deg, rgba(255, 255, 255, 0.6) 140deg 160deg, 
+        transparent 160deg 180deg, rgba(255, 255, 255, 0.6) 180deg 200deg, 
+        transparent 200deg 220deg, rgba(255, 255, 255, 0.6) 220deg 240deg, 
+        transparent 240deg 260deg, rgba(255, 255, 255, 0.6) 260deg 280deg, 
+        transparent 280deg 300deg, rgba(255, 255, 255, 0.6) 300deg 320deg, 
+        transparent 320deg 340deg, rgba(255, 255, 255, 0.6) 340deg 360deg
+    );
     border-radius: 50%;
     opacity: 0;
-    transition: opacity 0.3s;
-    animation: spinRays 6s linear infinite;
+    transition: opacity 0.5s ease;
+    animation: spinRays 4s linear infinite; /* Ускорили вращение */
     z-index: -1;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5)); /* Добавили свечение */
 }
 .disco-ball.dropped .disco-rays {
     opacity: 1;
 }
-@keyframes spinRays {
-    100% { transform: rotate(360deg); }
+/* Делаем сам шар более блестящим */
+.disco-ball svg circle {
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.8));
 }
