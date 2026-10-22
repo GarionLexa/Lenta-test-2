@@ -1,87 +1,35 @@
-/* ===== ОКНО С ПЕРСОНАЖАМИ ===== */
-#mechanicSvgContainer {
-    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(240,249,255,0.8));
-    border: 6px solid #fff;
-    border-radius: 16px;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.05), 0 4px 15px rgba(0,0,0,0.1);
-    position: relative;
-    overflow: hidden;
-    transition: all 0.5s ease;
-}
-.dark #mechanicSvgContainer {
-    background: linear-gradient(135deg, rgba(30,27,75,0.9), rgba(15,23,42,0.8));
-    border-color: #312e81;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 4px 15px rgba(0,0,0,0.3);
-}
-/* Рамка окна (крестовина) */
-#mechanicSvgContainer::before {
-    content: '';
-    position: absolute;
-    top: 50%; left: 0; right: 0;
-    height: 4px;
-    background: rgba(255,255,255,0.6);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    z-index: 10;
-    pointer-events: none;
-}
-.dark #mechanicSvgContainer::before { background: rgba(49,46,129,0.6); }
-#mechanicSvgContainer::after {
-    content: '';
-    position: absolute;
-    top: 0; bottom: 0; left: 50%;
-    width: 4px;
-    background: rgba(255,255,255,0.6);
-    box-shadow: 1px 0 3px rgba(0,0,0,0.1);
-    z-index: 10;
-    pointer-events: none;
-}
-.dark #mechanicSvgContainer::after { background: rgba(49,46,129,0.6); }
-
-/* Блик на стекле */
-.window-glare {
-    position: absolute;
-    top: -50%; left: -50%; width: 200%; height: 200%;
-    background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.4) 45%, transparent 50%);
-    z-index: 11;
-    pointer-events: none;
-    animation: glassGlare 8s infinite;
-}
-@keyframes glassGlare {
-    0%, 80% { transform: translate(-30%, -30%); }
-    100% { transform: translate(30%, 30%); }
-}
-
-/* ===== АНИМАЦИИ ДЕЙСТВИЙ ===== */
-.arm-typing { animation: typingArms 0.25s infinite alternate; }
-.arm-typing-delay { animation: typingArms 0.3s infinite alternate; animation-delay: 0.1s; }
-@keyframes typingArms { 0% { transform: rotate(0deg); } 100% { transform: rotate(10deg); } }
-
-.wrench-arm { animation: wrenchMotion 0.6s infinite alternate ease-in-out; transform-origin: 170px 29px; }
-@keyframes wrenchMotion { 0% { transform: rotate(-15deg); } 100% { transform: rotate(20deg); } }
-
-/* Анимация питья кофе для Марины */
-@keyframes drinkCoffee {
-    0%, 70%, 100% { transform: rotate(0deg) translateY(0); }
-    80%, 90% { transform: rotate(-15deg) translateY(-2px); }
-}
-.arm-drink { animation: drinkCoffee 4s infinite ease-in-out; transform-origin: 60px 29px; }
-
-/* ===== ТАНЦЫ (Когда играет музыка или ночь) ===== */
+/* Танцы */
 .dancing #girlsGroup {
-    animation: danceGirls 0.4s infinite alternate cubic-bezier(0.4, 0, 0.2, 1) !important;
+    animation: danceGirls 0.5s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: center bottom;
 }
 .dancing #mechGroup {
-    animation: danceMech 0.4s infinite alternate cubic-bezier(0.4, 0, 0.2, 1) !important;
+    animation: danceMech 0.5s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: center bottom;
 }
 @keyframes danceGirls {
     0% { transform: translateY(0) rotate(0deg); }
-    100% { transform: translateY(-6px) rotate(4deg); }
+    100% { transform: translateY(-4px) rotate(3deg); }
 }
 @keyframes danceMech {
     0% { transform: translateY(0) rotate(0deg); }
-    100% { transform: translateY(-6px) rotate(-4deg); }
+    100% { transform: translateY(-4px) rotate(-3deg); }
+}
+
+/* Жонглирование */
+.juggling-active .wrench-arm {
+    animation: juggleArm 0.4s infinite alternate;
+}
+.juggling-active #mechBody {
+    animation: juggleBody 0.4s infinite alternate;
+}
+@keyframes juggleArm {
+    0% { transform: rotate(-20deg); }
+    100% { transform: rotate(40deg); }
+}
+@keyframes juggleBody {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-3px); }
 }
 
 /* Запчасти для жонглирования */
@@ -90,11 +38,12 @@
 .jug-1 { animation: juggleCircle1 1.2s infinite linear; transform-origin: 170px 20px; }
 .jug-2 { animation: juggleCircle2 1.2s infinite linear; transform-origin: 170px 20px; animation-delay: -0.4s; }
 .jug-3 { animation: juggleCircle3 1.2s infinite linear; transform-origin: 170px 20px; animation-delay: -0.8s; }
+
 @keyframes juggleCircle1 { 0% { transform: rotate(0deg) translateX(25px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(25px) rotate(-360deg); } }
 @keyframes juggleCircle2 { 0% { transform: rotate(0deg) translateX(35px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(35px) rotate(-360deg); } }
 @keyframes juggleCircle3 { 0% { transform: rotate(0deg) translateX(20px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(20px) rotate(-360deg); } }
 
-/* ===== ДИСКО-ШАР И СВЕТОМУЗЫКА ===== */
+/* Диско-шар */
 .disco-ball {
     position: absolute;
     top: 0;
@@ -124,52 +73,39 @@
     animation: spinRays 6s linear infinite;
     z-index: -1;
 }
-.disco-ball.dropped .disco-rays { opacity: 1; }
+.disco-ball.dropped .disco-rays {
+    opacity: 1;
+}
 @keyframes spinRays { 100% { transform: rotate(360deg); } }
 
-/* Цветомузыка (мерцание окна в ночном режиме) */
-@keyframes discoLights {
-    0% { box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.5), 0 0 20px rgba(239, 68, 68, 0.3); }
-    33% { box-shadow: inset 0 0 30px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.3); }
-    66% { box-shadow: inset 0 0 30px rgba(16, 185, 129, 0.5), 0 0 20px rgba(16, 185, 129, 0.3); }
-    100% { box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.5), 0 0 20px rgba(239, 68, 68, 0.3); }
+/* ===== НОВЫЕ АНИМАЦИИ ДЛЯ КОНТАКТОВ ===== */
+@keyframes pullString {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-15deg); }
 }
-.disco-mode #mechanicSvgContainer {
-    animation: discoLights 1s infinite;
+.archer-arm { animation: pullString 1.5s infinite ease-in-out; }
+
+@keyframes dryHair {
+  0%, 100% { transform: rotate(0deg) translateX(0); }
+  50% { transform: rotate(10deg) translateX(2px); }
 }
+.hairdryer { animation: dryHair 1s infinite alternate ease-in-out; }
 
-/* ===== ОСТАЛЬНЫЕ АНИМАЦИИ ===== */
-.laughing { animation: bodyLaugh 0.3s infinite alternate; }
-@keyframes bodyLaugh { 0% { transform: translateY(0) scaleY(1); } 100% { transform: translateY(-2px) scaleY(1.05); } }
-
-.sweat-drop { opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: translateY(-5px); }
-.show-sweat { opacity: 1; transform: translateY(0); animation: dripDown 1.5s forwards; }
-@keyframes dripDown { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
-
-/* Дыхание микрофона */
-@keyframes micPulse {
-    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8); background-color: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: #ef4444 !important; }
-    70% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); background-color: rgba(239, 68, 68, 0.3); color: #ef4444; border-color: #ef4444 !important; }
-    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); background-color: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: #ef4444 !important; }
+@keyframes blowWind {
+  0%, 100% { transform: translateX(0); opacity: 1; }
+  50% { transform: translateX(-3px); opacity: 0.5; }
 }
-.mic-listening { animation: micPulse 1.2s infinite; }
+.hair-blowing { animation: blowWind 0.4s infinite alternate; }
 
-/* Радар геолокации */
-.radar-active { border-color: #10b981 !important; color: #10b981 !important; background-color: rgba(16, 185, 129, 0.1) !important; }
-.radar-active::before, .radar-active::after {
-    content: ''; position: absolute; top: 50%; left: 50%; width: 100%; height: 100%;
-    border-radius: 50%; border: 2px solid #10b981; transform: translate(-50%, -50%);
-    animation: radarPing 1.5s infinite cubic-bezier(0.2, 0.8, 0.2, 1); pointer-events: none; z-index: -1;
+@keyframes typeArm {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(10deg); }
 }
-.radar-active::after { animation-delay: 0.75s; }
-@keyframes radarPing { 0% { width: 100%; height: 100%; opacity: 1; } 100% { width: 250%; height: 250%; opacity: 0; } }
+.typing-arm { animation: typeArm 0.3s infinite alternate; }
+.typing-arm-delay { animation: typeArm 0.3s infinite alternate 0.15s; }
 
-/* Оживление иконок контактов */
-.contact-icon-sergey { animation: shootArrow 3s infinite; display: inline-block; transform-origin: bottom center; }
-@keyframes shootArrow { 0%, 80%, 100% { transform: scale(1) rotate(0deg); } 85% { transform: scale(1.1) rotate(-15deg); } 90% { transform: scale(1.1) rotate(10deg); } 95% { transform: scale(1.1) rotate(-5deg); } }
-.contact-icon-mech { animation: listenMusic 2s infinite ease-in-out; display: inline-block; }
-@keyframes listenMusic { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-4px) rotate(5deg); } }
-.contact-icon-sveta { animation: dryHair 1.5s infinite alternate ease-in-out; display: inline-block; transform-origin: center; }
-@keyframes dryHair { 0% { transform: rotate(0deg) translateX(0); } 100% { transform: rotate(15deg) translateX(3px); } }
-.contact-icon-marina { animation: drinkCoffeeIcon 4s infinite; display: inline-block; transform-origin: bottom center; }
-@keyframes drinkCoffeeIcon { 0%, 70%, 100% { transform: scale(1) rotate(0deg); } 80% { transform: scale(1.1) rotate(-15deg); } 90% { transform: scale(1.1) rotate(-15deg) translateY(-2px); } }
+@keyframes drinkCoffee {
+  0%, 60%, 100% { transform: translateY(0) rotate(0deg); }
+  70%, 90% { transform: translateY(-3px) rotate(-10deg); }
+}
+.coffee-cup { animation: drinkCoffee 3s infinite ease-in-out; }
