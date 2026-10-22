@@ -987,38 +987,23 @@ window.openNavModal = function(query, coordsStr) {
 
 window.closeNavModal = function() { document.getElementById('navModal').classList.add('hidden'); };
 
-// ИЗМЕНЕНИЕ: Спец. алгоритм для Уюта, Туртаса и Беляшной (только координаты)
+// ИЗМЕНЕНИЕ: Возвращаем старую добрую логику для навигации.
+// Для магазинов (где передаются и текст, и координаты) — гибридный поиск.
+// Для точек (где передаются только координаты или только адрес) — обычный поиск.
 window.executeNavigation = function(type) {
   playTickSound(); let navUrl = '';
   const encodedText = encodeURIComponent(currentNavQuery || '');
-  const qLower = (currentNavQuery || '').toLowerCase();
-  const isCoordsOnly = qLower.includes('уют') || qLower.includes('туртас') || qLower.includes('беляшная');
 
   if (type === 'yandex') {
-    if (isCoordsOnly && currentNavCoords) {
-      const [lat, lon] = currentNavCoords;
-      navUrl = `https://yandex.ru/maps/?pt=${lon},${lat}&z=17&l=map`;
-    } else {
-      navUrl = `https://yandex.ru/maps/?text=${encodedText}`;
-      if (currentNavCoords) {
-         const [lat, lon] = currentNavCoords;
-         navUrl += `&pt=${lon},${lat}&z=17`;
-      }
+    navUrl = `https://yandex.ru/maps/?text=${encodedText}`;
+    if (currentNavCoords) {
+       const [lat, lon] = currentNavCoords;
+       navUrl += `&pt=${lon},${lat}&z=17`;
     }
   } else if (type === '2gis') {
-    if (isCoordsOnly && currentNavCoords) {
-      const [lat, lon] = currentNavCoords;
-      navUrl = `https://2gis.ru/geo/${lon},${lat}`;
-    } else {
-      navUrl = `https://2gis.ru/search/${encodedText}`;
-    }
+    navUrl = `https://2gis.ru/search/${encodedText}`;
   } else if (type === 'google') {
-    if (isCoordsOnly && currentNavCoords) {
-      const [lat, lon] = currentNavCoords;
-      navUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
-    } else {
-      navUrl = `https://www.google.com/maps/search/?api=1&query=${encodedText}`;
-    }
+    navUrl = `https://www.google.com/maps/search/?api=1&query=${encodedText}`;
   }
   
   window.location.href = navUrl; closeNavModal();
@@ -1186,12 +1171,21 @@ function renderCards() {
       
       const phoneLink = st.phone ? `<a href="tel:${st.phone.replace(/[^0-9+]/g, '')}" class="inline-flex items-center text-[11px] font-bold text-blue-600 dark:text-blue-400 underline decoration-blue-600/30 underline-offset-2 hover:decoration-blue-600 whitespace-nowrap mt-1">📞 ${st.phone}</a>` : '';
       
-      // ИЗМЕНЕНИЕ: Добавляем проверку на "Беляшную" для подъезда
+      // ЛОГИКА ДЛЯ КНОПКИ "ПОЕХАТЬ" (ВОЗВРАЩАЕМ СТАРЫЙ АЛГОРИТМ ДЛЯ ТОЧЕК)
       const navQ = st.address || '';
       const coordsStr = (st.lat && st.lon) ? `${st.lat},${st.lon}` : '';
       const encQ = navQ.replace(/'/g, "\\'");
       const safeCoords = coordsStr.replace(/'/g, "\\'");
       
+      let navOnClick = '';
+      if (coordsStr) {
+          // Если есть координаты, отправляем ТОЛЬКО их (старый алгоритм)
+          navOnClick = `openNavModal('${safeCoords}')`;
+      } else {
+          navOnClick = `openNavModal('${encQ}')`;
+      }
+
+      // Добавляем кнопку "Подъезд" для Беляшной
       const isBelyashnaya = (st.name || '').toLowerCase().includes('беляшная') || (st.address || '').toLowerCase().includes('беляшная');
       const approachUrl = isBelyashnaya ? 'https://yandex.ru/maps?rtext=56.784734%2C60.472516~57.760255%2C67.638376&rtt=auto' : '';
       
@@ -1233,7 +1227,7 @@ function renderCards() {
               ${dTag}
             </div>
             <div class="grid ${isBelyashnaya ? 'grid-cols-3' : 'grid-cols-2'} gap-1.5">
-              <button onclick="openNavModal('${encQ}', '${safeCoords}');" class="flex items-center justify-center gap-1 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg text-[10px] font-bold tactile-btn shadow-sm">🗺️ Поехать</button>
+              <button onclick="${navOnClick}" class="flex items-center justify-center gap-1 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg text-[10px] font-bold tactile-btn shadow-sm">🗺️ Поехать</button>
               ${isBelyashnaya ? `<button onclick="openApproachMap('${approachUrl}')" class="flex items-center justify-center gap-1 py-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg text-[10px] font-bold tactile-btn shadow-md shadow-emerald-500/20">🛣️ Подъезд</button>` : ''}
               <button onclick="toggleFav('${st.id}', event)" class="flex items-center justify-center gap-1 py-1.5 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 rounded-lg text-[10px] font-bold tactile-btn">${isFav ? '⭐ В избр.' : '☆ В избр.'}</button>
             </div>
