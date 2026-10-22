@@ -45,11 +45,11 @@
   })();
 </script>
 <style>
-:root { --truck-light-opacity: 0; --truck-body-brightness: 1; --glass-bg: rgba(255,255,255,0.85); --glass-border: rgba(255,255,255,0.6); }
-.dark { --glass-bg: rgba(24, 24, 27, 0.85); --glass-border: rgba(255,255,255,0.08); }
+:root { --truck-light-opacity: 0; --truck-body-brightness: 1; --glass-bg: rgba(255,255,255,0.95); --glass-border: rgba(255,255,255,0.6); }
+.dark { --glass-bg: rgba(24, 24, 27, 0.95); --glass-border: rgba(255,255,255,0.08); }
 
-/* ИСПРАВЛЕН ПЕРЕСВЕТ */
-body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; width: 100%; overflow-x: hidden; padding-bottom: env(safe-area-inset-bottom); transition: background-color 0.4s ease, color 0.4s ease; filter: brightness(0.85) contrast(1.1); }
+/* ИСПРАВЛЕН ПЕРЕСВЕТ: убрали filter, сделали фон чуть темнее */
+body { background-color: #e5e7eb; color: #1f2937; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; width: 100%; overflow-x: hidden; padding-bottom: env(safe-area-inset-bottom); transition: background-color 0.4s ease, color 0.4s ease; }
 .dark body { background-color: #0f1115; color: #e4e4e7; }
 
 /* Premium Glassmorphism */
@@ -144,7 +144,7 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .wrench-arm { animation: wrenchMotion 0.6s infinite alternate ease-in-out; }
 @keyframes wrenchMotion { 0% { transform: rotate(-15deg); } 100% { transform: rotate(20deg); } }
 
-/* КОМИКС-ОБЛАЧКА (ИСПРАВЛЕНО) */
+/* КОМИКС-ОБЛАЧКА */
 .story-bubble { 
   position: absolute; 
   background: white; 
@@ -170,7 +170,6 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .dark .story-bubble { background: #27272a; border-color: #3f3f46; color: #f4f4f5; }
 .story-bubble.active { transform: scale(1); opacity: 1; }
 
-/* Хвостики облачков (указывают вниз на персонажа) */
 .story-bubble::after { 
   content: ''; 
   position: absolute; 
@@ -183,10 +182,32 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 }
 .dark .story-bubble::after { border-color: #27272a transparent transparent transparent; }
 
-/* Позиции облачков */
 #bubbleSveta { bottom: 65px; left: 5px; }
 #bubbleMarina { bottom: 65px; left: 45px; }
 #bubbleMech { bottom: 65px; right: 15px; }
+
+/* АНИМАЦИЯ МИКРОФОНА */
+@keyframes micPulse {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+.mic-listening {
+  animation: micPulse 1.5s infinite;
+  background-color: rgba(239, 68, 68, 0.1) !important;
+  color: #ef4444 !important;
+  border-color: #ef4444 !important;
+}
+
+/* АНИМАЦИЯ РАДАРА (БЛИЖАЙШИЕ) */
+@keyframes radarPulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+.radar-active {
+  animation: radarPulse 1.5s infinite;
+}
 
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -223,7 +244,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 }
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) { #cardsGrid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
 
-/* ДИСКО-ШАР: Улучшенный вид */
+/* ДИСКО-ШАР */
 .disco-ball { position: absolute; top: 0; left: 50%; transform: translate(-50%, -150%); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease; opacity: 0; z-index: 40; pointer-events: none; }
 .disco-ball.dropped { transform: translate(-50%, 5px); opacity: 1; }
 .disco-rays { position: absolute; top: 50%; left: 50%; width: 300px; height: 300px; margin-left: -150px; margin-top: -150px; background: conic-gradient(from 0deg, transparent 0deg 20deg, rgba(255, 255, 255, 0.6) 20deg 40deg, transparent 40deg 60deg, rgba(255, 255, 255, 0.6) 60deg 80deg, transparent 80deg 100deg, rgba(255, 255, 255, 0.6) 100deg 120deg, transparent 120deg 140deg, rgba(255, 255, 255, 0.6) 140deg 160deg, transparent 160deg 180deg, rgba(255, 255, 255, 0.6) 180deg 200deg, transparent 200deg 220deg, rgba(255, 255, 255, 0.6) 220deg 240deg, transparent 240deg 260deg, rgba(255, 255, 255, 0.6) 260deg 280deg, transparent 280deg 300deg, rgba(255, 255, 255, 0.6) 300deg 320deg, transparent 320deg 340deg, rgba(255, 255, 255, 0.6) 340deg 360deg); border-radius: 50%; opacity: 0; transition: opacity 0.5s ease; animation: spinRays 4s linear infinite; z-index: -1; filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5)); }
@@ -235,156 +256,158 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
 
 <!-- Навигация -->
-<div id="navModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4 transition-opacity">
-  <div class="rounded-[32px] p-8 max-w-sm w-full text-center relative animate-reveal glass-panel shadow-2xl">
-    <button onclick="closeNavModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 hover:bg-gray-200/50 dark:hover:bg-white/10 p-2.5 rounded-full tactile-btn transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+<div id="navModal" class="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity">
+  <div class="rounded-[32px] p-8 max-w-sm w-full text-center relative bg-white dark:bg-zinc-900 shadow-2xl border border-gray-200 dark:border-zinc-800">
+    <button onclick="closeNavModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 p-2.5 rounded-full tactile-btn transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
     <h3 class="text-xl font-display font-extrabold text-lentaDark dark:text-white mb-1">Маршрут</h3>
     <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 font-medium">Выберите навигатор</p>
     <div class="flex flex-wrap justify-center gap-5 my-2">
-      <button onclick="executeNavigation('yandex');" class="w-20 h-20 rounded-2xl glass-panel shadow-sm flex flex-col items-center justify-center tactile-btn hover:bg-white/90 dark:hover:bg-white/10 group"><div class="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center mb-1 group-hover:scale-110 transition-transform shadow-inner"><span class="text-xl text-black font-black">Я</span></div><span class="text-[10px] uppercase font-bold text-gray-700 dark:text-gray-200">Яндекс</span></button>
-      <button onclick="executeNavigation('2gis');" class="w-20 h-20 rounded-2xl glass-panel shadow-sm flex flex-col items-center justify-center tactile-btn hover:bg-white/90 dark:hover:bg-white/10 group"><div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center mb-1 group-hover:scale-110 transition-transform shadow-inner"><span class="text-white text-xs font-black">2Г</span></div><span class="text-[10px] uppercase font-bold text-gray-700 dark:text-gray-200">2ГИС</span></button>
-      <button onclick="executeNavigation('google');" class="w-20 h-20 rounded-2xl glass-panel shadow-sm flex flex-col items-center justify-center tactile-btn hover:bg-white/90 dark:hover:bg-white/10 group"><div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center mb-1 group-hover:scale-110 transition-transform shadow-inner"><span class="text-white text-xs font-black">G</span></div><span class="text-[10px] uppercase font-bold text-gray-700 dark:text-gray-200">Google</span></button>
+      <button onclick="executeNavigation('yandex');" class="w-20 h-20 rounded-2xl bg-gray-50 dark:bg-white/5 shadow-sm border border-gray-200 dark:border-white/10 flex flex-col items-center justify-center tactile-btn hover:bg-white dark:hover:bg-white/10 group"><div class="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center mb-1 group-hover:scale-110 transition-transform shadow-inner"><span class="text-xl text-black font-black">Я</span></div><span class="text-[10px] uppercase font-bold text-gray-700 dark:text-gray-200">Яндекс</span></button>
+      <button onclick="executeNavigation('2gis');" class="w-20 h-20 rounded-2xl bg-gray-50 dark:bg-white/5 shadow-sm border border-gray-200 dark:border-white/10 flex flex-col items-center justify-center tactile-btn hover:bg-white dark:hover:bg-white/10 group"><div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center mb-1 group-hover:scale-110 transition-transform shadow-inner"><span class="text-white text-xs font-black">2Г</span></div><span class="text-[10px] uppercase font-bold text-gray-700 dark:text-gray-200">2ГИС</span></button>
+      <button onclick="executeNavigation('google');" class="w-20 h-20 rounded-2xl bg-gray-50 dark:bg-white/5 shadow-sm border border-gray-200 dark:border-white/10 flex flex-col items-center justify-center tactile-btn hover:bg-white dark:hover:bg-white/10 group"><div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center mb-1 group-hover:scale-110 transition-transform shadow-inner"><span class="text-white text-xs font-black">G</span></div><span class="text-[10px] uppercase font-bold text-gray-700 dark:text-gray-200">Google</span></button>
     </div>
   </div>
 </div>
 
-<!-- Контакты (ОЧИЩЕННЫЕ) -->
-<div id="contactsModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-  <div class="rounded-[32px] p-5 max-w-md w-full relative animate-reveal glass-panel shadow-2xl max-h-[90vh] overflow-y-auto hide-scrollbar">
-    <button onclick="closeContactsModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-50"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+<!-- Контакты -->
+<div id="contactsModal" class="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="rounded-[32px] p-5 max-w-md w-full relative bg-white dark:bg-zinc-900 shadow-2xl border border-gray-200 dark:border-zinc-800 max-h-[90vh] overflow-y-auto hide-scrollbar">
+    <button onclick="closeContactsModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-50"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
     <h3 class="text-xl font-display font-extrabold text-lentaDark dark:text-white mb-1 uppercase mt-2 text-center">Контакты</h3>
     <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 font-medium text-center">Кому звоним?</p>
     
     <div class="space-y-2 relative z-10">
-      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="contact-icon w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-400 text-sm shadow-inner">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Сергей</div><div class="text-[8px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div></div><div class="contact-icon w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
-      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="contact-icon w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-sm shadow-inner">🔧</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Механик</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div></div><div class="contact-icon w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
-      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="contact-icon w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue dark:text-blue-400 text-sm shadow-inner">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Светлана</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="contact-icon w-8 h-8 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
-      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="contact-icon w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-600 dark:text-purple-400 text-sm shadow-inner">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Марина</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="contact-icon w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
+      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 hover:bg-white dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-400 text-sm shadow-inner">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Сергей</div><div class="text-[8px] text-gray-500 uppercase leading-tight font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div></div><div class="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
+      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 hover:bg-white dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-sm shadow-inner">🔧</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Механик</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div></div><div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
+      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 hover:bg-white dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue dark:text-blue-400 text-sm shadow-inner">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Светлана</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-8 h-8 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
+      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 hover:bg-white dark:hover:bg-white/10 rounded-2xl p-3 tactile-btn shadow-sm transition-colors"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-600 dark:text-purple-400 text-sm shadow-inner">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-xs">Марина</div><div class="text-[8px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-sm">📞</div></a>
     </div>
   </div>
 </div>
 
-<!-- Модалки (Монетка, Механик, Календарь и т.д. - оставлены без изменений) -->
-<div id="monetkaModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-  <div class="rounded-[32px] p-6 max-w-md w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh]">
-    <button onclick="closeMonetkaModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
-    <h3 class="text-lg font-display font-extrabold text-lentaDark dark:text-white mb-2 uppercase pr-8 mt-1">Инструкция РЦ Монетка</h3>
-    <div class="overflow-y-auto pr-2 pb-2 space-y-4 text-sm">
-      <div class="bg-blue-500/10 dark:bg-blue-400/10 border border-blue-500/20 rounded-2xl p-4"><div class="font-bold text-blue-700 dark:text-blue-300 mb-1 flex items-center gap-2"><span>❄️</span> ВАЖНО: ЗАМОРОЗКА</div><p class="text-xs text-blue-800/80 dark:text-blue-200/80 leading-relaxed">Доставка заморозки — <b class="uppercase">приоритет</b>. Чётко доводите информацию о заморозке сотрудникам Монетки!</p></div>
-      <div class="bg-emerald-500/10 dark:bg-emerald-400/10 border border-emerald-500/20 rounded-2xl p-4"><div class="font-bold text-emerald-700 dark:text-emerald-300 mb-1 flex items-center gap-2"><span>⚡</span> ЛАЙФХАК</div><p class="text-xs text-emerald-800/80 dark:text-emerald-200/80 leading-relaxed">Можно <b>зайти на склад</b> и обозначить присутствие <b>Старшему смены</b>, чтобы не ждать звонка!</p></div>
-    </div>
-  </div>
-</div>
-
-<div id="mechanicModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-  <div class="rounded-[32px] p-6 max-w-md w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh]">
-    <button onclick="closeMechanicModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+<!-- Инструктаж механика -->
+<div id="mechanicModal" class="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="rounded-[32px] p-6 max-w-md w-full relative bg-white dark:bg-zinc-900 shadow-2xl border border-gray-200 dark:border-zinc-800 flex flex-col max-h-[90vh]">
+    <button onclick="closeMechanicModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
     <h3 class="text-lg font-display font-extrabold text-lentaDark dark:text-white mb-2 uppercase pr-8 mt-1">Инструктаж от механика</h3>
     <div class="overflow-y-auto pr-2 pb-2 space-y-4 text-sm">
-      <div class="bg-amber-500/10 dark:bg-amber-400/10 border border-amber-500/20 rounded-2xl p-4"><div class="font-bold text-amber-700 dark:text-amber-300 mb-2 flex items-center gap-2"><span>⚠️</span> Режим и скорость</div><ul class="text-xs text-amber-800/80 dark:text-amber-200/80 leading-relaxed list-disc pl-4 space-y-1"><li><b>Скорость 80 км/час!</b> Учитываем погоду.</li><li>Соблюдаем РТО.</li></ul></div>
-      <div class="bg-red-500/10 dark:bg-red-400/10 border border-red-500/20 rounded-2xl p-4"><div class="font-bold text-red-700 dark:text-red-300 mb-2 flex items-center gap-2"><span>🚭</span> Порядок и ДТП</div><ul class="text-xs text-red-800/80 dark:text-red-200/80 leading-relaxed list-disc pl-4 space-y-1"><li><b>В машинах не курим!</b></li><li><b>ДТП или повредили</b> — сразу механику!</li></ul></div>
+      <div class="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-4"><div class="font-bold text-amber-700 dark:text-amber-300 mb-2 flex items-center gap-2"><span>⚠️</span> Режим и скорость</div><ul class="text-xs text-amber-800 dark:text-amber-200 leading-relaxed list-disc pl-4 space-y-1"><li><b>Скорость 80 км/час!</b> Учитываем погоду.</li><li>Соблюдаем РТО.</li></ul></div>
+      <div class="bg-red-500/10 border border-red-500/20 rounded-2xl p-4"><div class="font-bold text-red-700 dark:text-red-300 mb-2 flex items-center gap-2"><span>🚭</span> Порядок и ДТП</div><ul class="text-xs text-red-800 dark:text-red-200 leading-relaxed list-disc pl-4 space-y-1"><li><b>В машинах не курим!</b></li><li><b>ДТП или повредили</b> — сразу механику!</li></ul></div>
     </div>
   </div>
 </div>
 
-<div id="calendarModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-5">
-  <div class="rounded-[32px] p-5 sm:p-7 w-full max-w-sm relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh]">
-    <button onclick="closeCalendarModal();" class="absolute top-3 right-3 sm:top-5 sm:right-5 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2 sm:p-2.5 rounded-full tactile-btn z-10"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+<!-- Остальные модалки (Календарь, Монетка и т.д.) -->
+<div id="monetkaModal" class="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="rounded-[32px] p-6 max-w-md w-full relative bg-white dark:bg-zinc-900 shadow-2xl border border-gray-200 dark:border-zinc-800 flex flex-col max-h-[90vh]">
+    <button onclick="closeMonetkaModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    <h3 class="text-lg font-display font-extrabold text-lentaDark dark:text-white mb-2 uppercase pr-8 mt-1">Инструкция РЦ Монетка</h3>
+    <div class="overflow-y-auto pr-2 pb-2 space-y-4 text-sm">
+      <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4"><div class="font-bold text-blue-700 dark:text-blue-300 mb-1 flex items-center gap-2"><span>❄️</span> ВАЖНО: ЗАМОРОЗКА</div><p class="text-xs text-blue-800 dark:text-blue-200 leading-relaxed">Доставка заморозки — <b class="uppercase">приоритет</b>. Чётко доводите информацию о заморозке сотрудникам Монетки!</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="calendarModal" class="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-5">
+  <div class="rounded-[32px] p-5 sm:p-7 w-full max-w-sm relative bg-white dark:bg-zinc-900 shadow-2xl border border-gray-200 dark:border-zinc-800 flex flex-col max-h-[90vh]">
+    <button onclick="closeCalendarModal();" class="absolute top-3 right-3 sm:top-5 sm:right-5 text-gray-400 bg-gray-100 dark:bg-white/5 p-2 sm:p-2.5 rounded-full tactile-btn z-10"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
     <h3 class="text-base sm:text-lg font-display font-extrabold text-purple-600 dark:text-purple-400 mb-4 uppercase pr-8 mt-1 flex items-center gap-2"><span>📅</span> Мои смены</h3>
-    <div class="flex justify-between items-center mb-4 bg-white/50 dark:bg-black/20 p-1.5 rounded-2xl border border-white/20 dark:border-white/5 shadow-sm">
-      <button onclick="changeMonth(-1)" class="w-8 h-8 flex items-center justify-center bg-white dark:bg-zinc-800 rounded-full shadow-sm text-gray-600 dark:text-gray-300 tactile-btn hover:bg-gray-50 dark:hover:bg-zinc-700">◀</button>
+    <div class="flex justify-between items-center mb-4 bg-gray-50 dark:bg-black/20 p-1.5 rounded-2xl border border-gray-200 dark:border-white/5 shadow-sm">
+      <button onclick="changeMonth(-1)" class="w-8 h-8 flex items-center justify-center bg-white dark:bg-zinc-800 rounded-full shadow-sm text-gray-600 dark:text-gray-300 tactile-btn">◀</button>
       <div id="calendarMonthYear" class="font-display font-bold text-gray-800 dark:text-white capitalize text-xs sm:text-sm truncate px-2">Октябрь 2026</div>
-      <button onclick="changeMonth(1)" class="w-8 h-8 flex items-center justify-center bg-white dark:bg-zinc-800 rounded-full shadow-sm text-gray-600 dark:text-gray-300 tactile-btn hover:bg-gray-50 dark:hover:bg-zinc-700">▶</button>
+      <button onclick="changeMonth(1)" class="w-8 h-8 flex items-center justify-center bg-white dark:bg-zinc-800 rounded-full shadow-sm text-gray-600 dark:text-gray-300 tactile-btn">▶</button>
     </div>
     <div class="grid grid-cols-7 gap-1 mb-1 text-center text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-wider"><div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div class="text-red-400">Сб</div><div class="text-red-400">Вс</div></div>
     <div id="calendarViewport" class="mb-4"><div id="calendarGrid"></div></div>
-    <div class="flex-1 bg-white/40 dark:bg-black/20 rounded-2xl border border-white/20 dark:border-white/5 p-3 flex flex-col min-h-[120px] overflow-hidden mb-4 shadow-inner">
-      <div id="selectedDayTitle" class="text-[11px] sm:text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 border-b border-gray-200/50 dark:border-white/5 pb-2 flex justify-between"><span>Выберите день</span><span id="selectedDayCount" class="text-purple-600 dark:text-purple-400"></span></div>
+    <div class="flex-1 bg-gray-50 dark:bg-black/20 rounded-2xl border border-gray-200 dark:border-white/5 p-3 flex flex-col min-h-[120px] overflow-hidden mb-4 shadow-inner">
+      <div id="selectedDayTitle" class="text-[11px] sm:text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 border-b border-gray-200 dark:border-white/5 pb-2 flex justify-between"><span>Выберите день</span><span id="selectedDayCount" class="text-purple-600 dark:text-purple-400"></span></div>
       <div id="selectedDayShifts" class="flex-1 overflow-y-auto hide-scrollbar space-y-2 pr-1"><div class="text-center text-gray-400 text-xs mt-4 font-medium">В этот день смен нет</div></div>
     </div>
     <div class="grid grid-cols-3 gap-2 shrink-0">
-      <button onclick="openStorePicker()" class="flex flex-col items-center justify-center py-2.5 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"><span class="text-base mb-0.5">➕</span>ТК</button>
-      <button onclick="openTechPicker()" class="flex flex-col items-center justify-center py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"><span class="text-base mb-0.5">🔧</span>Сервис</button>
-      <button onclick="openCustomTaskModal()" class="flex flex-col items-center justify-center py-2.5 bg-teal-500 hover:bg-teal-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"><span class="text-base mb-0.5">➕</span>Точка</button>
-      <button onclick="exportMonthReport()" class="flex flex-col items-center justify-center py-2.5 bg-purple-500 hover:bg-purple-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"><span class="text-base mb-0.5">📥</span>Отчёт</button>
-      <button onclick="exportCalendarBackup()" class="flex flex-col items-center justify-center py-2.5 bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 text-gray-700 dark:text-gray-200 rounded-xl text-[10px] font-bold tactile-btn transition-colors"><span class="text-base mb-0.5">💾</span>Бэкап</button>
-      <button onclick="importCalendarBackup()" class="flex flex-col items-center justify-center py-2.5 bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 text-gray-700 dark:text-gray-200 rounded-xl text-[10px] font-bold tactile-btn transition-colors"><span class="text-base mb-0.5">📂</span>Загрузить</button>
+      <button onclick="openStorePicker()" class="flex flex-col items-center justify-center py-2.5 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-all"><span class="text-base mb-0.5">➕</span>ТК</button>
+      <button onclick="openTechPicker()" class="flex flex-col items-center justify-center py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-all"><span class="text-base mb-0.5">🔧</span>Сервис</button>
+      <button onclick="openCustomTaskModal()" class="flex flex-col items-center justify-center py-2.5 bg-teal-500 hover:bg-teal-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-all"><span class="text-base mb-0.5">➕</span>Точка</button>
+      <button onclick="exportMonthReport()" class="flex flex-col items-center justify-center py-2.5 bg-purple-500 hover:bg-purple-600 text-white rounded-xl text-[10px] font-bold tactile-btn shadow-md transition-all"><span class="text-base mb-0.5">📥</span>Отчёт</button>
+      <button onclick="exportCalendarBackup()" class="flex flex-col items-center justify-center py-2.5 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 text-gray-700 dark:text-gray-200 rounded-xl text-[10px] font-bold tactile-btn transition-colors"><span class="text-base mb-0.5">💾</span>Бэкап</button>
+      <button onclick="importCalendarBackup()" class="flex flex-col items-center justify-center py-2.5 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 text-gray-700 dark:text-gray-200 rounded-xl text-[10px] font-bold tactile-btn transition-colors"><span class="text-base mb-0.5">📂</span>Загрузить</button>
     </div>
   </div>
 </div>
 
-<div id="storePickerModal" class="fixed inset-0 z-[110] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-end justify-center sm:items-center p-0 sm:p-4">
-  <div class="rounded-t-[32px] sm:rounded-[32px] w-full max-w-md relative animate-slide-up sm:animate-reveal glass-panel shadow-2xl flex flex-col h-[80vh] sm:h-auto sm:max-h-[90vh]">
-    <div class="p-4 border-b border-white/20 dark:border-white/5 flex justify-between items-center bg-white/40 dark:bg-black/40 rounded-t-[32px]">
+<!-- Выбор магазина -->
+<div id="storePickerModal" class="fixed inset-0 z-[110] bg-black/60 backdrop-blur-sm hidden flex items-end justify-center sm:items-center p-0 sm:p-4">
+  <div class="rounded-t-[32px] sm:rounded-[32px] w-full max-w-md relative bg-white dark:bg-zinc-900 shadow-2xl border border-gray-200 dark:border-zinc-800 flex flex-col h-[80vh] sm:h-auto sm:max-h-[90vh]">
+    <div class="p-4 border-b border-gray-200 dark:border-white/5 flex justify-between items-center bg-gray-50 dark:bg-black/40 rounded-t-[32px]">
       <h3 class="font-display font-extrabold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider text-sm">Добавить магазин</h3>
-      <button onclick="closeStorePicker()" class="p-2 bg-white/50 dark:bg-white/10 text-gray-500 hover:text-gray-700 dark:text-gray-300 rounded-full tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      <button onclick="closeStorePicker()" class="p-2 bg-white dark:bg-white/10 text-gray-500 hover:text-gray-700 dark:text-gray-300 rounded-full tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
     </div>
-    <div class="p-3 bg-white/20 dark:bg-black/20">
-      <input type="text" id="pickerSearch" oninput="renderPickerStores()" placeholder="Поиск по ТК, адресу..." class="w-full bg-white/80 dark:bg-zinc-800/80 rounded-xl px-4 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-inner border border-transparent transition-all">
+    <div class="p-3 bg-gray-50 dark:bg-black/20">
+      <input type="text" id="pickerSearch" oninput="renderPickerStores()" placeholder="Поиск по ТК, адресу..." class="w-full bg-white dark:bg-zinc-800 rounded-xl px-4 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-sm border border-gray-200 dark:border-transparent transition-all">
     </div>
     <div id="pickerStoreList" class="flex-1 overflow-y-auto p-3 pt-0 space-y-2 hide-scrollbar rounded-b-[32px]"></div>
   </div>
 </div>
 
-<div id="techPickerModal" class="fixed inset-0 z-[110] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-end justify-center sm:items-center p-0 sm:p-4">
-  <div class="rounded-t-[32px] sm:rounded-[32px] w-full max-w-md relative animate-slide-up sm:animate-reveal glass-panel shadow-2xl flex flex-col h-[80vh] sm:h-auto sm:max-h-[90vh]">
-    <div class="p-4 border-b border-white/20 dark:border-white/5 flex justify-between items-center bg-white/40 dark:bg-black/40 rounded-t-[32px]">
+<!-- Выбор сервиса -->
+<div id="techPickerModal" class="fixed inset-0 z-[110] bg-black/60 backdrop-blur-sm hidden flex items-end justify-center sm:items-center p-0 sm:p-4">
+  <div class="rounded-t-[32px] sm:rounded-[32px] w-full max-w-md relative bg-white dark:bg-zinc-900 shadow-2xl border border-gray-200 dark:border-zinc-800 flex flex-col h-[80vh] sm:h-auto sm:max-h-[90vh]">
+    <div class="p-4 border-b border-gray-200 dark:border-white/5 flex justify-between items-center bg-gray-50 dark:bg-black/40 rounded-t-[32px]">
       <h3 class="font-display font-extrabold text-orange-600 dark:text-orange-400 uppercase tracking-wider text-sm">Добавить сервис</h3>
-      <button onclick="closeTechPicker()" class="p-2 bg-white/50 dark:bg-white/10 text-gray-500 hover:text-gray-700 dark:text-gray-300 rounded-full tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      <button onclick="closeTechPicker()" class="p-2 bg-white dark:bg-white/10 text-gray-500 hover:text-gray-700 dark:text-gray-300 rounded-full tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
     </div>
-    <div class="p-3 bg-white/20 dark:bg-black/20">
-      <input type="text" id="techPickerSearch" oninput="renderTechPicker()" placeholder="Поиск по названию, городу..." class="w-full bg-white/80 dark:bg-zinc-800/80 rounded-xl px-4 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500/50 shadow-inner border border-transparent transition-all">
+    <div class="p-3 bg-gray-50 dark:bg-black/20">
+      <input type="text" id="techPickerSearch" oninput="renderTechPicker()" placeholder="Поиск по названию, городу..." class="w-full bg-white dark:bg-zinc-800 rounded-xl px-4 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500/50 shadow-sm border border-gray-200 dark:border-transparent transition-all">
     </div>
     <div id="techPickerList" class="flex-1 overflow-y-auto p-3 pt-0 space-y-2 hide-scrollbar rounded-b-[32px]"></div>
   </div>
 </div>
 
-<div id="timePickerModal" class="fixed inset-0 z-[120] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-  <div class="rounded-[24px] p-6 max-w-xs w-full relative animate-reveal glass-panel shadow-2xl flex flex-col text-center">
+<div id="timePickerModal" class="fixed inset-0 z-[120] bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="rounded-[24px] p-6 max-w-xs w-full relative bg-white dark:bg-zinc-900 shadow-2xl border border-gray-200 dark:border-zinc-800 flex flex-col text-center">
     <h3 class="text-base font-display font-extrabold text-gray-800 dark:text-white mb-4">Укажите время</h3>
-    <input type="time" id="modalTimeInput" value="12:00" class="w-full bg-white/50 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-4 py-3 text-lg font-bold text-center text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/50 mb-6 shadow-inner">
+    <input type="time" id="modalTimeInput" value="12:00" class="w-full bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/5 rounded-xl px-4 py-3 text-lg font-bold text-center text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/50 mb-6 shadow-inner">
     <div class="flex gap-2">
-      <button onclick="closeTimePicker()" class="flex-1 py-3 bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300 rounded-xl text-sm font-bold tactile-btn transition-colors">Отмена</button>
-      <button onclick="confirmTimePicker()" class="flex-1 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl text-sm font-bold tactile-btn shadow-lg shadow-blue-500/30 transition-all">OK</button>
+      <button onclick="closeTimePicker()" class="flex-1 py-3 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 text-gray-600 dark:text-gray-300 rounded-xl text-sm font-bold tactile-btn transition-colors">Отмена</button>
+      <button onclick="confirmTimePicker()" class="flex-1 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-lg shadow-blue-500/30 transition-all">OK</button>
     </div>
   </div>
 </div>
 
-<div id="customTaskModal" class="fixed inset-0 z-[110] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-  <div class="rounded-[28px] p-5 max-w-sm w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh] overflow-y-auto hide-scrollbar">
-    <button onclick="closeCustomTaskModal()" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2 rounded-full tactile-btn z-10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+<div id="customTaskModal" class="fixed inset-0 z-[110] bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="rounded-[28px] p-5 max-w-sm w-full relative bg-white dark:bg-zinc-900 shadow-2xl border border-gray-200 dark:border-zinc-800 flex flex-col max-h-[90vh] overflow-y-auto hide-scrollbar">
+    <button onclick="closeCustomTaskModal()" class="absolute top-4 right-4 text-gray-400 bg-gray-100 dark:bg-white/5 p-2 rounded-full tactile-btn z-10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
     <h3 class="text-base font-display font-extrabold text-teal-600 dark:text-teal-400 mb-4 uppercase pr-8 mt-1">Добавить точку</h3>
     <p class="text-xs text-gray-500 font-bold mb-2 uppercase tracking-wide">Выберите тип:</p>
     <div class="grid grid-cols-2 gap-2 mb-5">
-      <button onclick="setTaskPreset('🛞 Шиномонтаж', this)" class="task-preset-btn flex items-center gap-2 p-2.5 bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200 hover:bg-white/80 transition-colors"><span class="text-lg">🛞</span> Шиномонтаж</button>
-      <button onclick="setTaskPreset('🚿 Автомойка', this)" class="task-preset-btn flex items-center gap-2 p-2.5 bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200 hover:bg-white/80 transition-colors"><span class="text-lg">🚿</span> Автомойка</button>
-      <button onclick="setTaskPreset('📦 Оборотная тара', this)" class="task-preset-btn flex items-center gap-2 p-2.5 bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200 hover:bg-white/80 transition-colors"><span class="text-lg">📦</span> Оборотная тара</button>
-      <button onclick="setTaskPreset('📍 Доп. точка', this)" class="task-preset-btn flex items-center gap-2 p-2.5 bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200 hover:bg-white/80 transition-colors"><span class="text-lg">📍</span> Доп. точка</button>
+      <button onclick="setTaskPreset('🛞 Шиномонтаж', this)" class="task-preset-btn flex items-center gap-2 p-2.5 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-100 transition-colors"><span class="text-lg">🛞</span> Шиномонтаж</button>
+      <button onclick="setTaskPreset('🚿 Автомойка', this)" class="task-preset-btn flex items-center gap-2 p-2.5 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-100 transition-colors"><span class="text-lg">🚿</span> Автомойка</button>
+      <button onclick="setTaskPreset('📦 Оборотная тара', this)" class="task-preset-btn flex items-center gap-2 p-2.5 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-100 transition-colors"><span class="text-lg">📦</span> Оборотная тара</button>
+      <button onclick="setTaskPreset('📍 Доп. точка', this)" class="task-preset-btn flex items-center gap-2 p-2.5 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/5 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200 hover:bg-gray-100 transition-colors"><span class="text-lg">📍</span> Доп. точка</button>
     </div>
     <p class="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wide">Название:</p>
-    <input type="text" id="customTaskName" placeholder="Название..." class="w-full bg-white/60 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500/50 mb-4 shadow-sm">
+    <input type="text" id="customTaskName" placeholder="Название..." class="w-full bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500/50 mb-4 shadow-sm">
     <div id="customTaskDropdownContainer" class="hidden mb-4">
       <p class="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wide">Или выберите из базы:</p>
-      <select id="customTaskDropdown" onchange="fillTaskFromDropdown()" class="w-full bg-white/60 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500/50 appearance-none shadow-sm">
+      <select id="customTaskDropdown" onchange="fillTaskFromDropdown()" class="w-full bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500/50 appearance-none shadow-sm">
         <option value="">-- Выберите адрес --</option>
       </select>
     </div>
     <p class="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wide">Куда заезжали / Описание:</p>
-    <input type="text" id="customTaskDesc" placeholder="Например: ул. Ленина 5..." class="w-full bg-white/60 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500/50 mb-4 shadow-sm">
+    <input type="text" id="customTaskDesc" placeholder="Например: ул. Ленина 5..." class="w-full bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500/50 mb-4 shadow-sm">
     <p class="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wide">Время:</p>
-    <input type="time" id="customTaskTime" value="12:00" class="w-full bg-white/60 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500/50 mb-6 shadow-sm">
-    <button onclick="saveCustomTask()" class="w-full py-3 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-lg shadow-teal-500/30 shrink-0 transition-all">Сохранить точку</button>
+    <input type="time" id="customTaskTime" value="12:00" class="w-full bg-gray-50 dark:bg-black/30 border border-gray-200 dark:border-white/5 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500/50 mb-6 shadow-sm">
+    <button onclick="saveCustomTask()" class="w-full py-3 bg-teal-500 hover:bg-teal-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-lg shadow-teal-500/30 shrink-0 transition-all">Сохранить точку</button>
   </div>
 </div>
 
-<div id="importConfirmModal" class="fixed inset-0 z-[110] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
-  <div class="rounded-[28px] p-6 max-w-sm w-full relative animate-reveal glass-panel shadow-2xl text-center">
+<div id="importConfirmModal" class="fixed inset-0 z-[110] bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="rounded-[28px] p-6 max-w-sm w-full relative bg-white dark:bg-zinc-900 shadow-2xl border border-gray-200 dark:border-zinc-800 text-center">
     <h3 class="text-lg font-display font-extrabold text-blue-600 dark:text-blue-400 mb-2">Загрузка данных</h3>
     <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 font-medium">Файл прочитан. Как поступить?</p>
     <div class="flex flex-col gap-3">
-      <button onclick="confirmImport(true)" class="w-full py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-md">Объединить</button>
-      <button onclick="confirmImport(false)" class="w-full py-3 bg-gradient-to-r from-red-500 to-rose-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-md">Заменить</button>
-      <button onclick="document.getElementById('importConfirmModal').classList.add('hidden');" class="w-full py-2 bg-white/50 dark:bg-white/5 text-gray-600 dark:text-gray-300 rounded-xl text-sm font-bold tactile-btn transition-colors">Отмена</button>
+      <button onclick="confirmImport(true)" class="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-md">Объединить</button>
+      <button onclick="confirmImport(false)" class="w-full py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-md">Заменить</button>
+      <button onclick="document.getElementById('importConfirmModal').classList.add('hidden');" class="w-full py-2 bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 rounded-xl text-sm font-bold tactile-btn transition-colors">Отмена</button>
     </div>
   </div>
 </div>
@@ -410,9 +433,9 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
       
       <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0 xl:order-last">
         <button id="installPwaBtn" onclick="installPwa()" class="hidden bg-emerald-500 text-white w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-lg flex items-center justify-center tactile-btn shrink-0 hover:bg-emerald-600" title="Установить"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></button>
-        <button id="textSizeBtn" onclick="toggleTextSize()" class="bg-white/50 dark:bg-white/5 text-sky-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-white/20 dark:border-white/5 flex items-center justify-center tactile-btn shrink-0 font-black text-sm hover:bg-white/80 transition-colors" title="Размер текста">A</button>
-        <button id="calendarBtn" onclick="openCalendarModal()" class="bg-white/50 dark:bg-white/5 text-purple-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-white/20 dark:border-white/5 flex items-center justify-center tactile-btn shrink-0 hover:bg-white/80 transition-colors" title="Календарь"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></button>
-        <button id="themeToggleBtn" onclick="toggleTheme()" class="bg-white/50 dark:bg-white/5 text-gray-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-white/20 dark:border-white/5 flex items-center justify-center tactile-btn shrink-0 hover:bg-white/80 transition-colors" title="Тема"><svg id="themeIcon" class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></button>
+        <button id="textSizeBtn" onclick="toggleTextSize()" class="bg-gray-100 dark:bg-white/5 text-sky-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-gray-200 dark:border-white/5 flex items-center justify-center tactile-btn shrink-0 font-black text-sm hover:bg-gray-200 transition-colors" title="Размер текста">A</button>
+        <button id="calendarBtn" onclick="openCalendarModal()" class="bg-gray-100 dark:bg-white/5 text-purple-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-gray-200 dark:border-white/5 flex items-center justify-center tactile-btn shrink-0 hover:bg-gray-200 transition-colors" title="Календарь"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></button>
+        <button id="themeToggleBtn" onclick="toggleTheme()" class="bg-gray-100 dark:bg-white/5 text-gray-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-gray-200 dark:border-white/5 flex items-center justify-center tactile-btn shrink-0 hover:bg-gray-200 transition-colors" title="Тема"><svg id="themeIcon" class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></button>
       </div>
   </div>
 
@@ -435,7 +458,6 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
     
     <div id="centerStage" class="relative flex flex-col items-center flex-1 max-w-lg cursor-pointer tactile-btn mx-3 group z-20 pt-16" onclick="playTickSound(); openContactsModal();">
       
-      <!-- КОМИКС-ОБЛАЧКА -->
       <div id="bubbleSveta" class="story-bubble"><div class="story-bubble-inner"></div></div>
       <div id="bubbleMarina" class="story-bubble"><div class="story-bubble-inner"></div></div>
       <div id="bubbleMech" class="story-bubble"><div class="story-bubble-inner"></div></div>
@@ -470,14 +492,14 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   <div class="flex items-center gap-2 w-full mb-4 mt-2">
     <div class="relative flex-1 group">
       <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></div>
-      <input type="text" id="searchInput" placeholder="Поиск по ТК, адресу, городу..." class="bg-white/60 dark:bg-black/40 focus:bg-white dark:focus:bg-black/60 border border-white/40 dark:border-white/5 focus:border-lentaBlue/50 text-gray-800 dark:text-white placeholder-gray-500 text-sm rounded-2xl block w-full pl-11 pr-10 py-3 outline-none shadow-sm transition-all focus:ring-4 focus:ring-blue-500/10">
-      <button id="clearSearchBtn" onclick="clearSearch();" class="hidden absolute right-2 top-2 text-gray-400 bg-white dark:bg-zinc-800 p-1.5 rounded-full shadow-sm tactile-btn hover:text-gray-600 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      <input type="text" id="searchInput" placeholder="Поиск по ТК, адресу, городу..." class="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 text-gray-800 dark:text-white placeholder-gray-500 text-sm rounded-2xl block w-full pl-11 pr-10 py-3 outline-none shadow-sm transition-all focus:ring-4 focus:ring-blue-500/10">
+      <button id="clearSearchBtn" onclick="clearSearch();" class="hidden absolute right-2 top-2 text-gray-400 bg-gray-100 dark:bg-zinc-800 p-1.5 rounded-full shadow-sm tactile-btn hover:text-gray-600 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
       <div id="autocompleteList" class="absolute z-[100] w-full bg-white dark:bg-zinc-800 rounded-2xl hidden max-h-[40vh] overflow-y-auto mt-2 text-left text-gray-800 dark:text-gray-200 shadow-2xl border border-gray-100 dark:border-white/10 hide-scrollbar backdrop-blur-xl"></div>
     </div>
-    <button id="nearestBtn" onclick="sortByNearest();" class="relative bg-white/60 dark:bg-white/5 text-emerald-500 w-11 h-11 rounded-2xl shadow-sm border border-white/40 dark:border-white/5 flex items-center justify-center shrink-0 tactile-btn hover:bg-white transition-colors" title="Ближайшие ко мне"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></button>
-    <button id="voiceSearchBtn" onclick="startVoiceSearch();" class="bg-white/60 dark:bg-white/5 text-lentaBlue w-11 h-11 rounded-2xl shadow-sm border border-white/40 dark:border-white/5 flex items-center justify-center shrink-0 tactile-btn hover:bg-white transition-colors" title="Голос"><svg id="micIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg></button>
+    <button id="nearestBtn" onclick="sortByNearest();" class="relative bg-white dark:bg-zinc-900 text-emerald-500 w-11 h-11 rounded-2xl shadow-sm border border-gray-200 dark:border-zinc-800 flex items-center justify-center shrink-0 tactile-btn hover:bg-gray-50 transition-colors" title="Ближайшие ко мне"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></button>
+    <button id="voiceSearchBtn" onclick="startVoiceSearch();" class="bg-white dark:bg-zinc-900 text-lentaBlue w-11 h-11 rounded-2xl shadow-sm border border-gray-200 dark:border-zinc-800 flex items-center justify-center shrink-0 tactile-btn hover:bg-gray-50 transition-colors" title="Голос"><svg id="micIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg></button>
   </div>
-  <div class="relative overflow-hidden rounded-[28px] shadow-lg border border-white/20 dark:border-white/5 bg-white dark:bg-black">
+  <div class="relative overflow-hidden rounded-[28px] shadow-lg border border-gray-200 dark:border-white/5 bg-white dark:bg-black">
     <div class="scenic-bg group">
       <div id="skyDay" class="sky-layer sky-day"></div>
       <div id="skySunset" class="sky-layer sky-sunset"></div>
@@ -660,8 +682,8 @@ window.showDayShifts = function(dateStr) {
     container.innerHTML += `
       <div class="shift-item relative overflow-hidden rounded-xl animate-reveal" data-date="${dateStr}" data-index="${index}">
         <div class="absolute inset-0 bg-red-500 flex items-center justify-end pr-4 text-white font-bold text-xs pointer-events-none"><span>Удалить 🗑</span></div>
-        <div class="shift-content bg-white/80 dark:bg-black/40 p-2.5 rounded-xl border border-white/50 dark:border-white/5 relative shadow-sm will-change-transform">
-          <button onclick="deleteShift('${dateStr}', ${index})" class="absolute top-1 right-1 w-6 h-6 flex items-center justify-center bg-gray-100/50 dark:bg-white/5 hover:bg-red-100 hover:text-red-500 text-gray-400 rounded-full tactile-btn z-10"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+        <div class="shift-content bg-white/80 dark:bg-black/40 p-2.5 rounded-xl border border-gray-200 dark:border-white/5 relative shadow-sm will-change-transform">
+          <button onclick="deleteShift('${dateStr}', ${index})" class="absolute top-1 right-1 w-6 h-6 flex items-center justify-center bg-gray-100 dark:bg-white/5 hover:bg-red-100 hover:text-red-500 text-gray-400 rounded-full tactile-btn z-10"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
           <div class="flex items-center gap-1.5 mb-1 pr-6"><span class="px-1.5 py-0.5 rounded text-[8px] sm:text-[9px] font-black uppercase ${badgeClass}">${shift.brand}</span><span class="text-[11px] sm:text-xs font-bold text-gray-800 dark:text-gray-200">${name}</span><span class="text-[9px] sm:text-[10px] text-gray-400 ml-auto mr-1">${shift.time}</span></div>
           <div class="text-[9px] sm:text-[10px] text-gray-500 dark:text-gray-400 leading-tight pr-6">${shift.brand === 'ЗАДАЧА' ? '📍 ' + shift.city : shift.city + ', ' + shift.address}</div>
         </div>
@@ -712,13 +734,13 @@ window.openCustomTaskModal = function() {
   playTickSound(); document.getElementById('customTaskModal').classList.remove('hidden');
   document.getElementById('customTaskName').value = ''; document.getElementById('customTaskDesc').value = ''; document.getElementById('customTaskTime').value = '12:00';
   document.getElementById('customTaskDropdownContainer').classList.add('hidden');
-  document.querySelectorAll('.task-preset-btn').forEach(btn => { btn.classList.remove('bg-teal-100','border-teal-500','text-teal-800'); btn.classList.add('bg-white/50','dark:bg-white/5','border-white/20','dark:border-white/5'); });
+  document.querySelectorAll('.task-preset-btn').forEach(btn => { btn.classList.remove('bg-teal-100','border-teal-500','text-teal-800'); btn.classList.add('bg-gray-50','dark:bg-white/5','border-gray-200','dark:border-white/5'); });
 };
 window.closeCustomTaskModal = function() { document.getElementById('customTaskModal').classList.add('hidden'); };
 window.setTaskPreset = function(name, btnElement) {
   document.getElementById('customTaskName').value = name;
-  document.querySelectorAll('.task-preset-btn').forEach(btn => { btn.classList.remove('bg-teal-100','border-teal-500','text-teal-800'); btn.classList.add('bg-white/50','dark:bg-white/5','border-white/20','dark:border-white/5'); });
-  if (btnElement) { btnElement.classList.remove('bg-white/50','dark:bg-white/5','border-white/20','dark:border-white/5'); btnElement.classList.add('bg-teal-500/20','border-teal-500/50','text-teal-700','dark:text-teal-300'); }
+  document.querySelectorAll('.task-preset-btn').forEach(btn => { btn.classList.remove('bg-teal-100','border-teal-500','text-teal-800'); btn.classList.add('bg-gray-50','dark:bg-white/5','border-gray-200','dark:border-white/5'); });
+  if (btnElement) { btnElement.classList.remove('bg-gray-50','dark:bg-white/5','border-gray-200','dark:border-white/5'); btnElement.classList.add('bg-teal-500/20','border-teal-500/50','text-teal-700','dark:text-teal-300'); }
   const dropdownContainer = document.getElementById('customTaskDropdownContainer'); const dropdown = document.getElementById('customTaskDropdown');
   if (name.includes('Шиномонтаж')) {
     dropdown.innerHTML = '<option value="">-- Выберите или введите вручную --</option>';
@@ -754,7 +776,7 @@ window.renderPickerStores = function() {
     if (store.address.includes("ОКЕЙ") || store.tk === "929929") { brandName = "О'КЕЙ"; badgeClass = "bg-red-600 text-white"; }
     else if (store.address.includes("Молл")) { brandName = "РЦ МОЛЛ"; badgeClass = "bg-purple-600 text-white"; }
     else if (store.address.includes("Монетка") || (store.tk.startsWith("92") && store.tk.length > 3)) { brandName = "МОНЕТКА"; badgeClass = "bg-orange-500 text-white"; }
-    const btn = document.createElement('div'); btn.className = "bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 p-3 rounded-xl border border-white/20 dark:border-white/5 cursor-pointer tactile-btn transition-colors shadow-sm";
+    const btn = document.createElement('div'); btn.className = "bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 p-3 rounded-xl border border-gray-200 dark:border-white/5 cursor-pointer tactile-btn transition-colors shadow-sm";
     btn.onclick = () => { playTickSound(); saveStoreToDate(store.tk, brandName, store.city, store.address); };
     btn.innerHTML = `<div class="flex items-center gap-2 mb-1"><span class="px-2 py-0.5 rounded text-[10px] font-black uppercase ${badgeClass}">${brandName}</span><span class="text-xs font-bold text-gray-800 dark:text-gray-200">${store.tk !== '-' ? 'ТК/РЦ ' + store.tk : ''}</span><span class="text-[10px] text-gray-500 ml-auto">${store.city}</span></div><div class="text-[10px] text-gray-500 dark:text-gray-400 leading-tight">${store.address}</div>`;
     container.appendChild(btn);
@@ -773,7 +795,7 @@ window.renderTechPicker = function() {
   if (filtered.length === 0) { container.innerHTML = `<div class="text-center text-gray-400 py-6 text-sm">Ничего не найдено</div>`; return; }
   filtered.forEach(st => {
     const badgeClass = 'bg-purple-500';
-    const btn = document.createElement('div'); btn.className = "bg-white/50 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 p-3 rounded-xl border border-white/20 dark:border-white/5 cursor-pointer tactile-btn transition-colors shadow-sm";
+    const btn = document.createElement('div'); btn.className = "bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 p-3 rounded-xl border border-gray-200 dark:border-white/5 cursor-pointer tactile-btn transition-colors shadow-sm";
     btn.onclick = () => { playTickSound(); saveTechToDate(st); };
     btn.innerHTML = `<div class="flex items-center gap-2 mb-1"><span class="px-2 py-0.5 rounded text-[10px] font-black uppercase text-white ${badgeClass}">${st.type}</span><span class="text-xs font-bold text-gray-800 dark:text-gray-200">${st.name}</span><span class="text-[10px] text-gray-500 ml-auto">${st.city || ''}</span></div><div class="text-[10px] text-gray-500 dark:text-gray-400 leading-tight">${st.address}</div>`;
     container.appendChild(btn);
@@ -958,7 +980,6 @@ function updateParallax(vX) {
 }
 
 // ========== МОДАЛКИ, НАВИГАЦИЯ ==========
-// УБРАН ВЫЗОВ startModalStory И stopModalStory, КОТОРЫЕ ВЫЗЫВАЛИ КРАШ
 window.openContactsModal = function() { 
     playTickSound();
     document.getElementById('contactsModal').classList.remove('hidden'); 
@@ -995,7 +1016,6 @@ let currentNavCoords = null;
 
 window.openNavModal = function(query) {
   playTickSound();
-  // Если переданы координаты (широта,долгота), используем их
   if (query && query.match(/^-?\d+\.\d+,\s*-?\d+\.\d+$/)) {
     currentNavCoords = query.split(',').map(s => parseFloat(s.trim()));
     currentNavQuery = query;
@@ -1015,7 +1035,7 @@ window.executeNavigation = function(type) {
   if (currentNavCoords && currentNavCoords.length === 2) {
     const [lat, lon] = currentNavCoords;
     if (type === 'yandex') {
-      navUrl = `https://yandex.ru/maps/?rtext=~${lat},${lon}&rtt=auto`; // Сразу строит маршрут
+      navUrl = `https://yandex.ru/maps/?rtext=~${lat},${lon}&rtt=auto`;
     } else if (type === '2gis') {
       navUrl = `https://2gis.ru/geo/${lon},${lat}`;
     } else if (type === 'google') {
@@ -1056,14 +1076,14 @@ window.addEventListener('scroll', () => {
 
 window.sortByNearest = function() {
   playTickSound(); const btn = document.getElementById('nearestBtn');
-  if (window.isSortedByDistance) { window.isSortedByDistance = false; btn.classList.remove('bg-emerald-100', 'dark:bg-emerald-900/50', 'text-emerald-700', 'radar-active'); btn.classList.add('bg-white', 'dark:bg-slate-800', 'text-emerald-500'); renderCards(); return; }
+  if (window.isSortedByDistance) { window.isSortedByDistance = false; btn.classList.remove('bg-emerald-100', 'dark:bg-emerald-900/50', 'text-emerald-700', 'radar-active'); btn.classList.add('bg-white', 'dark:bg-zinc-900', 'text-emerald-500'); renderCards(); return; }
   if (!navigator.geolocation) { showToast("Геолокация не поддерживается 😔"); return; }
   btn.classList.add('radar-active');
   navigator.geolocation.getCurrentPosition(
     (position) => { 
         window.userLocation = { lat: position.coords.latitude, lon: position.coords.longitude }; 
         window.isSortedByDistance = true; 
-        btn.classList.remove('radar-active', 'bg-white/60', 'dark:bg-white/5', 'text-emerald-500'); 
+        btn.classList.remove('radar-active', 'bg-white', 'dark:bg-zinc-900', 'text-emerald-500'); 
         btn.classList.add('bg-emerald-100', 'dark:bg-emerald-900/50', 'text-emerald-700'); 
         renderCards(); showToast("Сортировка по удалённости применена 📍"); 
     },
@@ -1163,13 +1183,13 @@ function renderCards() {
   
   if (isTechMode) {
     html += `<div class="col-span-full flex flex-wrap gap-2 mb-2 overflow-x-auto hide-scrollbar pb-1">
-      <button onclick="selectedTechType='all';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='all'?'bg-orange-500 text-white shadow-md':'bg-white/50 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-white/20'}">Все</button>
-      <button onclick="selectedTechType='КАФЕ';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='КАФЕ'?'bg-orange-500 text-white shadow-md':'bg-white/50 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-white/20'}">Кафе</button>
-      <button onclick="selectedTechType='СТОЯНКА';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='СТОЯНКА'?'bg-orange-500 text-white shadow-md':'bg-white/50 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-white/20'}">Стоянки</button>
-      <button onclick="selectedTechType='ШИНОМОНТАЖ';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='ШИНОМОНТАЖ'?'bg-orange-500 text-white shadow-md':'bg-white/50 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-white/20'}">Шиномонтаж</button>
-      <button onclick="selectedTechType='АВТОМОЙКА';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='АВТОМОЙКА'?'bg-orange-500 text-white shadow-md':'bg-white/50 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-white/20'}">Автомойка</button>
-      <button onclick="selectedTechType='СЕРВИС';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='СЕРВИС'?'bg-orange-500 text-white shadow-md':'bg-white/50 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-white/20'}">Сервисы</button>
-      <button onclick="selectedTechType='favorites';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='favorites'?'bg-yellow-500 text-white shadow-md':'bg-white/50 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-white/20'}">⭐ Избранное</button>
+      <button onclick="selectedTechType='all';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='all'?'bg-orange-500 text-white shadow-md':'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/20'}">Все</button>
+      <button onclick="selectedTechType='КАФЕ';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='КАФЕ'?'bg-orange-500 text-white shadow-md':'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/20'}">Кафе</button>
+      <button onclick="selectedTechType='СТОЯНКА';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='СТОЯНКА'?'bg-orange-500 text-white shadow-md':'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/20'}">Стоянки</button>
+      <button onclick="selectedTechType='ШИНОМОНТАЖ';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='ШИНОМОНТАЖ'?'bg-orange-500 text-white shadow-md':'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/20'}">Шиномонтаж</button>
+      <button onclick="selectedTechType='АВТОМОЙКА';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='АВТОМОЙКА'?'bg-orange-500 text-white shadow-md':'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/20'}">Автомойка</button>
+      <button onclick="selectedTechType='СЕРВИС';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='СЕРВИС'?'bg-orange-500 text-white shadow-md':'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/20'}">Сервисы</button>
+      <button onclick="selectedTechType='favorites';renderCards();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${selectedTechType==='favorites'?'bg-yellow-500 text-white shadow-md':'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/20'}">⭐ Избранное</button>
       <button onclick="openAddTechModal();" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-white shadow-md tactile-btn ml-auto hover:bg-emerald-600 transition-colors">➕ Своя точка</button>
     </div>`;
     let list = getTechStations();
@@ -1192,7 +1212,6 @@ function renderCards() {
       
       const phoneLink = st.phone ? `<a href="tel:${st.phone.replace(/[^0-9+]/g, '')}" class="inline-flex items-center text-[11px] font-bold text-blue-600 dark:text-blue-400 underline decoration-blue-600/30 underline-offset-2 hover:decoration-blue-600 whitespace-nowrap mt-1">📞 ${st.phone}</a>` : '';
       
-      // ИСПРАВЛЕНИЕ НАВИГАЦИИ: Если есть координаты, используем их
       let navQuery = st.name;
       if (st.lat && st.lon) {
           navQuery = `${st.lat},${st.lon}`;
@@ -1280,7 +1299,7 @@ function renderCards() {
       
       let navQ = getSmartNavQuery(store.city, store.address, store.tk);
       const coords = window.storeCoords ? window.storeCoords[store.tk] : null;
-      if (coords) navQ = `${coords.lat},${coords.lon}`; // Приоритет координатам
+      if (coords) navQ = `${coords.lat},${coords.lon}`;
       
       const encQ = navQ;
       const routeUrl = customRoutes[store.tk] || null;
