@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lenta-cache-v12';
+const CACHE_NAME = 'lenta-cache-v1';
 const ASSETS = [
   './',
   './index.html',
