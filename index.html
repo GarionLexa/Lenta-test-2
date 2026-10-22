@@ -87,7 +87,7 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .border-brand-moll { border-left: 6px solid #9333ea; }
 .border-type-servis { border-left: 6px solid #8b5cf6; }
 .border-type-stoyanka { border-left: 6px solid #3b82f6; }
-.border-type-shinomontazh { border-left: 6px solid #10b981; }
+.border-type-shinоmontazh { border-left: 6px solid #10b981; }
 .border-type-kafe { border-left: 6px solid #f97316; }
 .border-type-avtomoyka { border-left: 6px solid #0ea5e9; }
 
@@ -150,7 +150,6 @@ body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-ser
 .show-sweat { opacity: 1; transform: translateY(0); animation: dripDown 1.5s forwards; }
 @keyframes dripDown { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
 
-/* ИЗМЕНЕНИЕ: Уменьшили bottom, чтобы диалоги не обрезались на ПК */
 .story-bubble { position: absolute; background: white; border: 1px solid #e4e4e7; color: #18181b; font-size: 11px; font-weight: 700; padding: 8px 12px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); opacity: 0; pointer-events: none; z-index: 1000; max-width: 150px; text-align: center; line-height: 1.3; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
 .dark .story-bubble { background: #27272a; border-color: #3f3f46; color: #f4f4f5; }
 .story-bubble.actor-sveta { bottom: 70px; left: 0; transform: scale(0.9) translateY(10px); }
@@ -197,51 +196,6 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   main { padding-top: 1rem; padding-bottom: 1rem; }
 }
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) { #cardsGrid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
-
-/* --- НОВЫЕ АНИМАЦИИ ДЛЯ МИКРОФОНА И РАДАРА --- */
-@keyframes micPulse {
-  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); background-color: rgba(239, 68, 68, 0.1); color: #ef4444 !important; }
-  70% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); background-color: rgba(239, 68, 68, 0.2); color: #ef4444 !important; }
-  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); background-color: rgba(239, 68, 68, 0.1); color: #ef4444 !important; }
-}
-.mic-listening {
-  animation: micPulse 1.5s infinite !important;
-  color: #ef4444 !important;
-  border-color: #ef4444 !important;
-}
-
-@keyframes radarWave {
-  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
-}
-.radar-active {
-  position: relative;
-  color: #10b981 !important;
-  border-color: #10b981 !important;
-  z-index: 10;
-}
-.radar-active::before,
-.radar-active::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  border: 2px solid #10b981;
-  transform: translate(-50%, -50%);
-  animation: radarWave 2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
-  pointer-events: none;
-  z-index: 0;
-}
-.radar-active::after {
-  animation-delay: 0.8s;
-}
-.radar-active svg {
-  position: relative;
-  z-index: 10;
-}
 </style>
 </head>
 <body class="relative flex flex-col min-h-screen antialiased">
@@ -485,12 +439,17 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 
   <div id="controlPanel" class="flex-1 w-full xl:w-auto bg-white/60 dark:bg-black/30 backdrop-blur-xl rounded-[28px] shadow-sm border border-white/40 dark:border-white/5 py-2 px-4 flex items-center justify-between transition-all duration-700 min-h-[80px]">
     <div id="visitContainer" class="flex flex-col items-center justify-center shrink-0 min-w-[70px] z-10" title="Счётчик визитов">
-      <img id="visitCounterBadge" alt="Визиты" loading="lazy" class="h-[20px] rounded-md shadow-sm opacity-0 transition-opacity duration-300" onload="this.classList.remove('opacity-0')" onerror="this.style.display='none'">
+      <!-- ЗАМЕНА СЧЕТЧИКА НА ЛОКАЛЬНЫЙ С ВОЗМОЖНОСТЬЮ СБРОСА -->
+      <div id="visitCounterBadge" onclick="handleVisitReset()" class="bg-slate-800 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm cursor-pointer select-none tactile-btn" title="Двойной клик для сброса">0 ВИЗИТОВ</div>
     </div>
     <div id="centerStage" class="relative flex flex-col items-center flex-1 max-w-lg cursor-pointer tactile-btn mx-3 group z-20" onclick="playTickSound(); openContactsModal();">
       <div id="bubbleSveta" class="story-bubble actor-sveta"><div class="story-bubble-inner"></div></div>
       <div id="bubbleMarina" class="story-bubble actor-marina"><div class="story-bubble-inner"></div></div>
       <div id="bubbleMech" class="story-bubble actor-mech"><div class="story-bubble-inner"></div></div>
+      
+      <!-- ДИСКОШАР -->
+      <div id="discoBall" class="disco-ball"><div class="disco-ball-inner"></div><div class="disco-rays"></div></div>
+      
       <div class="w-full h-14 relative flex items-center justify-center overflow-visible" id="mechanicSvgContainer">
         <svg viewBox="0 0 240 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-gray-500 dark:text-gray-400 group-hover:text-emerald-500 transition-colors normal-mode overflow-visible drop-shadow-sm" id="mechanicSvgElement">
           <g id="girlsGroup">
@@ -848,7 +807,27 @@ window.importCalendarBackup = function() {
   input.click();
 };
 window.confirmImport = function(mergeMode) { if (!_importedData) return; if (mergeMode) { for (const date in _importedData) { if (!myShifts[date]) myShifts[date] = []; myShifts[date] = myShifts[date].concat(_importedData[date]); } } else myShifts = _importedData; saveShifts(); document.getElementById('importConfirmModal').classList.add('hidden'); renderCalendar(); showDayShifts(selectedDate); showToast("✅ Данные успешно загружены!"); };
-(function initCounter() { const badge = document.getElementById('visitCounterBadge'); if (!badge) return; const uniqueTime = Date.now() + Math.floor(Math.random() * 1000); badge.src = `https://hits.sh/garionlexa_new.github.io/lenta_app_v3.svg?label=%D0%92%D0%B8%D0%B7%D0%B8%D1%82%D1%8B&color=1e293b&labelColor=334155&nocache=${uniqueTime}`; })();
+
+// ========== ЛОКАЛЬНЫЙ СЧЕТЧИК ВИЗИТОВ ==========
+let visitCount = parseInt(localStorage.getItem('lenta_visits') || '0');
+visitCount++;
+localStorage.setItem('lenta_visits', visitCount);
+document.getElementById('visitCounterBadge').innerText = visitCount + ' ВИЗИТОВ';
+
+let clickCount = 0, clickTimer;
+function handleVisitReset() {
+  clickCount++;
+  if (clickCount === 1) {
+    clickTimer = setTimeout(() => { clickCount = 0; }, 600); // Если не успел кликнуть второй раз
+  } else if (clickCount === 2) {
+    clearTimeout(clickTimer);
+    clickCount = 0;
+    localStorage.setItem('lenta_visits', '0');
+    document.getElementById('visitCounterBadge').innerText = '0 ВИЗИТОВ';
+    showToast("Счётчик сброшен на 0");
+    playTickSound();
+  }
+}
 
 // ========== АУДИО ==========
 let audioCtx = null; let engineOsc = null; let engineGain = null; let isAudioUnlocked = false;
@@ -910,12 +889,53 @@ citySlider.addEventListener('mousemove', (e) => { if (!isMouseDown || isMusicPla
 citySlider.style.cursor = 'grab';
 let lastLogoTapTime = 0, logoTapTimeout;
 function handleLogoTap() { unlockAudio(); const now = Date.now(); if (now - lastLogoTapTime < 400) { clearTimeout(logoTapTimeout); fullStopMusic(); } else logoTapTimeout = setTimeout(togglePlayPause, 400); lastLogoTapTime = now; }
+
 function togglePlayPause() {
   const logo = document.getElementById('logoImage');
-  if (isMusicPlaying) { bgMusic.pause(); isMusicPlaying = false; logo.classList.remove('record-spin'); stopAutoScroll(); startStoryTimer(); } 
-  else { abortStory(); clearTimeout(storyTimer); const p = bgMusic.play(); if (p !== undefined) { p.then(() => { isMusicPlaying = true; logo.classList.add('record-spin'); startAutoScroll(); }).catch(() => showToast("Не удалось запустить музыку 🔇")); } }
+  const controlPanel = document.getElementById('controlPanel');
+  const discoBall = document.getElementById('discoBall');
+  
+  if (isMusicPlaying) { 
+    bgMusic.pause(); 
+    isMusicPlaying = false; 
+    logo.classList.remove('record-spin'); 
+    controlPanel.classList.remove('dancing');
+    discoBall.classList.remove('dropped');
+    stopAutoScroll(); 
+    startStoryTimer(); 
+  } 
+  else { 
+    abortStory(); 
+    clearTimeout(storyTimer); 
+    const p = bgMusic.play(); 
+    if (p !== undefined) { 
+      p.then(() => { 
+        isMusicPlaying = true; 
+        logo.classList.add('record-spin'); 
+        controlPanel.classList.add('dancing');
+        
+        // Проверяем время: если ночь (после 19:00) — опускаем дискошар
+        const hour = new Date().getHours();
+        if (hour >= 19 || hour < 6) {
+           discoBall.classList.add('dropped');
+        }
+        
+        startAutoScroll(); 
+      }).catch(() => showToast("Не удалось запустить музыку 🔇")); 
+    } 
+  }
 }
-function fullStopMusic() { bgMusic.pause(); bgMusic.currentTime = 0; isMusicPlaying = false; document.getElementById('logoImage').classList.remove('record-spin'); stopAutoScroll(); resetTrucksToStart(); startStoryTimer(); }
+function fullStopMusic() { 
+  bgMusic.pause(); 
+  bgMusic.currentTime = 0; 
+  isMusicPlaying = false; 
+  document.getElementById('logoImage').classList.remove('record-spin'); 
+  document.getElementById('controlPanel').classList.remove('dancing');
+  document.getElementById('discoBall').classList.remove('dropped');
+  stopAutoScroll(); 
+  resetTrucksToStart(); 
+  startStoryTimer(); 
+}
 function resetTrucksToStart() { buildCitySlider(); citySlider.scrollLeft = 0; virtualScrollX = 0; window.fractionalScroll = 0; lastActualScrollLeft = 0; updateParallax(0); }
 
 let lastSliderScrollTime = 0;
@@ -992,9 +1012,6 @@ window.openNavModal = function(query, coordsStr) {
 
 window.closeNavModal = function() { document.getElementById('navModal').classList.add('hidden'); };
 
-// ИЗМЕНЕНИЕ: Возвращаем старую добрую логику для навигации.
-// Для магазинов (где передаются и текст, и координаты) — гибридный поиск.
-// Для точек (где передаются только координаты или только адрес) — обычный поиск.
 window.executeNavigation = function(type) {
   playTickSound(); let navUrl = '';
   const encodedText = encodeURIComponent(currentNavQuery || '');
