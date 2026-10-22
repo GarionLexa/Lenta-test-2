@@ -48,7 +48,6 @@
 :root { --truck-light-opacity: 0; --truck-body-brightness: 1; --glass-bg: rgba(255,255,255,0.95); --glass-border: rgba(255,255,255,0.6); }
 .dark { --glass-bg: rgba(24, 24, 27, 0.95); --glass-border: rgba(255,255,255,0.08); }
 
-/* ИСПРАВЛЕН ПЕРЕСВЕТ: убрали filter, сделали фон чуть темнее */
 body { background-color: #e5e7eb; color: #1f2937; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; width: 100%; overflow-x: hidden; padding-bottom: env(safe-area-inset-bottom); transition: background-color 0.4s ease, color 0.4s ease; }
 .dark body { background-color: #0f1115; color: #e4e4e7; }
 
@@ -144,44 +143,21 @@ body { background-color: #e5e7eb; color: #1f2937; font-family: 'Inter', sans-ser
 .wrench-arm { animation: wrenchMotion 0.6s infinite alternate ease-in-out; }
 @keyframes wrenchMotion { 0% { transform: rotate(-15deg); } 100% { transform: rotate(20deg); } }
 
+/* ТАНЦЫ */
+@keyframes danceSveta { 0% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-6px) rotate(5deg); } 100% { transform: translateY(0) rotate(0deg); } }
+@keyframes danceMarina { 0% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-5px) rotate(-5deg); } 100% { transform: translateY(0) rotate(0deg); } }
+@keyframes danceMech { 0% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-7px) rotate(-8deg); } 100% { transform: translateY(0) rotate(0deg); } }
+
+.dancing #svetaBody { animation: danceSveta 0.6s infinite ease-in-out; transform-origin: 30px 48px; }
+.dancing #marinaBody { animation: danceMarina 0.5s infinite ease-in-out; transform-origin: 70px 48px; }
+.dancing #mechBody { animation: danceMech 0.7s infinite ease-in-out; transform-origin: 170px 55px; }
+
 /* КОМИКС-ОБЛАЧКА */
-.story-bubble { 
-  position: absolute; 
-  background: white; 
-  border: 2px solid #e4e4e7; 
-  color: #18181b; 
-  font-size: 11px; 
-  font-weight: 700; 
-  padding: 8px 12px; 
-  border-radius: 12px; 
-  box-shadow: 0 4px 15px -3px rgba(0,0,0,0.15); 
-  opacity: 0; 
-  pointer-events: none; 
-  z-index: 9999; 
-  max-width: 130px; 
-  width: max-content;
-  white-space: normal; 
-  word-break: break-word; 
-  text-align: center; 
-  line-height: 1.2; 
-  transform: scale(0.8);
-  transition: all 0.3s cubic-bezier(0.4,0,0.2,1); 
-}
+.story-bubble { position: absolute; background: white; border: 2px solid #e4e4e7; color: #18181b; font-size: 11px; font-weight: 700; padding: 8px 12px; border-radius: 12px; box-shadow: 0 4px 15px -3px rgba(0,0,0,0.15); opacity: 0; pointer-events: none; z-index: 9999; max-width: 130px; width: max-content; white-space: normal; word-break: break-word; text-align: center; line-height: 1.2; transform: scale(0.8); transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
 .dark .story-bubble { background: #27272a; border-color: #3f3f46; color: #f4f4f5; }
 .story-bubble.active { transform: scale(1); opacity: 1; }
-
-.story-bubble::after { 
-  content: ''; 
-  position: absolute; 
-  top: 100%; 
-  left: 50%;
-  margin-left: -6px;
-  border-width: 6px; 
-  border-style: solid; 
-  border-color: white transparent transparent transparent; 
-}
+.story-bubble::after { content: ''; position: absolute; top: 100%; left: 50%; margin-left: -6px; border-width: 6px; border-style: solid; border-color: white transparent transparent transparent; }
 .dark .story-bubble::after { border-color: #27272a transparent transparent transparent; }
-
 #bubbleSveta { bottom: 65px; left: 5px; }
 #bubbleMarina { bottom: 65px; left: 45px; }
 #bubbleMech { bottom: 65px; right: 15px; }
@@ -199,11 +175,11 @@ body { background-color: #e5e7eb; color: #1f2937; font-family: 'Inter', sans-ser
   border-color: #ef4444 !important;
 }
 
-/* АНИМАЦИЯ РАДАРА (БЛИЖАЙШИЕ) */
+/* АНИМАЦИЯ РАДАРА (ВОЛНЫ) */
 @keyframes radarPulse {
-  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-  70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7), 0 0 0 0 rgba(16, 185, 129, 0.5); }
+  50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0), 0 0 0 20px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 20px rgba(16, 185, 129, 0), 0 0 0 40px rgba(16, 185, 129, 0); }
 }
 .radar-active {
   animation: radarPulse 1.5s infinite;
@@ -244,10 +220,36 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 }
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) { #cardsGrid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
 
-/* ДИСКО-ШАР */
+/* ДИСКО-ШАР (УМЕНЬШЕННЫЙ И РЕАЛИСТИЧНЫЙ) */
 .disco-ball { position: absolute; top: 0; left: 50%; transform: translate(-50%, -150%); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease; opacity: 0; z-index: 40; pointer-events: none; }
 .disco-ball.dropped { transform: translate(-50%, 5px); opacity: 1; }
-.disco-rays { position: absolute; top: 50%; left: 50%; width: 300px; height: 300px; margin-left: -150px; margin-top: -150px; background: conic-gradient(from 0deg, transparent 0deg 20deg, rgba(255, 255, 255, 0.6) 20deg 40deg, transparent 40deg 60deg, rgba(255, 255, 255, 0.6) 60deg 80deg, transparent 80deg 100deg, rgba(255, 255, 255, 0.6) 100deg 120deg, transparent 120deg 140deg, rgba(255, 255, 255, 0.6) 140deg 160deg, transparent 160deg 180deg, rgba(255, 255, 255, 0.6) 180deg 200deg, transparent 200deg 220deg, rgba(255, 255, 255, 0.6) 220deg 240deg, transparent 240deg 260deg, rgba(255, 255, 255, 0.6) 260deg 280deg, transparent 280deg 300deg, rgba(255, 255, 255, 0.6) 300deg 320deg, transparent 320deg 340deg, rgba(255, 255, 255, 0.6) 340deg 360deg); border-radius: 50%; opacity: 0; transition: opacity 0.5s ease; animation: spinRays 4s linear infinite; z-index: -1; filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5)); }
+
+/* Разноцветные лучи */
+.disco-rays { 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    width: 400px; 
+    height: 400px; 
+    margin-left: -200px; 
+    margin-top: -200px; 
+    background: conic-gradient(
+        from 0deg, 
+        transparent 0deg 10deg, rgba(255, 0, 0, 0.4) 10deg 20deg, 
+        transparent 20deg 30deg, rgba(0, 255, 0, 0.4) 30deg 40deg, 
+        transparent 40deg 50deg, rgba(0, 0, 255, 0.4) 50deg 60deg, 
+        transparent 60deg 70deg, rgba(255, 255, 0, 0.4) 70deg 80deg, 
+        transparent 80deg 90deg, rgba(255, 0, 255, 0.4) 90deg 100deg, 
+        transparent 100deg 110deg, rgba(0, 255, 255, 0.4) 110deg 120deg, 
+        transparent 120deg 360deg
+    ); 
+    border-radius: 50%; 
+    opacity: 0; 
+    transition: opacity 0.5s ease; 
+    animation: spinRays 3s linear infinite; 
+    z-index: -1; 
+    filter: blur(2px);
+}
 .disco-ball.dropped .disco-rays { opacity: 1; }
 @keyframes spinRays { 100% { transform: rotate(360deg); } }
 </style>
@@ -297,7 +299,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   </div>
 </div>
 
-<!-- Остальные модалки (Календарь, Монетка и т.д.) -->
+<!-- Монетка -->
 <div id="monetkaModal" class="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
   <div class="rounded-[32px] p-6 max-w-md w-full relative bg-white dark:bg-zinc-900 shadow-2xl border border-gray-200 dark:border-zinc-800 flex flex-col max-h-[90vh]">
     <button onclick="closeMonetkaModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
@@ -308,6 +310,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   </div>
 </div>
 
+<!-- Календарь -->
 <div id="calendarModal" class="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-5">
   <div class="rounded-[32px] p-5 sm:p-7 w-full max-w-sm relative bg-white dark:bg-zinc-900 shadow-2xl border border-gray-200 dark:border-zinc-800 flex flex-col max-h-[90vh]">
     <button onclick="closeCalendarModal();" class="absolute top-3 right-3 sm:top-5 sm:right-5 text-gray-400 bg-gray-100 dark:bg-white/5 p-2 sm:p-2.5 rounded-full tactile-btn z-10"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
@@ -362,6 +365,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   </div>
 </div>
 
+<!-- Время -->
 <div id="timePickerModal" class="fixed inset-0 z-[120] bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
   <div class="rounded-[24px] p-6 max-w-xs w-full relative bg-white dark:bg-zinc-900 shadow-2xl border border-gray-200 dark:border-zinc-800 flex flex-col text-center">
     <h3 class="text-base font-display font-extrabold text-gray-800 dark:text-white mb-4">Укажите время</h3>
@@ -373,6 +377,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   </div>
 </div>
 
+<!-- Кастомная точка -->
 <div id="customTaskModal" class="fixed inset-0 z-[110] bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
   <div class="rounded-[28px] p-5 max-w-sm w-full relative bg-white dark:bg-zinc-900 shadow-2xl border border-gray-200 dark:border-zinc-800 flex flex-col max-h-[90vh] overflow-y-auto hide-scrollbar">
     <button onclick="closeCustomTaskModal()" class="absolute top-4 right-4 text-gray-400 bg-gray-100 dark:bg-white/5 p-2 rounded-full tactile-btn z-10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
@@ -400,6 +405,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   </div>
 </div>
 
+<!-- Импорт -->
 <div id="importConfirmModal" class="fixed inset-0 z-[110] bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
   <div class="rounded-[28px] p-6 max-w-sm w-full relative bg-white dark:bg-zinc-900 shadow-2xl border border-gray-200 dark:border-zinc-800 text-center">
     <h3 class="text-lg font-display font-extrabold text-blue-600 dark:text-blue-400 mb-2">Загрузка данных</h3>
@@ -412,6 +418,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
   </div>
 </div>
 
+<!-- Баннер обновления -->
 <div id="updateBanner" class="hidden fixed top-4 left-1/2 -translate-x-1/2 z-[300] bg-indigo-600 text-white px-6 py-3.5 rounded-2xl shadow-2xl shadow-indigo-500/40 max-w-sm flex items-center gap-4 animate-reveal border border-white/10 backdrop-blur-md">
   <div class="flex-1 text-xs font-bold leading-tight" id="updateBannerText">Доступно обновление</div>
   <button onclick="applyUpdate()" class="bg-white text-indigo-600 px-4 py-1.5 rounded-xl text-xs font-bold tactile-btn shadow-sm hover:bg-gray-50">Обновить</button>
@@ -441,14 +448,24 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 
   <div id="controlPanel" class="flex-1 w-full xl:w-auto bg-white/60 dark:bg-black/30 backdrop-blur-xl rounded-[28px] shadow-sm border border-white/40 dark:border-white/5 py-2 px-4 flex items-center justify-between transition-all duration-700 min-h-[80px] overflow-visible">
     
+    <!-- ДИСКО-ШАР -->
     <div id="discoBall" class="disco-ball absolute top-0 left-1/2 -translate-x-1/2 z-40">
-      <svg viewBox="0 0 100 100" class="w-16 h-16 drop-shadow-2xl">
-        <defs><radialGradient id="discoGrad" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#ffffff" /><stop offset="40%" stop-color="#cbd5e1" /><stop offset="80%" stop-color="#64748b" /><stop offset="100%" stop-color="#334155" /></radialGradient></defs>
-        <line x1="50" y1="-10" x2="50" y2="20" stroke="#cbd5e1" stroke-width="2" />
-        <circle cx="50" cy="55" r="30" fill="url(#discoGrad)" />
-        <path d="M 22 40 L 78 40 M 20 55 L 80 55 M 22 70 L 78 70" stroke="#94a3b8" stroke-width="1" fill="none" opacity="0.6"/>
-        <path d="M 35 25 L 35 85 M 50 25 L 50 85 M 65 25 L 65 85" stroke="#94a3b8" stroke-width="1" fill="none" opacity="0.6"/>
-        <circle cx="40" cy="45" r="8" fill="white" opacity="0.4" filter="blur(1px)"/>
+      <div class="disco-rays"></div>
+      <svg viewBox="0 0 100 100" class="w-10 h-10 drop-shadow-2xl relative z-10 animate-[spin_4s_linear_infinite]">
+        <defs>
+          <radialGradient id="discoGrad" cx="30%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#ffffff" />
+            <stop offset="40%" stop-color="#e2e8f0" />
+            <stop offset="70%" stop-color="#94a3b8" />
+            <stop offset="100%" stop-color="#334155" />
+          </radialGradient>
+        </defs>
+        <circle cx="50" cy="50" r="48" fill="url(#discoGrad)" />
+        <path d="M 10 50 Q 50 30 90 50 M 10 50 Q 50 70 90 50" stroke="#64748b" stroke-width="1.5" fill="none"/>
+        <path d="M 15 30 Q 50 60 85 30 M 15 70 Q 50 40 85 70" stroke="#64748b" stroke-width="1.5" fill="none"/>
+        <path d="M 50 10 V 90 M 30 15 V 85 M 70 15 V 85" stroke="#64748b" stroke-width="1.5" fill="none"/>
+        <path d="M 25 25 L 75 75 M 75 25 L 25 75" stroke="#64748b" stroke-width="1" fill="none" opacity="0.6"/>
+        <circle cx="35" cy="35" r="6" fill="white" opacity="0.6" filter="blur(1px)"/>
       </svg>
     </div>
 
@@ -463,6 +480,7 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
       <div id="bubbleMech" class="story-bubble"><div class="story-bubble-inner"></div></div>
       
       <div class="w-full h-14 relative flex items-center justify-center overflow-visible" id="mechanicSvgContainer">
+        <!-- Добавили класс dancing при музыке через JS -->
         <svg viewBox="0 0 240 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-gray-500 dark:text-gray-400 group-hover:text-emerald-500 transition-colors normal-mode overflow-visible drop-shadow-sm" id="mechanicSvgElement">
           <g id="girlsGroup">
             <path d="M 15 48 L 85 48" stroke-width="2"/>
@@ -546,15 +564,6 @@ html.very-large-text .text-sm   { font-size: 18px !important; }
 <script src="data.js"></script>
 <script src="data_services.js"></script>
 <script src="stories.js"></script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    if (window.customRoutes) {
-      // ИСПРАВЛЕННАЯ ССЫЛКА НА БЕЛЯШНУЮ
-      window.customRoutes['YOUR_TK'] = 'https://yandex.ru/maps?rtext=56.784546%2C60.473377~57.760255%2C67.638376&rtt=auto';
-    }
-  });
-</script>
 
 <script>
 // --- ЛОГИКА ПРИЛОЖЕНИЯ ---
@@ -910,7 +919,9 @@ function togglePlayPause() {
   } else { 
     abortStory(); clearTimeout(storyTimer); 
     isMusicPlaying = true; 
-    logo.classList.add('record-spin'); startAutoScroll(); document.getElementById('mechanicSvgElement').classList.add('dancing'); document.getElementById('discoBall').classList.add('dropped'); 
+    logo.classList.add('record-spin'); startAutoScroll(); document.getElementById('mechanicSvgElement').classList.add('dancing'); 
+    // Диско-шар покажется только ночью (через updateParallax)
+    
     const p = bgMusic.play(); 
     if (p !== undefined) { p.catch(() => showToast("Музыка не запущена (нет звука) 🔇")); } 
   }
@@ -964,6 +975,14 @@ function updateParallax(vX) {
   const darkness = 1 - progress * 0.7;
   if (progress > 0.6) { document.documentElement.style.setProperty('--truck-light-opacity', '1'); document.documentElement.style.setProperty('--truck-body-brightness', '0.6'); } else { document.documentElement.style.setProperty('--truck-light-opacity', '0'); document.documentElement.style.setProperty('--truck-body-brightness', '1'); }
   
+  // ДИСКО-ШАР ПОЯВЛЯЕТСЯ ТОЛЬКО НОЧЬЮ И ПРИ МУЗЫКЕ
+  const discoBall = document.getElementById('discoBall');
+  if (progress > 0.6 && isMusicPlaying) {
+      discoBall.classList.add('dropped');
+  } else {
+      discoBall.classList.remove('dropped');
+  }
+
   const layerTrees = document.getElementById('layerTrees'); const layerLeaves = document.getElementById('layerLeaves'); const layerSnow = document.getElementById('layerSnow');
   if (layerTrees && layerLeaves && layerSnow) {
     if (progress < 0.25) { layerLeaves.style.opacity = 0; layerSnow.style.opacity = 0; layerTrees.style.filter = `brightness(${darkness}) hue-rotate(-20deg) saturate(1.5)`; }
@@ -980,14 +999,8 @@ function updateParallax(vX) {
 }
 
 // ========== МОДАЛКИ, НАВИГАЦИЯ ==========
-window.openContactsModal = function() { 
-    playTickSound();
-    document.getElementById('contactsModal').classList.remove('hidden'); 
-};
-
-window.closeContactsModal = function() { 
-    document.getElementById('contactsModal').classList.add('hidden'); 
-};
+window.openContactsModal = function() { playTickSound(); document.getElementById('contactsModal').classList.remove('hidden'); };
+window.closeContactsModal = function() { document.getElementById('contactsModal').classList.add('hidden'); };
 
 window.openMonetkaModal = function() { playTickSound(); document.getElementById('monetkaModal').classList.remove('hidden'); };
 window.closeMonetkaModal = function() { document.getElementById('monetkaModal').classList.add('hidden'); };
@@ -1299,6 +1312,7 @@ function renderCards() {
       
       let navQ = getSmartNavQuery(store.city, store.address, store.tk);
       const coords = window.storeCoords ? window.storeCoords[store.tk] : null;
+      // ЕСЛИ ЕСТЬ КООРДИНАТЫ - ИСПОЛЬЗУЕМ ИХ (ЭТО РЕШИТ ПРОБЛЕМУ С ЯНДЕКСОМ)
       if (coords) navQ = `${coords.lat},${coords.lon}`;
       
       const encQ = navQ;
