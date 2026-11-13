@@ -76,6 +76,4 @@ html, body { min-height: 100dvh; }
 
 [id$="Modal"] > div { overscroll-behavior: contain; }
 #calendarGrid { grid-auto-rows: min-content; }
-
-/* === Новые модалки === */
 #wageList { max-height: 40vh; }
