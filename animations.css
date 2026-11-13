@@ -15,8 +15,7 @@
 .disco-rays { position: absolute; top: 50%; left: 50%; width: 200px; height: 200px; margin-left: -100px; margin-top: -100px; background: conic-gradient(from 0deg, transparent 0deg 20deg, rgba(255, 255, 255, 0.4) 20deg 40deg, transparent 40deg 60deg, rgba(255, 255, 255, 0.4) 60deg 80deg, transparent 80deg 100deg, rgba(255, 255, 255, 0.4) 100deg 120deg, transparent 120deg 140deg, rgba(255, 255, 255, 0.4) 140deg 160deg, transparent 160deg 180deg, rgba(255, 255, 255, 0.4) 180deg 200deg, transparent 200deg 220deg, rgba(255, 255, 255, 0.4) 220deg 240deg, transparent 240deg 260deg, rgba(255, 255, 255, 0.4) 260deg 280deg, transparent 280deg 300deg, rgba(255, 255, 255, 0.4) 300deg 320deg, transparent 320deg 340deg, rgba(255, 255, 255, 0.4) 340deg 360deg); border-radius: 50%; opacity: 0; transition: opacity 0.3s; animation: spinRays 6s linear infinite; z-index: 1; }
 .disco-ball.dropped .disco-rays { opacity: 1; }
 @keyframes spinRays { 100% { transform: rotate(360deg); } }
-
-/* === ДОБАВЛЕНО: АДАПТИВ И ГОРИЗОНТАЛЬНЫЙ РЕЖИМ === */
+/* === АДАПТИВ И ГОРИЗОНТАЛЬНЫЙ РЕЖИМ === */
 html, body { min-height: 100dvh; }
 @media (min-width: 1024px) { #cardsGrid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } .scenic-bg { height: 160px; } }
 @media (orientation: landscape) and (max-height: 600px) {
