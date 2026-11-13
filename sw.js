@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lenta-cache-v5';
+const CACHE_NAME = 'lenta-cache-v8';
 const ASSETS = [
   './',
   './index.html',
@@ -57,7 +57,7 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  if (url.origin === location.origin && url.pathname.match(/\.(css|js|png|jpg|jpeg|svg|woff2?|ttf|eot)$/)) {
+  if (url.origin === location.origin && url.pathname.match(/\.(css|js|png|jpg|jpeg|webp|svg|woff2?|ttf|eot)$/)) {
     e.respondWith(
       caches.match(request).then((cached) => {
         const fetchPromise = fetch(request).then((response) => {
