@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lenta-cache-v13';
+const CACHE_NAME = 'lenta-cache-v14';
 const ASSETS = [
   './', './index.html', './data.js', './data_services.js', './stories.js',
   './animations.css', './icon.png', './manifest.json', './offline.html'
@@ -49,4 +49,17 @@ self.addEventListener('fetch', (e) => {
     return;
   }
   e.respondWith(fetch(request).catch(() => caches.match(request)));
+});
+
+self.addEventListener('notificationclick', function(event) {
+  event.notification.close();
+  event.waitUntil(
+    clients.matchAll({type: 'window'}).then(windowClients => {
+      for (var i = 0; i < windowClients.length; i++) {
+        var client = windowClients[i];
+        if (client.url.includes('index.html') && 'focus' in client) return client.focus();
+      }
+      if (clients.openWindow) return clients.openWindow('./index.html');
+    })
+  );
 });
