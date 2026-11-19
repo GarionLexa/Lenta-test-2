@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+<title>ЛЕНТА: Мониторинг доставок</title>
+<link rel="icon" href="icon.png" type="image/png">
+<link rel="apple-touch-icon" href="icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#0f1115">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="animations.css">
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Manrope', 'sans-serif'] },
+        colors: {
+          lentaBlue: '#004182', lentaDark: '#002B5E', lentaYellow: '#FDCB05',
+          premiumDark: '#0f1115', premiumCard: '#18181b', premiumBorder: 'rgba(255,255,255,0.08)'
+        }
+      }
+    }
+  }
+</script>
+<script>
+  (function() {
+    try {
+      if (localStorage.getItem('lenta_theme') === 'dark') document.documentElement.classList.add('dark');
+      const savedSize = localStorage.getItem('lenta_text_size');
+      if (savedSize === '1') document.documentElement.classList.add('large-text');
+      if (savedSize === '2') document.documentElement.classList.add('very-large-text');
+    } catch (e) {}
+  })();
+</script>
+<style>
+:root { --truck-light-opacity: 0; --truck-body-brightness: 1; --glass-bg: rgba(255,255,255,0.85); --glass-border: rgba(255,255,255,0.6); }
+.dark { --glass-bg: rgba(24, 24, 27, 0.85); --glass-border: rgba(255,255,255,0.08); }
+body { background-color: #f4f4f6; color: #1f2937; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; width: 100%; overflow-x: hidden; padding-bottom: env(safe-area-inset-bottom); transition: background-color 0.4s ease, color 0.4s ease; }
+.dark body { background-color: #0f1115; color: #e4e4e7; }
+.glass-panel { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--glass-border); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1); transition: all 0.3s ease; }
+.dark .glass-panel { box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5); }
+.glass-header { padding-top: max(1rem, env(safe-area-inset-top)); position: sticky; top: 0; z-index: 50; border-radius: 0 0 32px 32px; transition: all 0.3s ease; }
+@keyframes slideUpFade { 0% { opacity: 0; transform: translateY(20px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+.animate-reveal { animation: slideUpFade 0.4s cubic-bezier(0.16,1,0.3,1) forwards; }
+.tactile-btn { transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, box-shadow 0.2s ease; }
+.tactile-btn:active { transform: scale(0.94); opacity: 0.9; }
+.volume-card { background: #ffffff; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01); border-radius: 20px; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); position: relative; }
+.volume-card:hover { transform: translateY(-3px); box-shadow: 0 20px 30px -10px rgba(0,0,0,0.1), 0 10px 15px -5px rgba(0,0,0,0.04); }
+.dark .volume-card { background: #1c1c1f; border-color: rgba(255,255,255,0.05); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4); }
+.dark .volume-card:hover { box-shadow: 0 20px 30px -10px rgba(0,0,0,0.6); }
+.border-brand-lenta { border-left: 6px solid #FDCB05; }
+.border-brand-monetka { border-left: 6px solid #f97316; }
+.border-brand-okey { border-left: 6px solid #dc2626; }
+.border-brand-moll { border-left: 6px solid #9333ea; }
+.border-type-servis { border-left: 6px solid #8b5cf6; }
+.border-type-stoyanka { border-left: 6px solid #3b82f6; }
+.border-type-shinomontazh { border-left: 6px solid #10b981; }
+.border-type-kafe { border-left: 6px solid #f97316; }
+.border-type-avtomoyka { border-left: 6px solid #0ea5e9; }
+.record-spin { animation: recordSpin 4s linear infinite; }
+@keyframes recordSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.scenic-bg { background-color: #0f1115; overflow: hidden; position: relative; height: 140px; width: 100%; border-radius: 24px; box-shadow: inset 0 4px 20px rgba(0,0,0,0.5); }
+.sky-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity 0.2s ease-out; }
+.sky-day { background: linear-gradient(to bottom, #38bdf8 0%, #bae6fd 100%); opacity: 1; z-index: 1; }
+.sky-sunset { background: linear-gradient(to bottom, #f97316 0%, #fde047 100%); opacity: 0; z-index: 2; }
+.sky-night { background: linear-gradient(to bottom, #0f172a 0%, #1e1b4b 100%); opacity: 0; z-index: 3; }
+.sky-stars { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 4; background-image: radial-gradient(#fff 1.5px, transparent 1.5px), radial-gradient(#fff 1px, transparent 1px); background-size: 50px 50px; background-position: 0 0, 25px 25px; opacity: 0; transition: opacity 0.2s ease-out; }
+.celestial-body { position: absolute; border-radius: 50%; transition: transform 0.2s ease-out, opacity 0.2s ease-out; will-change: transform; z-index: 5; }
+.parallax-layer { position: absolute; top: 0; left: 0; width: 5000px; height: 100%; background-repeat: repeat-x; background-position: bottom left; will-change: transform; }
+.parallax-mountains { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='70' viewBox='0 0 160 70'%3E%3Cpath d='M0,70 L40,20 L80,70 Z' fill='%2394a3b8' opacity='0.5'/%3E%3Cpath d='M50,70 L90,10 L130,70 Z' fill='%23cbd5e1' opacity='0.7'/%3E%3C/svg%3E"); background-size: 200px auto; z-index: 6; }
+.parallax-trees { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='50' viewBox='0 0 120 50'%3E%3Cpath d='M20,50 L20,35 L10,35 L25,15 L15,15 L30,-5 L45,15 L35,15 L50,35 L40,35 L40,50 Z' fill='%23064e3b' opacity='0.9'/%3E%3Cpath d='M70,50 L70,30 L60,30 L75,5 L65,5 L80,-15 L95,5 L85,5 L100,30 L90,30 L90,50 Z' fill='%230f766e' opacity='0.8'/%3E%3C/svg%3E"); background-size: 100px auto; z-index: 7; }
+.parallax-road { position: absolute; bottom: 0; left: 0; width: 5000px; height: 18px; z-index: 10; background-color: #475569; background-image: linear-gradient(90deg, transparent 50%, #cbd5e1 50%); background-size: 40px 2px; background-position: top 4px left 0; background-repeat: repeat-x; border-top: 3px solid #64748b; will-change: transform; }
+.weather-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; transition: opacity 0.2s ease-out; z-index: 8; }
+.snow-anim { background-image: radial-gradient(circle, white 1.5px, transparent 1.5px), radial-gradient(circle, white 1px, transparent 1px); background-size: 60px 60px, 40px 40px; background-position: 0 0, 20px 20px; animation: weatherFallSnow 3s linear infinite; opacity: 0; }
+.leaves-anim { background-image: radial-gradient(ellipse at center, #ea580c 2px, transparent 3px), radial-gradient(ellipse at center, #dc2626 2px, transparent 3px), radial-gradient(ellipse at center, #eab308 1.5px, transparent 2.5px); background-size: 70px 70px, 90px 90px, 50px 50px; background-position: 0 0, 30px 30px, 15px 15px; animation: weatherFallLeaves 4s linear infinite; opacity: 0; }
+@keyframes weatherFallSnow { 0% { background-position: 0 0, 20px 20px; } 100% { background-position: 30px 60px, 0 40px; } }
+@keyframes weatherFallLeaves { 0% { background-position: 0 -70px, 30px -90px, 15px -50px; } 100% { background-position: 70px 70px, -30px 90px, 65px 50px; } }
+.parallax-signs { position: absolute; bottom: 18px; left: 0; width: 5000px; height: 40px; z-index: 9; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1500' height='40'%3E%3Cg transform='translate(50,0)'%3E%3Crect x='9' y='10' width='2' height='30' fill='%23475569'/%3E%3Cpolygon points='1,1 19,1 10,18' fill='white' stroke='%23ef4444' stroke-width='2' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2200' height='40'%3E%3Cg transform='translate(800,0)'%3E%3Crect x='9' y='10' width='2' height='30' fill='%23475569'/%3E%3Cpolygon points='10,1 19,10 10,19 1,10' fill='%23fde047' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E"); background-size: 1500px 40px, 2200px 40px; background-repeat: repeat-x; will-change: transform; }
+.police-car { position: absolute; bottom: 4px; left: 120vw; width: 60px; height: 20px; background: linear-gradient(to right, #1e293b 25%, #fff 25%, #fff 75%, #1e293b 75%); border-radius: 4px 4px 10px 6px; z-index: 25; display: none; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transform: scaleX(-1); }
+.police-car.active { display: block; animation: driveOpposite 4.5s linear forwards; }
+.police-siren-red { position: absolute; top: -5px; left: 25px; width: 6px; height: 5px; border-radius: 2px; animation: sirenRed 0.6s infinite; }
+.police-siren-blue { position: absolute; top: -5px; left: 15px; width: 6px; height: 5px; border-radius: 2px; animation: sirenBlue 0.6s infinite; }
+
+@keyframes sirenRed { 0%, 49% { box-shadow: 0 0 16px 6px rgba(239,68,68,0.95); background: #f87171; } 50%, 100% { box-shadow: none; background: #991b1b; } }
+@keyframes sirenBlue { 0%, 49% { box-shadow: none; background: #1e3a8a; } 50%, 100% { box-shadow: 0 0 16px 6px rgba(59,130,246,0.95); background: #60a5fa; } }
+@keyframes driveOpposite { 0% { left: 120vw; } 100% { left: -150px; } }
+.city-slider { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; overscroll-behavior-x: contain; height: 100%; align-items: flex-end; padding-bottom: 2px; padding-left: 10px; padding-right: 10px; will-change: scroll-position; }
+.city-slider::-webkit-scrollbar { display: none; }
+.truck-chip { outline: none; opacity: 0.8; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); margin-right: 20px; filter: saturate(0.8); }
+.truck-chip.active { opacity: 1; transform: scale(1.03) translateY(-2px); z-index: 30; filter: saturate(1.2) drop-shadow(0 10px 15px rgba(0,0,0,0.2)); }
+.truck-wrapper { filter: brightness(var(--truck-body-brightness)); transition: filter 0.2s ease-out; }
+@keyframes truckBump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+.auto-driving .truck-wrapper { animation: truckBump var(--bump-dur, 1.2s) ease-in-out infinite var(--bump-del, 0s); }
+.siren-orange { position: absolute; top: -5px; left: 10px; width: 10px; height: 5px; border-radius: 3px 3px 0 0; background: #f59e0b; animation: flashOrange 0.6s infinite alternate; z-index: 30; }
+@keyframes flashOrange { 0% { box-shadow: 0 0 10px 3px rgba(251,191,36,0.8); background: #fbbf24; } 100% { box-shadow: 0 0 25px 10px rgba(245,158,11,1); background: #d97706; } }
+.headlight-beam { position: absolute; width: 70px; height: 20px; background: linear-gradient(to right, rgba(253,224,71,0.95), transparent); transform: skewX(-15deg); opacity: var(--truck-light-opacity); transition: opacity 0.3s; border-radius: 50%; filter: blur(2px); z-index: 50; pointer-events: none; }
+.tail-light { position: absolute; bottom: 4px; left: -1px; width: 3px; height: 8px; background-color: #ef4444; box-shadow: 0 0 12px 3px rgba(239,68,68,0.95); opacity: var(--truck-light-opacity); transition: opacity 0.3s; border-radius: 2px; z-index: 20; }
+.marker-light { position: absolute; top: 2px; width: 4px; height: 2px; background-color: #fde047; box-shadow: 0 0 8px 2px rgba(253,224,71,0.9); opacity: var(--truck-light-opacity); transition: opacity 0.3s; border-radius: 1px; }
+.dark .city-name-plaque { background-color: #27272a !important; color: #f4f4f5 !important; border-color: #3f3f46 !important; }
+#visitContainer { transition: all 0.6s cubic-bezier(0.4,0,0.2,1); overflow: hidden; }
+.story-mode #visitContainer { width: 0 !important; min-width: 0 !important; opacity: 0; padding: 0; margin: 0; transform: scale(0.8); pointer-events: none; }
+.story-mode #centerStage { width: 100%; flex: 1; }
+#girlsGroup, #mechGroup { transition: transform 0.8s cubic-bezier(0.4,0,0.2,1); }
+.story-mode #girlsGroup { transform: translateX(-25px); }
+.story-mode #mechGroup { transform: translateX(25px); }
+.arm-typing { animation: typingArms 0.25s infinite alternate; }
+.arm-typing-delay { animation: typingArms 0.3s infinite alternate; animation-delay: 0.1s; }
+@keyframes typingArms { 0% { transform: rotate(0deg); } 100% { transform: rotate(10deg); } }
+.wrench-arm { animation: wrenchMotion 0.6s infinite alternate ease-in-out; }
+@keyframes wrenchMotion { 0% { transform: rotate(-15deg); } 100% { transform: rotate(20deg); } }
+.laughing { animation: bodyLaugh 0.3s infinite alternate; }
+@keyframes bodyLaugh { 0% { transform: translateY(0) scaleY(1); } 100% { transform: translateY(-2px) scaleY(1.05); } }
+.sweat-drop { opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: translateY(-5px); }
+.show-sweat { opacity: 1; transform: translateY(0); animation: dripDown 1.5s forwards; }
+@keyframes dripDown { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
+.story-bubble { position: absolute; background: white; border: 1px solid #e4e4e7; color: #18181b; font-size: 11px; font-weight: 700; padding: 8px 12px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); opacity: 0; pointer-events: none; z-index: 1000; max-width: 150px; text-align: center; line-height: 1.3; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+.dark .story-bubble { background: #27272a; border-color: #3f3f46; color: #f4f4f5; }
+.story-bubble.actor-sveta { bottom: 70px; left: 0; transform: scale(0.9) translateY(10px); }
+.story-bubble.actor-sveta.active { transform: scale(1) translateY(0); opacity: 1; }
+.story-bubble.actor-marina { bottom: 70px; right: 0; transform: scale(0.9) translateY(10px); }
+.story-bubble.actor-marina.active { transform: scale(1) translateY(0); opacity: 1; }
+.story-bubble.actor-mech { bottom: 80px; left: 50%; margin-left: -50px; transform: scale(0.9) translateY(10px); }
+.story-bubble.actor-mech.active { transform: scale(1) translateY(0); opacity: 1; }
+.story-bubble::after { content: ''; position: absolute; top: 100%; border-width: 5px; border-style: solid; border-color: white transparent transparent transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05)); }
+.dark .story-bubble::after { border-color: #27272a transparent transparent transparent; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); }
+.story-bubble.actor-sveta::after { left: 40px; }
+.story-bubble.actor-marina::after { right: 40px; }
+.story-bubble.actor-mech::after { left: 50%; margin-left: -5px; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+html.large-text { font-size: 18px; }
+html.large-text .text-\[8px\]  { font-size: 11px !important; }
+html.large-text .text-\[9px\]  { font-size: 12px !important; }
+html.large-text .text-\[10px\] { font-size: 13px !important; }
+html.large-text .text-\[11px\] { font-size: 14px !important; }
+html.large-text .text-xs   { font-size: 14px !important; }
+html.large-text .text-sm   { font-size: 16px !important; }
+html.very-large-text { font-size: 22px; }
+html.very-large-text .text-\[8px\]  { font-size: 13px !important; }
+html.very-large-text .text-\[9px\]  { font-size: 14px !important; }
+html.very-large-text .text-\[10px\] { font-size: 15px !important; }
+html.very-large-text .text-\[11px\] { font-size: 16px !important; }
+html.very-large-text .text-xs   { font-size: 16px !important; }
+html.very-large-text .text-sm   { font-size: 18px !important; }
+#updateBanner { animation: slideDownBanner 0.4s cubic-bezier(0.16,1,0.3,1); }
+@keyframes slideDownBanner { 0% { transform: translate(-50%,-120%); } 100% { transform: translate(-50%,0); } }
+#calendarViewport { position: relative; overflow: hidden; touch-action: pan-y; }
+#calendarGrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; height: auto; }
+@media (orientation: landscape) and (max-height: 550px) {
+  body { padding-bottom: 0 !important; }
+  .glass-header { position: relative; padding-top: 4px !important; padding-bottom: 4px !important; border-radius: 0 0 16px 16px !important; }
+  #controlPanel { min-height: 50px !important; padding: 4px 8px !important; margin-top: 4px !important; }
+  #visitContainer, #speedContainer { display: none !important; }
+  #logoImage { width: 36px !important; height: 36px !important; }
+  h1 { font-size: 14px !important; }
+  .scenic-bg { height: 60px !important; border-radius: 8px !important; }
+  #searchInput { padding-top: 6px !important; padding-bottom: 6px !important; }
+  main { padding-top: 8px !important; padding-bottom: 8px !important; }
+  .volume-card { padding: 10px !important; }
+  #cardsGrid { gap: 8px !important; }
+}
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) { #cardsGrid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+</style>
+</head>
+
+<body class="relative flex flex-col min-h-screen antialiased">
+<audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
+
+<div id="offlineBanner" class="hidden fixed top-0 left-0 right-0 bg-red-500 text-white text-center py-2 text-xs font-bold z-[999] shadow-lg" onclick="this.classList.add('hidden')">📡 Вы офлайн. База, GPS-радар и офлайн-навигация работают!</div>
+
+<div id="arrivalBanner" class="hidden fixed bottom-6 left-4 right-4 sm:left-1/2 sm:-translate-x-1/2 sm:max-w-md z-[350] rounded-[28px] p-5 glass-panel border-2 border-emerald-500 shadow-2xl animate-reveal">
+  <div class="flex items-start gap-3">
+    <div class="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center text-2xl shrink-0 shadow-lg">📍</div>
+    <div class="flex-1 min-w-0">
+      <div class="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">GPS Авто-отметка ТК</div>
+      <div id="arrivalStoreTitle" class="text-sm font-display font-extrabold text-gray-900 dark:text-white leading-tight mt-0.5">Вы прибыли на гипермаркет!</div>
+      <div id="arrivalStoreAddr" class="text-[11px] text-gray-500 dark:text-gray-400 truncate mt-0.5"></div>
+    </div>
+    <button onclick="dismissArrivalBanner()" class="text-gray-400 p-1.5 rounded-full hover:bg-gray-200/50 dark:hover:bg-white/10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+  </div>
+  <div class="grid grid-cols-2 gap-2 mt-4">
+    <button onclick="confirmArrivalCheckIn()" class="py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl text-xs font-bold tactile-btn shadow-lg shadow-emerald-500/30">✅ Отметиться (Прибыл)</button>
+    <button onclick="dismissArrivalBanner()" class="py-2.5 bg-gray-200/70 dark:bg-white/10 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold tactile-btn">Позже</button>
+  </div>
+</div>
+
+<div id="navModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4 transition-opacity">
+  <div class="rounded-[32px] p-6 max-w-sm w-full text-center relative animate-reveal glass-panel shadow-2xl">
+    <button onclick="closeNavModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    <h3 class="text-xl font-display font-extrabold text-lentaDark dark:text-white mb-1">Маршрут</h3>
+    <p id="navModalSub" class="text-xs text-gray-500 dark:text-gray-400 mb-5 font-medium">Выберите навигатор (по точным координатам)</p>
+    <div class="grid grid-cols-3 gap-2 my-2">
+      <button onclick="executeNavigation('2gis');" class="h-20 rounded-2xl glass-panel shadow-sm flex flex-col items-center justify-center tactile-btn hover:bg-white/90 group"><div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center mb-1"><span class="text-white text-xs font-black">2Г</span></div><span class="text-[10px] uppercase font-bold text-gray-700 dark:text-gray-200">2ГИС</span></button>
+      <button onclick="executeNavigation('yandex');" class="h-20 rounded-2xl glass-panel shadow-sm flex flex-col items-center justify-center tactile-btn hover:bg-white/90 group"><div class="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center mb-1"><span class="text-xl text-black font-black">Я</span></div><span class="text-[10px] uppercase font-bold text-gray-700 dark:text-gray-200">Яндекс</span></button>
+      <button onclick="executeNavigation('google');" class="h-20 rounded-2xl glass-panel shadow-sm flex flex-col items-center justify-center tactile-btn hover:bg-white/90 group"><div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center mb-1"><span class="text-white text-xs font-black">G</span></div><span class="text-[10px] uppercase font-bold text-gray-700 dark:text-gray-200">Google</span></button>
+    </div>
+  </div>
+</div>
+
+<div id="contactsModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+  <div class="rounded-[32px] p-6 max-w-sm w-full text-center relative animate-reveal glass-panel shadow-2xl max-h-[90vh] overflow-y-auto hide-scrollbar">
+    <button onclick="closeContactsModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    <h3 class="text-xl font-display font-extrabold text-lentaDark dark:text-white mb-1 uppercase mt-2">Контакты</h3>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 font-medium">Кому звоним?</p>
+    <div class="space-y-3">
+      <a href="tel:+79193802679" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 rounded-2xl p-4 tactile-btn shadow-sm"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 text-lg">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Сергей</div><div class="text-[9px] text-gray-500 uppercase font-semibold">Ведущий инженер по гарантии, ТО и БДД</div></div></div><div class="w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
+      <a href="tel:+79826209051" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 rounded-2xl p-4 tactile-btn shadow-sm"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 text-lg">🔧</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Механик</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Дежурный механик</div></div></div><div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
+      <a href="tel:+79826702427" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 rounded-2xl p-4 tactile-btn shadow-sm"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-lentaBlue text-lg">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Светлана</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-10 h-10 rounded-full bg-lentaBlue text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
+      <a href="tel:+79122719690" onclick="closeContactsModal()" class="flex items-center justify-between bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 hover:bg-white/80 rounded-2xl p-4 tactile-btn shadow-sm"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-600 text-lg">👤</div><div class="text-left"><div class="font-bold text-gray-800 dark:text-gray-100 text-sm">Марина</div><div class="text-[10px] text-gray-500 uppercase font-semibold">Диспетчер</div></div></div><div class="w-10 h-10 rounded-full bg-purple-500 text-white flex items-center justify-center shadow-lg text-lg">📞</div></a>
+    </div>
+  </div>
+</div>
+
+<div id="monetkaModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+  <div class="rounded-[32px] p-6 max-w-md w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh]">
+    <button onclick="closeMonetkaModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    <h3 class="text-lg font-display font-extrabold text-lentaDark dark:text-white mb-2 uppercase pr-8 mt-1">Инструкция РЦ Монетка</h3>
+    <div class="overflow-y-auto pr-2 pb-2 space-y-4 text-sm">
+      <div class="bg-blue-500/10 dark:bg-blue-400/10 border border-blue-500/20 rounded-2xl p-4"><div class="font-bold text-blue-700 dark:text-blue-300 mb-1 flex items-center gap-2"><span>❄️</span> ВАЖНО: ЗАМОРОЗКА</div><p class="text-xs text-blue-800/80 dark:text-blue-200/80 leading-relaxed">Доставка заморозки — <b class="uppercase">приоритет</b>. Чётко доводите информацию о заморозке сотрудникам Монетки!</p></div>
+      <div class="bg-emerald-500/10 dark:bg-emerald-400/10 border border-emerald-500/20 rounded-2xl p-4"><div class="font-bold text-emerald-700 dark:text-emerald-300 mb-1 flex items-center gap-2"><span>⚡</span> ЛАЙФХАК</div><p class="text-xs text-emerald-800/80 dark:text-emerald-200/80 leading-relaxed">Можно <b>зайти на склад</b> и обозначить присутствие <b>Старшему смены</b>, чтобы не ждать звонка!</p></div>
+      <div class="bg-purple-500/10 dark:bg-purple-400/10 border border-purple-500/20 rounded-2xl p-4">
+        <div class="font-bold text-purple-700 dark:text-purple-300 mb-2 flex items-center gap-2"><span>📞</span> ТЕЛЕФОНЫ РЦ ТЭЦ (ЕКБ)</div>
+        <div class="flex flex-wrap items-center gap-2 mb-3"><a href="tel:+73432930001" class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold tactile-btn shadow-sm">+7 (343) 293-00-01</a><span class="text-[11px] text-purple-600 dark:text-purple-400 font-medium">в тоновом режиме жмём <b class="bg-purple-200 dark:bg-purple-800 px-1.5 py-0.5 rounded text-purple-800 dark:text-purple-200">1</b></span></div>
+        <div class="grid grid-cols-2 gap-2 text-xs"><div class="bg-white/50 dark:bg-black/20 border border-purple-200/50 dark:border-purple-700/50 p-2 rounded-xl text-center"><div class="text-gray-500 text-[9px] uppercase font-bold mb-0.5">Старый склад</div><div class="font-black text-purple-700 dark:text-purple-300 text-sm">доб. 22204</div></div><div class="bg-white/50 dark:bg-black/20 border border-purple-200/50 dark:border-purple-700/50 p-2 rounded-xl text-center"><div class="text-gray-500 text-[9px] uppercase font-bold mb-0.5">Новый склад</div><div class="font-black text-purple-700 dark:text-purple-300 text-sm">доб. 22537</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="mechanicModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+  <div class="rounded-[32px] p-6 max-w-md w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh]">
+    <button onclick="closeMechanicModal();" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    <h3 class="text-lg font-display font-extrabold text-lentaDark dark:text-white mb-2 uppercase pr-8 mt-1">Инструктаж от механика</h3>
+    <div class="overflow-y-auto pr-2 pb-2 space-y-4 text-sm">
+      <div class="bg-amber-500/10 dark:bg-amber-400/10 border border-amber-500/20 rounded-2xl p-4"><div class="font-bold text-amber-700 dark:text-amber-300 mb-2 flex items-center gap-2"><span>⚠️</span> Режим и скорость</div><ul class="text-xs text-amber-800/80 dark:text-amber-200/80 leading-relaxed list-disc pl-4 space-y-1"><li><b>Скорость 80 км/час!</b> Учитываем погоду.</li><li>Соблюдаем РТО.</li><li>Не забываем ставить карту СКЗИ.</li></ul></div>
+      <div class="bg-blue-500/10 dark:bg-blue-400/10 border border-blue-500/20 rounded-2xl p-4"><div class="font-bold text-blue-700 dark:text-blue-300 mb-2 flex items-center gap-2"><span>📄</span> Документы</div><ul class="text-xs text-blue-800/80 dark:text-blue-200/80 leading-relaxed list-disc pl-4 space-y-1"><li>Смотрим документы — куда ехать.</li><li><b>Путёвки закрываем после каждого рейса</b>.</li><li>Не сидим в машине с путёвками!</li><li>По прибытию на РЦ — звоним механику.</li></ul></div>
+      <div class="bg-red-500/10 dark:bg-red-400/10 border border-red-500/20 rounded-2xl p-4"><div class="font-bold text-red-700 dark:text-red-300 mb-2 flex items-center gap-2"><span>🚭</span> Порядок и ДТП</div><ul class="text-xs text-red-800/80 dark:text-red-200/80 leading-relaxed list-disc pl-4 space-y-1"><li><b>В машинах не курим!</b></li><li>Предельно аккуратно в манёврах.</li><li><b>ДТП или повредили</b> — сразу механику!</li><li>После рейса — звоним, сдаём ТС.</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<div id="calendarModal" class="fixed inset-0 z-[100] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-5">
+  <div class="rounded-[32px] p-5 sm:p-7 w-full max-w-sm relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh] overflow-hidden">
+    <button onclick="closeCalendarModal();" class="absolute top-3 right-3 sm:top-5 sm:right-5 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2 sm:p-2.5 rounded-full tactile-btn z-10"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    <h3 class="text-base sm:text-lg font-display font-extrabold text-purple-600 dark:text-purple-400 mb-3 uppercase pr-8 mt-1 flex items-center gap-2 shrink-0"><span>📅</span> Мои смены</h3>
+    <div class="mb-3 flex items-center gap-1.5 bg-purple-500/10 p-1.5 rounded-2xl border border-purple-500/20 shadow-sm shrink-0">
+      <span class="text-[10px] font-bold text-purple-600 dark:text-purple-300 uppercase pl-1">👤 Водитель:</span>
+      <select id="driverSelect" onchange="changeDriver(this.value)" class="flex-1 min-w-0 bg-transparent text-sm font-extrabold text-gray-800 dark:text-white outline-none cursor-pointer appearance-none"></select>
+      <button onclick="renameCurrentDriver()" class="w-7 h-7 shrink-0 flex items-center justify-center bg-amber-500 text-white rounded-lg shadow-md tactile-btn font-bold text-[10px]" title="Переименовать">✏️</button>
+      <button onclick="deleteCurrentDriver()" class="w-7 h-7 shrink-0 flex items-center justify-center bg-red-500 text-white rounded-lg shadow-md tactile-btn font-bold text-[10px]" title="Удалить">🗑️</button>
+      <button onclick="addNewDriver()" class="w-7 h-7 shrink-0 flex items-center justify-center bg-purple-500 text-white rounded-lg shadow-md tactile-btn font-bold text-base" title="Добавить">+</button>
+    </div>
+    <div class="flex justify-between items-center mb-4 bg-white/50 dark:bg-black/20 p-1.5 rounded-2xl border border-white/20 dark:border-white/5 shrink-0">
+      <button onclick="changeMonth(-1)" class="w-8 h-8 flex items-center justify-center bg-white dark:bg-zinc-800 rounded-full text-gray-600 dark:text-gray-300 tactile-btn">◀</button>
+      <div id="calendarMonthYear" class="font-display font-bold text-gray-800 dark:text-white capitalize text-xs sm:text-sm truncate px-2">Октябрь 2026</div>
+      <button onclick="changeMonth(1)" class="w-8 h-8 flex items-center justify-center bg-white dark:bg-zinc-800 rounded-full text-gray-600 dark:text-gray-300 tactile-btn">▶</button>
+    </div>
+    <div class="grid grid-cols-7 gap-1 mb-1 text-center text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-wider shrink-0"><div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div class="text-red-400">Сб</div><div class="text-red-400">Вс</div></div>
+    <div id="calendarViewport" class="mb-3 shrink-0 relative z-10"><div id="calendarGrid"></div></div>
+    <div class="flex-1 bg-white/40 dark:bg-black/20 rounded-2xl border border-white/20 dark:border-white/5 p-3 flex flex-col min-h-[120px] overflow-hidden mb-3 shadow-inner relative z-20">
+      <div id="selectedDayTitle" class="text-[11px] sm:text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 border-b border-gray-200/50 dark:border-white/5 pb-2 flex justify-between shrink-0"><span>Выберите день</span><span id="selectedDayCount" class="text-purple-600 dark:text-purple-400"></span></div>
+      <div id="selectedDayShifts" class="flex-1 overflow-y-auto hide-scrollbar space-y-2 pr-1"><div class="text-center text-gray-400 text-xs mt-4 font-medium">В этот день смен нет</div></div>
+    </div>
+    <button onclick="openWageModal()" class="w-full py-2.5 mb-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl text-xs font-bold tactile-btn shadow-md shrink-0">💰 Ведомость / Зарплата</button>
+    <div class="grid grid-cols-3 gap-2 shrink-0">
+      <button onclick="openStorePicker()" class="flex flex-col items-center justify-center py-2.5 bg-indigo-500 text-white rounded-xl text-[10px] font-bold tactile-btn"><span class="text-base mb-0.5">➕</span>ТК</button>
+      <button onclick="openTechPicker()" class="flex flex-col items-center justify-center py-2.5 bg-orange-500 text-white rounded-xl text-[10px] font-bold tactile-btn"><span class="text-base mb-0.5">🔧</span>Сервис</button>
+      <button onclick="openCustomTaskModal()" class="flex flex-col items-center justify-center py-2.5 bg-teal-500 text-white rounded-xl text-[10px] font-bold tactile-btn"><span class="text-base mb-0.5">➕</span>Точка</button>
+      <button onclick="exportMonthReport()" class="flex flex-col items-center justify-center py-2.5 bg-purple-500 text-white rounded-xl text-[10px] font-bold tactile-btn"><span class="text-base mb-0.5">📥</span>Отчёт</button>
+      <button onclick="exportCalendarBackup()" class="flex flex-col items-center justify-center py-2.5 bg-white/50 dark:bg-white/5 text-gray-700 dark:text-gray-200 rounded-xl text-[10px] font-bold tactile-btn"><span class="text-base mb-0.5">💾</span>Бэкап</button>
+      <button onclick="importCalendarBackup()" class="flex flex-col items-center justify-center py-2.5 bg-white/50 dark:bg-white/5 text-gray-700 dark:text-gray-200 rounded-xl text-[10px] font-bold tactile-btn"><span class="text-base mb-0.5">📂</span>Загрузить</button>
+    </div>
+  </div>
+</div>
+
+<div id="storePickerModal" class="fixed inset-0 z-[110] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-end justify-center sm:items-center p-0 sm:p-4">
+  <div class="rounded-t-[32px] sm:rounded-[32px] w-full max-w-md relative animate-reveal glass-panel shadow-2xl flex flex-col h-[80vh] sm:h-auto sm:max-h-[90vh]">
+    <div class="p-4 border-b border-white/20 dark:border-white/5 flex justify-between items-center bg-white/40 dark:bg-black/40 rounded-t-[32px]">
+      <h3 class="font-display font-extrabold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider text-sm">Добавить магазин</h3>
+      <button onclick="closeStorePicker()" class="p-2 bg-white/50 dark:bg-white/10 text-gray-500 rounded-full tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    </div>
+    <div class="p-3 bg-white/20 dark:bg-black/20"><input type="text" id="pickerSearch" oninput="renderPickerStores()" placeholder="Поиск по ТК, адресу..." class="w-full bg-white/80 dark:bg-zinc-800/80 rounded-xl px-4 py-2.5 text-sm text-gray-800 dark:text-white outline-none border border-transparent"></div>
+    <div id="pickerStoreList" class="flex-1 overflow-y-auto p-3 pt-0 space-y-2 hide-scrollbar rounded-b-[32px]"></div>
+  </div>
+</div>
+
+<div id="techPickerModal" class="fixed inset-0 z-[110] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-end justify-center sm:items-center p-0 sm:p-4">
+  <div class="rounded-t-[32px] sm:rounded-[32px] w-full max-w-md relative animate-reveal glass-panel shadow-2xl flex flex-col h-[80vh] sm:h-auto sm:max-h-[90vh]">
+    <div class="p-4 border-b border-white/20 dark:border-white/5 flex justify-between items-center bg-white/40 dark:bg-black/40 rounded-t-[32px]">
+      <h3 class="font-display font-extrabold text-orange-600 dark:text-orange-400 uppercase tracking-wider text-sm">Добавить сервис</h3>
+      <button onclick="closeTechPicker()" class="p-2 bg-white/50 dark:bg-white/10 text-gray-500 rounded-full tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    </div>
+    <div class="p-3 bg-white/20 dark:bg-black/20"><input type="text" id="techPickerSearch" oninput="renderTechPicker()" placeholder="Поиск по названию, городу..." class="w-full bg-white/80 dark:bg-zinc-800/80 rounded-xl px-4 py-2.5 text-sm text-gray-800 dark:text-white outline-none border border-transparent"></div>
+    <div id="techPickerList" class="flex-1 overflow-y-auto p-3 pt-0 space-y-2 hide-scrollbar rounded-b-[32px]"></div>
+  </div>
+</div>
+
+<div id="timePickerModal" class="fixed inset-0 z-[120] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+  <div class="rounded-[24px] p-6 max-w-xs w-full relative animate-reveal glass-panel shadow-2xl flex flex-col text-center">
+    <h3 class="text-base font-display font-extrabold text-gray-800 dark:text-white mb-4">Укажите время</h3>
+    <input type="time" id="modalTimeInput" value="12:00" class="w-full bg-white/50 dark:bg-black/30 border border-white/20 dark:border-white/5 rounded-xl px-4 py-3 text-lg font-bold text-center text-gray-800 dark:text-white outline-none mb-6 shadow-inner">
+    <div class="flex gap-2">
+      <button onclick="closeTimePicker()" class="flex-1 py-3 bg-white/50 dark:bg-white/5 text-gray-600 dark:text-gray-300 rounded-xl text-sm font-bold tactile-btn">Отмена</button>
+      <button onclick="confirmTimePicker()" class="flex-1 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-lg">OK</button>
+    </div>
+  </div>
+</div>
+
+<div id="customTaskModal" class="fixed inset-0 z-[110] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+  <div class="rounded-[28px] p-5 max-w-sm w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh] overflow-y-auto hide-scrollbar">
+    <button onclick="closeCustomTaskModal()" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2 rounded-full tactile-btn z-10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    <h3 class="text-base font-display font-extrabold text-teal-600 dark:text-teal-400 mb-4 uppercase pr-8 mt-1">Добавить точку</h3>
+    <div class="grid grid-cols-2 gap-2 mb-4">
+      <button onclick="setTaskPreset('🛞 Шиномонтаж', this)" class="task-preset-btn flex items-center gap-2 p-2.5 bg-white/50 dark:bg-white/5 border border-white/20 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200"><span class="text-lg">🛞</span> Шиномонтаж</button>
+      <button onclick="setTaskPreset('🚿 Автомойка', this)" class="task-preset-btn flex items-center gap-2 p-2.5 bg-white/50 dark:bg-white/5 border border-white/20 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200"><span class="text-lg">🚿</span> Автомойка</button>
+      <button onclick="setTaskPreset('📦 Оборотная тара', this)" class="task-preset-btn flex items-center gap-2 p-2.5 bg-white/50 dark:bg-white/5 border border-white/20 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200"><span class="text-lg">📦</span> Оборотная тара</button>
+      <button onclick="setTaskPreset('📍 Доп. точка', this)" class="task-preset-btn flex items-center gap-2 p-2.5 bg-white/50 dark:bg-white/5 border border-white/20 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-200"><span class="text-lg">📍</span> Доп. точка</button>
+    </div>
+    <input type="text" id="customTaskName" placeholder="Название..." class="w-full bg-white/60 dark:bg-black/30 border border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none mb-3">
+    <div id="customTaskDropdownContainer" class="hidden mb-3"><select id="customTaskDropdown" onchange="fillTaskFromDropdown()" class="w-full bg-white/60 dark:bg-black/30 border border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none"><option value="">-- Выберите адрес --</option></select></div>
+    <input type="text" id="customTaskDesc" placeholder="Адрес / Описание..." class="w-full bg-white/60 dark:bg-black/30 border border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none mb-3">
+    <input type="time" id="customTaskTime" value="12:00" class="w-full bg-white/60 dark:bg-black/30 border border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none mb-4">
+    <button onclick="saveCustomTask()" class="w-full py-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white rounded-xl text-sm font-bold tactile-btn shadow-lg">Сохранить точку</button>
+  </div>
+</div>
+
+<div id="addTechModal" class="fixed inset-0 z-[120] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+  <div class="rounded-[28px] p-5 max-w-sm w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh] overflow-y-auto hide-scrollbar">
+    <button onclick="closeAddTechModal()" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2 rounded-full tactile-btn z-10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    <h3 class="text-base font-display font-extrabold text-emerald-600 dark:text-emerald-400 mb-4 uppercase pr-8 mt-1">Добавить свою точку</h3>
+    <select id="newTechType" class="w-full bg-white/60 dark:bg-black/30 border border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none mb-3"><option value="ШИНОМОНТАЖ">🛞 Шиномонтаж</option><option value="СТОЯНКА">🅿️ Стоянка</option><option value="АВТОМОЙКА">🚿 Автомойка</option><option value="КАФЕ">☕ Кафе</option><option value="СЕРВИС">🔧 Сервис / Ремонт</option></select>
+    <input type="text" id="newTechName" placeholder="Название..." class="w-full bg-white/60 dark:bg-black/30 border border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none mb-3">
+    <input type="text" id="newTechAddress" placeholder="Адрес (город, улица, дом)..." class="w-full bg-white/60 dark:bg-black/30 border border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none mb-3">
+    <input type="text" id="newTechCity" placeholder="Город..." class="w-full bg-white/60 dark:bg-black/30 border border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none mb-3">
+    <input type="text" id="newTechDesc" placeholder="Описание..." class="w-full bg-white/60 dark:bg-black/30 border border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none mb-3">
+    <input type="tel" id="newTechPhone" placeholder="Телефон (+7...)" class="w-full bg-white/60 dark:bg-black/30 border border-white/20 rounded-xl px-3 py-2.5 text-sm text-gray-800 dark:text-white outline-none mb-3">
+    <input type="text" id="newTechCoords" placeholder="Координаты: 57.152, 65.541" class="w-full bg-white/80 dark:bg-black/40 border border-blue-500/20 rounded-xl px-3 py-2.5 text-xs text-gray-800 dark:text-white outline-none mb-4">
+    <button onclick="saveCustomTech()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-lg">Сохранить точку</button>
+  </div>
+</div>
+
+<div id="importConfirmModal" class="fixed inset-0 z-[110] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+  <div class="rounded-[28px] p-6 max-w-sm w-full relative animate-reveal glass-panel shadow-2xl text-center">
+    <h3 class="text-lg font-display font-extrabold text-blue-600 dark:text-blue-400 mb-2">Загрузка данных</h3>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 font-medium">Файл прочитан. Как поступить?</p>
+    <div class="flex flex-col gap-3">
+      <button onclick="confirmImport(true)" class="w-full py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-md">Объединить</button>
+      <button onclick="confirmImport(false)" class="w-full py-3 bg-gradient-to-r from-red-500 to-rose-600 text-white rounded-xl text-sm font-bold tactile-btn shadow-md">Заменить</button>
+      <button onclick="document.getElementById('importConfirmModal').classList.add('hidden');" class="w-full py-2 bg-white/50 dark:bg-white/5 text-gray-600 dark:text-gray-300 rounded-xl text-sm font-bold tactile-btn">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<div id="drivingHoursModal" class="fixed inset-0 z-[130] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+  <div class="rounded-[24px] p-6 max-w-sm w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh]">
+    <h3 class="text-base font-display font-extrabold text-gray-800 dark:text-white mb-1 text-center shrink-0">⏱ Часы за рулём</h3>
+    <p class="text-[10px] text-gray-500 mb-2 font-medium text-center shrink-0" id="drivingHoursContext"></p>
+    <div id="drivingSessionsList" class="mb-4 max-h-[150px] overflow-y-auto hide-scrollbar space-y-1.5 pr-1 shrink-0"></div>
+    <div class="flex gap-2 mb-3 items-end shrink-0">
+      <div class="flex-1"><label class="text-[9px] font-bold text-gray-400 uppercase block mb-1 text-center">Часы</label><input type="tel" inputmode="numeric" pattern="[0-9]*" id="driveHoursInput" placeholder="0" oninput="updateDrivePreview()" class="w-full bg-white/50 dark:bg-black/30 border border-white/20 rounded-xl px-3 py-3 text-2xl font-bold text-center text-gray-800 dark:text-white outline-none"></div>
+      <div class="pb-3 text-2xl font-bold text-gray-400">:</div>
+      <div class="flex-1"><label class="text-[9px] font-bold text-gray-400 uppercase block mb-1 text-center">Минуты</label><input type="tel" inputmode="numeric" pattern="[0-9]*" id="driveMinutesInput" placeholder="0" oninput="updateDrivePreview()" class="w-full bg-white/50 dark:bg-black/30 border border-white/20 rounded-xl px-3 py-3 text-2xl font-bold text-center text-gray-800 dark:text-white outline-none"></div>
+    </div>
+    <div id="drivePreview" class="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3 mb-3 text-center shrink-0">
+      <div class="text-[10px] text-emerald-700 dark:text-emerald-400 font-bold uppercase mb-0.5">Предварительная оплата</div>
+      <div class="text-2xl font-display font-black text-emerald-700 dark:text-emerald-400" id="drivePreviewSum">0 ₽</div>
+      <div class="text-[9px] text-gray-500 mt-0.5">Ставка ≈ 220 ₽/час</div>
+    </div>
+    <div class="flex gap-2 shrink-0">
+      <button onclick="closeDrivingHours()" class="flex-1 py-3 bg-white/50 dark:bg-white/5 text-gray-600 dark:text-gray-300 rounded-xl text-[11px] font-bold tactile-btn">Готово</button>
+      <button onclick="addDrivingSession()" class="flex-1 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl text-[11px] font-bold tactile-btn shadow-lg">➕ Добавить</button>
+    </div>
+  </div>
+</div>
+
+<div id="wageModal" class="fixed inset-0 z-[110] bg-black/40 dark:bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+  <div class="rounded-[32px] p-5 max-w-sm w-full relative animate-reveal glass-panel shadow-2xl flex flex-col max-h-[90vh]">
+    <button onclick="closeWageModal()" class="absolute top-4 right-4 text-gray-400 bg-gray-100/50 dark:bg-white/5 p-2.5 rounded-full tactile-btn z-10"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    <h3 class="text-lg font-display font-extrabold text-emerald-600 dark:text-emerald-400 mb-1 uppercase pr-8 mt-1">💰 Ведомость</h3>
+    <p class="text-[10px] text-gray-500 mb-3 font-medium">⚠️ Расчёт предварительный — уточняйте у диспетчера</p>
+    <div class="grid grid-cols-2 gap-2 mb-3">
+      <button onclick="setWagePeriod('week')" id="wageBtnWeek" class="py-2 rounded-xl text-xs font-bold bg-white/50 dark:bg-white/5 border border-white/20 text-gray-600 dark:text-gray-300">Неделя</button>
+      <button onclick="setWagePeriod('month')" id="wageBtnMonth" class="py-2 rounded-xl text-xs font-bold bg-emerald-500 text-white border border-emerald-600 shadow-md">Месяц</button>
+    </div>
+    <div class="bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 rounded-2xl p-4 mb-3">
+      <div class="text-[10px] font-bold text-emerald-600 uppercase mb-1">Итого (предварительно)</div>
+      <div id="wageTotal" class="text-3xl font-display font-black text-emerald-700 dark:text-emerald-400">0 ₽</div>
+      <div class="mt-3 pt-3 border-t border-emerald-500/20 space-y-2">
+        <div class="flex justify-between items-center"><div><div class="text-[10px] font-bold text-gray-600 dark:text-gray-300 uppercase">🚛 Сделка</div><div class="text-[9px] text-gray-500"><span id="wageTrips">0</span> рейс(ов)</div></div><div id="wageDeal" class="text-base font-black text-gray-700 dark:text-gray-200">0 ₽</div></div>
+        <div class="flex justify-between items-center"><div><div class="text-[10px] font-bold text-gray-600 dark:text-gray-300 uppercase">⏱ Вождение</div><div class="text-[9px] text-gray-500"><span id="wageDriving">0 ч 0 мин</span> × ≈ 220 ₽/ч</div></div><div id="wageDriveSum" class="text-base font-black text-blue-600 dark:text-blue-400">0 ₽</div></div>
+      </div>
+    </div>
+    <div class="text-[10px] font-bold text-gray-500 uppercase mb-2">Детализация</div>
+    <div id="wageList" class="flex-1 overflow-y-auto hide-scrollbar space-y-1.5 pr-1"></div>
+  </div>
+</div>
+
+<div id="updateBanner" class="hidden fixed top-4 left-1/2 -translate-x-1/2 z-[300] bg-indigo-600 text-white px-6 py-3.5 rounded-2xl shadow-2xl max-w-sm flex items-center gap-4 animate-reveal border border-white/10 backdrop-blur-md">
+  <div class="flex-1 text-xs font-bold leading-tight" id="updateBannerText">Доступно обновление</div>
+  <button onclick="applyUpdate()" class="bg-white text-indigo-600 px-4 py-1.5 rounded-xl text-xs font-bold tactile-btn shadow-sm">Обновить</button>
+</div>
+
+<header class="glass-header glass-panel border-t-0 border-l-0 border-r-0">
+<div class="max-w-[1600px] mx-auto px-4 sm:px-6 relative z-10 pb-3 pt-2 flex flex-col xl:flex-row xl:items-center gap-3 xl:gap-6">
+  <div class="flex items-center justify-between w-full xl:w-auto xl:contents">
+      <div class="flex items-center gap-3 shrink-0">
+        <div onclick="handleLogoTap()" class="w-11 h-11 md:w-12 md:h-12 rounded-full bg-white shadow-lg flex items-center justify-center shrink-0 border border-white/50 overflow-hidden relative cursor-pointer tactile-btn z-50 group" title="1 тап: плей/пауза. 2 тапа: сброс">
+          <img id="logoImage" src="icon.png" alt="" loading="lazy" class="w-full h-full object-cover" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23FDCB05\'/%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'20\' fill=\'%23004182\'/%3E%3C/svg%3E'">
+        </div>
+        <div class="min-w-0 flex-1">
+          <h1 class="text-[15px] sm:text-lg md:text-xl font-display font-extrabold text-lentaDark dark:text-white tracking-tight flex items-center gap-2 w-full"><span>ЛЕНТА</span><span class="bg-lentaYellow text-lentaDark px-2 py-0.5 rounded-md text-[9px] sm:text-[10px] font-black shadow-sm shrink-0 uppercase tracking-wide">Логистика</span></h1>
+          <div class="text-[11px] md:text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5 w-full">Мониторинг доставок</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0 xl:order-last">
+        <button id="installPwaBtn" onclick="installPwa()" class="hidden bg-emerald-500 text-white w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-lg flex items-center justify-center tactile-btn shrink-0" title="Установить"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></button>
+        <button onclick="toggleFullScreen()" class="bg-white/50 dark:bg-white/5 text-emerald-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-white/20 flex items-center justify-center tactile-btn shrink-0" title="На весь экран"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg></button>
+        <button id="textSizeBtn" onclick="toggleTextSize()" class="bg-white/50 dark:bg-white/5 text-sky-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-white/20 flex items-center justify-center tactile-btn shrink-0 font-black text-sm" title="Размер текста">A</button>
+        <button id="calendarBtn" onclick="openCalendarModal()" class="bg-white/50 dark:bg-white/5 text-purple-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-white/20 flex items-center justify-center tactile-btn shrink-0" title="Календарь"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></button>
+        <button id="themeToggleBtn" onclick="toggleTheme()" class="bg-white/50 dark:bg-white/5 text-gray-500 w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-sm border border-white/20 flex items-center justify-center tactile-btn shrink-0" title="Тема"><svg id="themeIcon" class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></button>
+      </div>
+  </div>
+
+  <div id="controlPanel" class="flex-1 w-full xl:w-auto bg-white/60 dark:bg-black/30 backdrop-blur-xl rounded-[28px] shadow-sm border border-white/40 dark:border-white/5 py-2 px-4 flex items-center justify-between transition-all duration-700 min-h-[80px]">
+    <div id="visitContainer" class="flex flex-col items-center justify-center shrink-0 min-w-[70px] z-10">
+      <div id="visitCounterBadge" onclick="handleVisitReset()" class="bg-slate-800 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm cursor-pointer select-none tactile-btn">0 ВИЗИТОВ</div>
+    </div>
+    <div id="centerStage" class="relative flex flex-col items-center flex-1 max-w-lg cursor-pointer tactile-btn mx-3 group z-20" onclick="playTickSound(); openContactsModal();">
+      <div id="bubbleSveta" class="story-bubble actor-sveta"><div class="story-bubble-inner"></div></div>
+      <div id="bubbleMarina" class="story-bubble actor-marina"><div class="story-bubble-inner"></div></div>
+      <div id="bubbleMech" class="story-bubble actor-mech"><div class="story-bubble-inner"></div></div>
+      <div id="discoBall" class="disco-ball"><div class="disco-ball-inner"></div><div class="disco-rays"></div></div>
+      <div class="w-full h-14 relative flex items-center justify-center overflow-visible" id="mechanicSvgContainer">
+        <svg viewBox="0 0 240 60" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full text-gray-500 dark:text-gray-400 group-hover:text-emerald-500 transition-colors normal-mode overflow-visible drop-shadow-sm" id="mechanicSvgElement">
+          <g id="girlsGroup">
+            <path d="M 15 48 L 85 48" stroke-width="2"/>
+            <g id="svetaBody" style="transform-origin: 30px 48px;"><rect x="15" y="32" width="10" height="7" rx="1"/><path d="M 20 39 V 48"/><circle cx="35" cy="22" r="5"/><path d="M 35 27 V 43"/><path d="M 35 43 L 30 55 M 35 43 L 40 55"/><path d="M 30 43 L 40 43 Z" fill="currentColor" stroke-width="1"/><g class="arm-typing" style="transform-origin: 35px 29px;"><path d="M 35 29 L 28 35 L 22 36"/><path d="M 35 29 L 25 36 L 20 38"/></g></g>
+            <g id="marinaBody" style="transform-origin: 70px 48px;"><rect x="75" y="32" width="10" height="7" rx="1"/><path d="M 80 39 V 48"/><circle cx="60" cy="22" r="5"/><path d="M 55 22 A 5 5 0 0 1 65 22" stroke-width="2"/><path d="M 60 27 V 43"/><path d="M 60 43 L 55 55 M 60 43 L 65 55"/><path d="M 55 43 L 65 43 Z" fill="currentColor" stroke-width="1"/><g class="arm-typing-delay" style="transform-origin: 60px 29px;"><path d="M 60 29 L 68 35 L 75 36"/><path d="M 60 29 L 71 36 L 78 38"/></g></g>
+          </g>
+          <g id="mechGroup">
+            <g id="mechBody" style="transform-origin: 170px 55px;"><circle cx="170" cy="22" r="5"/><path d="M 165 18 L 175 18 L 173 22 Z" fill="currentColor"/><path d="M 170 27 V 45"/><path d="M 170 45 L 163 55 M 170 45 L 177 55"/><g class="wrench-arm" style="transform-origin: 170px 29px;"><path d="M 170 29 L 155 36"/><path d="M 157 34 L 150 40" stroke-width="2"/><path d="M 148 37 C 152 35, 153 42, 150 40" stroke-width="2" fill="none"/></g><path d="M 170 29 L 178 35 L 172 40"/><path id="sweatDrop" d="M 176 16 Q 178 20 176 22 Q 174 20 176 16 Z" fill="#38bdf8" stroke="none" class="sweat-drop"/></g><circle cx="195" cy="45" r="10" stroke-width="3"/><circle cx="195" cy="45" r="3" fill="currentColor" stroke="none"/><path d="M 185 55 L 205 55" stroke-width="1.5"/></g>
+        </svg>
+      </div>
+      <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mt-0 text-center w-full z-20 relative bg-white/50 dark:bg-black/20 px-3 py-0.5 rounded-full inline-block">Контакты</div>
+    </div>
+    <div id="speedContainer" class="flex flex-col items-center justify-center cursor-default shrink-0 min-w-[50px] z-10 tactile-btn" onclick="playTickSound(); openMechanicModal();" title="Скорость / Инструктаж">
+      <div class="w-11 h-11 rounded-full border-[3px] border-red-500 bg-white flex items-center justify-center shadow-lg relative cursor-pointer">
+        <span id="speedLimitNumber" class="text-slate-800 font-display font-black text-lg leading-none tracking-tighter">80</span>
+        <div id="seasonIcon" class="absolute -bottom-1 -right-2 w-5 h-5 rounded-full flex items-center justify-center text-[10px] shadow-sm border bg-white"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Панель статуса GPS и авто-Push для ТК -->
+<div class="max-w-[1600px] mx-auto px-4 sm:px-6 relative z-10 pb-2">
+  <div class="flex flex-wrap items-center justify-between gap-2 bg-white/50 dark:bg-black/30 border border-white/30 dark:border-white/5 rounded-2xl px-3 py-1.5 text-[11px]">
+    <div class="flex items-center gap-2">
+      <span id="gpsDot" class="w-2.5 h-2.5 rounded-full bg-gray-400"></span>
+      <span id="gpsStatusText" class="font-bold text-gray-600 dark:text-gray-300">GPS: выключен</span>
+    </div>
+    <button id="bgPushBtn" onclick="toggleBgHyperPush()" class="px-2.5 py-1 rounded-xl font-bold text-[10px] bg-gray-200/80 dark:bg-white/10 text-gray-700 dark:text-gray-200 tactile-btn">🔔 Авто-Push ТК: ВЫКЛ</button>
+  </div>
+</div>
+
+<div class="max-w-[1600px] mx-auto px-4 sm:px-6 relative z-10 pb-4">
+  <div class="flex items-center gap-2 w-full mb-3 mt-1">
+    <div class="relative flex-1 group">
+      <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></div>
+      <input type="text" id="searchInput" placeholder="Поиск по ТК, Беляшам, Уюту, адресу..." class="bg-white/60 dark:bg-black/40 focus:bg-white dark:focus:bg-black/60 border border-white/40 dark:border-white/5 text-gray-800 dark:text-white placeholder-gray-500 text-sm rounded-2xl block w-full pl-11 pr-10 py-3 outline-none shadow-sm">
+      <button id="clearSearchBtn" onclick="clearSearch();" class="hidden absolute right-2 top-2 text-gray-400 bg-white dark:bg-zinc-800 p-1.5 rounded-full shadow-sm tactile-btn"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      <div id="autocompleteList" class="absolute z-[100] w-full bg-white dark:bg-zinc-800 rounded-2xl hidden max-h-[40vh] overflow-y-auto mt-2 text-left text-gray-800 dark:text-gray-200 shadow-2xl border border-gray-100 dark:border-white/10 hide-scrollbar"></div>
+    </div>
+    <button id="homeBtn" onclick="filterByCity('all');" class="relative bg-white/60 dark:bg-white/5 text-indigo-500 w-11 h-11 rounded-2xl shadow-sm border border-white/40 flex items-center justify-center shrink-0 tactile-btn" title="Все магазины"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg></button>
+    <button id="nearestBtn" onclick="sortByNearest();" class="relative bg-white/60 dark:bg-white/5 text-emerald-500 w-11 h-11 rounded-2xl shadow-sm border border-white/40 flex items-center justify-center shrink-0 tactile-btn overflow-visible" title="Точный GPS-радар"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></button>
+    <button id="voiceSearchBtn" onclick="startVoiceSearch();" class="bg-white/60 dark:bg-white/5 text-lentaBlue w-11 h-11 rounded-2xl shadow-sm border border-white/40 flex items-center justify-center shrink-0 tactile-btn" title="Голос"><svg id="micIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg></button>
+  </div>
+  <div class="relative overflow-hidden rounded-[28px] shadow-lg border border-white/20 dark:border-white/5 bg-white dark:bg-black">
+    <div class="scenic-bg group">
+      <div id="skyDay" class="sky-layer sky-day"></div>
+      <div id="skySunset" class="sky-layer sky-sunset"></div>
+      <div id="skyNight" class="sky-layer sky-night"></div>
+      <div id="skyStars" class="sky-stars"></div>
+      <div id="sunBody" class="celestial-body w-10 h-10 bg-gradient-to-tr from-yellow-400 to-yellow-200 shadow-[0_0_30px_rgba(250,204,21,1)]" style="left:-10%; bottom:-10%; opacity:0;"></div>
+      <div id="moonBody" class="celestial-body w-8 h-8 bg-blue-50 shadow-[0_0_20px_rgba(219,234,254,0.8)]" style="left:-10%; bottom:-10%; opacity:0;"></div>
+      <div id="layerMountains" class="parallax-layer parallax-mountains"></div>
+      <div id="layerTrees" class="parallax-layer parallax-trees"></div>
+      <div id="layerLeaves" class="weather-layer leaves-anim"></div>
+      <div id="layerSnow" class="weather-layer snow-anim"></div>
+      <div id="layerSigns" class="parallax-signs"></div>
+      <div id="layerRoad" class="parallax-road"></div>
+      <div id="policeCar" class="police-car"><div class="police-siren-red"></div><div class="police-siren-blue"></div></div>
+      <div id="citySlider" class="city-slider relative z-30 cursor-pointer"></div>
+    </div>
+  </div>
+</div>
+</header>
+
+<main class="max-w-[1600px] mx-auto px-4 sm:px-6 py-6 relative z-10 flex-1">
+  <div id="nearestBanner" class="hidden mb-4 p-3 rounded-2xl bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border-2 border-emerald-500/30 shadow-lg animate-reveal">
+    <div class="flex items-center justify-between mb-2"><div class="text-[10px] font-black uppercase text-emerald-600 tracking-wider">📍 Ближайшие к вам (по точному GPS)</div><button onclick="hideNearestBanner()" class="text-gray-400 text-xs px-2 py-1 rounded-full tactile-btn">✕</button></div>
+    <div id="nearestBannerList" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+  </div>
+  <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 mb-8"></div>
+</main>
+
+<div id="toast-notification" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-gray-900/90 dark:bg-white/10 backdrop-blur-md text-white px-6 py-3.5 rounded-2xl shadow-2xl z-[200] font-bold text-[13px] text-center border border-white/20 transition-all duration-300 opacity-0 scale-95 pointer-events-none whitespace-nowrap"></div>
+
+<script src="data.js"></script>
+<script src="data_services.js"></script>
+<script src="stories.js"></script>
+<script>
+
+let myShifts = {};
+try { myShifts = JSON.parse(localStorage.getItem('lenta_shifts_v1')) || {}; } catch(e) { myShifts = {}; }
+for (const date in myShifts) {
+  myShifts[date].forEach(s => {
+    if (s.drivingMinutes && !s.drivingSessions) { s.drivingSessions = [{ id: Date.now() + Math.random(), minutes: s.drivingMinutes }]; delete s.drivingMinutes; }
+    else if (!s.drivingSessions) s.drivingSessions = [];
+  });
+}
+let currentCalYear = new Date().getFullYear(), currentCalMonth = new Date().getMonth(), selectedDate = null;
+const monthNames = ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
+let driverList = [];
+try { driverList = JSON.parse(localStorage.getItem('lenta_drivers')) || []; } catch(e) {}
+if (driverList.length === 0) driverList = ['Водитель 1', 'Водитель 2'];
+let currentDriver = localStorage.getItem('lenta_current_driver') || driverList[0];
+if (!driverList.includes(currentDriver)) currentDriver = driverList[0];
+
+window.changeDriver = function(name) { currentDriver = name; localStorage.setItem('lenta_current_driver', name); renderCalendar(); showDayShifts(selectedDate); if (!document.getElementById('wageModal').classList.contains('hidden')) renderWage(); showToast(`👤 Профиль: ${name}`); };
+window.addNewDriver = function() { const name = prompt("Имя нового водителя:"); if (!name || !name.trim()) return; const c = name.trim(); if (!driverList.includes(c)) { driverList.push(c); localStorage.setItem('lenta_drivers', JSON.stringify(driverList)); } currentDriver = c; localStorage.setItem('lenta_current_driver', c); renderDriverSelector(); renderCalendar(); showDayShifts(selectedDate); showToast(`✅ Добавлен: ${c}`); };
+window.renameCurrentDriver = function() { const old = currentDriver, n = prompt("Новое имя:", old); if (!n || !n.trim() || n === old) return; const c = n.trim(); if (driverList.includes(c)) return showToast("Такое имя уже есть!"); driverList[driverList.indexOf(old)] = c; localStorage.setItem('lenta_drivers', JSON.stringify(driverList)); for (const d in myShifts) myShifts[d].forEach(s => { if (getShiftDriver(s) === old) s.driver = c; }); saveShifts(); currentDriver = c; localStorage.setItem('lenta_current_driver', c); renderDriverSelector(); renderCalendar(); showDayShifts(selectedDate); showToast(`✅ Переименован в ${c}`); };
+window.deleteCurrentDriver = function() { if (driverList.length <= 1) return showToast("Нельзя удалить единственного!"); if (!confirm(`Удалить профиль "${currentDriver}"?`)) return; driverList.splice(driverList.indexOf(currentDriver), 1); localStorage.setItem('lenta_drivers', JSON.stringify(driverList)); currentDriver = driverList[0]; localStorage.setItem('lenta_current_driver', currentDriver); renderDriverSelector(); renderCalendar(); showDayShifts(selectedDate); showToast("🗑️ Удалён"); };
+function renderDriverSelector() { const sel = document.getElementById('driverSelect'); if (!sel) return; sel.innerHTML = ''; driverList.forEach(d => { const o = document.createElement('option'); o.value = d; o.textContent = d; if (d === currentDriver) o.selected = true; sel.appendChild(o); }); }
+function getShiftDriver(s) { return s.driver || 'Водитель 1'; }
+function saveShifts() { try { localStorage.setItem('lenta_shifts_v1', JSON.stringify(myShifts)); return true; } catch(e) { showToast("⚠️ Память заполнена!"); return false; } }
+function getTodayStr() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+
+const TARIFFS = { 'Екатеринбург': 1164, 'Сургут': 8698, 'Ханты-Мансийск': 7569, 'Санкт-Петербург': 26511, 'Тобольск': 3879, 'Тюмень': 3234, 'Уфа': 3879, 'Челябинск': 2899, 'Новосибирск': 12627, 'Ноябрьск': 10686, 'Пермь': 2899, 'Курган': 2899, 'Магнитогорск': 2899, 'Миасс': 2899, 'Березовский': 1164, 'Нижний Тагил': 1164, 'Каменск-Уральский': 1164, 'Нефтеюганск': 8698, 'Нижневартовск': 10686, 'Южноуральск': 2899, 'Москва': 26511, 'Бобровка': 1164, 'Тюменская обл.': 3234, 'Свердловская обл.': 1164, 'Уватский район': 8698, 'Тобольский район': 3879 };
+const DRIVE_RATE_PER_HOUR = 220;
+function getShiftTariff(s) { return (!s || s.brand === 'ЗАДАЧА' || s.brand === 'СЕРВИС') ? 0 : (TARIFFS[s.city] || 0); }
+function formatMoney(n) { return n.toLocaleString('ru-RU') + ' ₽'; }
+function formatDriveTime(min) { return `${Math.floor(min/60)} ч ${min%60} мин`; }
+function getDrivingPay(m) { return m ? Math.round((m / 60) * DRIVE_RATE_PER_HOUR) : 0; }
+function getShiftDrivingTotal(s) { return (s && s.drivingSessions) ? s.drivingSessions.reduce((a, b) => a + b.minutes, 0) : 0; }
+
+let _wagePeriod = 'month';
+function getPeriodRange(p) {
+  const now = new Date();
+  if (p === 'month') { const y = currentCalYear, m = currentCalMonth, last = new Date(y, m + 1, 0).getDate(), mm = String(m + 1).padStart(2, '0'); return { start: `${y}-${mm}-01`, end: `${y}-${mm}-${String(last).padStart(2,'0')}` }; }
+  const day = now.getDay() || 7, mon = new Date(now); mon.setDate(now.getDate() - day + 1); const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+  const iso = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  return { start: iso(mon), end: iso(sun) };
+}
+window.openWageModal = function() { playTickSound(); document.getElementById('wageModal').classList.remove('hidden'); renderWage(); };
+window.closeWageModal = function() { document.getElementById('wageModal').classList.add('hidden'); };
+window.setWagePeriod = function(p) {
+  _wagePeriod = p;
+  const act = 'py-2 rounded-xl text-xs font-bold bg-emerald-500 text-white border border-emerald-600 shadow-md';
+  const inact = 'py-2 rounded-xl text-xs font-bold bg-white/50 dark:bg-white/5 border border-white/20 text-gray-600 dark:text-gray-300';
+  document.getElementById('wageBtnWeek').className = p === 'week' ? act : inact;
+  document.getElementById('wageBtnMonth').className = p === 'month' ? act : inact;
+  renderWage();
+};
+function renderWage() {
+  const { start, end } = getPeriodRange(_wagePeriod);
+  let dealSum = 0, driveSum = 0, trips = 0, drivingMin = 0; const items = [];
+  for (const date in myShifts) {
+    if (date < start || date > end) continue;
+    myShifts[date].forEach((s, idx) => {
+      if (getShiftDriver(s) !== currentDriver) return;
+      const t = getShiftTariff(s), dm = getShiftDrivingTotal(s), dp = getDrivingPay(dm);
+      if (t > 0) { dealSum += t; trips++; } if (dm > 0) { driveSum += dp; drivingMin += dm; }
+      if (t > 0 || dm > 0) items.push({ date, s, t, dm, dp, originalIndex: idx });
+    });
+  }
+  items.sort((a, b) => b.date.localeCompare(a.date));
+  document.getElementById('wageTotal').textContent = formatMoney(dealSum + driveSum);
+  document.getElementById('wageDeal').textContent = formatMoney(dealSum);
+  document.getElementById('wageDriveSum').textContent = formatMoney(driveSum);
+  document.getElementById('wageTrips').textContent = trips;
+  document.getElementById('wageDriving').textContent = drivingMin > 0 ? formatDriveTime(drivingMin) : '0 ч 0 мин';
+  const list = document.getElementById('wageList');
+  list.innerHTML = items.length === 0 ? '<div class="text-center text-gray-400 text-xs py-6">Нет записей</div>' : items.map(({ date, s, t, dm, originalIndex }) => {
+    const [y, m, d] = date.split('-');
+    return `<div class="flex items-center justify-between bg-white/50 dark:bg-black/30 p-2.5 rounded-xl border border-white/20">
+      <div class="min-w-0 flex-1"><div class="text-[10px] text-gray-500">${d}.${m}.${y} • ${s.time || ''}</div><div class="text-xs font-bold text-gray-800 dark:text-gray-200 truncate">${s.brand} • ${s.city || s.address}</div><button onclick="openDrivingHours('${date}', ${originalIndex})" class="text-[9px] text-blue-600 bg-blue-500/10 px-1.5 py-0.5 rounded mt-1 tactile-btn">⏱ ${dm > 0 ? formatDriveTime(dm) : '+ Время'}</button></div>
+      <div class="ml-2 shrink-0 text-right">${t > 0 ? `<div class="text-emerald-600 font-black text-xs">${formatMoney(t)}</div>` : ''}</div></div>`;
+  }).join('');
+}
+
+let _driveTarget = null;
+function _readDriveInputs() { const h = Math.max(0, Math.min(24, parseInt(document.getElementById('driveHoursInput').value) || 0)), m = Math.max(0, Math.min(59, parseInt(document.getElementById('driveMinutesInput').value) || 0)); return { h, m, totalMin: h * 60 + m }; }
+window.updateDrivePreview = function() { const el = document.getElementById('drivePreviewSum'); if (el) el.textContent = formatMoney(getDrivingPay(_readDriveInputs().totalMin)); };
+window.openDrivingHours = function(dateStr, index) { playTickSound(); const s = myShifts[dateStr] && myShifts[dateStr][index]; if (!s) return; _driveTarget = { dateStr, index }; document.getElementById('driveHoursInput').value = ''; document.getElementById('driveMinutesInput').value = ''; document.getElementById('drivingHoursContext').textContent = `${s.brand} • ${s.city || s.address}`; renderDrivingSessionsList(); updateDrivePreview(); document.getElementById('drivingHoursModal').classList.remove('hidden'); };
+window.closeDrivingHours = function() { _driveTarget = null; document.getElementById('drivingHoursModal').classList.add('hidden'); };
+window.renderDrivingSessionsList = function() {
+  if (!_driveTarget) return; const s = myShifts[_driveTarget.dateStr][_driveTarget.index], c = document.getElementById('drivingSessionsList'), sess = s.drivingSessions || [];
+  if (!sess.length) { c.innerHTML = `<div class="text-center text-[10px] text-gray-500">Нет добавленного времени</div>`; return; }
+  c.innerHTML = `<div class="text-[10px] font-bold text-gray-500 mb-1 uppercase">Итого: ${formatDriveTime(getShiftDrivingTotal(s))}</div>` + sess.map(x => `<div class="flex justify-between items-center bg-blue-500/10 px-2.5 py-1.5 rounded-lg"><span class="text-xs font-bold text-blue-700 dark:text-blue-300">⏱ ${formatDriveTime(x.minutes)}</span><button onclick="deleteDrivingSession(${x.id})" class="text-red-500 p-1">✕</button></div>`).join('');
+};
+window.addDrivingSession = function() { if (!_driveTarget) return; const { totalMin } = _readDriveInputs(); if (!totalMin) return showToast('Введите время > 0'); const s = myShifts[_driveTarget.dateStr][_driveTarget.index]; s.drivingSessions = s.drivingSessions || []; s.drivingSessions.push({ id: Date.now() + Math.random(), minutes: totalMin }); saveShifts(); document.getElementById('driveHoursInput').value = ''; document.getElementById('driveMinutesInput').value = ''; updateDrivePreview(); renderDrivingSessionsList(); showDayShifts(_driveTarget.dateStr); if (!document.getElementById('wageModal').classList.contains('hidden')) renderWage(); };
+window.deleteDrivingSession = function(id) { if (!_driveTarget) return; const s = myShifts[_driveTarget.dateStr][_driveTarget.index]; s.drivingSessions = s.drivingSessions.filter(x => x.id !== id); saveShifts(); renderDrivingSessionsList(); showDayShifts(_driveTarget.dateStr); if (!document.getElementById('wageModal').classList.contains('hidden')) renderWage(); };
+
+window.openCalendarModal = function() { playTickSound(); document.getElementById('calendarModal').classList.remove('hidden'); const t = new Date(); currentCalYear = t.getFullYear(); currentCalMonth = t.getMonth(); selectedDate = getTodayStr(); renderDriverSelector(); renderCalendar(); showDayShifts(selectedDate); };
+window.closeCalendarModal = function() { document.getElementById('calendarModal').classList.add('hidden'); };
+window.changeMonth = function(dir) { playTickSound(); currentCalMonth += dir; if (currentCalMonth > 11) { currentCalMonth = 0; currentCalYear++; } if (currentCalMonth < 0) { currentCalMonth = 11; currentCalYear--; } renderCalendar(); };
+function renderCalendar() {
+  document.getElementById('calendarMonthYear').innerText = `${monthNames[currentCalMonth]} ${currentCalYear}`;
+  const grid = document.getElementById('calendarGrid'); grid.innerHTML = '';
+  const firstDay = new Date(currentCalYear, currentCalMonth, 1).getDay(), daysInMonth = new Date(currentCalYear, currentCalMonth + 1, 0).getDate();
+  let startDay = firstDay - 1; if (startDay === -1) startDay = 6;
+  for (let i = 0; i < startDay; i++) grid.innerHTML += `<div class="h-9 sm:h-10"></div>`;
+  const todayStr = getTodayStr();
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateStr = `${currentCalYear}-${String(currentCalMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const hasShift = myShifts[dateStr] && myShifts[dateStr].some(s => getShiftDriver(s) === currentDriver);
+    let cls = "flex flex-col items-center justify-center rounded-xl cursor-pointer tactile-btn relative border h-9 sm:h-10 text-[12px] ";
+    if (dateStr === selectedDate) cls += "bg-purple-500 text-white border-purple-600 font-bold ";
+    else if (hasShift) cls += "bg-purple-500/15 text-purple-700 dark:text-purple-300 border-purple-500/30 font-bold ";
+    else if (dateStr === todayStr) cls += "bg-gray-200/70 dark:bg-white/10 font-bold border-gray-300 ";
+    else cls += "bg-white/50 dark:bg-black/20 text-gray-600 dark:text-gray-400 border-transparent ";
+    grid.innerHTML += `<div onclick="selectDate('${dateStr}')" class="${cls}"><span>${day}</span>${hasShift ? '<span class="text-[8px] leading-none">🚛</span>' : ''}</div>`;
+  }
+}
+window.selectDate = function(d) { playTickSound(); selectedDate = d; renderCalendar(); showDayShifts(d); };
+window.showDayShifts = function(dateStr) {
+  const [y, m, d] = dateStr.split('-');
+  const raw = myShifts[dateStr] || [], shifts = raw.map((s, i) => ({...s, originalIndex: i})).filter(s => getShiftDriver(s) === currentDriver);
+  document.getElementById('selectedDayTitle').innerHTML = `<span>${d}.${m}.${y}</span><span class="text-purple-600">${shifts.length ? shifts.length + ' рейс(ов)' : ''}</span>`;
+  const c = document.getElementById('selectedDayShifts'); c.innerHTML = '';
+  if (!shifts.length) { c.innerHTML = `<div class="text-center text-gray-400 text-xs mt-4">Нет рейсов</div>`; return; }
+  shifts.forEach(s => {
+    const dm = getShiftDrivingTotal(s), t = getShiftTariff(s);
+    c.innerHTML += `<div class="bg-white/80 dark:bg-black/40 p-2.5 rounded-xl border border-white/40 relative">
+      <button onclick="deleteShift('${dateStr}', ${s.originalIndex})" class="absolute top-1.5 right-1.5 text-gray-400 hover:text-red-500 px-1.5">✕</button>
+      <div class="text-xs font-bold text-gray-800 dark:text-gray-200 pr-6">${s.brand} ${s.tk !== '-' ? 'ТК ' + s.tk : ''} • ${s.time}</div>
+      <div class="text-[10px] text-gray-500 truncate">${s.city}, ${s.address}</div>
+      <div class="flex items-center justify-between mt-1.5"><button onclick="openDrivingHours('${dateStr}', ${s.originalIndex})" class="text-[10px] font-bold bg-blue-500/10 text-blue-600 px-2 py-0.5 rounded">⏱ ${dm ? formatDriveTime(dm) : '+ Время'}</button>${t ? `<span class="text-[10px] font-black text-emerald-600">${formatMoney(t)}</span>` : ''}</div></div>`;
+  });
+};
+window.deleteShift = function(d, i) { playTickSound(); myShifts[d].splice(i, 1); if (!myShifts[d].length) delete myShifts[d]; saveShifts(); renderCalendar(); showDayShifts(d); };
+window.addToShifts = function(tk, brand, address, city) { playTickSound(); const dt = selectedDate || getTodayStr(); myShifts[dt] = myShifts[dt] || []; const now = new Date(); myShifts[dt].push({ tk, brand, address, city, time: `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`, timestamp: now.getTime(), driver: currentDriver, drivingSessions: [] }); saveShifts(); showToast(`✅ Рейс учтён!`); if (!document.getElementById('calendarModal').classList.contains('hidden')) { renderCalendar(); showDayShifts(dt); } };
+
+let customTechStations = []; try { customTechStations = JSON.parse(localStorage.getItem('lenta_custom_tech')) || []; } catch(e) {}
+function getTechStations() { return [...(window.techStations || []), ...customTechStations]; }
+window.openStorePicker = function() { if (!selectedDate) return showToast("Выберите день!"); document.getElementById('storePickerModal').classList.remove('hidden'); document.getElementById('pickerSearch').value = ''; renderPickerStores(); };
+window.closeStorePicker = function() { document.getElementById('storePickerModal').classList.add('hidden'); };
+window.renderPickerStores = function() {
+  const q = document.getElementById('pickerSearch').value.toLowerCase().trim(), c = document.getElementById('pickerStoreList'); c.innerHTML = '';
+  stores.filter(s => `${s.tk} ${s.city} ${s.address}`.toLowerCase().includes(q)).slice(0, 40).forEach(s => {
+    const b = document.createElement('div'); b.className = "bg-white/60 dark:bg-white/5 p-3 rounded-xl cursor-pointer tactile-btn";
+    b.onclick = () => openTimePicker(t => { myShifts[selectedDate] = myShifts[selectedDate] || []; myShifts[selectedDate].push({ tk: s.tk, brand: 'ЛЕНТА', address: s.address, city: s.city, time: t, timestamp: Date.now(), driver: currentDriver, drivingSessions: [] }); saveShifts(); closeStorePicker(); renderCalendar(); showDayShifts(selectedDate); });
+    b.innerHTML = `<div class="text-xs font-bold">ТК ${s.tk} • ${s.city}</div><div class="text-[10px] text-gray-500">${s.address}</div>`; c.appendChild(b);
+  });
+};
+window.openTechPicker = function() { if (!selectedDate) return showToast("Выберите день!"); document.getElementById('techPickerModal').classList.remove('hidden'); document.getElementById('techPickerSearch').value = ''; renderTechPicker(); };
+window.closeTechPicker = function() { document.getElementById('techPickerModal').classList.add('hidden'); };
+window.renderTechPicker = function() {
+  const q = document.getElementById('techPickerSearch').value.toLowerCase().trim(), c = document.getElementById('techPickerList'); c.innerHTML = '';
+  getTechStations().filter(st => `${st.name} ${st.city} ${st.address}`.toLowerCase().includes(q)).slice(0, 40).forEach(st => {
+    const b = document.createElement('div'); b.className = "bg-white/60 dark:bg-white/5 p-3 rounded-xl cursor-pointer tactile-btn";
+    b.onclick = () => openTimePicker(t => { myShifts[selectedDate] = myShifts[selectedDate] || []; myShifts[selectedDate].push({ tk: st.id, brand: 'СЕРВИС', address: `${st.type}: ${st.name}`, city: st.address, time: t, timestamp: Date.now(), driver: currentDriver, drivingSessions: [] }); saveShifts(); closeTechPicker(); renderCalendar(); showDayShifts(selectedDate); });
+    b.innerHTML = `<div class="text-xs font-bold">${st.name} • ${st.city || ''}</div><div class="text-[10px] text-gray-500">${st.address}</div>`; c.appendChild(b);
+  });
+};
+let _pendingTimeCallback = null;
+window.openTimePicker = function(cb) { _pendingTimeCallback = cb; document.getElementById('timePickerModal').classList.remove('hidden'); };
+window.closeTimePicker = function() { _pendingTimeCallback = null; document.getElementById('timePickerModal').classList.add('hidden'); };
+window.confirmTimePicker = function() { if (_pendingTimeCallback) _pendingTimeCallback(document.getElementById('modalTimeInput').value || '12:00'); closeTimePicker(); };
+window.openCustomTaskModal = function() { if (!selectedDate) return showToast("Выберите день!"); document.getElementById('customTaskModal').classList.remove('hidden'); };
+window.closeCustomTaskModal = function() { document.getElementById('customTaskModal').classList.add('hidden'); };
+window.setTaskPreset = function(n) { document.getElementById('customTaskName').value = n; };
+window.fillTaskFromDropdown = function() { const v = document.getElementById('customTaskDropdown').value; if (v) document.getElementById('customTaskDesc').value = v; };
+window.saveCustomTask = function() { const n = document.getElementById('customTaskName').value.trim(); if (!n) return showToast("Введите название!"); myShifts[selectedDate] = myShifts[selectedDate] || []; myShifts[selectedDate].push({ tk: '-', brand: 'ЗАДАЧА', address: n, city: document.getElementById('customTaskDesc').value.trim() || '—', time: document.getElementById('customTaskTime').value || '12:00', timestamp: Date.now(), driver: currentDriver, drivingSessions: [] }); saveShifts(); closeCustomTaskModal(); renderCalendar(); showDayShifts(selectedDate); };
+window.openAddTechModal = function() { document.getElementById('addTechModal').classList.remove('hidden'); };
+window.closeAddTechModal = function() { document.getElementById('addTechModal').classList.add('hidden'); };
+window.saveCustomTech = function() {
+  const name = document.getElementById('newTechName').value.trim(), address = document.getElementById('newTechAddress').value.trim(), city = document.getElementById('newTechCity').value.trim();
+  if (!name || !address || !city) return showToast("Заполните название, адрес и город!");
+  let lat = null, lon = null, co = document.getElementById('newTechCoords').value.trim().split(',');
+  if (co.length === 2) { lat = parseFloat(co[0]); lon = parseFloat(co[1]); if (isNaN(lat) || isNaN(lon)) lat = lon = null; }
+  customTechStations.push({ id: 'custom_' + Date.now(), type: document.getElementById('newTechType').value, name, address, city, desc: document.getElementById('newTechDesc').value.trim(), phone: document.getElementById('newTechPhone').value.trim(), lat, lon, isCustom: true });
+  localStorage.setItem('lenta_custom_tech', JSON.stringify(customTechStations)); closeAddTechModal(); renderCards(); showToast("✅ Точка добавлена!");
+};
+window.deleteCustomTech = function(id) { if (!confirm("Удалить точку?")) return; customTechStations = customTechStations.filter(s => s.id !== id); localStorage.setItem('lenta_custom_tech', JSON.stringify(customTechStations)); renderCards(); };
+window.exportMonthReport = function() {
+  const m = String(currentCalMonth + 1).padStart(2, '0'), prefix = `${currentCalYear}-${m}`, days = Object.keys(myShifts).filter(d => d.startsWith(prefix)).sort();
+  if (!days.length) return showToast("Нет записей");
+  let txt = `ОТЧЕТ: ${monthNames[currentCalMonth]} ${currentCalYear} (${currentDriver})\n\n`;
+  days.forEach(d => { myShifts[d].filter(s => getShiftDriver(s) === currentDriver).forEach(s => { txt += `${d} [${s.time}] ${s.brand} ${s.tk} (${s.city})\n`; }); });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([txt], {type: "text/plain"})); a.download = `Reysi_${currentDriver}_${m}.txt`; a.click();
+};
+window.exportCalendarBackup = function() { const a = document.createElement('a'); a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(myShifts, null, 2)); a.download = `lenta_backup_${getTodayStr()}.json`; a.click(); showToast("Бэкап сохранён! 💾"); };
+let _importedData = null;
+window.importCalendarBackup = function() { const i = document.createElement('input'); i.type = 'file'; i.onchange = e => { const r = new FileReader(); r.onload = ev => { try { _importedData = JSON.parse(ev.target.result); document.getElementById('importConfirmModal').classList.remove('hidden'); } catch(err) { showToast("❌ Ошибка файла"); } }; r.readAsText(e.target.files[0]); }; i.click(); };
+window.confirmImport = function(merge) { if (merge) { for (const d in _importedData) myShifts[d] = (myShifts[d] || []).concat(_importedData[d]); } else myShifts = _importedData; saveShifts(); document.getElementById('importConfirmModal').classList.add('hidden'); renderCalendar(); showDayShifts(selectedDate); showToast("✅ Загружено!"); };
+
+// ========== ТОЧНЫЙ GPS, ФОНОВЫЙ PUSH ТОЛЬКО ДЛЯ ГИПЕРМАРКЕТОВ, ЕДИНАЯ НАВИГАЦИЯ ==========
+let gpsWatchId = null, _lastArrivalStore = null, _arrivalDismissed = new Set(), _pendingArrival = null;
+const HYPER_ARRIVAL_RADIUS_KM = 0.35; // 350 метров до гипермаркета
+const MAX_ACCEPTABLE_ACCURACY = 120;  // игнорируем неточные скачки по вышкам > 120м
+let bgHyperPushEnabled = localStorage.getItem('lenta_bg_push') === '1';
+
+function updateGpsStatusUI(text, colorClass) {
+  const t = document.getElementById('gpsStatusText'), d = document.getElementById('gpsDot');
+  if (t) t.textContent = text;
+  if (d) d.className = `w-2.5 h-2.5 rounded-full ${colorClass}`;
+}
+function updateBgPushUI() {
+  const b = document.getElementById('bgPushBtn');
+  if (!b) return;
+  if (bgHyperPushEnabled) { b.textContent = '🔔 Авто-Push ТК: ВКЛ'; b.className = 'px-2.5 py-1 rounded-xl font-bold text-[10px] bg-emerald-500 text-white shadow-sm tactile-btn'; }
+  else { b.textContent = '🔔 Авто-Push ТК: ВЫКЛ'; b.className = 'px-2.5 py-1 rounded-xl font-bold text-[10px] bg-gray-200/80 dark:bg-white/10 text-gray-700 dark:text-gray-200 tactile-btn'; }
+}
+window.toggleBgHyperPush = function() {
+  playTickSound();
+  if (!bgHyperPushEnabled) {
+    if ('Notification' in window && Notification.permission !== 'granted') {
+      Notification.requestPermission().then(p => {
+        if (p !== 'granted') return showToast("❌ Разрешите уведомления в браузере");
+        bgHyperPushEnabled = true; localStorage.setItem('lenta_bg_push', '1'); updateBgPushUI(); startGpsMonitoring(); showToast("🔔 Авто-Push для гипермаркетов включён!");
+      });
+    } else {
+      bgHyperPushEnabled = true; localStorage.setItem('lenta_bg_push', '1'); updateBgPushUI(); startGpsMonitoring(); showToast("🔔 Авто-Push для гипермаркетов включён!");
+    }
+  } else {
+    bgHyperPushEnabled = false; localStorage.setItem('lenta_bg_push', '0'); updateBgPushUI(); showToast("🔕 Авто-Push выключен");
+  }
+};
+
+function startGpsMonitoring() {
+  if (!navigator.geolocation || gpsWatchId !== null) return;
+  updateGpsStatusUI('GPS: поиск спутников...', 'bg-amber-400 animate-pulse');
+  gpsWatchId = navigator.geolocation.watchPosition((pos) => {
+    const acc = Math.round(pos.coords.accuracy);
+    // Фильтр: если уже есть более точная позиция и пришёл неточный скачок по вышке > 150м — отбрасываем
+    if (window.userLocation && window.userLocation.accuracy <= 100 && acc > 150) return;
+    window.userLocation = { lat: pos.coords.latitude, lon: pos.coords.longitude, accuracy: acc };
+    updateGpsStatusUI(`GPS: ±${acc} м`, acc <= 50 ? 'bg-emerald-500' : (acc <= 120 ? 'bg-amber-400' : 'bg-red-500'));
+    if (window.isSortedByDistance) renderCards();
+    // Проверка прибытия ТОЛЬКО по гипермаркетам и ТОЛЬКО при точном GPS
+    if (bgHyperPushEnabled && acc <= MAX_ACCEPTABLE_ACCURACY) checkHyperProximity(pos.coords.latitude, pos.coords.longitude);
+  }, () => updateGpsStatusUI('GPS: нет сигнала', 'bg-red-500'), { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 });
+}
+
+function checkHyperProximity(lat, lon) {
+  let nearestTk = null, best = Infinity;
+  // ТОЛЬКО гипермаркеты (storeCoords), сервисы и кафе полностью исключены!
+  for (const [tk, c] of Object.entries(window.storeCoords || {})) {
+    const d = getDistanceFromLatLonInKm(lat, lon, c.lat, c.lon);
+    if (d < best) { best = d; nearestTk = tk; }
+  }
+  if (!nearestTk) return;
+  if (best <= HYPER_ARRIVAL_RADIUS_KM) {
+    if (_arrivalDismissed.has(nearestTk) || _lastArrivalStore === nearestTk) return;
+    _lastArrivalStore = nearestTk;
+    showHyperArrivalAlert(nearestTk, best);
+  } else if (best > HYPER_ARRIVAL_RADIUS_KM * 1.8 && _lastArrivalStore) {
+    _arrivalDismissed.delete(_lastArrivalStore); _lastArrivalStore = null;
+  }
+}
+
+function showHyperArrivalAlert(tk, distKm) {
+  const s = stores.find(x => x.tk === tk); if (!s) return;
+  _pendingArrival = s;
+  try { playArrivalChime(); } catch(e) {}
+  if (navigator.vibrate) navigator.vibrate([150, 70, 150]);
+  const distTxt = `${Math.round(distKm * 1000)} м`;
+  document.getElementById('arrivalStoreTitle').textContent = `ТК/РЦ ${s.tk} (${s.city})`;
+  document.getElementById('arrivalStoreAddr').textContent = `${s.address} • ${distTxt}`;
+  document.getElementById('arrivalBanner').classList.remove('hidden');
+  if ('Notification' in window && Notification.permission === 'granted') {
+    const title = `📍 Вы у гипермаркета ТК ${s.tk}!`;
+    const opts = { body: `Сделайте отметку о прибытии (${distTxt})\n${s.address}`, icon: './icon.png', badge: './icon.png', vibrate: [200, 100, 200], tag: 'hyper-arrival-' + s.tk, renotify: true };
+    if (navigator.serviceWorker && navigator.serviceWorker.ready) navigator.serviceWorker.ready.then(reg => reg.showNotification(title, opts));
+    else new Notification(title, opts);
+  }
+}
+window.dismissArrivalBanner = function() { document.getElementById('arrivalBanner').classList.add('hidden'); if (_lastArrivalStore) _arrivalDismissed.add(_lastArrivalStore); };
+window.confirmArrivalCheckIn = function() {
+  if (!_pendingArrival) return dismissArrivalBanner();
+  addToShifts(_pendingArrival.tk, 'ЛЕНТА', _pendingArrival.address, _pendingArrival.city);
+  document.getElementById('arrivalBanner').classList.add('hidden');
+  if (_lastArrivalStore) _arrivalDismissed.add(_lastArrivalStore);
+};
+
+window.sortByNearest = function() {
+  playTickSound(); const btn = document.getElementById('nearestBtn');
+  if (window.isSortedByDistance) {
+    window.isSortedByDistance = false;
+    btn.classList.remove('bg-emerald-100', 'text-emerald-700', 'radar-active');
+    hideNearestBanner(); renderCards(); return;
+  }
+  window.isSortedByDistance = true;
+  btn.classList.add('bg-emerald-100', 'text-emerald-700', 'radar-active');
+  startGpsMonitoring();
+  if (window.userLocation) { renderCards(); showToast(`📍 Отсортировано (GPS ±${window.userLocation.accuracy} м)`); }
+  else showToast("🛰️ Ловим точные спутники...");
+};
+
+// ЕДИНООБРАЗНАЯ НАВИГАЦИЯ: всегда приоритет GPS-координатам
+let currentNavQuery = '', currentNavCoords = null;
+window.openNavModal = function(query, coordsStr) {
+  currentNavQuery = query || '';
+  if (coordsStr && coordsStr.match(/^-?\d+\.\d+,\s*-?\d+\.\d+$/)) currentNavCoords = coordsStr.split(',').map(s => s.trim());
+  else currentNavCoords = null;
+  document.getElementById('navModalSub').textContent = currentNavCoords ? `Точные координаты: ${currentNavCoords[0]}, ${currentNavCoords[1]}` : 'По адресу';
+  document.getElementById('navModal').classList.remove('hidden');
+};
+window.closeNavModal = function() { document.getElementById('navModal').classList.add('hidden'); };
+window.executeNavigation = function(type) {
+  playTickSound(); let url = '';
+  if (currentNavCoords) {
+    const [lat, lon] = currentNavCoords;
+    if (type === 'yandex') url = `https://yandex.ru/maps/?rtext=~${lat},${lon}&rtt=auto`;
+    else if (type === '2gis') url = `https://2gis.ru/geo/${lon},${lat}`;
+    else if (type === 'google') url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`;
+  } else {
+    const enc = encodeURIComponent(currentNavQuery);
+    if (type === 'yandex') url = `https://yandex.ru/maps/?text=${enc}`;
+    else if (type === '2gis') url = `https://2gis.ru/search/${enc}`;
+    else if (type === 'google') url = `https://www.google.com/maps/search/?api=1&query=${enc}`;
+  }
+  window.location.href = url; closeNavModal();
+};
+
+// БАЗОВЫЕ ФУНКЦИИ, СКВОЗНОЙ ПОИСК И РЕНДЕР
+function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) { const R = 6371, dLat = (lat2-lat1)*Math.PI/180, dLon = (lon2-lon1)*Math.PI/180, a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2; return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); }
+let stores = [];
+(window.rawData || '').trim().split('\n').forEach((line, i) => { let c = line.split('\t'); if (c.length < 4) c = line.split('|').map(x => x.trim()); c = c.map(x => x ? x.trim() : '-'); if (c.length >= 4) stores.push({ id: 'store_' + i, tk: c[0], route: c[1], address: c[2], city: c[3], rc1: c[4] || '-', is24_7: c[7] === 'Да', start: c[8] || '-', end: c[9] || '-' }); });
+let selectedCityFilter = 'all', isTechMode = false, selectedTechType = 'all', favorites = [];
+try { favorites = JSON.parse(localStorage.getItem('lenta_favs')) || []; } catch(e) {}
+const cardsGrid = document.getElementById('cardsGrid'), searchInput = document.getElementById('searchInput'), clearSearchBtn = document.getElementById('clearSearchBtn'), autocompleteList = document.getElementById('autocompleteList'), citySlider = document.getElementById('citySlider');
+
+function renderCards() {
+  const q = searchInput.value.toLowerCase().trim();
+  clearSearchBtn.classList.toggle('hidden', !q);
+  const words = q.split(/\s+/).filter(Boolean);
+  let html = '', count = 0;
+
+  // Если введён поиск — ищем СКВОЗНЫМ способом и по ТК, и по Техпомощи/Кафе одновременно!
+  const showStores = !isTechMode || words.length > 0;
+  const showTech = isTechMode || words.length > 0;
+
+  if (showTech) {
+    let tList = getTechStations().map(st => ({...st, distance: (window.userLocation && st.lat && st.lon) ? getDistanceFromLatLonInKm(window.userLocation.lat, window.userLocation.lon, st.lat, st.lon) : 999999}));
+    if (window.isSortedByDistance && window.userLocation) tList.sort((a,b) => a.distance - b.distance);
+    tList.forEach(st => {
+      if (isTechMode && !words.length && selectedTechType !== 'all' && (selectedTechType === 'favorites' ? !favorites.includes(st.id) : st.type !== selectedTechType)) return;
+      if (words.length && !words.every(w => `${st.type} ${st.name} ${st.address} ${st.desc||''} ${st.city||''}`.toLowerCase().includes(w))) return;
+      count++;
+      const coords = (st.lat && st.lon) ? `${st.lat},${st.lon}` : '';
+      const dTag = (window.isSortedByDistance && st.distance < 99999) ? `<span class="text-[10px] font-black text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded">${st.distance < 1 ? Math.round(st.distance*1000)+' м' : st.distance.toFixed(1)+' км'}</span>` : '';
+      html += `<div class="store-card volume-card p-4 border-type-kafe"><div class="flex items-center gap-2 mb-1"><span class="px-2 py-0.5 rounded text-[9px] font-black uppercase text-white bg-slate-800">${st.type}</span>${dTag}<span class="text-[10px] text-blue-600 font-bold ml-auto">${st.city||''}</span></div><div class="text-sm font-extrabold mb-1">${st.name}</div><div class="text-[11px] text-gray-500 mb-2">${st.address}</div><div class="grid ${st.route ? 'grid-cols-2' : 'grid-cols-1'} gap-1.5"><button onclick="openNavModal('${(st.address||'').replace(/'/g,"\\'")}', '${coords}')" class="py-2 bg-orange-500 text-white rounded-xl text-[10px] font-bold tactile-btn">🧭 Навигатор (GPS)</button>${st.route ? `<button onclick="openApproachMap('${st.route}')" class="py-2 bg-emerald-500 text-white rounded-xl text-[10px] font-bold tactile-btn">🛣️ Подъезд</button>` : ''}</div></div>`;
+    });
+  }
+
+  if (showStores) {
+    let sList = stores.map(s => { const c = (window.storeCoords||{})[s.tk]; return {...s, distance: (window.userLocation && c) ? getDistanceFromLatLonInKm(window.userLocation.lat, window.userLocation.lon, c.lat, c.lon) : 999999}; });
+    if (window.isSortedByDistance && window.userLocation) sList.sort((a,b) => a.distance - b.distance);
+    sList.forEach(s => {
+      if (!words.length && selectedCityFilter !== 'all' && s.city !== selectedCityFilter) return;
+      if (words.length && !words.every(w => `тк ${s.tk} рц ${s.tk} ${s.city} ${s.address}`.toLowerCase().includes(w))) return;
+      count++;
+      const c = (window.storeCoords||{})[s.tk], coords = c ? `${c.lat},${c.lon}` : '', rUrl = (window.customRoutes||{})[s.tk] || '';
+      const dTag = (window.isSortedByDistance && s.distance < 99999) ? `<span class="text-[10px] font-black text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded">${s.distance < 1 ? Math.round(s.distance*1000)+' м' : s.distance.toFixed(1)+' км'}</span>` : '';
+      html += `<div class="store-card volume-card p-4 border-brand-lenta"><div class="flex items-center gap-2 mb-2"><span class="px-2 py-0.5 rounded text-[10px] font-black bg-lentaYellow text-lentaDark">ТК ${s.tk}</span>${dTag}<span class="text-[11px] font-bold text-lentaBlue ml-auto">${s.city}</span></div><div class="text-sm font-extrabold mb-3">${s.address}</div><button onclick="addToShifts('${s.tk}','ЛЕНТА','${s.address.replace(/'/g,"\\'")}','${s.city}')" class="w-full py-2 mb-2 bg-purple-500/10 text-purple-600 rounded-xl text-xs font-bold tactile-btn">📝 Учесть рейс</button><div class="grid grid-cols-2 gap-1.5"><button onclick="openApproachMap('${rUrl}')" class="py-2 bg-emerald-500 text-white rounded-xl text-[10px] font-bold tactile-btn">🛣️ Подъезд</button><button onclick="openNavModal('${s.address.replace(/'/g,"\\'")}', '${coords}')" class="py-2 bg-lentaBlue text-white rounded-xl text-[10px] font-bold tactile-btn">🧭 Навигатор</button></div></div>`;
+    });
+  }
+  cardsGrid.innerHTML = count ? html : `<div class="col-span-full py-12 text-center text-gray-400">Ничего не найдено</div>`;
+}
+
+searchInput.addEventListener('input', () => renderCards());
+window.clearSearch = function() { searchInput.value = ''; renderCards(); };
+window.filterByCity = function(city) { isTechMode = false; selectedCityFilter = city; searchInput.value = ''; renderCards(); };
+window.filterByTechSupport = function() { isTechMode = true; selectedTechType = 'all'; searchInput.value = ''; renderCards(); };
+window.hideNearestBanner = function() { document.getElementById('nearestBanner').classList.add('hidden'); };
+window.openApproachMap = function(u) { if (u) window.open(u, '_blank'); else showToast("Схема не добавлена 🛠"); };
+window.openContactsModal = function() { document.getElementById('contactsModal').classList.remove('hidden'); };
+window.closeContactsModal = function() { document.getElementById('contactsModal').classList.add('hidden'); };
+window.openMonetkaModal = function() { document.getElementById('monetkaModal').classList.remove('hidden'); };
+window.closeMonetkaModal = function() { document.getElementById('monetkaModal').classList.add('hidden'); };
+window.openMechanicModal = function() { document.getElementById('mechanicModal').classList.remove('hidden'); };
+window.closeMechanicModal = function() { document.getElementById('mechanicModal').classList.add('hidden'); };
+window.toggleTheme = function() { const dark = document.documentElement.classList.toggle('dark'); localStorage.setItem('lenta_theme', dark ? 'dark' : 'light'); };
+window.toggleTextSize = function() { let s = (parseInt(localStorage.getItem('lenta_text_size')||'0')+1)%3; document.documentElement.classList.remove('large-text','very-large-text'); if(s===1) document.documentElement.classList.add('large-text'); if(s===2) document.documentElement.classList.add('very-large-text'); localStorage.setItem('lenta_text_size', s); };
+window.toggleFullScreen = function() { if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{}); else document.exitFullscreen(); };
+function showToast(m) { const t = document.getElementById('toast-notification'); t.innerHTML = m; t.classList.remove('opacity-0','scale-95'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.add('opacity-0','scale-95'), 2800); }
+function playTickSound() {} function playArrivalChime() {} function handleLogoTap() {} function handleVisitReset() {} function startVoiceSearch() { showToast("🎙 Голосовой поиск"); }
+
+(function init() {
+  const cities = ['all', ...new Set(stores.map(s => s.city))];
+  citySlider.innerHTML = cities.map(c => `<button onclick="filterByCity('${c}')" class="px-3 py-1.5 mr-2 mb-2 rounded-xl bg-white/90 text-lentaDark text-[10px] font-black uppercase shrink-0">${c==='all'?'🌐 ВСЕ':c}</button>`).join('') + `<button onclick="filterByTechSupport()" class="px-3 py-1.5 mr-2 mb-2 rounded-xl bg-yellow-400 text-orange-900 text-[10px] font-black uppercase shrink-0">🛠 ТЕХПОМОЩЬ</button>`;
+  updateBgPushUI(); renderCards(); renderDriverSelector();
+  if (bgHyperPushEnabled) startGpsMonitoring();
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+})();
+</script>
+</body>
+</html>
