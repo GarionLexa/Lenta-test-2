@@ -1,7 +1,21 @@
-const CACHE_NAME = 'lenta-cache-v2';
+const CACHE_NAME = 'lenta-offline-v4';
 const ASSETS = [
-  './', './index.html', './data.js', './data_services.js', './stories.js',
-  './animations.css', './icon.png', './manifest.json', './offline.html'
+  './',
+  './index.html',
+  './data.js',
+  './data_services.js',
+  './stories.js',
+  './animations.css',
+  './icon.png',
+  './road-icon.png',
+  './music.mp3',
+  './manifest.json',
+  './offline.html'
+];
+
+const EXTERNAL_ASSETS = [
+  'https://cdn.tailwindcss.com?plugins=forms',
+  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap'
 ];
 
 self.addEventListener('install', (e) => {
@@ -9,57 +23,66 @@ self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE_NAME).then(async (cache) => {
       await cache.addAll(ASSETS);
-      try {
-        await cache.addAll([
-          'https://cdn.tailwindcss.com',
-          'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap'
-        ]);
-      } catch (err) { console.warn('[SW] Ошибка кэширования:', err); }
+      for (const url of EXTERNAL_ASSETS) {
+        try { await cache.add(url); } catch (err) { console.warn('[SW] Skip:', url); }
+      }
     })
   );
 });
 
 self.addEventListener('activate', (e) => {
-  e.waitUntil(caches.keys().then((keys) => Promise.all(keys.map((key) => key !== CACHE_NAME ? caches.delete(key) : null))).then(() => self.clients.claim()));
+  e.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(keys.map((key) => (key !== CACHE_NAME ? caches.delete(key) : null)))
+    ).then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('message', (e) => {
+  if (e.data === 'SKIP_WAITING') self.skipWaiting();
+});
+
+self.addEventListener('notificationclick', (e) => {
+  e.notification.close();
+  e.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((list) => {
+      for (const client of list) {
+        if ('focus' in client) return client.focus();
+      }
+      if (clients.openWindow) return clients.openWindow('./index.html');
+    })
+  );
 });
 
 self.addEventListener('fetch', (e) => {
-  const request = e.request;
-  if (request.method !== 'GET') return;
-  const url = new URL(request.url);
+  const req = e.request;
+  if (req.method !== 'GET') return;
 
-  if (request.mode === 'navigate') {
-    e.respondWith(fetch(request).then((response) => { const clone = response.clone(); caches.open(CACHE_NAME).then((cache) => cache.put(request, clone)); return response; }).catch(() => caches.match(request).then((cached) => cached || caches.match('./offline.html'))));
+  // HTML: сначала сеть, если офлайн — мгновенно из кэша
+  if (req.mode === 'navigate') {
+    e.respondWith(
+      fetch(req)
+        .then((res) => {
+          const clone = res.clone();
+          caches.open(CACHE_NAME).then((c) => c.put(req, clone));
+          return res;
+        })
+        .catch(() => caches.match('./index.html').then((r) => r || caches.match('./offline.html')))
+    );
     return;
   }
 
-  if (url.origin === location.origin && url.pathname.match(/\.(css|js|png|jpg|jpeg|webp|svg|woff2?|ttf|eot)$/)) {
-    e.respondWith(caches.match(request).then((cached) => {
-      const fetchPromise = fetch(request).then((response) => { const clone = response.clone(); caches.open(CACHE_NAME).then((cache) => cache.put(request, clone)); return response; }).catch(() => cached);
-      return cached || fetchPromise;
-    }));
-    return;
-  }
-
-  if (url.origin !== location.origin) {
-    e.respondWith(caches.match(request).then((cached) => {
-      if (cached) return cached;
-      return fetch(request).then((response) => { const clone = response.clone(); caches.open(CACHE_NAME).then((cache) => cache.put(request, clone)); return response; }).catch(() => new Response('', { status: 503 }));
-    }));
-    return;
-  }
-  e.respondWith(fetch(request).catch(() => caches.match(request)));
-});
-
-self.addEventListener('notificationclick', function(event) {
-  event.notification.close();
-  event.waitUntil(
-    clients.matchAll({type: 'window'}).then(windowClients => {
-      for (var i = 0; i < windowClients.length; i++) {
-        var client = windowClients[i];
-        if (client.url.includes('index.html') && 'focus' in client) return client.focus();
-      }
-      if (clients.openWindow) return clients.openWindow('./index.html');
+  // Всё остальное (базы, музыка, стили, шрифты): сначала из кэша (мгновенный офлайн)
+  e.respondWith(
+    caches.match(req).then((cached) => {
+      const networkFetch = fetch(req).then((res) => {
+        if (res && res.status === 200) {
+          const clone = res.clone();
+          caches.open(CACHE_NAME).then((c) => c.put(req, clone));
+        }
+        return res;
+      }).catch(() => cached);
+      return cached || networkFetch;
     })
   );
 });
