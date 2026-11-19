@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lenta-cache-v1';
+const CACHE_NAME = 'lenta-cache-v2';
 const ASSETS = [
   './', './index.html', './data.js', './data_services.js', './stories.js',
   './animations.css', './icon.png', './manifest.json', './offline.html'
